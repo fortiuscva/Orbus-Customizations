@@ -2,7 +2,7 @@
   "id": "30815d47-8f7f-430a-b516-aaf2e1cfb1d4",
   "name": "Orbus Customizations",
   "publisher": "SMB",
-  "version": "1.0.0.0",
+  "version": "1.0.0.4",
   "brief": "",
   "description": "",
   "privacyStatement": "",
@@ -10,14 +10,39 @@
   "help": "",
   "url": "",
   "logo": "",
-  "dependencies": [],
+  "dependencies": [
+    {
+      "id": "12968b6e-b233-40e8-8ebc-160ee407d489",
+      "name": "Shop Floor Insight",
+      "version": "7.11.8432.2",
+      "publisher": "Insight Works"
+    },
+    {
+      "id": "c4145162-ba8a-4371-b2d5-97e3dac8161b",
+      "name": "OrbusCustomFieldsMod",
+      "version": "1.0.2.23",
+      "publisher": "Orbus, Inc."
+    },
+    {
+      "id": "a0972a12-b028-4717-a767-b26da3864425",
+      "name": "OrbusApp",
+      "version": "1.0.1.18",
+      "publisher": "Orbus"
+    },
+    {
+      "id": "ba1776ba-1198-4b4c-a61e-c4612f1880d5",
+      "name": "IWorks Common",
+      "publisher": "Insight Works",
+      "version": "2.8.8308.1"
+    }
+  ],
   "screenshots": [],
   "platform": "1.0.0.0",
   "application": "22.0.0.0",
   "idRanges": [
     {
-      "from": 50100,
-      "to": 50149
+      "from": 52600,
+      "to": 52800
     }
   ],
   "resourceExposurePolicy": {
