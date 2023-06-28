@@ -166,7 +166,7 @@ codeunit 52600 "ORB Auto-Post Journals"
         lrecItemJnlLine."Line No." := lintNextLineNo;
         lrecItemJnlLine.Insert();
 
-        precItemJournalLine.Delete(true);
+        //precItemJournalLine.Delete(true);
     end;
 }
 
