@@ -39,6 +39,7 @@ pageextension 52601 "ORB Output Journal" extends "Output Journal"
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
+                Image = CancelAllLines;
 
                 trigger OnAction()
                 var
@@ -64,6 +65,13 @@ pageextension 52601 "ORB Output Journal" extends "Output Journal"
     }
 
     trigger OnOpenPage()
+    begin
+        OUTPUTERRBatchVarGbl := false;
+        IF Rec."Journal Batch Name" = 'OUTPUTERR' then
+            OUTPUTERRBatchVarGbl := true;
+    end;
+
+    trigger OnAfterGetCurrRecord()
     begin
         OUTPUTERRBatchVarGbl := false;
         IF Rec."Journal Batch Name" = 'OUTPUTERR' then
