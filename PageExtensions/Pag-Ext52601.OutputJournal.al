@@ -27,4 +27,49 @@ pageextension 52601 "ORB Output Journal" extends "Output Journal"
             }
         }
     }
+    actions
+    {
+        addlast("F&unctions")
+        {
+            action("ORB CleanFinishedRPOLines")
+            {
+                Caption = 'Clean Up Finished RPO Lines';
+                Visible = OUTPUTERRBatchVarGbl;
+                ApplicationArea = All;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+
+                trigger OnAction()
+                var
+                    ItemJnlLineRecLcl: Record "Item Journal Line";
+                    ProdOrdeRecLcl: Record "Production Order";
+                    ProceedConfirmMsgLbl: Label 'Do you want to delete the finished production order journal lines?';
+                begin
+                    if not Confirm(ProceedConfirmMsgLbl, false) then
+                        exit;
+
+                    Rec.TestField("Journal Template Name", 'OUTPUT');
+                    ItemJnlLineRecLcl.Reset();
+                    ItemJnlLineRecLcl.SetRange("Journal Template Name", 'OUTPUT');
+                    ItemJnlLineRecLcl.SetRange("Journal Batch Name", 'OUTPUTERR');
+                    if ItemJnlLineRecLcl.FindSet() then
+                        repeat
+                            if not ProdOrdeRecLcl.get(ProdOrdeRecLcl.status::Released, ItemJnlLineRecLcl."Order No.") then
+                                ItemJnlLineRecLcl.Delete(true);
+                        until ItemJnlLineRecLcl.Next() = 0;
+                end;
+            }
+        }
+    }
+
+    trigger OnOpenPage()
+    begin
+        OUTPUTERRBatchVarGbl := false;
+        IF Rec."Journal Batch Name" = 'OUTPUTERR' then
+            OUTPUTERRBatchVarGbl := true;
+    end;
+
+    var
+        OUTPUTERRBatchVarGbl: Boolean;
 }
