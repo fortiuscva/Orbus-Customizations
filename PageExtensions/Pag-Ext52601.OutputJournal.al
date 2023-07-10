@@ -53,7 +53,7 @@ pageextension 52601 "ORB Output Journal" extends "Output Journal"
                     Rec.TestField("Journal Template Name", 'OUTPUT');
                     ItemJnlLineRecLcl.Reset();
                     ItemJnlLineRecLcl.SetRange("Journal Template Name", 'OUTPUT');
-                    ItemJnlLineRecLcl.SetRange("Journal Batch Name", 'OUTPUTERR');
+                    ItemJnlLineRecLcl.SetRange("Journal Batch Name", CurrentJnlBatchName);
                     if ItemJnlLineRecLcl.FindSet() then
                         repeat
                             if not ProdOrdeRecLcl.get(ProdOrdeRecLcl.status::Released, ItemJnlLineRecLcl."Order No.") then
