@@ -34,7 +34,7 @@ pageextension 52601 "ORB Output Journal" extends "Output Journal"
             action("ORB CleanFinishedRPOLines")
             {
                 Caption = 'Clean Up Finished RPO Lines';
-                Visible = OUTPUTERRBatchVarGbl;
+                Visible = ShowCleanUpButtonVarGbl;
                 ApplicationArea = All;
                 Promoted = true;
                 PromotedCategory = Process;
@@ -66,18 +66,19 @@ pageextension 52601 "ORB Output Journal" extends "Output Journal"
 
     trigger OnOpenPage()
     begin
-        OUTPUTERRBatchVarGbl := false;
-        IF Rec."Journal Batch Name" = 'OUTPUTERR' then
-            OUTPUTERRBatchVarGbl := true;
+        ShowCleanUpButtonVarGbl := false;
+        IF (Rec."Journal Batch Name" = 'OUTPUTERR') OR (Rec."Journal Batch Name" = 'WR-GRAPHIC') OR (Rec."Journal Batch Name" = 'LV-GRAPHIC') then
+            ShowCleanUpButtonVarGbl := true;
     end;
 
     trigger OnAfterGetCurrRecord()
     begin
-        OUTPUTERRBatchVarGbl := false;
-        IF Rec."Journal Batch Name" = 'OUTPUTERR' then
-            OUTPUTERRBatchVarGbl := true;
+        ShowCleanUpButtonVarGbl := false;
+        IF (Rec."Journal Batch Name" = 'OUTPUTERR') OR (Rec."Journal Batch Name" = 'WR-GRAPHIC') OR (Rec."Journal Batch Name" = 'LV-GRAPHIC') then
+            ShowCleanUpButtonVarGbl := true;
     end;
 
     var
-        OUTPUTERRBatchVarGbl: Boolean;
+
+        ShowCleanUpButtonVarGbl: Boolean;
 }
