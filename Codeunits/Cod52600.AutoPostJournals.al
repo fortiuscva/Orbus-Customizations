@@ -58,7 +58,8 @@ codeunit 52600 "ORB Auto-Post Journals"
             repeat
                 // output
                 lrecOutputLine.SETRANGE("Journal Batch Name", lrecItemJnlBatch.Name);
-                lrecOutputLine.SetRange("ORB IWX AutoPost State", lrecOutputLine."ORB IWX AutoPost State"::Unposted);
+                //lrecOutputLine.SetRange("ORB IWX AutoPost State", lrecOutputLine."ORB IWX AutoPost State"::Unposted);
+                lrecOutputLine.SetFilter("ORB IWX AutoPost State", '%1|%2', lrecOutputLine."ORB IWX AutoPost State"::Unposted, lrecOutputLine."ORB IWX AutoPost State"::Errored);
                 if lrecOutputLine.FINDSET(FALSE) then begin
                     repeat
                         postSingleLine(lrecOutputLine);
@@ -166,7 +167,7 @@ codeunit 52600 "ORB Auto-Post Journals"
         lrecItemJnlLine."Line No." := lintNextLineNo;
         lrecItemJnlLine.Insert();
 
-        //precItemJournalLine.Delete(true);
+        precItemJournalLine.Delete(true);
     end;
 }
 
