@@ -30,7 +30,7 @@ pageextension 52606 "ORB Posted Sales Invoices" extends "Posted Sales Invoices"
                 ToolTip = 'Only for Developer use';
                 trigger OnAction()
                 var
-                    AutoSendInvoice: Codeunit "ORB AutoSend Sales Invoices";
+                    AutoSendInvoice: Codeunit "ORB Auto Send Sales Invoices";
                     SalesInvHdr: Record "Sales Invoice Header";
                 begin
                     AutoSendInvoice.Run();

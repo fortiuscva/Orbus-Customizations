@@ -1,4 +1,4 @@
-codeunit 52602 "ORB AutoSend Sales Invoices"
+codeunit 52602 "ORB Auto Send Sales Invoices"
 {
     Permissions = tabledata "Sales Invoice Header" = rmid;
     trigger OnRun()
@@ -7,11 +7,6 @@ codeunit 52602 "ORB AutoSend Sales Invoices"
         SalesInvoiceHeaderRecLcl: Record "Sales Invoice Header";
         OrbusSingleInstanceCULcl: Codeunit "ORB Orbus Single Instance";
     begin
-        // Clear(SalesInvoiceHeaderRecLcl);
-        // SalesInvoiceHeaderRecLcl.SetRange("Sell-to Customer No.", '11180');
-        // if SalesInvoiceHeaderRecLcl.FindSet() then
-        //     SalesInvoiceHeaderRecLcl.ModifyAll("Sell-to E-Mail", 'vamshi.gutha@panaceasofttech.com');
-
         OrbusSingleInstanceCULcl.SetOnSendCustomerRecordsOnBeforeLookupProfile(false);
         OrbusSingleInstanceCULcl.SetOnBeforeSendEmailToCust(true);
         OrbusSingleInstanceCULcl.SetOnBeforeSendEmail(true);
@@ -25,9 +20,7 @@ codeunit 52602 "ORB AutoSend Sales Invoices"
                 SalesInvoiceHeaderRecLcl.SetRange("ORB Email Sent by JQ", false);
                 SalesInvoiceHeaderRecLcl.SetRange("Sell-to Customer No.", CustomerRecLcl."No.");
                 if SalesInvoiceHeaderRecLcl.FindSet() then begin
-                    SalesInvoiceHeaderRecLcl.SendRecords();
-                    SalesInvoiceHeaderRecLcl.ModifyAll("ORB Last Email Sent DT", CurrentDateTime());
-                    SalesInvoiceHeaderRecLcl.ModifyAll("ORB Email Sent by JQ", true);
+                    if not ORBSendSalesInvByCustCUGbl.run(SalesInvoiceHeaderRecLcl) then;
                 end;
             until CustomerRecLcl.Next() = 0;
 
@@ -36,4 +29,8 @@ codeunit 52602 "ORB AutoSend Sales Invoices"
         OrbusSingleInstanceCULcl.SetOnBeforeSendEmail(false);
         OrbusSingleInstanceCULcl.SetOnBeforeCheckShowProfileSelectionMethodDialog(0, false, false);
     end;
+
+    var
+        ORBSendSalesInvByCustCUGbl: Codeunit "ORB Send Sales Inv. By Cust.";
+
 }
