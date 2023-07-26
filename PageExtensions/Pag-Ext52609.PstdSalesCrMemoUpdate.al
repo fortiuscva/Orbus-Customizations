@@ -12,7 +12,7 @@ pageextension 52609 "ORB Pstd. Sales Cr.Memo-Update" extends "Pstd. Sales Cr. Me
             {
                 ApplicationArea = All;
                 Editable = true;
-                ToolTip = 'Specifies the name of the customer that the invoice was sent to.';
+                ToolTip = 'Specifies the name of the customer that the Credit Memo was sent to.';
             }
 
             field("ORB Ship-to Name"; Rec."Ship-to Name")
