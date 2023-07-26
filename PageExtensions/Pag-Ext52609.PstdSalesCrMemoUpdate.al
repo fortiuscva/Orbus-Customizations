@@ -1,4 +1,4 @@
-pageextension 52605 "ORB Posted Sales Inv. - Update" extends "Posted Sales Inv. - Update"
+pageextension 52609 "ORB Pstd. Sales Cr.Memo-Update" extends "Pstd. Sales Cr. Memo - Update"
 {
     layout
     {
@@ -8,11 +8,6 @@ pageextension 52605 "ORB Posted Sales Inv. - Update" extends "Posted Sales Inv. 
         }
         addafter("Sell-to Customer Name")
         {
-            field("ORB Email Sent by JQ"; Rec."ORB Email Sent by JQ")
-            {
-                ApplicationArea = All;
-                ToolTip = 'Specifies the Email Sent by JQ for the invoice';
-            }
             field("ORB Bill-to Name"; Rec."Bill-to Name")
             {
                 ApplicationArea = All;
@@ -25,12 +20,6 @@ pageextension 52605 "ORB Posted Sales Inv. - Update" extends "Posted Sales Inv. 
                 ApplicationArea = All;
                 ToolTip = 'Specifies the name of the customer that the items were shipped to.';
             }
-            field("ORB Sell-to E-Mail"; Rec."Sell-to E-Mail")
-            {
-                ApplicationArea = All;
-                ToolTip = 'Specifies the value of the Email field.';
-            }
-
         }
     }
 }
