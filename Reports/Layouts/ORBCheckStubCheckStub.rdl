@@ -735,7 +735,7 @@
               <Top>2.54755in</Top>
               <Left>0.68604in</Left>
               <Height>0.16654in</Height>
-              <Width>3.49307in</Width>
+              <Width>7.07266in</Width>
               <ZIndex>5</ZIndex>
               <DataElementOutput>NoOutput</DataElementOutput>
               <Style>
@@ -1044,7 +1044,7 @@
               <Top>2.71409in</Top>
               <Left>0.68604in</Left>
               <Height>0.16654in</Height>
-              <Width>3.49307in</Width>
+              <Width>7.07266in</Width>
               <ZIndex>17</ZIndex>
               <DataElementOutput>NoOutput</DataElementOutput>
               <Style />
@@ -1065,7 +1065,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>textbox2</rd:DefaultName>
-              <Left>5.78889in</Left>
+              <Left>6.01389in</Left>
               <Height>0.16654in</Height>
               <Width>0.87253in</Width>
               <ZIndex>18</ZIndex>
@@ -1089,7 +1089,7 @@
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Left>6.66142in</Left>
+              <Left>6.88642in</Left>
               <Height>0.16654in</Height>
               <Width>0.90945in</Width>
               <ZIndex>19</ZIndex>
