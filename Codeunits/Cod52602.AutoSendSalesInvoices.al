@@ -7,6 +7,7 @@ codeunit 52602 "ORB Auto Send Sales Invoices"
         SalesInvoiceHeaderRecLcl: Record "Sales Invoice Header";
         SalesReceivablesSetupRecLcl: Record "Sales & Receivables Setup";
         OrbusSingleInstanceCULcl: Codeunit "ORB Orbus Single Instance";
+        CustomReportSelectionRecLcl: Record "Custom Report Selection";
     begin
         OrbusSingleInstanceCULcl.SetOnSendCustomerRecordsOnBeforeLookupProfile(false);
         OrbusSingleInstanceCULcl.SetOnBeforeSendEmailToCust(true);
@@ -19,12 +20,18 @@ codeunit 52602 "ORB Auto Send Sales Invoices"
         CustomerRecLcl.SetRange("ORB Auto Send Email", true);
         if CustomerRecLcl.FindSet() then
             repeat
-                clear(SalesInvoiceHeaderRecLcl);
-                SalesInvoiceHeaderRecLcl.SetRange("ORB Email Sent by JQ", false);
-                SalesInvoiceHeaderRecLcl.SetRange("Sell-to Customer No.", CustomerRecLcl."No.");
-                SalesInvoiceHeaderRecLcl.SetFilter("Posting Date", '>=%1', SalesReceivablesSetupRecLcl."ORB Send Email Inv. Start Date");
-                if SalesInvoiceHeaderRecLcl.FindSet() then begin
-                    if not ORBSendSalesInvByCustCUGbl.run(SalesInvoiceHeaderRecLcl) then;
+                CustomReportSelectionRecLcl.Reset();
+                CustomReportSelectionRecLcl.SetRange("Source Type", Database::Customer);
+                CustomReportSelectionRecLcl.SetRange("Source No.", CustomerRecLcl."No.");
+                CustomReportSelectionRecLcl.SetRange(Usage, CustomReportSelectionRecLcl.Usage::"S.Invoice");
+                if CustomReportSelectionRecLcl.FindLast() then begin
+                    clear(SalesInvoiceHeaderRecLcl);
+                    SalesInvoiceHeaderRecLcl.SetRange("ORB Email Sent by JQ", false);
+                    SalesInvoiceHeaderRecLcl.SetRange("Sell-to Customer No.", CustomerRecLcl."No.");
+                    SalesInvoiceHeaderRecLcl.SetFilter("Posting Date", '>=%1', SalesReceivablesSetupRecLcl."ORB Send Email Inv. Start Date");
+                    if SalesInvoiceHeaderRecLcl.FindSet() then begin
+                        if not ORBSendSalesInvByCustCUGbl.run(SalesInvoiceHeaderRecLcl) then;
+                    end;
                 end;
             until CustomerRecLcl.Next() = 0;
 
