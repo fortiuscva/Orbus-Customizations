@@ -187,14 +187,14 @@
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Right</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
                           <Style>
                             <BackgroundColor>White</BackgroundColor>
                             <VerticalAlign>Middle</VerticalAlign>
-                            <PaddingLeft>0.04134in</PaddingLeft>
+                            <PaddingLeft>0.06134in</PaddingLeft>
                           </Style>
                         </Textbox>
                       </CellContents>
@@ -221,7 +221,7 @@
                           <Style>
                             <BackgroundColor>White</BackgroundColor>
                             <VerticalAlign>Middle</VerticalAlign>
-                            <PaddingLeft>0.04134in</PaddingLeft>
+                            <PaddingLeft>0.06134in</PaddingLeft>
                           </Style>
                         </Textbox>
                       </CellContents>
@@ -1093,7 +1093,9 @@
               <Height>0.16654in</Height>
               <Width>0.90945in</Width>
               <ZIndex>19</ZIndex>
-              <Style />
+              <Style>
+                <PaddingLeft>5pt</PaddingLeft>
+              </Style>
             </Textbox>
             <Textbox Name="textbox4">
               <KeepTogether>true</KeepTogether>
