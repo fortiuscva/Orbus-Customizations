@@ -69,6 +69,18 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         end;
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"DSHIP Event Publisher", OnAfterSetAddress, '', false, false)]
+    local procedure OnAfterSetAddress(addressSource: RecordRef; var addressBuffer: Record "DSHIP Address Buffer" temporary; var isValidationRequired: Boolean; var isHandled: Boolean);
+    var
+        SalesHeaderRecLcl: Record "Sales Header";
+    begin
+        if SalesHeaderRecLcl.get(addressSource.RecordId) then
+            if addressBuffer."Address Type" = addressBuffer."Address Type"::Destination then begin
+                //if SalesHeaderRecLcl."Ship-to Contact" <> '' then
+                addressBuffer.Name := SalesHeaderRecLcl."Ship-to Contact";
+            end;
+    end;
+
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
 
