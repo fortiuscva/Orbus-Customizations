@@ -17,5 +17,4 @@ tableextension 52601 "ORB Item Journal Line" extends "Item Journal Line"
             DataClassification = CustomerContent;
         }
     }
-
 }
