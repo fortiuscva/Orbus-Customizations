@@ -26,6 +26,23 @@ pageextension 52601 "ORB Output Journal" extends "Output Journal"
 
             }
         }
+        addafter("Output Quantity")
+        {
+            field("ORB Finished Quantity"; FinishedQuantityVarGbl)
+            {
+                Caption = 'Finished Quantity';
+                ApplicationArea = all;
+                Editable = false;
+                ToolTip = 'Finished Quantity from Prodcution Order';
+            }
+            field("ORB Required Quantity"; RequiredQuantityVarGbl)
+            {
+                Caption = 'Required Quantity';
+                ApplicationArea = all;
+                Editable = false;
+                ToolTip = 'Calculated from Quanity minus of Finished Quantity from Production Order';
+            }
+        }
     }
     actions
     {
@@ -78,7 +95,21 @@ pageextension 52601 "ORB Output Journal" extends "Output Journal"
             ShowCleanUpButtonVarGbl := true;
     end;
 
+    trigger OnAfterGetRecord()
     var
+        ProdOrderLineVarLcl: Record "Prod. Order Line";
+    begin
+        Clear(FinishedQuantityVarGbl);
+        Clear(RequiredQuantityVarGbl);
+        ProdOrderLineVarLcl.Reset();
+        if ProdOrderLineVarLcl.get(ProdOrderLineVarLcl.Status::Released, rec."Order No.", rec."Order Line No.") then begin
+            FinishedQuantityVarGbl := ProdOrderLineVarLcl."Finished Quantity";
+            RequiredQuantityVarGbl := ProdOrderLineVarLcl.Quantity - ProdOrderLineVarLcl."Finished Quantity";
+        end;
+    end;
 
+    var
+        FinishedQuantityVarGbl: Decimal;
+        RequiredQuantityVarGbl: Decimal;
         ShowCleanUpButtonVarGbl: Boolean;
 }
