@@ -1,7 +1,7 @@
-page 52603 "ORB ORBAPISalesHeaderDetails"
+page 52603 "ORB orbapiSalesHeaderDetails"
 {
-    APIGroup = 'Orbus';
-    APIPublisher = 'Orbus';
+    APIGroup = 'orbus';
+    APIPublisher = 'orbus';
     APIVersion = 'v2.0';
     ApplicationArea = All;
     Caption = 'orbapiSalesHeaderDetails';
@@ -17,53 +17,37 @@ page 52603 "ORB ORBAPISalesHeaderDetails"
         {
             repeater(General)
             {
-                field(documentType; Rec."Document Type")
-                {
-                    Caption = 'Document Type';
-                }
                 field(no; Rec."No.")
                 {
                     Caption = 'No.';
                 }
-                field(sellToCustomerNo; Rec."Sell-to Customer No.")
+                field(sellToCustomerName; Rec."Sell-to Customer Name")
                 {
-                    Caption = 'Sell-to Customer No.';
-                }
-                field(postingDate; Rec."Posting Date")
-                {
-                    Caption = 'Posting Date';
-                }
-                field(shipToCode; Rec."Ship-to Code")
-                {
-                    Caption = 'Ship-to Code';
-                }
-                field(paymentTermsCode; Rec."Payment Terms Code")
-                {
-                    Caption = 'Payment Terms Code';
-                }
-                field(amount; Rec.Amount)
-                {
-                    Caption = 'Amount';
-                }
-                field(amountIncludingVAT; Rec."Amount Including VAT")
-                {
-                    Caption = 'Amount Including VAT';
-                }
-                field(externalDocumentNo; Rec."External Document No.")
-                {
-                    Caption = 'External Document No.';
+                    Caption = 'Sell-to Customer Name';
                 }
                 field(orderStatus; Rec."Order Status")
                 {
                     Caption = 'Order Status';
                 }
-                field(locationOverride; Rec."Location Override")
+                field(approvalDeadline; Rec."Approval Deadline")
                 {
-                    Caption = 'Location Override';
+                    Caption = 'Approval Deadline';
                 }
-                field(createdBy; Rec.Created_By)
+                field(inHandsDate; Rec."In-Hands Date")
                 {
-                    Caption = 'Created_By';
+                    Caption = 'In-Hands Date';
+                }
+                field(externalDocumentNo; Rec."External Document No.")
+                {
+                    Caption = 'External Document No.';
+                }
+                field(yourReference; Rec."Your Reference")
+                {
+                    Caption = 'Your Reference';
+                }
+                field(assignedUserID; Rec."Assigned User ID")
+                {
+                    Caption = 'Assigned User ID';
                 }
                 field(needsApproval; Rec.Needs_Approval)
                 {
@@ -72,14 +56,6 @@ page 52603 "ORB ORBAPISalesHeaderDetails"
                 field(artEmail; Rec.ArtEmail)
                 {
                     Caption = 'Email (Art)';
-                }
-                field(upsAccountNumber; Rec."UPS Account Number")
-                {
-                    Caption = 'UPS Account Number';
-                }
-                field(fedExAccountNumber; Rec."FedEx Account Number")
-                {
-                    Caption = 'FedEx Account Number';
                 }
                 field(graphicsOnly; Rec."Graphics Only")
                 {
@@ -93,81 +69,153 @@ page 52603 "ORB ORBAPISalesHeaderDetails"
                 {
                     Caption = 'Rush';
                 }
-                field(tFlowStatus; Rec.TFlowStatus)
+                field(locationCode; Rec."Location Code")
                 {
-                    Caption = 'TFlowStatus';
+                    Caption = 'Location Code';
                 }
-                field(salesOrderCreatedBy; Rec."Sales Order Created By")
+                field(shipmentDate; Rec."Shipment Date")
                 {
-                    Caption = 'Sales Order Created By';
+                    Caption = 'Shipment Date';
                 }
-                field(salesOrderAssignedTo; Rec."Sales Order Assigned To")
+                field(currencyCode; Rec."Currency Code")
                 {
-                    Caption = 'Sales Order Assigned To';
+                    Caption = 'Currency Code';
                 }
-                field(salesOrderPaymentType; Rec."Sales Order Payment Type")
+                field(paymentTermsCode; Rec."Payment Terms Code")
                 {
-                    Caption = 'Sales Order Payment Type';
+                    Caption = 'Payment Terms Code';
                 }
-                field(soPaymentAccountNo; Rec."SO Payment Account No.")
+                field(shipmentMethodCode; Rec."Shipment Method Code")
                 {
-                    Caption = 'Sales Order Payment Account No.';
+                    Caption = 'Shipment Method Code';
                 }
-                field(salesOrderShipmentMethod; Rec."Sales Order Shipment Method")
+                field(salespersonCode; Rec."Salesperson Code")
                 {
-                    Caption = 'Sales Order Shipment Method';
+                    Caption = 'Salesperson Code';
                 }
-                field(warehousePickNo; Rec."Warehouse Pick No.")
+                field(requestedDeliveryDate; Rec."Requested Delivery Date")
                 {
-                    Caption = 'Warehouse Pick No.';
+                    Caption = 'Requested Delivery Date';
                 }
-                field(registeredWarehousePickNo; Rec."Registered Warehouse Pick No.")
+                field(status; Rec.Status)
                 {
-                    Caption = 'Registered Warehouse Pick No.';
+                    Caption = 'Status';
                 }
-                field(industryShortcutDimension; Rec."Industry Shortcut Dimension")
+                field(billToName; Rec."Bill-to Name")
                 {
-                    Caption = 'Industry Shortcut Dimension';
+                    Caption = 'Bill-to Name';
                 }
-                field(paymentTypeNew; Rec."Payment Type (new)")
+                field(billToCustomerNo; Rec."Bill-to Customer No.")
                 {
-                    Caption = 'Payment Type (new)';
+                    Caption = 'Bill-to Customer No.';
                 }
-                field(prepaymentReceieved; Rec."Prepayment Receieved")
+                field(shipToName; Rec."Ship-to Name")
                 {
-                    Caption = 'Prepayment Receieved';
+                    Caption = 'Ship-to Name';
                 }
-                field(reportartEmail; Rec."Art Email")
+                field(shipToContact; Rec."Ship-to Contact")
                 {
-                    Caption = 'Rep.Art Email';
+                    Caption = 'Ship-to Contact';
                 }
-                field(inHandsDate; Rec."In-Hands Date")
+                field(sellToAddress; Rec."Sell-to Address")
                 {
-                    Caption = 'In-Hands Date';
+                    Caption = 'Sell-to Address';
                 }
-                field(sellToContactNoCustom; Rec."Sell-To Contact No. (Custom)")
+                field(sellToAddress2; Rec."Sell-to Address 2")
                 {
-                    Caption = 'Sell-To Contact No. (Custom)';
+                    Caption = 'Sell-to Address 2';
                 }
-                field(sellToPhoneNoCustom; Rec."Sell-To Phone No. (Custom)")
+                field(sellToCity; Rec."Sell-to City")
                 {
-                    Caption = 'Sell-To Phone No. (Custom)';
+                    Caption = 'Sell-to City';
                 }
-                field(sellToEmailCustom; Rec."Sell-To Email (Custom)")
+                field(sellToCountryRegionCode; Rec."Sell-to Country/Region Code")
                 {
-                    Caption = 'Sell-To Email (Custom)';
+                    Caption = 'Sell-to Country/Region Code';
                 }
-                field(sellToContactNameCustom; Rec."Sell-To Contact Name (Custom)")
+                field(sellToCounty; Rec."Sell-to County")
                 {
-                    Caption = 'Sell-To Contact Name (Custom)';
+                    Caption = 'Sell-to County';
                 }
-                field(projectNo; Rec."Project No.")
+                field(sellToPostCode; Rec."Sell-to Post Code")
                 {
-                    Caption = 'Project No.';
+                    Caption = 'Sell-to Post Code';
                 }
-                field(approvalDeadline; Rec."Approval Deadline")
+                field(billToAddress; Rec."Bill-to Address")
                 {
-                    Caption = 'Approval Deadline';
+                    Caption = 'Bill-to Address';
+                }
+                field(billToAddress2; Rec."Bill-to Address 2")
+                {
+                    Caption = 'Bill-to Address 2';
+                }
+                field(billToCity; Rec."Bill-to City")
+                {
+                    Caption = 'Bill-to City';
+                }
+                field(billToCountryRegionCode; Rec."Bill-to Country/Region Code")
+                {
+                    Caption = 'Bill-to Country/Region Code';
+                }
+                field(billToCounty; Rec."Bill-to County")
+                {
+                    Caption = 'Bill-to County';
+                }
+                field(billToPostCode; Rec."Bill-to Post Code")
+                {
+                    Caption = 'Bill-to Post Code';
+                }
+                field(orderDate; Rec."Order Date")
+                {
+                    Caption = 'Order Date';
+                }
+                field(postingDate; Rec."Posting Date")
+                {
+                    Caption = 'Posting Date';
+                }
+                field(sellToCustomerNo; Rec."Sell-to Customer No.")
+                {
+                    Caption = 'Sell-to Customer No.';
+                }
+                field(amountIncludingVAT; Rec."Amount Including VAT")
+                {
+                    Caption = 'Amount Including VAT';
+                }
+                field(pricesIncludingVAT; Rec."Prices Including VAT")
+                {
+                    Caption = 'Prices Including VAT';
+                }
+                field(shipToAddress; Rec."Ship-to Address")
+                {
+                    Caption = 'Ship-to Address';
+                }
+                field(shipToAddress2; Rec."Ship-to Address 2")
+                {
+                    Caption = 'Ship-to Address 2';
+                }
+                field(shipToCity; Rec."Ship-to City")
+                {
+                    Caption = 'Ship-to City';
+                }
+                field(shipToCountryRegionCode; Rec."Ship-to Country/Region Code")
+                {
+                    Caption = 'Ship-to Country/Region Code';
+                }
+                field(shipToCounty; Rec."Ship-to County")
+                {
+                    Caption = 'Ship-to County';
+                }
+                field(shipToPostCode; Rec."Ship-to Post Code")
+                {
+                    Caption = 'Ship-to Post Code';
+                }
+                field(shortcutDimension1Code; Rec."Shortcut Dimension 1 Code")
+                {
+                    Caption = 'Shortcut Dimension 1 Code';
+                }
+                field(shortcutDimension2Code; Rec."Shortcut Dimension 2 Code")
+                {
+                    Caption = 'Shortcut Dimension 2 Code';
                 }
             }
         }
