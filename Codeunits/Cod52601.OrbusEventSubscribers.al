@@ -73,9 +73,11 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
     local procedure OnAfterSetAddress(addressSource: RecordRef; var addressBuffer: Record "DSHIP Address Buffer" temporary; var isValidationRequired: Boolean; var isHandled: Boolean);
     var
         SalesHeaderRecLcl: Record "Sales Header";
+        WarehouseShipmentHeaderRecLcl: Record "Warehouse Shipment Header";
+        WarehouseShipmentLineRecLcl: Record "Warehouse Shipment Line";
         BillToCustomerRecLcl: Record Customer;
     begin
-        if SalesHeaderRecLcl.get(addressSource.RecordId) then
+        if SalesHeaderRecLcl.get(addressSource.RecordId) then begin
             if addressBuffer."Address Type" = addressBuffer."Address Type"::Destination then begin
                 //if SalesHeaderRecLcl."Ship-to Contact" <> '' then
                 addressBuffer.Name := SalesHeaderRecLcl."Ship-to Contact";
@@ -84,6 +86,25 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
                 if BillToCustomerRecLcl.get(SalesHeaderRecLcl."Bill-to Customer No.") then
                     addressBuffer."Phone No." := BillToCustomerRecLcl."Phone No.";
             end;
+        end else begin
+
+            if WarehouseShipmentHeaderRecLcl.get(addressSource.RecordId) then begin
+                WarehouseShipmentLineRecLcl.Reset();
+                WarehouseShipmentLineRecLcl.SetRange("No.", WarehouseShipmentHeaderRecLcl."No.");
+                if WarehouseShipmentLineRecLcl.FindFirst() then begin
+                    if SalesHeaderRecLcl.get(SalesHeaderRecLcl."Document Type"::Order, WarehouseShipmentLineRecLcl."Source No.") then begin
+                        if addressBuffer."Address Type" = addressBuffer."Address Type"::Destination then begin
+                            //if SalesHeaderRecLcl."Ship-to Contact" <> '' then
+                            addressBuffer.Name := SalesHeaderRecLcl."Ship-to Contact";
+
+                            //Update Bill To Customer Phone No.
+                            if BillToCustomerRecLcl.get(SalesHeaderRecLcl."Bill-to Customer No.") then
+                                addressBuffer."Phone No." := BillToCustomerRecLcl."Phone No.";
+                        end;
+                    end;
+                end;
+            end;
+        end;
     end;
 
     var
