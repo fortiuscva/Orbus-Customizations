@@ -1,4 +1,4 @@
-page 52603 "ORB orbapiSalesHeaderDetails"
+page 52603 "ORB APISalesHeaderDetails"
 {
     APIGroup = 'orbus';
     APIPublisher = 'orbus';
@@ -17,6 +17,14 @@ page 52603 "ORB orbapiSalesHeaderDetails"
         {
             repeater(General)
             {
+                field(systemId; Rec.SystemId)
+                {
+                    Caption = 'systemId', Locked = true;
+                }
+                field(documentType; Rec."Document Type")
+                {
+                    Caption = 'documentType', Locked = true;
+                }
                 field(no; Rec."No.")
                 {
                     Caption = 'No.';

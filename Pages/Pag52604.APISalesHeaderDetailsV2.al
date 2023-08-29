@@ -1,4 +1,4 @@
-page 52604 "ORB ORBAPISalesHeaderDetailsV2"
+page 52604 "ORB APISalesHeaderDetailsV2"
 {
     APIGroup = 'orbus';
     APIPublisher = 'orbus';
