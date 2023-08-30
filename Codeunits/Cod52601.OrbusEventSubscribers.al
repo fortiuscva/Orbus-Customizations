@@ -107,7 +107,13 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         end;
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"DSHIP Event Publisher", OnCxContactOverrideSrcUnhandledEnum, '', false, false)]
+    local procedure OnCxContactOverrideSrcUnhandledEnum(recRef: RecordRef; contactSource: Enum "DSHIP Customer Contact Source"; var contactName: Text[100]; var contactEmail: Text[250]; var contactPhone: Text[30]; var isHandled: Boolean);
+    begin
+        Error('Test Carrier label %1', Format(recRef.RecordId));
+    end;
+
+
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
-
 }
