@@ -401,7 +401,9 @@ codeunit 52605 "ORB IWX Inventory Count Mgmt"
         lrecWhseEntryTest: Record "Warehouse Entry";
         ltrecBinContent: Record "Bin Content" temporary;
         lrecTrackedBinContent: Record "Bin Content";
+        WarehouseActLineRecLcl: Record "Warehouse Activity Line";
         lqBinContentByDate: Query "IWX Bin Content by Date";
+        WarehousePickQtyVarLcl: Decimal;
         lbTrackingSet: Boolean;
         lbIsWhseTracked: Boolean;
         lbInsert: Boolean;
@@ -508,6 +510,23 @@ codeunit 52605 "ORB IWX Inventory Count Mgmt"
                     lrecCountSheet."Location Code" := codLocation;
                     lrecCountSheet."Bin Code" := ltrecBinContent."Bin Code";
                     lrecCountSheet."ORB Zone Code" := pcodZoneFilter;
+
+                    Clear(WarehousePickQtyVarLcl);
+                    WarehouseActLineRecLcl.Reset();
+                    WarehouseActLineRecLcl.SetRange("Item No.", lrecCountSheet."Item No.");
+                    WarehouseActLineRecLcl.SetRange("Location Code", lrecCountSheet."Location Code");
+                    WarehouseActLineRecLcl.SetRange("Variant Code", lrecCountSheet."Variant Code");
+                    if lrecCountSheet."Bin Code" <> '' then
+                        WarehouseActLineRecLcl.SetRange("Bin Code", lrecCountSheet."Bin Code");
+                    if lrecCountSheet."ORB Zone Code" <> '' then
+                        WarehouseActLineRecLcl.SetRange("Zone Code", lrecCountSheet."ORB Zone Code");
+                    if WarehouseActLineRecLcl.FindSet() then
+                        repeat
+                            WarehousePickQtyVarLcl += WarehouseActLineRecLcl.Quantity;
+                        until WarehouseActLineRecLcl.Next() = 0;
+
+                    lrecCountSheet."ORB Quantity on Pick" := WarehousePickQtyVarLcl;
+
                     lrecCountSheet."Prod. Order No." := codProdOrder;
                     lrecCountSheet."Auto Generated" := true;
                     if recLocation."Directed Put-away and Pick" then begin
