@@ -30,7 +30,10 @@ pageextension 52605 "ORB Posted Sales Inv. - Update" extends "Posted Sales Inv. 
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the Email field.';
             }
-
+            field("ORB External Document No."; Rec."External Document No.")
+            {
+                ApplicationArea = all;
+            }
         }
     }
 }
