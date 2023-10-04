@@ -61,9 +61,9 @@ page 52603 "ORB APISalesHeaderDetails"
                 {
                     Caption = 'Needs Approval';
                 }
-                field(artEmail; Rec.ArtEmail)
+                field(artEmail; Rec."Art Email")
                 {
-                    Caption = 'Email (Art)';
+                    Caption = 'artEmail', Locked = true;
                 }
                 field(graphicsOnly; Rec."Graphics Only")
                 {
