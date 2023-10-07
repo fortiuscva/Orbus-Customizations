@@ -439,16 +439,15 @@ page 52605 "ORB Sales Order Archive Lines"
                     ToolTip = 'Specifies the number of units per parcel of the item. In the sales statistics window, the number of units per parcel on the line helps to determine the total number of units for all the lines for the particular sales document.';
                     Visible = false;
                 }
-                field("Date Archived"; SalesHeadArchiveRecGbl."Date Archived")
+                field("ORB Date Archived"; Rec."ORB Date Archived")
                 {
-                    ApplicationArea = Suite;
-                    ToolTip = 'Specifies the date when the document was archived.';
+                    ToolTip = 'Specifies the value of the Date Archived field.';
                 }
-                field("Time Archived"; SalesHeadArchiveRecGbl."Time Archived")
+                field("ORB Time Archived"; Rec."ORB Time Archived")
                 {
-                    ApplicationArea = Suite;
-                    ToolTip = 'Specifies what time the document was archived.';
+                    ToolTip = 'Specifies the value of the Time Archived field.';
                 }
+
             }
         }
     }
@@ -525,12 +524,9 @@ page 52605 "ORB Sales Order Archive Lines"
         DimMgt: Codeunit DimensionManagement;
     begin
         DimMgt.GetShortcutDimensions(Rec."Dimension Set ID", ShortcutDimCode);
-        if not SalesHeadArchiveRecGbl.get(Rec."Document Type", Rec."No.", Rec."Doc. No. Occurrence", Rec."Version No.") then
-            SalesHeadArchiveRecGbl.Init();
+        rec.CalcFields("ORB Date Archived", "ORB Time Archived");
     end;
 
-    Var
-        SalesHeadArchiveRecGbl: Record "Sales Header Archive";
 
     protected var
         ShortcutDimCode: array[8] of Code[20];
