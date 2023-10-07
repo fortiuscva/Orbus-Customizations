@@ -20,6 +20,16 @@ pageextension 52609 "ORB Pstd. Sales Cr.Memo-Update" extends "Pstd. Sales Cr. Me
                 ApplicationArea = All;
                 ToolTip = 'Specifies the name of the customer that the items were shipped to.';
             }
+            field("ORB External Document No."; Rec."External Document No.")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Specifies the External Doc No. on Sales Cr Memo Header';
+            }
+            field("ORB Your Reference"; Rec."Your Reference")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Specifies the Your Reference on Sales Cr Memo Header';
+            }
         }
     }
 }
