@@ -119,13 +119,20 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         SalesInvHeader."Order No." := SalesHeader."No."
     end;
 
-    [EventSubscriber(ObjectType::Table, Database::"Report Selections", OnBeforeSendEmailDirectly, '', false, false)]
-    local procedure OnBeforeSendEmailDirectly(var ReportSelections: Record "Report Selections"; ReportUsage: Enum "Report Selection Usage"; RecordVariant: Variant; var DocNo: Code[100]; var DocName: Text[150]; FoundBody: Boolean; FoundAttachment: Boolean; ServerEmailBodyFilePath: Text[250]; var DefaultEmailAddress: Text[250]; ShowDialog: Boolean; var TempAttachReportSelections: Record "Report Selections" temporary; var CustomReportSelection: Record "Custom Report Selection"; var AllEmailsWereSuccessful: Boolean; var IsHandled: Boolean; var SourceTableIDs: List of [Integer]; var SourceIDs: List of [Guid]; var SourceRelationTypes: List of [Integer]);
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Document-Mailing", OnBeforeGetEmailSubject, '', false, false)]
+    local procedure CU260_OnBeforeGetEmailSubject(PostedDocNo: Code[20]; EmailDocumentName: Text[250]; ReportUsage: Integer; var EmailSubject: Text[250]; var IsHandled: Boolean);
     var
         SalesInvHdrRecLcl: Record "Sales Invoice Header";
+        CompanyInformation: Record "Company Information";
+        EmailSubjectCapTxt: Label '%1 - %2 P.O.# (%3)', Comment = '%1 = Customer Name. %2 = Document Type %3 = P.O. #';
     begin
-        SalesInvHdrRecLcl := RecordVariant;
-        DocNo := DocNo + '(' + SalesInvHdrRecLcl."External Document No." + ')';
+        CompanyInformation.get();
+        if PostedDocNo <> '' then
+            if SalesInvHdrRecLcl.get(PostedDocNo) then begin
+                EmailSubject := CopyStr(
+                                StrSubstNo(EmailSubjectCapTxt, CompanyInformation.Name, EmailDocumentName, SalesInvHdrRecLcl."External Document No."), 1, MaxStrLen(EmailSubject));
+                IsHandled := true;
+            end;
     end;
 
     var
