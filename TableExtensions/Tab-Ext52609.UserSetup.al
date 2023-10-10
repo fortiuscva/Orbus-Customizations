@@ -12,6 +12,11 @@ tableextension 52609 "ORB User Setup" extends "User Setup"
             DataClassification = CustomerContent;
             Caption = 'Restrict GL and User Setup Access';
         }
+        field(52602; "ORB GenPost. Setup Not Allowed"; Boolean)
+        {
+            DataClassification = CustomerContent;
+            Caption = 'General Posting Setup Not Allowed';
+        }
     }
 
 }

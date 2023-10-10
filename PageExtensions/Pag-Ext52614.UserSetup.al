@@ -14,6 +14,11 @@ pageextension 52614 "ORB User Setup" extends "User Setup"
                 ApplicationArea = all;
                 ToolTip = 'To restrict user from GL & User Setup Access';
             }
+            field("ORB GenPost. Setup Not Allowed"; Rec."ORB GenPost. Setup Not Allowed")
+            {
+                ApplicationArea = all;
+                ToolTip = 'To restrict user from General Posting Setup Access';
+            }
         }
     }
 
