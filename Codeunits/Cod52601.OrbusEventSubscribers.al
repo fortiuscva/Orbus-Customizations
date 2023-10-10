@@ -119,6 +119,15 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         SalesInvHeader."Order No." := SalesHeader."No."
     end;
 
+    [EventSubscriber(ObjectType::Table, Database::"Report Selections", OnBeforeSendEmailDirectly, '', false, false)]
+    local procedure OnBeforeSendEmailDirectly(var ReportSelections: Record "Report Selections"; ReportUsage: Enum "Report Selection Usage"; RecordVariant: Variant; var DocNo: Code[100]; var DocName: Text[150]; FoundBody: Boolean; FoundAttachment: Boolean; ServerEmailBodyFilePath: Text[250]; var DefaultEmailAddress: Text[250]; ShowDialog: Boolean; var TempAttachReportSelections: Record "Report Selections" temporary; var CustomReportSelection: Record "Custom Report Selection"; var AllEmailsWereSuccessful: Boolean; var IsHandled: Boolean; var SourceTableIDs: List of [Integer]; var SourceIDs: List of [Guid]; var SourceRelationTypes: List of [Integer]);
+    var
+        SalesInvHdrRecLcl: Record "Sales Invoice Header";
+    begin
+        SalesInvHdrRecLcl := RecordVariant;
+        DocNo := DocNo + '(' + SalesInvHdrRecLcl."External Document No." + ')';
+    end;
+
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
 }
