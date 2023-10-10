@@ -1,4 +1,4 @@
-tableextension 52609 "ORB User Setup" extends "User Setup"
+tableextension 52610 "ORB User Setup" extends "User Setup"
 {
     fields
     {
