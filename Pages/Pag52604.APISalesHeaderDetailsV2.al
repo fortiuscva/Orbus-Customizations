@@ -8,6 +8,7 @@ page 52604 "ORB APISalesHeaderDetailsV2"
     DelayedInsert = true;
     EntityName = 'salesHeaderDetailsv2API';
     EntitySetName = 'salesHeaderDetailsv2API';
+    ODataKeyFields = SystemId;
     PageType = API;
     SourceTable = "Sales Header";
 
