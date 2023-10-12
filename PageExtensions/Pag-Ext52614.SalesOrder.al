@@ -54,7 +54,7 @@ pageextension 52614 "ORB Sales Order" extends "Sales Order"
                     EFTTransactionRecLcl.SetFilter("Expiration Filter", '<%1', WorkDate());
                     EFTTransactionRecLcl.CalcSums("Transaction Amount");
 
-                    if EFTTransactionRecLcl."Transaction Amount" < 0 then
+                    if EFTTransactionRecLcl."Transaction Amount" <= 0 then
                         Error(NoValidCreditCardErrorLbl);
                 end;
 
