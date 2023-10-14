@@ -2,7 +2,7 @@
   "id": "30815d47-8f7f-430a-b516-aaf2e1cfb1d4",
   "name": "Orbus Customizations",
   "publisher": "SMB",
-  "version": "1.0.0.34",
+  "version": "1.0.0.35",
   "brief": "",
   "description": "",
   "privacyStatement": "",
@@ -46,6 +46,19 @@
       "name": "OrbusReports",
       "version": "1.0.0.142",
       "publisher": "Alex Vescovi"
+    },
+    {
+      "id": "0f30fcab-5ea0-4345-ba83-a32015759fbe",
+      "name": "Versapay Payments",
+      "version": "4.4.1.4683",
+      "publisher": "Versapay"
+    }
+    ,
+    {
+      "id": "c381967e-7387-467a-95e8-58d929296681",
+      "name": "BC_Release&Pick",
+      "version": "1.0.0.1",
+      "publisher": "Impact Networking"
     }
   ],
   "screenshots": [],
