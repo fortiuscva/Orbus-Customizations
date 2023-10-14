@@ -76,6 +76,26 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
 
             end;
         }
+        modify("Create &Warehouse Shipment")
+        {
+            trigger OnBeforeAction()
+            var
+                OrbusEventSubscribers: Codeunit "ORB Orbus Event & Subscribers";
+            begin
+                OrbusFunctions.RestrictZeroTransactionAmountforCreditCardPayment(rec);
+            end;
+        }
+        modify("Create Inventor&y Put-away/Pick")
+        {
+            trigger OnBeforeAction()
+            var
+                OrbusEventSubscribers: Codeunit "ORB Orbus Event & Subscribers";
+            begin
+                OrbusFunctions.RestrictZeroTransactionAmountforCreditCardPayment(rec);
+            end;
+        }
     }
 
+    var
+        OrbusFunctions: Codeunit "ORB Functions";
 }
