@@ -2,6 +2,18 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Snapshot",
+            "request": "snapshotInitialize",
+            "type": "al",
+            "tenant": "09c433f2-4ad2-49f4-b0e7-8562e0331493",
+            "environmentType": "Production",
+            "environmentName": "Production",
+            "breakOnNext": "WebClient",
+            "executionContext": "Debug",
+            "snapshotVerbosity": "Full",
+            "userId": "bcadmin"
+        },
+        {
             "name": "SandboxOCT",
             "request": "launch",
             "type": "al",
