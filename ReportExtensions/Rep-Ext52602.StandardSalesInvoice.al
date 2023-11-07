@@ -20,6 +20,14 @@ reportextension 52602 "ORB Standard Sales - Invoice" extends "Standard Sales - I
             {
 
             }
+            column(ORBClick_to_Pay_URL__CL_Url; "Click-to-Pay URL -CL-")
+            {
+
+            }
+            column(ORBClick_to_Pay_URL__CL_UrlText; 'PAY ONLINE!')
+            {
+
+            }
         }
         modify(Header)
         {
