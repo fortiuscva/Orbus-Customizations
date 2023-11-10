@@ -124,7 +124,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
     var
         SalesInvHdrRecLcl: Record "Sales Invoice Header";
         CompanyInformation: Record "Company Information";
-        EmailSubjectCapTxt: Label '%1 - %2 P.O.# (%3)', Comment = '%1 = Customer Name. %2 = Document Type %3 = P.O. #';
+        EmailSubjectCapTxt: Label '%1 - %2 P.O.# %3', Comment = '%1 = Customer Name. %2 = Document Type %3 = P.O. #';
     begin
         CompanyInformation.get();
         if PostedDocNo <> '' then
