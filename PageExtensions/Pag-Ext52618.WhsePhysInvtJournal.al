@@ -9,7 +9,7 @@ pageextension 52618 "ORB Whse. Phys. Invt. Journal" extends "Whse. Phys. Invt. J
         {
             action("ORB Export")
             {
-                ApplicationArea = Warehouse;
+                ApplicationArea = All;
                 Caption = 'Export';
                 Ellipsis = true;
                 Image = Export;
@@ -23,7 +23,7 @@ pageextension 52618 "ORB Whse. Phys. Invt. Journal" extends "Whse. Phys. Invt. J
             }
             action("ORB Import")
             {
-                ApplicationArea = Warehouse;
+                ApplicationArea = All;
                 Caption = 'Import';
                 Ellipsis = true;
                 Image = Import;
