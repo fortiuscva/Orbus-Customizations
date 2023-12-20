@@ -38,11 +38,11 @@ page 52604 "ORB APISalesHeaderDetailsV2"
                 {
                     Caption = 'Status';
                 }
-                field(approvalDeadline; Rec."Approval Deadline")
+                field(approvalDeadline; ApprovalDeadline)
                 {
                     Caption = 'Approval Deadline';
                 }
-                field(inHandsDate; Rec."In-Hands Date")
+                field(inHandsDate; InHandsDate)
                 {
                     Caption = 'In-Hands Date';
                 }
@@ -82,11 +82,28 @@ page 52604 "ORB APISalesHeaderDetailsV2"
                 {
                     Caption = 'Location Code';
                 }
-                field(shipmentDate; Rec."Shipment Date")
+                field(shipmentDate; ShipmentDate)
                 {
                     Caption = 'Shipment Date';
                 }
             }
         }
     }
+
+    trigger OnAfterGetRecord()
+    begin
+        Clear(ApprovalDeadline);
+        Clear(InHandsDate);
+        clear(ShipmentDate);
+
+        Evaluate(ApprovalDeadline, Format(rec."Approval Deadline", 0, '<Month,2>/<Day,2>/<Year4>'));
+        Evaluate(InHandsDate, Format(rec."In-Hands Date", 0, '<Month,2>/<Day,2>/<Year4>'));
+        Evaluate(ShipmentDate, Format(rec."Shipment Date", 0, '<Month,2>/<Day,2>/<Year4>'));
+    end;
+
+    var
+        ApprovalDeadline: Date;
+        InHandsDate: Date;
+        ShipmentDate: Date;
+
 }
