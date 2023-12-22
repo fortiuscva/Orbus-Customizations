@@ -20,9 +20,16 @@ reportextension 52600 "ORB Standard Sales-Order Conf." extends "Standard Sales -
             {
 
             }
+            column(ORBLocation_Code; "Location Code")
+            {
+
+            }
+            column(ORBLocationCodeLblLcl; LocationCodeLblLcl)
+            { }
         }
     }
     var
         ShippingAgentCodeLblLcl: Label 'Shipping Agent Code';
         ShippingAgentServiceCodeLblLcl: Label 'Shipping Agent Service Code';
+        LocationCodeLblLcl: Label 'Location Code';
 }
