@@ -38,11 +38,11 @@ page 52604 "ORB APISalesHeaderDetailsV2"
                 {
                     Caption = 'Status';
                 }
-                field(approvalDeadline; ApprovalDeadline)
+                field(approvalDeadline; ApprovalDeadlineTxt)
                 {
                     Caption = 'Approval Deadline';
                 }
-                field(inHandsDate; InHandsDate)
+                field(inHandsDate; InHandsDateTxt)
                 {
                     Caption = 'In-Hands Date';
                 }
@@ -82,9 +82,10 @@ page 52604 "ORB APISalesHeaderDetailsV2"
                 {
                     Caption = 'Location Code';
                 }
-                field(shipmentDate; ShipmentDate)
+                field(shipmentDate; ShipmentDateTxt)
                 {
                     Caption = 'Shipment Date';
+
                 }
             }
         }
@@ -99,11 +100,19 @@ page 52604 "ORB APISalesHeaderDetailsV2"
         Evaluate(ApprovalDeadline, Format(rec."Approval Deadline", 0, '<Month,2>/<Day,2>/<Year4>'));
         Evaluate(InHandsDate, Format(rec."In-Hands Date", 0, '<Month,2>/<Day,2>/<Year4>'));
         Evaluate(ShipmentDate, Format(rec."Shipment Date", 0, '<Month,2>/<Day,2>/<Year4>'));
+        Evaluate(ApprovalDeadlineTxt, Format(rec."Approval Deadline", 0, '<Month,2>/<Day,2>/<Year4>'));
+        Evaluate(InHandsDateTxt, Format(rec."In-Hands Date", 0, '<Month,2>/<Day,2>/<Year4>'));
+        Evaluate(ShipmentDateTxt, Format(rec."Shipment Date", 0, '<Month,2>/<Day,2>/<Year4>'));
+
     end;
 
     var
         ApprovalDeadline: Date;
         InHandsDate: Date;
         ShipmentDate: Date;
+        ApprovalDeadlineTxt: text;
+        InHandsDateTxt: text;
+        ShipmentDateTxt: text;
+
 
 }
