@@ -1,17 +1,7 @@
-tableextension 52604 "ORB Sales Invoice Header" extends "Sales Invoice Header"
+tableextension 52611 "ORB Sales Header" extends "Sales Header"
 {
     fields
     {
-        field(52600; "ORB Email Sent by JQ"; Boolean)
-        {
-            Caption = 'Email Sent by JQ';
-            DataClassification = CustomerContent;
-        }
-        field(52601; "ORB Last Email Sent DT"; DateTime)
-        {
-            Caption = 'Last JQ Email Sent Date & Time';
-            DataClassification = CustomerContent;
-        }
         field(52610; "ORB Tax ID"; Code[20])
         {
             Caption = 'Tax ID';
@@ -28,6 +18,4 @@ tableextension 52604 "ORB Sales Invoice Header" extends "Sales Invoice Header"
             DataClassification = ToBeClassified;
         }
     }
-
-
 }

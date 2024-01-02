@@ -2,6 +2,24 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
 {
     layout
     {
+        addlast(General)
+        {
+            field("ORB Tax ID"; Rec."ORB Tax ID")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Specifies the Tax ID of Sales';
+            }
+            field("ORB Declared Value"; Rec."ORB Declared Value")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Specifies the Declared Value of Sales';
+            }
+            field("ORB International Contact"; Rec."ORB International Contact")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Specifies the International Contact of Sales';
+            }
+        }
         modify("Payment Terms Code")
         {
             trigger OnBeforeValidate()
