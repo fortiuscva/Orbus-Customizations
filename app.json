@@ -2,7 +2,7 @@
   "id": "30815d47-8f7f-430a-b516-aaf2e1cfb1d4",
   "name": "Orbus Customizations",
   "publisher": "SMB",
-  "version": "1.0.0.43",
+  "version": "1.0.0.44",
   "brief": "",
   "description": "",
   "privacyStatement": "",
@@ -52,8 +52,13 @@
       "name": "Versapay Payments",
       "version": "4.4.1.4683",
       "publisher": "Versapay"
-    }
-    ,
+    },
+    {
+      "id": "4714e6b7-6fde-4a8b-9c39-c2da3f239396",
+      "name": "Versapay Base",
+      "version": "1.3.7.4542",
+      "publisher": "Versapay"
+    },
     {
       "id": "c381967e-7387-467a-95e8-58d929296681",
       "name": "BC_Release&Pick",
