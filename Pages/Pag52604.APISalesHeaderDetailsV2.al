@@ -87,6 +87,30 @@ page 52604 "ORB APISalesHeaderDetailsV2"
                     Caption = 'Shipment Date';
 
                 }
+                field(CreatedAt; CreatedAtTxt)
+                {
+                    Caption = 'Created At';
+                }
+                field(OrderDate; OrderDateTxt)
+                {
+                    Caption = 'Order Date';
+                }
+                field(CreatedBy; rec.Created_By)
+                {
+                    Caption = 'Created By';
+                }
+                field(OrderStatus; Rec."Order Status")
+                {
+                    Caption = 'Order Status';
+                }
+                field(ShippingAgentCode; Rec."Shipping Agent Code")
+                {
+                    Caption = 'Shipping Agent Code';
+                }
+                field(ShippingAgentServiceCode; Rec."Shipping Agent Service Code")
+                {
+                    Caption = 'Shipping Agent Service Code';
+                }
             }
         }
     }
@@ -103,6 +127,8 @@ page 52604 "ORB APISalesHeaderDetailsV2"
         Evaluate(ApprovalDeadlineTxt, Format(rec."Approval Deadline", 0, '<Month,2>/<Day,2>/<Year4>'));
         Evaluate(InHandsDateTxt, Format(rec."In-Hands Date", 0, '<Month,2>/<Day,2>/<Year4>'));
         Evaluate(ShipmentDateTxt, Format(rec."Shipment Date", 0, '<Month,2>/<Day,2>/<Year4>'));
+        Evaluate(CreatedAtTxt, Format(rec."Created At", 0, '<Month,2>/<Day,2>/<Year4>'));
+        Evaluate(OrderDateTxt, Format(rec."Order Date", 0, '<Month,2>/<Day,2>/<Year4>'));
 
     end;
 
@@ -113,6 +139,8 @@ page 52604 "ORB APISalesHeaderDetailsV2"
         ApprovalDeadlineTxt: text;
         InHandsDateTxt: text;
         ShipmentDateTxt: text;
+        CreatedAtTxt: Text;
+        OrderDateTxt: Text;
 
 
 }
