@@ -12,8 +12,29 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
             }
         }
     }
+    actions
+    {
+        addlast(processing)
+        {
+            action("ORB Send Email")
+            {
+                Image = Email;
+                Promoted = true;
+                PromotedCategory = Process;
+                ApplicationArea = all;
+                Caption = 'Send Invoices Email';
 
+                trigger OnAction()
+                var
+                    CustomerRecLcl: Record Customer;
+                begin
+                    CustomerRecLcl.Reset();
+                    CustomerRecLcl.SetRange("No.", Rec."No.");
+                    if CustomerRecLcl.FindFirst() then
+                        report.RunModal(52602, true, false, CustomerRecLcl);
 
-
-
+                end;
+            }
+        }
+    }
 }
