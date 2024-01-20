@@ -61,6 +61,16 @@ codeunit 52603 "ORB Orbus Single Instance"
         exit(ResultVarGbl);
     end;
 
+    procedure SetEmailSendFromCustomerCardButton(SendEmail: Boolean)
+    begin
+        SendEmailVarGbl := SendEmail;
+    end;
+
+    procedure GetEmailSendFromCustomerCardButton(): Boolean
+    begin
+        exit(SendEmailVarGbl);
+    end;
+
     var
         ShowDialogLookupProfileVarGbl: Boolean;
         ShowDialogSendEmailToCustVarGbl: Boolean;
@@ -68,4 +78,5 @@ codeunit 52603 "ORB Orbus Single Instance"
         ProfileSelectionMethodVarGbl: Integer;
         IsHandledVarGbl: Boolean;
         ResultVarGbl: Boolean;
+        SendEmailVarGbl: Boolean;
 }
