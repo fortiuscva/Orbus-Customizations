@@ -65,7 +65,7 @@ report 52603 "Production Components INBIN"
             ProdOrderComponentsRecLcl.SetRange("Variant Code", GroupProdOrderComponentsQueryLcl.Variant_Code);
             if ProdOrderComponentsRecLcl.FindSet() then
                 repeat
-                    INBINQtyVarLcl += ORBFunctionsCUGbl.CalcINBINQty(ProdOrderComponentsRecLcl);
+                    //INBINQtyVarLcl += ORBFunctionsCUGbl.CalcINBINQty(ProdOrderComponentsRecLcl);
                     ReviewQtyVarLcl += ORBFunctionsCUGbl.CalcReviewRequiredQty(ProdOrderComponentsRecLcl);
                 until ProdOrderComponentsRecLcl.Next() = 0;
 
@@ -76,7 +76,7 @@ report 52603 "Production Components INBIN"
             TempExcelBufferRecGbl.AddColumn(GroupProdOrderComponentsQueryLcl.Prod__Order_Line_No_, false, '', false, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
             TempExcelBufferRecGbl.AddColumn(GroupProdOrderComponentsQueryLcl.Variant_Code, false, '', false, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
             TempExcelBufferRecGbl.AddColumn(ItemRecLcl."Base Unit of Measure", false, '', false, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
-            TempExcelBufferRecGbl.AddColumn(Format(INBINQtyVarLcl), false, '', false, false, false, '', TempExcelBufferRecGbl."Cell Type"::Number);
+            TempExcelBufferRecGbl.AddColumn(Format(ReviewQtyVarLcl), false, '', false, false, false, '', TempExcelBufferRecGbl."Cell Type"::Number);
             if ReviewQtyVarLcl < 0 then
                 TempExcelBufferRecGbl.AddColumn('Y', false, '', false, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text)
             else
