@@ -26,4 +26,29 @@ codeunit 52606 "ORB Functions"
         end;
     end;
 
+    procedure CalcINBINQty(ProdOrderComponents: Record "Prod. Order Component"): Decimal
+    var
+        WarehouseActLinRecLcl: Record "Warehouse Activity Line";
+        WarehouseEntryRecLcl: Record "Warehouse Entry";
+    begin
+        WarehouseActLinRecLcl.Reset();
+        WarehouseActLinRecLcl.SetRange("Source No.", ProdOrderComponents."Prod. Order No.");
+        WarehouseActLinRecLcl.SetRange("Source Line No.", ProdOrderComponents."Prod. Order Line No.");
+        WarehouseActLinRecLcl.SetRange("Source Subline No.", ProdOrderComponents."Line No.");
+        WarehouseActLinRecLcl.SetRange("Bin Code", ProdOrderComponents."Bin Code");
+        WarehouseActLinRecLcl.SetRange("Action Type", WarehouseActLinRecLcl."Action Type"::Place);
+        IF WarehouseActLinRecLcl.FindSet() then
+            WarehouseActLinRecLcl.CalcSums(Quantity);
+
+        WarehouseEntryRecLcl.Reset();
+        WarehouseEntryRecLcl.SetRange("Source No.", ProdOrderComponents."Prod. Order No.");
+        WarehouseEntryRecLcl.SetRange("Source Line No.", ProdOrderComponents."Prod. Order Line No.");
+        WarehouseEntryRecLcl.SetRange("Source Subline No.", ProdOrderComponents."Line No.");
+        WarehouseEntryRecLcl.SetRange("Bin Code", ProdOrderComponents."Bin Code");
+        WarehouseEntryRecLcl.SetRange("Reference Document", WarehouseEntryRecLcl."Reference Document"::Pick);
+        IF WarehouseEntryRecLcl.FindSet() then
+            WarehouseEntryRecLcl.CalcSums(Quantity);
+
+        exit(WarehouseActLinRecLcl.Quantity + WarehouseEntryRecLcl.Quantity);
+    end;
 }
