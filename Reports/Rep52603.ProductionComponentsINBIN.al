@@ -1,8 +1,35 @@
-codeunit 52607 "Export INBIN ProdComponents"
+report 52603 "Production Components INBIN"
 {
+    Caption = 'Production Components INBIN';
+    ApplicationArea = all;
+    UsageCategory = ReportsAndAnalysis;
+    ProcessingOnly = true;
+    dataset
+    {
+        dataitem("Prod. Order Component"; "Prod. Order Component")
+        {
+            RequestFilterFields = "Prod. Order No.", "Prod. Order Line No.";
+            DataItemTableView = where(Status = const(released));
+
+            trigger OnPreDataItem()
+            var
+                ProdOrderNoVarLcl: Code[20];
+                ProdOrderLineNoVarLcl: Integer;
+                LineNoTextVarLcl: Text;
+            begin
+                ProdOrderNoVarLcl := GetFilter("Prod. Order No.");
+                LineNoTextVarLcl := GetFilter("Prod. Order Line No.");
+                if LineNoTextVarLcl <> '' then
+                    Evaluate(ProdOrderLineNoVarLcl, LineNoTextVarLcl);
+
+                ExportINBINComponents(ProdOrderNoVarLcl, ProdOrderLineNoVarLcl);
+            end;
+        }
 
 
-    procedure ExportINBINComponents()
+    }
+
+    procedure ExportINBINComponents(ProdOrderNo: Code[20]; ProdOrderLineNo: Integer)
     var
         ProdOrderComponentsRecLcl: Record "Prod. Order Component";
         GroupProdOrderComponentsQueryLcl: Query "Group Prod Order Components";
@@ -20,6 +47,10 @@ codeunit 52607 "Export INBIN ProdComponents"
         TempExcelBufferRecGbl.AddColumn('Requires Quantity Review', false, '', true, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
         TempExcelBufferRecGbl.NewRow();
 
+        if ProdOrderNo <> '' then
+            GroupProdOrderComponentsQueryLcl.SetRange(FilterProd__Order_No_, ProdOrderNo);
+        if ProdOrderLineNo <> 0 then
+            GroupProdOrderComponentsQueryLcl.SetRange(FilterProd__Order_Line_No_, ProdOrderLineNo);
         GroupProdOrderComponentsQueryLcl.Open();
         while GroupProdOrderComponentsQueryLcl.Read() do begin
             ItemRecLcl.get(GroupProdOrderComponentsQueryLcl.Item_No_);

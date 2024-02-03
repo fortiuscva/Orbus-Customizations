@@ -11,6 +11,10 @@ query 52600 "Group Prod Order Components"
             {
 
             }
+            filter(FilterProd__Order_Line_No_; "Prod. Order Line No.")
+            {
+
+            }
             column(Prod__Order_No_; "Prod. Order No.")
             {
 
