@@ -7,6 +7,10 @@ query 52600 "Group Prod Order Components"
     {
         dataitem(Prod__Order_Component; "Prod. Order Component")
         {
+            filter(FilterProd__Order_No_; "Prod. Order No.")
+            {
+
+            }
             column(Prod__Order_No_; "Prod. Order No.")
             {
 

@@ -6,7 +6,9 @@ codeunit 52607 "Export INBIN ProdComponents"
     var
         ProdOrderComponentsRecLcl: Record "Prod. Order Component";
         GroupProdOrderComponentsQueryLcl: Query "Group Prod Order Components";
+        ItemRecLcl: Record Item;
         INBINQtyVarLcl: Decimal;
+        ReviewQtyVarLcl: Decimal;
     begin
         TempExcelBufferRecGbl.AddColumn('Bin Code', false, '', true, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
         TempExcelBufferRecGbl.AddColumn('Item No.', false, '', true, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
@@ -16,10 +18,14 @@ codeunit 52607 "Export INBIN ProdComponents"
         TempExcelBufferRecGbl.AddColumn('Unit of Measure Code', false, '', true, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
         TempExcelBufferRecGbl.AddColumn('Total (IN BIN  Qty)', false, '', true, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
         TempExcelBufferRecGbl.AddColumn('Requires Quantity Review', false, '', true, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
+        TempExcelBufferRecGbl.NewRow();
 
         GroupProdOrderComponentsQueryLcl.Open();
         while GroupProdOrderComponentsQueryLcl.Read() do begin
+            ItemRecLcl.get(GroupProdOrderComponentsQueryLcl.Item_No_);
             Clear(INBINQtyVarLcl);
+
+            Clear(ReviewQtyVarLcl);
             ProdOrderComponentsRecLcl.Reset();
             ProdOrderComponentsRecLcl.SetRange("Prod. Order No.", GroupProdOrderComponentsQueryLcl.Prod__Order_No_);
             ProdOrderComponentsRecLcl.SetRange("Prod. Order Line No.", GroupProdOrderComponentsQueryLcl.Prod__Order_Line_No_);
@@ -29,6 +35,7 @@ codeunit 52607 "Export INBIN ProdComponents"
             if ProdOrderComponentsRecLcl.FindSet() then
                 repeat
                     INBINQtyVarLcl += ORBFunctionsCUGbl.CalcINBINQty(ProdOrderComponentsRecLcl);
+                    ReviewQtyVarLcl += ORBFunctionsCUGbl.CalcReviewRequiredQty(ProdOrderComponentsRecLcl);
                 until ProdOrderComponentsRecLcl.Next() = 0;
 
 
@@ -37,9 +44,14 @@ codeunit 52607 "Export INBIN ProdComponents"
             TempExcelBufferRecGbl.AddColumn(GroupProdOrderComponentsQueryLcl.Prod__Order_No_, false, '', false, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
             TempExcelBufferRecGbl.AddColumn(GroupProdOrderComponentsQueryLcl.Prod__Order_Line_No_, false, '', false, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
             TempExcelBufferRecGbl.AddColumn(GroupProdOrderComponentsQueryLcl.Variant_Code, false, '', false, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
-            TempExcelBufferRecGbl.AddColumn('', false, '', false, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
+            TempExcelBufferRecGbl.AddColumn(ItemRecLcl."Base Unit of Measure", false, '', false, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
             TempExcelBufferRecGbl.AddColumn(Format(INBINQtyVarLcl), false, '', false, false, false, '', TempExcelBufferRecGbl."Cell Type"::Number);
-            TempExcelBufferRecGbl.AddColumn('Requires Quantity Review', false, '', false, false, false, '', TempExcelBufferRecGbl."Cell Type"::Number);
+            if ReviewQtyVarLcl < 0 then
+                TempExcelBufferRecGbl.AddColumn('Y', false, '', false, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text)
+            else
+                TempExcelBufferRecGbl.AddColumn('', false, '', false, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
+            TempExcelBufferRecGbl.NewRow();
+
         end;
 
         TempExcelBufferRecGbl.CreateNewBook('INBIN Entries');
