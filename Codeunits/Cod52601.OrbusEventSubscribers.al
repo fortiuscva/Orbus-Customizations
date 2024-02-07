@@ -135,6 +135,13 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             end;
     end;
 
+    [EventSubscriber(ObjectType::Table, Database::Customer, OnAfterOnInsert, '', false, false)]
+    local procedure OnAfterOnInsert(var Customer: Record Customer; xCustomer: Record Customer);
+    begin
+        Customer."Tax Liable" := true;
+        Customer.Validate("Tax Area Code", 'AVATAX');
+    end;
+
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
 }
