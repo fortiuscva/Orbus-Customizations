@@ -85,6 +85,6 @@ codeunit 52606 "ORB Functions"
         IF WarehouseEntry2RecLcl.FindSet() then
             WarehouseEntry2RecLcl.CalcSums(Quantity);
 
-        exit(WarehouseActLinRecLcl.Quantity + WarehouseEntryRecLcl.Quantity - WarehouseEntry2RecLcl.Quantity);
+        exit(WarehouseActLinRecLcl.Quantity + WarehouseEntryRecLcl.Quantity - Abs(WarehouseEntry2RecLcl.Quantity));
     end;
 }
