@@ -1,6 +1,6 @@
-report 52603 "Production Components INBIN"
+report 52603 "Daily Rel. Prod. Ord. Demand"
 {
-    Caption = 'Production Components INBIN';
+    Caption = 'Daily Released Production Order Demand';
     ApplicationArea = all;
     UsageCategory = ReportsAndAnalysis;
     ProcessingOnly = true;
