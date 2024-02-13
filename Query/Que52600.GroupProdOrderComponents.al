@@ -7,6 +7,10 @@ query 52600 "Group Prod Order Components"
     {
         dataitem(Prod__Order_Component; "Prod. Order Component")
         {
+            filter(Status; Status)
+            {
+
+            }
             filter(FilterProd__Order_No_; "Prod. Order No.")
             {
 
@@ -20,6 +24,10 @@ query 52600 "Group Prod Order Components"
 
             }
             column(Prod__Order_Line_No_; "Prod. Order Line No.")
+            {
+
+            }
+            filter(BinCode; "Bin Code")
             {
 
             }

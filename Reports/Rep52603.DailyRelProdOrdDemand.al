@@ -23,6 +23,7 @@ report 52603 "Daily Rel. Prod. Ord. Demand"
                     Evaluate(ProdOrderLineNoVarLcl, LineNoTextVarLcl);
 
                 ExportINBINComponents(ProdOrderNoVarLcl, ProdOrderLineNoVarLcl);
+                CurrReport.Break();
             end;
         }
 
@@ -47,17 +48,20 @@ report 52603 "Daily Rel. Prod. Ord. Demand"
         TempExcelBufferRecGbl.AddColumn('Requires Quantity Review', false, '', true, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
         TempExcelBufferRecGbl.NewRow();
 
+        GroupProdOrderComponentsQueryLcl.SetRange(status, ProductionOrderStatusVarGbl::Released);
         if ProdOrderNo <> '' then
             GroupProdOrderComponentsQueryLcl.SetRange(FilterProd__Order_No_, ProdOrderNo);
         if ProdOrderLineNo <> 0 then
             GroupProdOrderComponentsQueryLcl.SetRange(FilterProd__Order_Line_No_, ProdOrderLineNo);
+        GroupProdOrderComponentsQueryLcl.SetFilter(BinCode, '%1', '*IN*');
         GroupProdOrderComponentsQueryLcl.Open();
         while GroupProdOrderComponentsQueryLcl.Read() do begin
-            ItemRecLcl.get(GroupProdOrderComponentsQueryLcl.Item_No_);
+            if ItemRecLcl.get(GroupProdOrderComponentsQueryLcl.Item_No_) then;
             Clear(INBINQtyVarLcl);
 
             Clear(ReviewQtyVarLcl);
             ProdOrderComponentsRecLcl.Reset();
+            ProdOrderComponentsRecLcl.SetCurrentKey("Prod. Order No.", "Prod. Order Line No.", "Item No.", "Bin Code", "Variant Code");
             ProdOrderComponentsRecLcl.SetRange("Prod. Order No.", GroupProdOrderComponentsQueryLcl.Prod__Order_No_);
             ProdOrderComponentsRecLcl.SetRange("Prod. Order Line No.", GroupProdOrderComponentsQueryLcl.Prod__Order_Line_No_);
             ProdOrderComponentsRecLcl.SetRange("Item No.", GroupProdOrderComponentsQueryLcl.Item_No_);
@@ -96,4 +100,5 @@ report 52603 "Daily Rel. Prod. Ord. Demand"
     var
         TempExcelBufferRecGbl: Record "Excel Buffer" temporary;
         ORBFunctionsCUGbl: Codeunit "ORB Functions";
+        ProductionOrderStatusVarGbl: Enum "Production Order Status";
 }
