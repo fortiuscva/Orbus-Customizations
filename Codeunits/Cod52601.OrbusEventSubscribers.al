@@ -142,6 +142,22 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         Customer.Validate("Tax Area Code", 'AVATAX');
     end;
 
+    // [EventSubscriber(ObjectType::Table, Database::"Sales Line", OnValidateQuantityOnAfterInitQty, '', false, false)]
+    // local procedure Tab37_OnValidateQuantityOnAfterInitQty(var SalesLine: Record "Sales Line"; var xSalesLine: Record "Sales Line"; CurrentFieldNo: Integer; var IsHandled: Boolean);
+    // var
+    //     DocumentTotals: Codeunit "Document Totals";
+    // begin
+    //     
+    // end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Explode BOM", OnBeforeConfirmExplosion, '', false, false)]
+    local procedure CU63_OnBeforeConfirmExplosion(var SalesLine: Record "Sales Line"; var Selection: Integer; var HideDialog: Boolean; var NoOfBOMComp: Integer);
+    begin
+        if OrbusSingleInstanceCUGbl.GetExplodeBOMConfirm() then
+            HideDialog := true;
+
+    end;
+
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
 }
