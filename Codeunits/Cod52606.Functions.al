@@ -32,6 +32,7 @@ codeunit 52606 "ORB Functions"
         WarehouseEntryRecLcl: Record "Warehouse Entry";
     begin
         WarehouseActLinRecLcl.Reset();
+        WarehouseActLinRecLcl.SetCurrentKey("Source No.", "Source Line No.", "Source Subline No.", "Bin Code", "Action Type");
         WarehouseActLinRecLcl.SetRange("Source No.", ProdOrderComponents."Prod. Order No.");
         WarehouseActLinRecLcl.SetRange("Source Line No.", ProdOrderComponents."Prod. Order Line No.");
         WarehouseActLinRecLcl.SetRange("Source Subline No.", ProdOrderComponents."Line No.");
@@ -41,6 +42,7 @@ codeunit 52606 "ORB Functions"
             WarehouseActLinRecLcl.CalcSums(Quantity);
 
         WarehouseEntryRecLcl.Reset();
+        WarehouseEntryRecLcl.SetCurrentKey("Source No.", "Source Line No.", "Source Subline No.", "Bin Code", "Reference Document");
         WarehouseEntryRecLcl.SetRange("Source No.", ProdOrderComponents."Prod. Order No.");
         WarehouseEntryRecLcl.SetRange("Source Line No.", ProdOrderComponents."Prod. Order Line No.");
         WarehouseEntryRecLcl.SetRange("Source Subline No.", ProdOrderComponents."Line No.");
@@ -59,6 +61,7 @@ codeunit 52606 "ORB Functions"
         WarehouseEntry2RecLcl: Record "Warehouse Entry";
     begin
         WarehouseActLinRecLcl.Reset();
+        WarehouseActLinRecLcl.SetCurrentKey("Source No.", "Source Line No.", "Source Subline No.", "Bin Code", "Action Type");
         WarehouseActLinRecLcl.SetRange("Source No.", ProdOrderComponents."Prod. Order No.");
         WarehouseActLinRecLcl.SetRange("Source Line No.", ProdOrderComponents."Prod. Order Line No.");
         WarehouseActLinRecLcl.SetRange("Source Subline No.", ProdOrderComponents."Line No.");
@@ -68,6 +71,7 @@ codeunit 52606 "ORB Functions"
             WarehouseActLinRecLcl.CalcSums(Quantity);
 
         WarehouseEntryRecLcl.Reset();
+        WarehouseEntryRecLcl.SetCurrentKey("Source No.", "Source Line No.", "Source Subline No.", "Bin Code", "Reference Document");
         WarehouseEntryRecLcl.SetRange("Source No.", ProdOrderComponents."Prod. Order No.");
         WarehouseEntryRecLcl.SetRange("Source Line No.", ProdOrderComponents."Prod. Order Line No.");
         WarehouseEntryRecLcl.SetRange("Source Subline No.", ProdOrderComponents."Line No.");
@@ -77,6 +81,7 @@ codeunit 52606 "ORB Functions"
             WarehouseEntryRecLcl.CalcSums(Quantity);
 
         WarehouseEntry2RecLcl.Reset();
+        WarehouseEntry2RecLcl.SetCurrentKey("Source No.", "Source Line No.", "Source Subline No.", "Bin Code", "Reference Document");
         WarehouseEntry2RecLcl.SetRange("Source No.", ProdOrderComponents."Prod. Order No.");
         WarehouseEntry2RecLcl.SetRange("Source Line No.", ProdOrderComponents."Prod. Order Line No.");
         WarehouseEntry2RecLcl.SetRange("Source Subline No.", ProdOrderComponents."Line No.");
