@@ -42,7 +42,7 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
                 PromotedCategory = Process;
                 ApplicationArea = all;
                 Caption = 'Incorrect Send Email Customers';
-                RunObject = report "Fail Send Email Customer List";
+                RunObject = report "Exp. Inv. Email Setup Issues";
             }
         }
     }
