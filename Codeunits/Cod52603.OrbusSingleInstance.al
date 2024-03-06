@@ -71,6 +71,16 @@ codeunit 52603 "ORB Orbus Single Instance"
         exit(SendEmailVarGbl);
     end;
 
+    procedure SetExplodeBOMConfirm(ExplodeConfirm: Boolean)
+    begin
+        ExplodeConfirmVarGbl := ExplodeConfirm;
+    end;
+
+    procedure GetExplodeBOMConfirm(): Boolean
+    begin
+        exit(ExplodeConfirmVarGbl);
+    end;
+
     var
         ShowDialogLookupProfileVarGbl: Boolean;
         ShowDialogSendEmailToCustVarGbl: Boolean;
@@ -79,4 +89,6 @@ codeunit 52603 "ORB Orbus Single Instance"
         IsHandledVarGbl: Boolean;
         ResultVarGbl: Boolean;
         SendEmailVarGbl: Boolean;
+        ExplodeConfirmVarGbl: Boolean;
+        ExplodeBOMExecutionVarGbl: Boolean;
 }
