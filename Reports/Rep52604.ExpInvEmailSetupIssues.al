@@ -1,6 +1,6 @@
-report 52604 "Fail Send Email Customer List"
+report 52604 "Exp. Inv. Email Setup Issues"
 {
-    Caption = 'Fail Send Email Customer List';
+    Caption = 'Export Invoice Email Setup Issues';
     ProcessingOnly = true;
     UseRequestPage = false;
 
