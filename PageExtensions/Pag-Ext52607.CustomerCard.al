@@ -35,13 +35,13 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
 
                 end;
             }
-            action("ORB Incorrect Send Email Customers")
+            action("ORB Export Invoice Email Setup Issues")
             {
                 Image = Email;
                 Promoted = true;
                 PromotedCategory = Process;
                 ApplicationArea = all;
-                Caption = 'Incorrect Send Email Customers';
+                Caption = 'Export Invoice Email Setup Issues';
                 RunObject = report "Exp. Inv. Email Setup Issues";
             }
         }
