@@ -24,6 +24,7 @@ codeunit 52602 "ORB Auto Send Sales Invoices"
                 CustomReportSelectionRecLcl.SetRange("Source Type", Database::Customer);
                 CustomReportSelectionRecLcl.SetRange("Source No.", CustomerRecLcl."No.");
                 CustomReportSelectionRecLcl.SetRange(Usage, CustomReportSelectionRecLcl.Usage::"S.Invoice");
+                CustomReportSelectionRecLcl.SetRange("Send To Email", '<>%1', '');
                 if CustomReportSelectionRecLcl.FindLast() then begin
                     clear(SalesInvoiceHeaderRecLcl);
                     SalesInvoiceHeaderRecLcl.SetRange("ORB Email Sent by JQ", false);

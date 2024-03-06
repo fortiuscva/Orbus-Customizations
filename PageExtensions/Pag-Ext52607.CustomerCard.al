@@ -35,6 +35,15 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
 
                 end;
             }
+            action("ORB Incorrect Send Email Customers")
+            {
+                Image = Email;
+                Promoted = true;
+                PromotedCategory = Process;
+                ApplicationArea = all;
+                Caption = 'Incorrect Send Email Customers';
+                RunObject = report "Fail Send Email Customer List";
+            }
         }
     }
 }
