@@ -1,8 +1,8 @@
-tableextension 52614 "ORB Sales Shipment Header" extends "Sales Shipment Header"
+tableextension 52616 "ORB Sales Cr.Memo Header" extends "Sales Cr.Memo Header"
 {
     fields
     {
-        field(52620; "Magento Order #"; Text[20])
+        field(52620; "ORB Magento Order #"; Text[20])
         {
             Caption = 'Magento Order #';
             DataClassification = ToBeClassified;

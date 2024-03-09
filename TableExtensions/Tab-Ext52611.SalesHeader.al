@@ -17,7 +17,7 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             Caption = 'International Contact';
             DataClassification = ToBeClassified;
         }
-        field(52620; "Magento Order #"; Text[20])
+        field(52620; "ORB Magento Order #"; Text[20])
         {
             Caption = 'Magento Order #';
             DataClassification = ToBeClassified;
