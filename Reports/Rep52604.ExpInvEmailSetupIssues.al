@@ -27,7 +27,8 @@ report 52604 "Exp. Inv. Email Setup Issues"
         TempExcelBufferRecLcl: Record "Excel Buffer" temporary;
         CustomReportLayoutRecLcl: Record "Custom Report Layout";
         GroupPSIByCustomerQueLcl: Query "ORB GroupPSIByCustomer";
-        WarningMessageVarLcl: Text;
+        SkipVarLcl: Boolean;
+
     begin
         TempExcelBufferRecLcl.DeleteAll();
         TempExcelBufferRecLcl.AddColumn('Customer No.', false, '', true, false, true, '', TempExcelBufferRecLcl."Cell Type"::Text);
@@ -37,44 +38,76 @@ report 52604 "Exp. Inv. Email Setup Issues"
 
         GroupPSIByCustomerQueLcl.Open();
         While GroupPSIByCustomerQueLcl.Read() Do begin
-            Clear(WarningMessageVarLcl);
+            Clear(WarningMessageVarGbl);
             if CustomerRecLcl.Get(GroupPSIByCustomerQueLcl.Sell_to_Customer_No_) then begin
                 if not CustomerRecLcl."ORB Auto Send Email" then
-                    WarningMessageVarLcl := 'Auto Send Email is not Enabled;';
+                    PrepareWarningMsg('Auto Send Email is not Enabled');
 
                 CustomReportSelectionRecLcl.Reset();
                 CustomReportSelectionRecLcl.SetRange("Source Type", Database::Customer);
                 CustomReportSelectionRecLcl.SetRange("Source No.", CustomerRecLcl."No.");
                 CustomReportSelectionRecLcl.SetRange(Usage, CustomReportSelectionRecLcl.Usage::"S.Invoice");
-                if CustomReportSelectionRecLcl.FindFirst() then begin
-                    if CustomReportSelectionRecLcl."Custom Report Description" = '' then
-                        WarningMessageVarLcl += ';Custom Report Description is blank';
+                if not CustomReportSelectionRecLcl.FindFirst() then
+                    PrepareWarningMsg('No Document Layout found with usage Invoice');
 
-                    if CustomReportSelectionRecLcl."Email Body Layout Description" = '' then begin
-                        WarningMessageVarLcl += ';Email Body Layout Description is blank';
+                SkipVarLcl := false;
+                CustomReportSelectionRecLcl.Reset();
+                CustomReportSelectionRecLcl.SetRange("Source Type", Database::Customer);
+                CustomReportSelectionRecLcl.SetRange("Source No.", CustomerRecLcl."No.");
+                CustomReportSelectionRecLcl.SetRange(Usage, CustomReportSelectionRecLcl.Usage::"S.Invoice");
+                if CustomReportSelectionRecLcl.FindSet() then
+                    repeat
+                        if CustomReportSelectionRecLcl."Send To Email" = '' then begin
+                            PrepareWarningMsg('There is atleast one document layout which has blank Send to Email');
+                            SkipVarLcl := false;
+                        end;
+                    until (CustomReportSelectionRecLcl.Next() = 0) or SkipVarLcl;
 
+                CustomReportSelectionRecLcl.Reset();
+                CustomReportSelectionRecLcl.SetRange("Source Type", Database::Customer);
+                CustomReportSelectionRecLcl.SetRange("Source No.", CustomerRecLcl."No.");
+                CustomReportSelectionRecLcl.SetRange(Usage, CustomReportSelectionRecLcl.Usage::"S.Invoice");
+                CustomReportSelectionRecLcl.SetRange("Use for Email Body", true);
+                CustomReportSelectionRecLcl.SetRange("Email Body Layout Code", '');
+                if CustomReportSelectionRecLcl.FindFirst() then
+                    PrepareWarningMsg('There is atleast one document layout which has is to set for Email Body and blank "Body Layout" selected');
+
+                SkipVarLcl := false;
+                CustomReportSelectionRecLcl.Reset();
+                CustomReportSelectionRecLcl.SetRange("Source Type", Database::Customer);
+                CustomReportSelectionRecLcl.SetRange("Source No.", CustomerRecLcl."No.");
+                CustomReportSelectionRecLcl.SetRange(Usage, CustomReportSelectionRecLcl.Usage::"S.Invoice");
+                CustomReportSelectionRecLcl.SetRange("Use for Email Body", true);
+                CustomReportSelectionRecLcl.SetFilter("Email Body Layout Code", '<>%1');
+                if CustomReportSelectionRecLcl.FindFirst() then
+                    repeat
                         CustomReportLayoutRecLcl.reset();
-                        CustomReportLayoutRecLcl.setrange(Code, CustomReportSelectionRecLcl."Custom Report Layout Code");
-                        if CustomReportLayoutRecLcl.FindFirst() then
-                            if CustomReportLayoutRecLcl.Type <> CustomReportLayoutRecLcl.Type::Word then
-                                WarningMessageVarLcl += ';Custom Report Layout is not word';
-                    end;
+                        CustomReportLayoutRecLcl.setrange(Code, CustomReportSelectionRecLcl."Email Body Layout Code");
+                        if not CustomReportLayoutRecLcl.FindFirst() then begin
+                            PrepareWarningMsg('Invalid Body Layout Selected');
+                            SkipVarLcl := false;
+                        end else begin
+                            if CustomReportLayoutRecLcl.Type <> CustomReportLayoutRecLcl.Type::Word then begin
+                                PrepareWarningMsg('There is atlease one document layout selected for email body which is not a Word document');
+                                SkipVarLcl := false;
+                            end;
+                        end;
+                    until (CustomReportSelectionRecLcl.Next() = 0) or SkipVarLcl;
 
+                CustomReportSelectionRecLcl.Reset();
+                CustomReportSelectionRecLcl.SetRange("Source Type", Database::Customer);
+                CustomReportSelectionRecLcl.SetRange("Source No.", CustomerRecLcl."No.");
+                CustomReportSelectionRecLcl.SetRange(Usage, CustomReportSelectionRecLcl.Usage::"S.Invoice");
+                CustomReportSelectionRecLcl.SetFilter("Custom Report Layout Code", '<>%1');
+                if not CustomReportSelectionRecLcl.FindFirst() then
+                    PrepareWarningMsg('There is no document layout which is using a custom layout.');
+            end;
 
-                    if CustomReportSelectionRecLcl."Send To Email" = '' then
-                        WarningMessageVarLcl += ';Send To Email is blank';
-
-
-                end else
-                    WarningMessageVarLcl += ';Document Layout not found';
-
-
-                if WarningMessageVarLcl <> '' then begin
-                    TempExcelBufferRecLcl.NewRow();
-                    TempExcelBufferRecLcl.AddColumn(CustomerRecLcl."No.", false, '', false, false, false, '', TempExcelBufferRecLcl."Cell Type"::Text);
-                    TempExcelBufferRecLcl.AddColumn(CustomerRecLcl.Name, false, '', false, false, false, '', TempExcelBufferRecLcl."Cell Type"::Text);
-                    TempExcelBufferRecLcl.AddColumn(WarningMessageVarLcl, false, '', false, false, false, '', TempExcelBufferRecLcl."Cell Type"::Text);
-                end;
+            if WarningMessageVarGbl <> '' then begin
+                TempExcelBufferRecLcl.NewRow();
+                TempExcelBufferRecLcl.AddColumn(CustomerRecLcl."No.", false, '', false, false, false, '', TempExcelBufferRecLcl."Cell Type"::Text);
+                TempExcelBufferRecLcl.AddColumn(CustomerRecLcl.Name, false, '', false, false, false, '', TempExcelBufferRecLcl."Cell Type"::Text);
+                TempExcelBufferRecLcl.AddColumn(WarningMessageVarGbl, false, '', false, false, false, '', TempExcelBufferRecLcl."Cell Type"::Text);
             end;
         end;
 
@@ -85,5 +118,17 @@ report 52604 "Exp. Inv. Email Setup Issues"
         TempExcelBufferRecLcl.SetFriendlyFilename('Customers Export');
         TempExcelBufferRecLcl.OpenExcel();
     end;
+
+
+    procedure PrepareWarningMsg(WarningMsgVarLcl: Text);
+    begin
+        if WarningMessageVarGbl = '' then
+            WarningMessageVarGbl := WarningMsgVarLcl
+        else
+            WarningMessageVarGbl += '; ' + WarningMsgVarLcl;
+    end;
+
+    var
+        WarningMessageVarGbl: Text;
 
 }
