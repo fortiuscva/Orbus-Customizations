@@ -1,9 +1,9 @@
-page 52609 "Magento Sales Header Details"
+page 52609 "ORB Magento Sales Order Det."
 {
     ApplicationArea = All;
-    Caption = 'Magento Sales Header Details';
+    Caption = 'Magento Sales Order Details';
     PageType = List;
-    SourceTable = "ORB Magento SalesHdr Details";
+    SourceTable = "ORB Magento Sales Order Det.";
     UsageCategory = Lists;
 
     layout

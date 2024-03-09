@@ -1,6 +1,6 @@
-table 52600 "ORB Magento SalesHdr Details"
+table 52600 "ORB Magento Sales Order Det."
 {
-    Caption = 'Magento Sales Header Details';
+    Caption = 'Magento Sales Order Details';
     DataClassification = ToBeClassified;
 
     fields
