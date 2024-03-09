@@ -19,7 +19,7 @@ pageextension 52608 "ORB Posted Sales Invoice" extends "Posted Sales Invoice"
         }
         addlast(General)
         {
-            field("Magento Order #"; Rec."Magento Order #")
+            field("Magento Order #"; Rec."ORB Magento Order #")
             {
                 ApplicationArea = all;
                 ToolTip = 'Specifies the Magento Order # of Sales';

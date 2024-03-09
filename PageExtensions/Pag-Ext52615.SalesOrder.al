@@ -19,7 +19,7 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 ApplicationArea = all;
                 ToolTip = 'Specifies the International Contact of Sales';
             }
-            field("Magento Order #"; Rec."Magento Order #")
+            field("Magento Order #"; Rec."ORB Magento Order #")
             {
                 ApplicationArea = all;
                 ToolTip = 'Specifies the Magento Order # of Sales';
