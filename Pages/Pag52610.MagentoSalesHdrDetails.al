@@ -1,10 +1,15 @@
 page 52610 "ORB Magento Sales Hdr. Details"
 {
+    APIGroup = 'orbus';
+    APIPublisher = 'orbus';
+    APIVersion = 'v2.0';
     ApplicationArea = All;
-    Caption = 'Magento Sales Hdr. Details';
-    PageType = List;
+    Caption = 'MagentoSalesHeaderDetails';
+    DelayedInsert = true;
+    EntityName = 'MagentosalesHeaderDetailsAPI';
+    EntitySetName = 'MagentosalesHeaderDetailsAPI';
+    PageType = API;
     SourceTable = "Sales Header";
-    UsageCategory = Lists;
 
     layout
     {
@@ -12,63 +17,67 @@ page 52610 "ORB Magento Sales Hdr. Details"
         {
             repeater(General)
             {
-                field("Document Type"; Rec."Document Type")
+                field(SystemId; Rec.SystemId)
+                {
+
+                }
+                field(DocumentType; Rec."Document Type")
                 {
                     ToolTip = 'Specifies the type of the document.';
                 }
-                field("No."; Rec."No.")
+                field(No_; Rec."No.")
                 {
                     ToolTip = 'Specifies the number of the estimate.';
                 }
-                field("Bill-to Contact"; Rec."Bill-to Contact")
+                field(BillToContact; Rec."Bill-to Contact")
                 {
                     ToolTip = 'Specifies the value of the Bill-to Contact field.';
                 }
-                field("Sell-to Customer No."; Rec."Sell-to Customer No.")
+                field(SelltoCustomerNo; Rec."Sell-to Customer No.")
                 {
                     ToolTip = 'Specifies the value of the Sell-to Customer No. field.';
                 }
-                field("Sell-to E-Mail"; Rec."Sell-to E-Mail")
+                field(SelltoEmail; Rec."Sell-to E-Mail")
                 {
                     ToolTip = 'Specifies the value of the Sell-to E-Mail field.';
                 }
-                field("Magento Order #"; Rec."ORB Magento Order #")
+                field(MagentoOrderNo; Rec."ORB Magento Order #")
                 {
                     ToolTip = 'Specifies the value of the Magento Order # field.';
                 }
-                field("Magento Artwork Job ID"; Rec."ORB Magento Artwork Job ID")
+                field(MagentoArtworkJobID; Rec."ORB Magento Artwork Job ID")
                 {
                     ToolTip = 'Specifies the value of the Magento Artwork Job ID field.';
                 }
-                field("Ship-to Contact"; Rec."Ship-to Contact")
+                field(ShiptoContact; Rec."Ship-to Contact")
                 {
                     ToolTip = 'Specifies the value of the Ship-to Contact field.';
                 }
-                field("Ship-to Name"; Rec."Ship-to Name")
+                field(ShiptoName; Rec."Ship-to Name")
                 {
                     ToolTip = 'Specifies the value of the Ship-to Name field.';
                 }
-                field("Ship-to Address"; Rec."Ship-to Address")
+                field(ShiptoAddress; Rec."Ship-to Address")
                 {
                     ToolTip = 'Specifies the value of the Ship-to Address field.';
                 }
-                field("Ship-to-Address 2"; Rec."Ship-to Address 2")
+                field(ShiptoAddress2; Rec."Ship-to Address 2")
                 {
                     ToolTip = 'Specifies the value of the Ship-to-Address 2 field.';
                 }
-                field("Ship-to City"; Rec."Ship-to City")
+                field(ShiptoCity; Rec."Ship-to City")
                 {
                     ToolTip = 'Specifies the value of the Ship-to City field.';
                 }
-                field("Ship-to County"; Rec."Ship-to County")
+                field(ShiptoCounty; Rec."Ship-to County")
                 {
                     ToolTip = 'Specifies the value of the Ship-to County field.';
                 }
-                field("Ship-to Post Code"; Rec."Ship-to Post Code")
+                field(ShiptoPostCode; Rec."Ship-to Post Code")
                 {
                     ToolTip = 'Specifies the value of the Ship-to Post Code field.';
                 }
-                field("Ship-to Country/Region Code"; Rec."Ship-to Country/Region Code")
+                field(ShiptoCountryRegionCode; Rec."Ship-to Country/Region Code")
                 {
                     ToolTip = 'Specifies the value of the Ship-to Country/Region Code field.';
                 }
@@ -78,15 +87,15 @@ page 52610 "ORB Magento Sales Hdr. Details"
                     ToolTip = 'Specifies the value of the Magento CC 4 Digits field.';
                 }
                 */
-                field("Ship-to Phone No."; Rec."Ship-to Phone No. -CL-")
+                field(ShiptoPhoneNo; Rec."Ship-to Phone No. -CL-")
                 {
                     ToolTip = 'Specifies the value of the Ship-to Phone No. field.';
                 }
-                field("External Document No."; Rec."External Document No.")
+                field(ExternalDocumentNo; Rec."External Document No.")
                 {
                     ToolTip = 'Specifies the value of the External Document No. field.';
                 }
-                field("In-Hands Date"; Rec."In-Hands Date")
+                field(InHandsDate; Rec."In-Hands Date")
                 {
                     ToolTip = 'Specifies the value of the In-Hands Date field.';
                 }
@@ -96,19 +105,19 @@ page 52610 "ORB Magento Sales Hdr. Details"
                     ToolTip = 'Specifies the value of the Magento Direct to show Label field.';
                 }
                 */
-                field("Shipping Agent Service Code"; Rec."Shipping Agent Service Code")
+                field(ShippingAgentServiceCode; Rec."Shipping Agent Service Code")
                 {
                     ToolTip = 'Specifies the value of the Shipping Agent Service Code field.';
                 }
-                field("Shipping Agent Code"; Rec."Shipping Agent Code")
+                field(ShippingAgentCode; Rec."Shipping Agent Code")
                 {
                     ToolTip = 'Specifies the value of the Shipping Agent Code field.';
                 }
-                field("Shipment Date"; Rec."Shipment Date")
+                field(ShipmentDate; Rec."Shipment Date")
                 {
                     ToolTip = 'Specifies the value of the Shipment Date field.';
                 }
-                field("Location Code"; Rec."Location Code")
+                field(LocationCode; Rec."Location Code")
                 {
                     ToolTip = 'Specifies the value of the Location Code" field.';
                 }
