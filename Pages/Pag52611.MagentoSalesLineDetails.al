@@ -1,10 +1,16 @@
 page 52611 "ORB Magento Sales Line Details"
 {
+
+    APIGroup = 'orbus';
+    APIPublisher = 'orbus';
+    APIVersion = 'v2.0';
     ApplicationArea = All;
-    Caption = 'Magento Sales Line Details';
-    PageType = List;
+    Caption = 'MagentoSalesLineDetails';
+    DelayedInsert = true;
+    PageType = API;
+    EntityName = 'MagentosalesLineDetailsAPI';
+    EntitySetName = 'MagentosalesLineDetailsAPI';
     SourceTable = "Sales Line";
-    UsageCategory = Lists;
 
     layout
     {
@@ -12,27 +18,30 @@ page 52611 "ORB Magento Sales Line Details"
         {
             repeater(General)
             {
-                field("Document Type"; Rec."Document Type")
+                field(SystemId; Rec.SystemId)
+                {
+                }
+                field(DocumentType; Rec."Document Type")
                 {
                     ToolTip = 'Specifies the type of document that you are about to create.';
                 }
-                field("Document No."; Rec."Document No.")
+                field(DocumentNo; Rec."Document No.")
                 {
                     ToolTip = 'Specifies the document number.';
                 }
-                field("Line No."; Rec."Line No.")
+                field(LineNo; Rec."Line No.")
                 {
                     ToolTip = 'Specifies the line number.';
                 }
-                field(Type; Rec."Type")
+                field(LineType; Rec."Type")
                 {
                     ToolTip = 'Specifies the line type.';
                 }
-                field("Item No."; Rec."No.")
+                field(ItemNo; Rec."No.")
                 {
                     ToolTip = 'Specifies the value of the Item No. field.';
                 }
-                field(Quantity; Rec.Quantity)
+                field(LineQuantity; Rec.Quantity)
                 {
                     ToolTip = 'Specifies the value of the Item No. field.';
                 }
