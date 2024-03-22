@@ -29,6 +29,10 @@ page 52610 "ORB Magento Sales Hdr. Details"
                 {
                     ToolTip = 'Specifies the number of the estimate.';
                 }
+                field(billToContactNo; Rec."Bill-to Contact No.")
+                {
+                    Caption = 'billToContactNo', Locked = true;
+                }
                 field(BillToContact; Rec."Bill-to Contact")
                 {
                     ToolTip = 'Specifies the value of the Bill-to Contact field.';
@@ -49,6 +53,7 @@ page 52610 "ORB Magento Sales Hdr. Details"
                 {
                     ToolTip = 'Specifies the value of the Magento Artwork Job ID field.';
                 }
+
                 field(ShiptoContact; Rec."Ship-to Contact")
                 {
                     ToolTip = 'Specifies the value of the Ship-to Contact field.';
@@ -120,6 +125,14 @@ page 52610 "ORB Magento Sales Hdr. Details"
                 field(LocationCode; Rec."Location Code")
                 {
                     ToolTip = 'Specifies the value of the Location Code" field.';
+                }
+                field(sellToContactNo; Rec."Sell-to Contact No.")
+                {
+                    Caption = 'sellToContactNo', Locked = true;
+                }
+                field(sellToContactNoCustom; Rec."Sell-To Contact No. (Custom)")
+                {
+                    Caption = 'sellToContactNoCustom', Locked = true;
                 }
             }
         }
