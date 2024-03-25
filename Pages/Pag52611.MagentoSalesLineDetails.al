@@ -11,6 +11,10 @@ page 52611 "ORB Magento Sales Line Details"
     EntityName = 'MagentosalesLineDetailsAPI';
     EntitySetName = 'MagentosalesLineDetailsAPI';
     SourceTable = "Sales Line";
+    ModifyAllowed = true;
+    DeleteAllowed = true;
+    InsertAllowed = true;
+    Permissions = tabledata "Sales Line" = rmid;
 
     layout
     {
