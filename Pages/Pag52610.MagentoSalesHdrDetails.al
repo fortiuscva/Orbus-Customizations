@@ -9,7 +9,11 @@ page 52610 "ORB Magento Sales Hdr. Details"
     EntityName = 'MagentosalesHeaderDetailsAPI';
     EntitySetName = 'MagentosalesHeaderDetailsAPI';
     PageType = API;
+    ModifyAllowed = true;
+    DeleteAllowed = true;
+    InsertAllowed = true;
     SourceTable = "Sales Header";
+    Permissions = tabledata "Sales Header" = rmid;
 
     layout
     {
