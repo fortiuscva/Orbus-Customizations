@@ -1,15 +1,13 @@
 page 52613 "ORB ItemListV2"
 {
-    APIGroup = 'orbus';
-    APIPublisher = 'orbus';
-    APIVersion = 'v2.0';
-    ApplicationArea = All;
     Caption = 'itemlistv2';
-    DelayedInsert = true;
-    EntityName = 'itemlistv2API';
-    EntitySetName = 'itemlistv2API';
-    PageType = API;
+    Editable = false;
+    PageType = List;
+    QueryCategory = 'Item List';
     SourceTable = Item;
+    UsageCategory = Lists;
+    ApplicationArea = All;
+    DelayedInsert = true;
 
     layout
     {
