@@ -138,6 +138,27 @@ page 52610 "ORB Magento Sales Hdr. Details"
                 {
                     Caption = 'sellToContactNoCustom', Locked = true;
                 }
+                field(orbMagentoCC4Digits; Rec."ORB Magento CC 4 Digits")
+                {
+                    Caption = 'orbMagentoCC4Digits', Locked = true;
+                }
+                field(createdAt; Rec."Created At")
+                {
+                    Caption = 'createdAt', Locked = true;
+                }
+                field(billToCountryRegionCode; Rec."Bill-to Country/Region Code")
+                {
+                    Caption = 'billToCountryRegionCode', Locked = true;
+                }
+                field(billToCounty; Rec."Bill-to County")
+                {
+                    Caption = 'billToCounty', Locked = true;
+                }
+                field(billToPostCode; Rec."Bill-to Post Code")
+                {
+                    Caption = 'billToPostCode', Locked = true;
+                }
+
             }
         }
     }
