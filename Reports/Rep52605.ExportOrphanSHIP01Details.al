@@ -9,7 +9,7 @@ report 52605 "Export Orphan SHIP01 Details"
     {
         dataitem("Warehouse Entry"; "Warehouse Entry")
         {
-            RequestFilterFields = "Registering Date", "Source No.", "Reference No.";
+            RequestFilterFields = "Item No.", "Registering Date", "Source No.", "Reference No.";
 
             trigger OnPreDataItem()
             var
@@ -48,12 +48,16 @@ report 52605 "Export Orphan SHIP01 Details"
                 RegDateFilter := GetFilter("Registering Date");
                 SourceNoFilter := GetFilter("Source No.");
                 ReferenceNoFilter := GetFilter("Reference No.");
+                ItemNoFilter := GetFilter("Item No.");
+
                 if RegDateFilter <> '' then
                     GroupWhseOrderSHIP01QueryGbl.SetFilter(Registering_Date_Filter, RegDateFilter);
                 if SourceNoFilter <> '' then
                     GroupWhseOrderSHIP01QueryGbl.SetFilter(Source_No_Filter, SourceNoFilter);
                 if ReferenceNoFilter <> '' then
                     GroupWhseOrderSHIP01QueryGbl.SetFilter(Reference_No_Filter, ReferenceNoFilter);
+                if ItemNoFilter <> '' then
+                    GroupWhseOrderSHIP01QueryGbl.SetFilter(Item_No_, ItemNoFilter);
                 GroupWhseOrderSHIP01QueryGbl.Open();
                 while GroupWhseOrderSHIP01QueryGbl.Read() do begin
                     SHIP01OrderDetailsTempRecGbl.Init();
@@ -187,6 +191,7 @@ report 52605 "Export Orphan SHIP01 Details"
         RegDateFilter: Text;
         SourceNoFilter: Text;
         ReferenceNoFilter: Text;
+        ItemNoFilter: Text;
         NextEntryNoGbl: Integer;
         NextMvmtEntryNoGbl: Integer;
 }
