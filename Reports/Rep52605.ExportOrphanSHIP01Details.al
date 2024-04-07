@@ -3,6 +3,8 @@ report 52605 "Export Orphan SHIP01 Details"
     ApplicationArea = All;
     Caption = 'Export Orphan SHIP01 Details';
     UsageCategory = ReportsAndAnalysis;
+    ProcessingOnly = true;
+
     dataset
     {
         dataitem("Warehouse Entry"; "Warehouse Entry")
