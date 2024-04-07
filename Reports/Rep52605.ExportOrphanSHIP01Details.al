@@ -145,8 +145,11 @@ report 52605 "Export Orphan SHIP01 Details"
                                 end;
                                 SHIP01OrderDetailsTempRecGbl.Modify()
                             until SHIP01WhseMvmtDetailsTempRecGbl.Next() = 0;
+                        if SHIP01OrderDetailsTempRecGbl."Remaining Whse. Qty." > 0 then begin
+                            SHIP01OrderDetailsTempRecGbl."Orphan Qty." := SHIP01OrderDetailsTempRecGbl."Remaining Whse. Qty.";
+                            SHIP01OrderDetailsTempRecGbl.Modify();
+                        end;
                     until SHIP01OrderDetailsTempRecGbl.Next() = 0;
-
                 ExportToExcel();
             end;
         }
