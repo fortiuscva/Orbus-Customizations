@@ -1,4 +1,4 @@
-tableextension 52614 "ORB Sales Line" extends "Sales Line"
+tableextension 52621 "ORB Sales Line" extends "Sales Line"
 {
     fields
     {
