@@ -1,4 +1,4 @@
-pageextension 52623 "ORB Sales Order Subform" extends "Sales Order Subform"
+pageextension 52621 "Posted Sales Invoice Subform" extends "Posted Sales Invoice Subform"
 {
     layout
     {

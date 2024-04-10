@@ -49,6 +49,10 @@ page 52611 "ORB Magento Sales Line Details"
                 {
                     ToolTip = 'Specifies the value of the Item No. field.';
                 }
+                field(MagentoArtworkJobID; Rec."ORB Magento Artwork Job ID")
+                {
+                    ToolTip = 'Specifies the value of the Magento Artwork Job ID field.';
+                }
             }
         }
     }
