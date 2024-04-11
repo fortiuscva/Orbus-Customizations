@@ -53,10 +53,10 @@ page 52610 "ORB Magento Sales Hdr. Details"
                 {
                     ToolTip = 'Specifies the value of the Magento Order # field.';
                 }
-                field(MagentoArtworkJobID; Rec."ORB Magento Artwork Job ID")
-                {
-                    ToolTip = 'Specifies the value of the Magento Artwork Job ID field.';
-                }
+                // field(MagentoArtworkJobID; Rec."ORB Magento Artwork Job ID")
+                // {
+                //     ToolTip = 'Specifies the value of the Magento Artwork Job ID field.';
+                // }
 
                 field(ShiptoContact; Rec."Ship-to Contact")
                 {
