@@ -146,20 +146,49 @@ page 52610 "ORB Magento Sales Hdr. Details"
                 {
                     Caption = 'createdAt', Locked = true;
                 }
-                field(billToCountryRegionCode; Rec."Bill-to Country/Region Code")
+                field(billToCountryRegionCode; DSHIPPackageOptionsRecGbl."Payment Country Code")
                 {
                     Caption = 'billToCountryRegionCode', Locked = true;
                 }
-                field(billToCounty; Rec."Bill-to County")
+                field(billToCounty; DSHIPPackageOptionsRecGbl."Payment Province")
                 {
                     Caption = 'billToCounty', Locked = true;
                 }
-                field(billToPostCode; Rec."Bill-to Post Code")
+                field(billToPostCode; DSHIPPackageOptionsRecGbl."Payment Postal Code")
                 {
                     Caption = 'billToPostCode', Locked = true;
+                }
+                field(paymentType; DSHIPPackageOptionsRecGbl."Payment Type")
+                {
+                    Caption = 'paymentType', Locked = true;
+                }
+                field(paymentAccountNo; DSHIPPackageOptionsRecGbl."Payment Account No.")
+                {
+                    Caption = 'paymentAccountNo', Locked = true;
+                }
+                field(onHold; Rec."On Hold")
+                {
+                    Caption = 'onHold', Locked = true;
+                }
+                field(discountAmount; Rec."Invoice Discount Amount")
+                {
+                    Caption = 'discountAmount', Locked = true;
                 }
 
             }
         }
     }
+    var
+        DSHIPPackageOptionsRecGbl: Record "DSHIP Package Options";
+
+    trigger OnAfterGetRecord()
+    begin
+        DSHIPPackageOptionsRecGbl.Reset();
+        DSHIPPackageOptionsRecGbl.SetRange("Entry Type", DSHIPPackageOptionsRecGbl."Entry Type"::document);
+        DSHIPPackageOptionsRecGbl.SetRange("Document Type", DSHIPPackageOptionsRecGbl."Document Type"::"Sales Order");
+        DSHIPPackageOptionsRecGbl.SetRange("Document No.", rec."No.");
+        if DSHIPPackageOptionsRecGbl.FindFirst() then;
+
+        rec.CalcFields("Invoice Discount Amount");
+    end;
 }
