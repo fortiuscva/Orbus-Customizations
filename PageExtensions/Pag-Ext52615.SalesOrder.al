@@ -127,6 +127,16 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 OrbusFunctions.RestrictZeroTransactionAmountforCreditCardPayment(rec);
             end;
         }
+        addafter("S&hipments")
+        {
+            action("ORB Sales Header Additional Fields")
+            {
+                Image = Navigate;
+                ApplicationArea = all;
+                RunObject = page "Sales Header Additional Fields";
+                RunPageLink = "Document Type" = field("Document Type"), "No." = field("No.");
+            }
+        }
     }
 
     var
