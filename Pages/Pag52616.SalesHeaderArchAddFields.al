@@ -2,7 +2,7 @@ page 52616 "Sales Header Arch. Add. Fields"
 {
     ApplicationArea = All;
     Caption = 'Sales Header Arch. Add. Fields';
-    PageType = Card;
+    PageType = Document;
     SourceTable = "Sales Header Arch. Add. Fields";
     UsageCategory = Documents;
     Editable = false;

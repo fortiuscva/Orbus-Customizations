@@ -2,7 +2,7 @@ page 52619 "Sales Cr.Memo Hdr Add. Fields"
 {
     ApplicationArea = All;
     Caption = 'Sales Cr.Memo Hdr Add. Fields';
-    PageType = Card;
+    PageType = Document;
     SourceTable = "Sales Cr.Memo Hdr Add. Fields";
     UsageCategory = Documents;
     Editable = false;

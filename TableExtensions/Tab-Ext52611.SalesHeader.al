@@ -33,4 +33,12 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             DataClassification = ToBeClassified;
         }
     }
+
+    trigger OnDelete()
+    var
+        SalesHeaderAdditionalFields: Record "Sales Header Additional Fields";
+    begin
+        if SalesHeaderAdditionalFields.Get(Rec."Document Type", Rec."No.") then
+            SalesHeaderAdditionalFields.Delete(true);
+    end;
 }

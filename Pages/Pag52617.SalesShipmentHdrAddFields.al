@@ -2,7 +2,7 @@ page 52617 "Sales Shipment Hdr Add. Fields"
 {
     ApplicationArea = All;
     Caption = 'Sales Shipment Hdr Add. Fields';
-    PageType = Card;
+    PageType = Document;
     SourceTable = "Sales Shipment Hdr Add. Fields";
     UsageCategory = Documents;
     Editable = false;

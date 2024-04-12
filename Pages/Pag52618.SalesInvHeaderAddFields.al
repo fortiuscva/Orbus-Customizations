@@ -2,7 +2,7 @@ page 52618 "Sales Inv. Header Add. Fields"
 {
     ApplicationArea = All;
     Caption = 'Sales Inv. Header Add. Fields';
-    PageType = Card;
+    PageType = Document;
     SourceTable = "Sales Inv. Header Add. Fields";
     UsageCategory = Documents;
     Editable = false;
