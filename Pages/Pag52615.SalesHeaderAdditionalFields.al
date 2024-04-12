@@ -2,15 +2,15 @@ page 52615 "Sales Header Additional Fields"
 {
     ApplicationArea = All;
     Caption = 'Sales Header Additional Fields';
-    PageType = List;
+    PageType = Card;
     SourceTable = "Sales Header Additional Fields";
-    UsageCategory = Lists;
+    UsageCategory = Documents;
 
     layout
     {
         area(content)
         {
-            repeater(General)
+            group(General)
             {
                 field("Direct to show Label"; Rec."Direct to show Label")
                 {
@@ -20,6 +20,7 @@ page 52615 "Sales Header Additional Fields"
                 {
                     ToolTip = 'Specifies the value of the Production timeline field.';
                 }
+
             }
         }
     }
