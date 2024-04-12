@@ -2,9 +2,8 @@ page 52615 "Sales Header Additional Fields"
 {
     ApplicationArea = All;
     Caption = 'Sales Header Additional Fields';
-    PageType = Card;
+    PageType = Document;
     SourceTable = "Sales Header Additional Fields";
-    UsageCategory = Documents;
 
     layout
     {
