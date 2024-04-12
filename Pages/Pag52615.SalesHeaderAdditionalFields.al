@@ -12,10 +12,6 @@ page 52615 "Sales Header Additional Fields"
         {
             repeater(General)
             {
-                field("No."; Rec."No.")
-                {
-                    ToolTip = 'Specifies the value of the No. field.';
-                }
                 field("Direct to show Label"; Rec."Direct to show Label")
                 {
                     ToolTip = 'Specifies the value of the Direct to show Label field.';

@@ -1,11 +1,10 @@
-page 52619 "Sales Cr.Memo Hdr Add. Fields"
+page 52614 "ORB Sales Header Add. FieldsWS"
 {
     ApplicationArea = All;
-    Caption = 'Sales Cr.Memo Hdr Add. Fields';
+    Caption = 'Sales Header Additional FieldsWS';
     PageType = List;
-    SourceTable = "Sales Cr.Memo Hdr Add. Fields";
+    SourceTable = "Sales Header Additional Fields";
     UsageCategory = Lists;
-    Editable = false;
 
     layout
     {
@@ -13,6 +12,14 @@ page 52619 "Sales Cr.Memo Hdr Add. Fields"
         {
             repeater(General)
             {
+                field("Document Type"; Rec."Document Type")
+                {
+                    ToolTip = 'Specifies the value of the Document Type field.';
+                }
+                field("No."; Rec."No.")
+                {
+                    ToolTip = 'Specifies the value of the No. field.';
+                }
                 field("Direct to show Label"; Rec."Direct to show Label")
                 {
                     ToolTip = 'Specifies the value of the Direct to show Label field.';
