@@ -2,16 +2,16 @@ page 52619 "Sales Cr.Memo Hdr Add. Fields"
 {
     ApplicationArea = All;
     Caption = 'Sales Cr.Memo Hdr Add. Fields';
-    PageType = List;
+    PageType = Card;
     SourceTable = "Sales Cr.Memo Hdr Add. Fields";
-    UsageCategory = Lists;
+    UsageCategory = Documents;
     Editable = false;
 
     layout
     {
         area(content)
         {
-            repeater(General)
+            group(General)
             {
                 field("Direct to show Label"; Rec."Direct to show Label")
                 {

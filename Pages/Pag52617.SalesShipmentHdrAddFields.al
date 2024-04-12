@@ -2,16 +2,16 @@ page 52617 "Sales Shipment Hdr Add. Fields"
 {
     ApplicationArea = All;
     Caption = 'Sales Shipment Hdr Add. Fields';
-    PageType = List;
+    PageType = Card;
     SourceTable = "Sales Shipment Hdr Add. Fields";
-    UsageCategory = Lists;
+    UsageCategory = Documents;
     Editable = false;
 
     layout
     {
         area(content)
         {
-            repeater(General)
+            group(General)
             {
                 field("Direct to show Label"; Rec."Direct to show Label")
                 {

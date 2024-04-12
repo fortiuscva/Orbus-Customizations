@@ -2,18 +2,18 @@ page 52618 "Sales Inv. Header Add. Fields"
 {
     ApplicationArea = All;
     Caption = 'Sales Inv. Header Add. Fields';
-    PageType = List;
+    PageType = Card;
     SourceTable = "Sales Inv. Header Add. Fields";
-    UsageCategory = Lists;
+    UsageCategory = Documents;
     Editable = false;
 
     layout
     {
         area(content)
         {
-            repeater(General)
+            group(General)
             {
-                 field("Direct to show Label"; Rec."Direct to show Label")
+                field("Direct to show Label"; Rec."Direct to show Label")
                 {
                     ToolTip = 'Specifies the value of the Direct to show Label field.';
                 }

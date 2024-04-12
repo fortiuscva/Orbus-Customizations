@@ -2,16 +2,16 @@ page 52616 "Sales Header Arch. Add. Fields"
 {
     ApplicationArea = All;
     Caption = 'Sales Header Arch. Add. Fields';
-    PageType = List;
+    PageType = Card;
     SourceTable = "Sales Header Arch. Add. Fields";
-    UsageCategory = Lists;
+    UsageCategory = Documents;
     Editable = false;
 
     layout
     {
         area(content)
         {
-            repeater(General)
+            group(General)
             {
                 field("Direct to show Label"; Rec."Direct to show Label")
                 {
