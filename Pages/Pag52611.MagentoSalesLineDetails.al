@@ -48,6 +48,26 @@ page 52611 "ORB Magento Sales Line Details"
                 field(LineQuantity; Rec.Quantity)
                 {
                     ToolTip = 'Specifies the value of the Item No. field.';
+
+                    trigger OnValidate()
+                    var
+                        DocumentTotals: Codeunit "Document Totals";
+                        ItemRecLcl: Record Item;
+                    begin
+                        if (rec.Type = rec.Type::Item) and (rec.Quantity <> 0) then begin
+                            OrbusSingleInstanceCUGbl.SetExplodeBOMConfirm(true);
+                            if (ItemRecLcl.get(rec."No.")) and (rec."Prepmt. Amt. Inv." = 0) then begin
+                                ItemRecLcl.CalcFields("Assembly BOM");
+                                if ItemRecLcl."Assembly BOM" then
+                                    CODEUNIT.Run(CODEUNIT::"Sales-Explode BOM", Rec);
+                            end;
+
+                            DocumentTotals.SalesDocTotalsNotUpToDate();
+                            OrbusSingleInstanceCUGbl.SetExplodeBOMConfirm(false);
+                            CurrPage.Update(false);
+                        end;
+                    end;
+
                 }
                 field(MagentoArtworkJobID; Rec."ORB Magento Artwork Job ID")
                 {
@@ -56,4 +76,7 @@ page 52611 "ORB Magento Sales Line Details"
             }
         }
     }
+
+    Var
+        OrbusSingleInstanceCUGbl: codeunit "ORB Orbus Single Instance";
 }
