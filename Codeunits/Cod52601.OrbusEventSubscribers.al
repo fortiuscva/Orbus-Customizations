@@ -150,6 +150,23 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
 
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::ArchiveManagement, OnAfterStoreSalesDocument, '', false, false)]
+    local procedure ArchiveManagement_OnAfterStoreSalesDocument(var SalesHeader: Record "Sales Header"; var SalesHeaderArchive: Record "Sales Header Archive")
+    var
+        SalesHeaderAdditionalFields: Record "Sales Header Additional Fields";
+        SalesHeaderArchAddFields: Record "Sales Header Arch. Add. Fields";
+    begin
+        if SalesHeaderAdditionalFields.Get(SalesHeader."Document Type", SalesHeader."No.") then begin
+            SalesHeaderArchAddFields.Init();
+            SalesHeaderArchAddFields.TransferFields(SalesHeaderAdditionalFields);
+            SalesHeaderArchAddFields."Version No." := SalesHeaderArchive."Version No.";
+            SalesHeaderArchAddFields."Doc. No. Occurrence" := SalesHeaderArchive."Doc. No. Occurrence";
+            if not SalesHeaderArchAddFields.Insert() then
+                SalesHeaderArchAddFields.Modify();
+        end;
+    end;
+
+    /*
     [EventSubscriber(ObjectType::Codeunit, Codeunit::ArchiveManagement, OnAfterAutoArchiveSalesDocument, '', false, false)]
     local procedure ArchiveManagement_OnAfterAutoArchiveSalesDocument(var SalesHeader: Record "Sales Header")
     var
@@ -159,11 +176,11 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         if SalesHeaderAdditionalFields.Get(SalesHeader."Document Type", SalesHeader."No.") then begin
             SalesHeaderArchAddFields.Init();
             SalesHeaderArchAddFields.TransferFields(SalesHeaderAdditionalFields);
-            if SalesHeaderArchAddFields.Insert() then
+            if not SalesHeaderArchAddFields.Insert() then
                 SalesHeaderArchAddFields.Modify();
         end;
     end;
-
+    */
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnAfterInsertShipmentHeader, '', false, false)]
     local procedure "Sales-Post_OnAfterInsertShipmentHeader"(var SalesHeader: Record "Sales Header"; var SalesShipmentHeader: Record "Sales Shipment Header")
@@ -175,7 +192,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             SalesShipmentHeaderAddFields.Init();
             SalesShipmentHeaderAddFields.TransferFields(SalesHeaderAdditionalFields);
             SalesShipmentHeaderAddFields."No." := SalesShipmentHeader."No.";
-            if SalesShipmentHeaderAddFields.Insert() then
+            if not SalesShipmentHeaderAddFields.Insert() then
                 SalesShipmentHeaderAddFields.Modify();
         end;
     end;
@@ -190,7 +207,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             SalesInvHeaderAddFields.Init();
             SalesInvHeaderAddFields.TransferFields(SalesHeaderAdditionalFields);
             SalesInvHeaderAddFields."No." := SalesInvHeader."No.";
-            if SalesInvHeaderAddFields.Insert() then
+            if not SalesInvHeaderAddFields.Insert() then
                 SalesInvHeaderAddFields.Modify();
         end;
     end;
@@ -205,7 +222,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             SalesCrMemoHeaderAddFields.Init();
             SalesCrMemoHeaderAddFields.TransferFields(SalesHeaderAdditionalFields);
             SalesCrMemoHeaderAddFields."No." := SalesCrMemoHeader."No.";
-            if SalesCrMemoHeaderAddFields.Insert() then
+            if not SalesCrMemoHeaderAddFields.Insert() then
                 SalesCrMemoHeaderAddFields.Modify();
         end;
     end;
