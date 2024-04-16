@@ -9,6 +9,7 @@ pageextension 52622 "ORB Sales Quote Subform" extends "Sales Quote Subform"
                 DocumentTotals: Codeunit "Document Totals";
                 ItemRecLcl: Record Item;
             begin
+                /*
                 if (rec.Type = rec.Type::Item) and (rec.Quantity <> 0) then begin
                     OrbusSingleInstanceCUGbl.SetExplodeBOMConfirm(true);
                     if (ItemRecLcl.get(rec."No.")) and (rec."Prepmt. Amt. Inv." = 0) then begin
@@ -21,6 +22,7 @@ pageextension 52622 "ORB Sales Quote Subform" extends "Sales Quote Subform"
                     OrbusSingleInstanceCUGbl.SetExplodeBOMConfirm(false);
                     CurrPage.Update(false);
                 end;
+                */
             end;
         }
     }

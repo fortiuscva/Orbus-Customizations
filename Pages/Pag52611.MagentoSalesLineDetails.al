@@ -49,6 +49,7 @@ page 52611 "ORB Magento Sales Line Details"
                 {
                     ToolTip = 'Specifies the value of the Item No. field.';
 
+                    /*
                     trigger OnValidate()
                     var
                         DocumentTotals: Codeunit "Document Totals";
@@ -67,6 +68,7 @@ page 52611 "ORB Magento Sales Line Details"
                             CurrPage.Update(false);
                         end;
                     end;
+                    */
 
                 }
                 field(MagentoArtworkJobID; Rec."ORB Magento Artwork Job ID")
