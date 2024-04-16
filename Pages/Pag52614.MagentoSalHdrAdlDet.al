@@ -14,7 +14,7 @@ page 52614 "ORB Magento Sal. Hdr. Adl. Det"
     DeleteAllowed = true;
     InsertAllowed = true;
     SourceTable = "Sales Header Additional Fields";
-    Permissions = tabledata "Sales Header" = rmid;
+    Permissions = tabledata "Sales Header Additional Fields" = rmid;
 
     layout
     {
