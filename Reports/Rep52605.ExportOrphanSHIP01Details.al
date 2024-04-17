@@ -133,17 +133,20 @@ report 52605 "Export Orphan SHIP01 Details"
                         if SHIP01WhseMvmtDetailsTempRecGbl.FindSet() then
                             repeat
                                 if SHIP01OrderDetailsTempRecGbl."Remaining Whse. Qty." > SHIP01WhseMvmtDetailsTempRecGbl."Remaining Mvmt. Qty." then begin
-                                    AppliedQtyVarLcl := SHIP01OrderDetailsTempRecGbl."Remaining Whse. Qty." - SHIP01WhseMvmtDetailsTempRecGbl."Remaining Mvmt. Qty.";
+                                    //AppliedQtyVarLcl := SHIP01OrderDetailsTempRecGbl."Remaining Whse. Qty." - SHIP01WhseMvmtDetailsTempRecGbl."Remaining Mvmt. Qty.";
+                                    AppliedQtyVarLcl := SHIP01WhseMvmtDetailsTempRecGbl."Remaining Mvmt. Qty.";
                                     SHIP01OrderDetailsTempRecGbl."Applied Qty." += AppliedQtyVarLcl;
                                     SHIP01OrderDetailsTempRecGbl."Remaining Whse. Qty." -= AppliedQtyVarLcl;
                                     SHIP01WhseMvmtDetailsTempRecGbl."Remaining Mvmt. Qty." := 0
                                 end else begin
-                                    AppliedQtyVarLcl := (SHIP01WhseMvmtDetailsTempRecGbl."Remaining Mvmt. Qty." - SHIP01OrderDetailsTempRecGbl."Remaining Whse. Qty.");
+                                    //AppliedQtyVarLcl := (SHIP01WhseMvmtDetailsTempRecGbl."Remaining Mvmt. Qty." - SHIP01OrderDetailsTempRecGbl."Remaining Whse. Qty.");
+                                    AppliedQtyVarLcl := SHIP01OrderDetailsTempRecGbl."Remaining Whse. Qty.";
                                     SHIP01OrderDetailsTempRecGbl."Applied Qty." += AppliedQtyVarLcl;
                                     SHIP01WhseMvmtDetailsTempRecGbl."Remaining Mvmt. Qty." -= AppliedQtyVarLcl;
                                     SHIP01OrderDetailsTempRecGbl."Remaining Whse. Qty." := 0;
                                 end;
-                                SHIP01OrderDetailsTempRecGbl.Modify()
+                                SHIP01OrderDetailsTempRecGbl.Modify();
+                                SHIP01WhseMvmtDetailsTempRecGbl.Modify();
                             until SHIP01WhseMvmtDetailsTempRecGbl.Next() = 0;
                         if SHIP01OrderDetailsTempRecGbl."Remaining Whse. Qty." > 0 then begin
                             SHIP01OrderDetailsTempRecGbl."Orphan Qty." := SHIP01OrderDetailsTempRecGbl."Remaining Whse. Qty.";
