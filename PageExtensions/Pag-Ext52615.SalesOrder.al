@@ -34,6 +34,11 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 ApplicationArea = all;
                 ToolTip = 'Specifies the Magento CC 4 Digits of Sales';
             }
+            field("ORB On Hold"; Rec."On Hold")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies if the document was put on hold when it was posted, for example because payment of the resulting customer ledger entries is overdue.';
+            }
         }
         modify("Payment Terms Code")
         {
