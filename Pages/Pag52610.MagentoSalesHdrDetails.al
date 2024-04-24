@@ -114,13 +114,13 @@ page 52610 "ORB Magento Sales Hdr. Details"
                     ToolTip = 'Specifies the value of the Magento Direct to show Label field.';
                 }
                 */
-                field(ShippingAgentServiceCode; Rec."Shipping Agent Service Code")
-                {
-                    ToolTip = 'Specifies the value of the Shipping Agent Service Code field.';
-                }
                 field(ShippingAgentCode; Rec."Shipping Agent Code")
                 {
                     ToolTip = 'Specifies the value of the Shipping Agent Code field.';
+                }
+                field(ShippingAgentServiceCode; Rec."Shipping Agent Service Code")
+                {
+                    ToolTip = 'Specifies the value of the Shipping Agent Service Code field.';
                 }
                 field(ShipmentDate; Rec."Shipment Date")
                 {
