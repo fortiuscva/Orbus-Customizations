@@ -15,21 +15,25 @@ tableextension 52621 "ORB Sales Line" extends "Sales Line"
                 DocumentTotals: Codeunit "Document Totals";
                 ItemRecLcl: Record Item;
             begin
-                if CurrFieldNo = FieldNo(Quantity) then begin
-                    if (rec."Document Type" = Rec."Document Type"::Order) or (rec."Document Type" = rec."Document Type"::Quote) then begin
-                        if (rec.Type = rec.Type::Item) and (rec.Quantity <> 0) then begin
-                            OrbusSingleInstanceCUGbl.SetExplodeBOMConfirm(true);
-                            if (ItemRecLcl.get(rec."No.")) and (rec."Prepmt. Amt. Inv." = 0) then begin
-                                ItemRecLcl.CalcFields("Assembly BOM");
-                                if ItemRecLcl."Assembly BOM" then
-                                    CODEUNIT.Run(CODEUNIT::"Sales-Explode BOM", Rec);
-                            end;
-                            DocumentTotals.SalesDocTotalsNotUpToDate();
-                            OrbusSingleInstanceCUGbl.SetExplodeBOMConfirm(false);
+                //if CurrFieldNo = FieldNo(Quantity) then begin
+                if GuiAllowed then
+                    exit;
+                if Rec.Quantity = 0 then
+                    exit;
+                if (rec."Document Type" = Rec."Document Type"::Order) or (rec."Document Type" = rec."Document Type"::Quote) then begin
+                    if (rec.Type = rec.Type::Item) and (rec.Quantity <> 0) then begin
+                        OrbusSingleInstanceCUGbl.SetExplodeBOMConfirm(true);
+                        if (ItemRecLcl.get(rec."No.")) and (rec."Prepmt. Amt. Inv." = 0) then begin
+                            ItemRecLcl.CalcFields("Assembly BOM");
+                            if ItemRecLcl."Assembly BOM" then
+                                CODEUNIT.Run(CODEUNIT::"Sales-Explode BOM", Rec);
                         end;
+                        DocumentTotals.SalesDocTotalsNotUpToDate();
+                        OrbusSingleInstanceCUGbl.SetExplodeBOMConfirm(false);
                     end;
                 end;
             end;
+            //end;
         }
     }
 

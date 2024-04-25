@@ -18,7 +18,8 @@ pageextension 52620 "ORB Sales Order Subform" extends "Sales Order Subform"
                 DocumentTotals: Codeunit "Document Totals";
                 ItemRecLcl: Record Item;
             begin
-                /*
+                if not GuiAllowed then
+                    exit;
                 if (rec.Type = rec.Type::Item) and (rec.Quantity <> 0) then begin
                     OrbusSingleInstanceCUGbl.SetExplodeBOMConfirm(true);
                     if (ItemRecLcl.get(rec."No.")) and (rec."Prepmt. Amt. Inv." = 0) then begin
@@ -31,7 +32,7 @@ pageextension 52620 "ORB Sales Order Subform" extends "Sales Order Subform"
                     OrbusSingleInstanceCUGbl.SetExplodeBOMConfirm(false);
                     CurrPage.Update(false);
                 end;
-                */
+
             end;
         }
     }
