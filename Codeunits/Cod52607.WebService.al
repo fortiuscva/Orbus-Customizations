@@ -1,7 +1,28 @@
 codeunit 52607 "ORB Web Service"
 {
+    trigger OnRun()
+
+    begin
+        SalesHeader.init();
+        SalesHeader."Document Type" := SalesHeader."Document Type"::Order;
+        SalesHeader."No." := 'test1212';
+        SalesHeader.insert();
+        SalesHeader.Validate("Sell-to Customer No.", 'ORB00001');
+        SalesHeader.Modify();
+        SalesLine.Init();
+        SalesLine."Document No." := SalesHeader."No.";
+        SalesLine."Document Type" := SalesHeader."Document Type";
+        SalesLine.Type := salesline.Type::Item;
+        SalesLine."Line No." := 10000;
+        SalesLine.Insert(true);
+        SalesLine.Validate("No.", 'XCLM-2X2-K1-G');
+        SalesLine.Validate(Quantity, 1);
+        SalesLine.Modify();
+    end;
+
     procedure SendSalesHeader(SalesOrderString: text): Text
     begin
+        SalesOrderString := '{  "OrderNo":"TEST132",  "CustomerNo":"10014",    "LineNo":"10000",    "ItemNo":"XCLM-2X2-K1-G","Quantity" : "10"  }';
         if CreateSalesOrder(SalesOrderString) then
             exit(StrSubstNo('Order %1 has been created successfully', SalesHeader."No."))
         else
@@ -100,4 +121,5 @@ codeunit 52607 "ORB Web Service"
 
     var
         SalesHeader: Record "Sales Header";
+        SalesLine: Record "Sales Line";
 }
