@@ -126,7 +126,7 @@ page 52610 "ORB Magento Sales Hdr. Details"
                 {
                     ToolTip = 'Specifies the value of the Shipment Date field.';
                 }
-                field(LocationCode; Rec."Location Code")
+                field(LocationCode; Rec."ORB Magento Location Code")
                 {
                     ToolTip = 'Specifies the value of the Location Code" field.';
                 }
