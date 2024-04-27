@@ -39,23 +39,18 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 ApplicationArea = All;
                 ToolTip = 'Specifies if the document was put on hold when it was posted, for example because payment of the resulting customer ledger entries is overdue.';
             }
-        }
-        addfirst("Foreign Trade")
-        {
-            group("ORB orbus")
+            field("ORB Require Review"; Rec."ORB Require Review")
             {
-                caption = 'Orbus';
-                field("ORB Require Review"; Rec."ORB Require Review")
-                {
-                    ApplicationArea = All;
-                }
-                field("ORB Magento Location Code"; Rec."ORB Magento Location Code")
-                {
-                    ApplicationArea = All;
-                    Editable = false;
-                }
+                ApplicationArea = All;
+            }
+            field("ORB Magento Location Code"; Rec."ORB Magento Location Code")
+            {
+                ApplicationArea = All;
+                Editable = false;
+                Visible = false;
             }
         }
+
 
         modify("Payment Terms Code")
         {
