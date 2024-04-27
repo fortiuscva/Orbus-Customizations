@@ -7,9 +7,6 @@ tableextension 52621 "ORB Sales Line" extends "Sales Line"
             Caption = 'Magento Artwork Job ID';
             DataClassification = ToBeClassified;
         }
-
-
-
         field(50118; "ORB Ship-to State_fl"; Text[50])
         {
             Caption = 'State';
@@ -19,13 +16,8 @@ tableextension 52621 "ORB Sales Line" extends "Sales Line"
         }
         field(50119; "ORB Explode"; Boolean)
         {
-                    Caption = 'Explode';
+            Caption = 'Explode';
 
-        }
-
-        modify(Quantity)
-
-        {
             trigger OnValidate()
             var
                 ItemRecLcl: Record Item;
