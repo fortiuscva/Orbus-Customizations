@@ -32,6 +32,17 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             Caption = 'Magento CC 4 Digits';
             DataClassification = ToBeClassified;
         }
+        field(52623; "ORB Magento Location Code"; Code[10])
+        {
+            Caption = 'Magento Location Code';
+            TableRelation = Location;
+            DataClassification = ToBeClassified;
+        }
+        field(52624; "ORB Require Review"; Boolean)
+        {
+            Caption = 'Require Review';
+            DataClassification = ToBeClassified;
+        }
     }
 
     trigger OnDelete()
@@ -40,5 +51,11 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
     begin
         if SalesHeaderAdditionalFields.Get(Rec."Document Type", Rec."No.") then
             SalesHeaderAdditionalFields.Delete(true);
+    end;
+
+    trigger OnAfterInsert()
+    begin
+        Rec.Validate("Location Code", "ORB Magento Location Code");
+        Rec.Modify();
     end;
 }
