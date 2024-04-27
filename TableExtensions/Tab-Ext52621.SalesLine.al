@@ -8,7 +8,23 @@ tableextension 52621 "ORB Sales Line" extends "Sales Line"
             DataClassification = ToBeClassified;
         }
 
+
+
+        field(50118; "ORB Ship-to State_fl"; Text[50])
+        {
+            Caption = 'State';
+            Editable = false;
+            FieldClass = FlowField;
+            CalcFormula = lookup("Sales Header"."Ship-to County" where("No." = field("Document No.")));
+        }
         field(50119; "ORB Explode"; Boolean)
+        {
+                    Caption = 'Explode';
+
+        }
+
+        modify(Quantity)
+
         {
             trigger OnValidate()
             var
