@@ -68,7 +68,15 @@ tableextension 52621 "ORB Sales Line" extends "Sales Line"
     begin
 
         Rec.Validate("ORB Explode", true);
-        //Rec.Modify();
+        Rec.Modify();
+    end;
+
+    trigger OnAfterInsert()
+    begin
+        if Rec.Quantity <> 0 then begin
+            Rec.Validate("ORB Explode", true);
+            Rec.Modify();
+        end;
     end;
 
     var
