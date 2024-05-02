@@ -47,7 +47,7 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
 
     trigger OnDelete()
     var
-        SalesHeaderAdditionalFields: Record "Sales Header Additional Fields";
+        SalesHeaderAdditionalFields: Record "ORB Sales Header Add. Fields";
     begin
         if SalesHeaderAdditionalFields.Get(Rec."Document Type", Rec."No.") then
             SalesHeaderAdditionalFields.Delete(true);

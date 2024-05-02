@@ -1,6 +1,6 @@
-table 52604 "Sales Header Arch. Add. Fields"
+table 52604 "ORB Sales Hdr. Arch. Add. Flds"
 {
-    Caption = 'Sales Header Arch. Add. Fields';
+    Caption = 'Sales Header Arch. Additional Fields';
     DataClassification = CustomerContent;
 
     fields
@@ -29,6 +29,27 @@ table 52604 "Sales Header Arch. Add. Fields"
         field(52601; "Production timeline"; Text[200])
         {
             Caption = 'Production timeline';
+        }
+        field(52602; "Payment Type"; Option)
+        {
+            OptionMembers = " ",Sender,THIRD_PARTY,RECEIVER,COLLECT;
+            Caption = 'Payment Type';
+        }
+        field(52603; "Payment Account No."; Text[100])
+        {
+            Caption = 'Payment Account No.';
+        }
+        field(52604; "Payment Province"; Code[50])
+        {
+            Caption = 'Payment State';
+        }
+        field(52605; "Payment Postal Code"; Code[50])
+        {
+            Caption = 'Payment Zip';
+        }
+        field(52606; "Payment Country Code"; Code[50])
+        {
+            Caption = 'Payment Country';
         }
     }
     keys
