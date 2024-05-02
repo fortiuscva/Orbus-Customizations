@@ -50,10 +50,7 @@ page 52614 "ORB Magento Sal. Hdr. Adl. Det"
                 {
                     ToolTip = 'Specifies the value of the Payment Province field.';
                 }
-                field(PaymentState; Rec."Payment Province")
-                {
-                    ToolTip = 'Specifies the value of the Payment Province field.';
-                }
+
                 field(PaymentPostalCode; Rec."Payment Postal Code")
                 {
                     ToolTip = 'Specifies the value of the Payment Postal Code field.';
