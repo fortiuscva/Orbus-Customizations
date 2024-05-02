@@ -78,6 +78,17 @@ page 52611 "ORB Magento Sales Line Details"
             }
         }
     }
+    trigger OnInsertRecord(BelowxRec: Boolean): Boolean
+    var
+        salesLine: Record "Sales Line";
+    begin
+        salesLine.SetRange("Document Type", salesLine."Document Type"::Order);
+        salesLine.SetRange("Document No.", Rec."Document No.");
+        if salesLine.FindLast() then
+            Rec."Line No." := salesLine."Line No." + 10000
+        else
+            Rec."Line No." := 10000;
+    end;
 
     Var
         OrbusSingleInstanceCUGbl: codeunit "ORB Orbus Single Instance";
