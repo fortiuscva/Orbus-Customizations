@@ -1,9 +1,9 @@
-page 52616 "Sales Header Arch. Add. Fields"
+page 52618 "ORB Sales Inv. Hdr Add. Fields"
 {
     ApplicationArea = All;
-    Caption = 'Sales Header Arch. Additional Fields';
+    Caption = 'Sales Invoice Header Additional Fields';
     PageType = Document;
-    SourceTable = "ORB Sales Hdr. Arch. Add. Flds";
+    SourceTable = "ORB Sales Inv. Hdr. Add. Flds";
     UsageCategory = Documents;
     Editable = false;
 

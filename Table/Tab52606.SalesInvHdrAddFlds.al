@@ -1,6 +1,6 @@
-table 52606 "Sales Inv. Header Add. Fields"
+table 52606 "ORB Sales Inv. Hdr. Add. Flds"
 {
-    Caption = 'Sales Inv. Header Add. Fields';
+    Caption = 'Sales Invoice Header Additional Fields';
     DataClassification = CustomerContent;
 
     fields

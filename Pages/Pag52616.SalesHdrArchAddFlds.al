@@ -1,9 +1,9 @@
-page 52617 "Sales Shipment Hdr Add. Fields"
+page 52616 "ORB Sales Hdr Arch. Add. Flds"
 {
     ApplicationArea = All;
-    Caption = 'Sales Shipment Hdr Add. Fields';
+    Caption = 'Sales Header Arch. Additional Fields';
     PageType = Document;
-    SourceTable = "Sales Shipment Hdr Add. Fields";
+    SourceTable = "ORB Sales Hdr. Arch. Add. Flds";
     UsageCategory = Documents;
     Editable = false;
 

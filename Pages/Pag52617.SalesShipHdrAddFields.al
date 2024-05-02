@@ -1,9 +1,9 @@
-page 52619 "Sales Cr.Memo Hdr Add. Fields"
+page 52617 "ORB Sales Ship Hdr Add. Fields"
 {
     ApplicationArea = All;
-    Caption = 'Sales Cr.Memo Hdr Add. Fields';
+    Caption = 'Sales Shipment Header Additional Fields';
     PageType = Document;
-    SourceTable = "Sales Cr.Memo Hdr Add. Fields";
+    SourceTable = "ORB Sales Ship. Hdr Add. Flds";
     UsageCategory = Documents;
     Editable = false;
 

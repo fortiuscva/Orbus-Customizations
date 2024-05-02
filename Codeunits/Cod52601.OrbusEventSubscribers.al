@@ -186,7 +186,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
     local procedure "Sales-Post_OnAfterInsertShipmentHeader"(var SalesHeader: Record "Sales Header"; var SalesShipmentHeader: Record "Sales Shipment Header")
     var
         SalesHeaderAdditionalFields: Record "ORB Sales Header Add. Fields";
-        SalesShipmentHeaderAddFields: Record "Sales Shipment Hdr Add. Fields";
+        SalesShipmentHeaderAddFields: Record "ORB Sales Ship. Hdr Add. Flds";
     begin
         if SalesHeaderAdditionalFields.Get(SalesHeader."Document Type", SalesHeader."No.") then begin
             SalesShipmentHeaderAddFields.Init();
@@ -201,7 +201,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
     local procedure "Sales-Post_OnAfterInsertInvoiceHeader"(var SalesHeader: Record "Sales Header"; var SalesInvHeader: Record "Sales Invoice Header")
     var
         SalesHeaderAdditionalFields: Record "ORB Sales Header Add. Fields";
-        SalesInvHeaderAddFields: Record "Sales Inv. Header Add. Fields";
+        SalesInvHeaderAddFields: Record "ORB Sales Inv. Hdr. Add. Flds";
     begin
         if SalesHeaderAdditionalFields.Get(SalesHeader."Document Type", SalesHeader."No.") then begin
             SalesInvHeaderAddFields.Init();
@@ -216,7 +216,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
     local procedure "Sales-Post_OnAfterInsertCrMemoHeader"(var SalesHeader: Record "Sales Header"; var SalesCrMemoHeader: Record "Sales Cr.Memo Header")
     var
         SalesHeaderAdditionalFields: Record "ORB Sales Header Add. Fields";
-        SalesCrMemoHeaderAddFields: Record "Sales Cr.Memo Hdr Add. Fields";
+        SalesCrMemoHeaderAddFields: Record "ORB Sales Cr.M Hdr Add. Flds";
     begin
         if SalesHeaderAdditionalFields.Get(SalesHeader."Document Type", SalesHeader."No.") then begin
             SalesCrMemoHeaderAddFields.Init();

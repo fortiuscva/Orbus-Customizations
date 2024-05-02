@@ -1,6 +1,6 @@
-table 52605 "Sales Shipment Hdr Add. Fields"
+table 52605 "ORB Sales Ship. Hdr Add. Flds"
 {
-    Caption = 'Sales Shipment Hdr Add. Fields';
+    Caption = 'Sales Shipment Hdr Additional Fields';
     DataClassification = CustomerContent;
 
     fields
