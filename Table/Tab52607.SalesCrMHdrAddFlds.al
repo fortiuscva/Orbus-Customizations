@@ -1,6 +1,6 @@
-table 52607 "Sales Cr.Memo Hdr Add. Fields"
+table 52607 "ORB Sales Cr.M Hdr Add. Flds"
 {
-    Caption = 'Sales Cr.Memo Hdr Add. Fields';
+    Caption = 'Sales Cr.Memo Hdr Additional Fields';
     DataClassification = CustomerContent;
 
     fields

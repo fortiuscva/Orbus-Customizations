@@ -1,11 +1,9 @@
-page 52618 "Sales Inv. Header Add. Fields"
+page 52615 "ORB Sales Header Add. Fields"
 {
     ApplicationArea = All;
-    Caption = 'Sales Inv. Header Add. Fields';
+    Caption = 'Sales Header Additional Fields';
     PageType = Document;
-    SourceTable = "Sales Inv. Header Add. Fields";
-    UsageCategory = Documents;
-    Editable = false;
+    SourceTable = "ORB Sales Header Add. Fields";
 
     layout
     {
@@ -42,6 +40,7 @@ page 52618 "Sales Inv. Header Add. Fields"
                 {
                     ToolTip = 'Specifies the value of the Payment Country Code field.';
                 }
+
             }
         }
     }

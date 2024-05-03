@@ -1,9 +1,11 @@
-page 52615 "Sales Header Additional Fields"
+page 52619 "ORB Sales Cr.M Hdr Add. Fields"
 {
     ApplicationArea = All;
-    Caption = 'Sales Header Additional Fields';
+    Caption = 'Sales Cr.Memo Header Additional Fields';
     PageType = Document;
-    SourceTable = "ORB Sales Header Add. Fields";
+    SourceTable = "ORB Sales Cr.M Hdr Add. Flds";
+    UsageCategory = Documents;
+    Editable = false;
 
     layout
     {
@@ -40,7 +42,6 @@ page 52615 "Sales Header Additional Fields"
                 {
                     ToolTip = 'Specifies the value of the Payment Country Code field.';
                 }
-
             }
         }
     }

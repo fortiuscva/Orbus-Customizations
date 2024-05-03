@@ -45,7 +45,7 @@ pageextension 52608 "ORB Posted Sales Invoice" extends "Posted Sales Invoice"
                 Caption = 'Additional Fields';
                 Image = RelatedInformation;
                 ApplicationArea = all;
-                RunObject = page "Sales Inv. Header Add. Fields";
+                RunObject = page "ORB Sales Inv. Hdr Add. Fields";
                 RunPageLink = "No." = field("No.");
             }
         }

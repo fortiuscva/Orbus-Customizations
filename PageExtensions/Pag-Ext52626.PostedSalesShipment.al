@@ -9,7 +9,7 @@ pageextension 52626 "ORB Posted Sales Shipment" extends "Posted Sales Shipment"
                 Caption = 'Additional Fields';
                 Image = RelatedInformation;
                 ApplicationArea = all;
-                RunObject = page "Sales Shipment Hdr Add. Fields";
+                RunObject = page "ORB Sales Ship Hdr Add. Fields";
                 RunPageLink = "No." = field("No.");
             }
         }

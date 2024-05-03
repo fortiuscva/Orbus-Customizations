@@ -151,7 +151,7 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 Caption = 'Additional Fields';
                 Image = RelatedInformation;
                 ApplicationArea = all;
-                RunObject = page "Sales Header Additional Fields";
+                RunObject = page "ORB Sales Header Add. Fields";
                 RunPageLink = "Document Type" = field("Document Type"), "No." = field("No.");
             }
         }
