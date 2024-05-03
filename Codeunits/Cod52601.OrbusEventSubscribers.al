@@ -236,6 +236,19 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             SalesHeaderAdditionalFields.Delete();
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"DSHIP Event Publisher", OnAfterBuildPackageOptions, '', false, false)]
+    local procedure "DSHIP Event Publisher_OnAfterBuildPackageOptions"(docType: Enum "DSHIP Document Type"; docNo: Code[50]; licensePlate: Code[20]; var packOptions: Record "DSHIP Package Options")
+    var
+        SalesHeaderAdditionalFields: Record "Sales Header Additional Fields";
+    begin
+        SalesHeaderAdditionalFields.SetRange("Document Type", SalesHeaderAdditionalFields."Document Type"::Order);
+        SalesHeaderAdditionalFields.SetRange("No.", packOptions."License Plate No.");
+        if SalesHeaderAdditionalFields.FindFirst() then begin
+            packOptions.Validate("Payment Type", SalesHeaderAdditionalFields."ORB Payment Type");
+        end;
+
+    end;
+
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
 }

@@ -38,6 +38,31 @@ page 52614 "ORB Magento Sal. Hdr. Adl. Det"
                 {
                     ToolTip = 'Specifies the value of the Production timeline field.';
                 }
+                field(PaymentType; Rec."ORB Payment Type")
+                {
+                    ToolTip = 'Specifies the value of the Payment Type field.';
+                }
+                field(PaymentAccountNo; Rec."ORB Payment Account No.")
+                {
+                    ToolTip = 'Specifies the value of the Payment Account No. field.';
+                }
+                field(PaymentProvince; Rec."ORB Payment Province")
+                {
+                    ToolTip = 'Specifies the value of the Payment Province field.';
+                }
+                field(PaymentState; Rec."ORB Payment Province")
+                {
+                    ToolTip = 'Specifies the value of the Payment Province field.';
+                }
+                field(PaymentPostalCode; Rec."ORB Payment Postal Code")
+                {
+                    ToolTip = 'Specifies the value of the Payment Postal Code field.';
+                }
+                field(PaymentCountryCode; Rec."ORB Payment Country Code")
+                {
+                    ToolTip = 'Specifies the value of the Payment Country Code field.';
+                }
+
             }
         }
     }
