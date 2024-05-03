@@ -1,4 +1,4 @@
-table 52603 "Sales Header Additional Fields"
+table 52603 "ORB Sales Header Add. Fields"
 {
     Caption = 'Sales Header Additional Fields';
     DataClassification = CustomerContent;
@@ -21,24 +21,24 @@ table 52603 "Sales Header Additional Fields"
         {
             Caption = 'Production timeline';
         }
-        field(52602; "ORB Payment Type"; Option)
+        field(52602; "Payment Type"; Option)
         {
             OptionMembers = " ",Sender,THIRD_PARTY,RECEIVER,COLLECT;
             Caption = 'Payment Type';
         }
-        field(52603; "ORB Payment Account No."; Text[100])
+        field(52603; "Payment Account No."; Text[100])
         {
             Caption = 'Payment Account No.';
         }
-        field(52604; "ORB Payment Province"; Code[50])
+        field(52604; "Payment Province"; Code[50])
         {
             Caption = 'Payment State';
         }
-        field(52605; "ORB Payment Postal Code"; Code[50])
+        field(52605; "Payment Postal Code"; Code[50])
         {
             Caption = 'Payment Zip';
         }
-        field(52606; "ORB Payment Country Code"; Code[50])
+        field(52606; "Payment Country Code"; Code[50])
         {
             Caption = 'Payment Country';
         }

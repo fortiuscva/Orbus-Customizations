@@ -13,8 +13,8 @@ page 52614 "ORB Magento Sal. Hdr. Adl. Det"
     ModifyAllowed = true;
     DeleteAllowed = true;
     InsertAllowed = true;
-    SourceTable = "Sales Header Additional Fields";
-    Permissions = tabledata "Sales Header Additional Fields" = rmid;
+    SourceTable = "ORB Sales Header Add. Fields";
+    Permissions = tabledata "ORB Sales Header Add. Fields" = rmid;
 
     layout
     {
@@ -38,27 +38,27 @@ page 52614 "ORB Magento Sal. Hdr. Adl. Det"
                 {
                     ToolTip = 'Specifies the value of the Production timeline field.';
                 }
-                field(PaymentType; Rec."ORB Payment Type")
+                field(PaymentType; Rec."Payment Type")
                 {
                     ToolTip = 'Specifies the value of the Payment Type field.';
                 }
-                field(PaymentAccountNo; Rec."ORB Payment Account No.")
+                field(PaymentAccountNo; Rec."Payment Account No.")
                 {
                     ToolTip = 'Specifies the value of the Payment Account No. field.';
                 }
-                field(PaymentProvince; Rec."ORB Payment Province")
+                field(PaymentProvince; Rec."Payment Province")
                 {
                     ToolTip = 'Specifies the value of the Payment Province field.';
                 }
-                field(PaymentState; Rec."ORB Payment Province")
+                field(PaymentState; Rec."Payment Province")
                 {
                     ToolTip = 'Specifies the value of the Payment Province field.';
                 }
-                field(PaymentPostalCode; Rec."ORB Payment Postal Code")
+                field(PaymentPostalCode; Rec."Payment Postal Code")
                 {
                     ToolTip = 'Specifies the value of the Payment Postal Code field.';
                 }
-                field(PaymentCountryCode; Rec."ORB Payment Country Code")
+                field(PaymentCountryCode; Rec."Payment Country Code")
                 {
                     ToolTip = 'Specifies the value of the Payment Country Code field.';
                 }
