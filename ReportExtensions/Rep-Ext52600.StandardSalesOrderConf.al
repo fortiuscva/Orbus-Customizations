@@ -26,10 +26,25 @@ reportextension 52600 "ORB Standard Sales-Order Conf." extends "Standard Sales -
             }
             column(ORBLocationCodeLblLcl; LocationCodeLblLcl)
             { }
+            column(ORBWillcallinfoLcl; WillcallinfoLcl)
+            { }
+        }
+
+        modify(Header)
+        {
+            trigger OnAfterAfterGetRecord()
+            begin
+                if Header."Shipping Agent Code" = 'WILL-CALL' then
+                    WillcallinfoLcl := 'Tax will be added at time of final invoice if applicable'
+                else
+                    WillcallinfoLcl := '';
+            end;
+
         }
     }
     var
         ShippingAgentCodeLblLcl: Label 'Shipping Agent Code';
         ShippingAgentServiceCodeLblLcl: Label 'Shipping Agent Service Code';
         LocationCodeLblLcl: Label 'Location Code';
+        WillcallinfoLcl: Text[1000];
 }
