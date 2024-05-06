@@ -174,7 +174,10 @@ page 52610 "ORB Magento Sales Hdr. Details"
                 {
                     Caption = 'discountAmount', Locked = true;
                 }
-
+                field(requireReview; Rec."ORB Require Review")
+                {
+                    Caption = 'orbRequireReview', Locked = true;
+                }
             }
         }
     }
