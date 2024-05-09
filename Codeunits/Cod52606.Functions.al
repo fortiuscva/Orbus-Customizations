@@ -60,6 +60,7 @@ codeunit 52606 "ORB Functions"
         WarehouseEntryRecLcl: Record "Warehouse Entry";
         WarehouseEntry2RecLcl: Record "Warehouse Entry";
     begin
+        //Open Picks quantity
         WarehouseActLinRecLcl.Reset();
         WarehouseActLinRecLcl.SetCurrentKey("Source No.", "Source Line No.", "Source Subline No.", "Bin Code", "Action Type");
         WarehouseActLinRecLcl.SetRange("Source No.", ProdOrderComponents."Prod. Order No.");
@@ -70,6 +71,7 @@ codeunit 52606 "ORB Functions"
         IF WarehouseActLinRecLcl.FindSet() then
             WarehouseActLinRecLcl.CalcSums(Quantity);
 
+        //Registered Pick Qty
         WarehouseEntryRecLcl.Reset();
         WarehouseEntryRecLcl.SetCurrentKey("Source No.", "Source Line No.", "Source Subline No.", "Bin Code", "Reference Document");
         WarehouseEntryRecLcl.SetRange("Source No.", ProdOrderComponents."Prod. Order No.");
@@ -80,6 +82,7 @@ codeunit 52606 "ORB Functions"
         IF WarehouseEntryRecLcl.FindSet() then
             WarehouseEntryRecLcl.CalcSums(Quantity);
 
+        //Consumptions posted against the line
         WarehouseEntry2RecLcl.Reset();
         WarehouseEntry2RecLcl.SetCurrentKey("Source No.", "Source Line No.", "Source Subline No.", "Bin Code", "Reference Document");
         WarehouseEntry2RecLcl.SetRange("Source No.", ProdOrderComponents."Prod. Order No.");
