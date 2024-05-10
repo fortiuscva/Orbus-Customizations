@@ -45,32 +45,7 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             Caption = 'Require Review';
             DataClassification = ToBeClassified;
         }
-        modify("Sell-To Contact No. (Custom)")
-        {
-            trigger OnAfterValidate()
-            var
-                contact: Record Contact;
-            begin
-                contact.SetRange("No.", "Sell-To Contact No. (Custom)");
-                if contact.FindFirst() then begin
-                    Rec."Sell-To Contact No. (Custom)" := Contact."No.";
-                    Rec."Sell-to Contact No." := Contact."No.";
-                    Rec."Sell-To Email (Custom)" := Contact."E-Mail";
-                    Rec."Sell-to E-Mail" := Contact."E-Mail";
-                    Rec."Sell-To Phone No. (Custom)" := Contact."Phone No.";
-                    Rec."Sell-to Phone No." := Contact."Phone No.";
-                    Rec."Sell-To Contact Name (Custom)" := Contact.Name;
-                    Rec."Sell-to Contact" := Contact.Name;
-                    Rec."Bill-to Contact No." := Contact."No.";
-                    Rec."Bill-to Contact" := Contact.Name;
-                    Rec."Ship-to Contact" := Contact.Name;
-                    Rec.Modify();
-                end;
 
-            end;
-
-            //end;
-        }
 
     }
 
@@ -83,8 +58,27 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
     end;
 
     trigger OnAfterInsert()
+    var
+        contact: Record Contact;
     begin
+        if GuiAllowed then
+            exit;
         Rec.Validate("Location Code", "ORB Magento Location Code");
+        contact.SetRange("No.", "Sell-To Contact No. (Custom)");
+        if contact.FindFirst() then begin
+            Rec."Sell-To Contact No. (Custom)" := Contact."No.";
+            Rec."Sell-to Contact No." := Contact."No.";
+            Rec."Sell-To Email (Custom)" := Contact."E-Mail";
+            Rec."Sell-to E-Mail" := Contact."E-Mail";
+            Rec."Sell-To Phone No. (Custom)" := Contact."Phone No.";
+            Rec."Sell-to Phone No." := Contact."Phone No.";
+            Rec."Sell-To Contact Name (Custom)" := Contact.Name;
+            Rec."Sell-to Contact" := Contact.Name;
+            Rec."Bill-to Contact No." := Contact."No.";
+            Rec."Bill-to Contact" := Contact.Name;
+            Rec."Ship-to Contact" := Contact.Name;
+            //Rec.Modify();
+        end;
         Rec.Modify();
     end;
 }
