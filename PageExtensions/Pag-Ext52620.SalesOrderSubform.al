@@ -2,15 +2,6 @@ pageextension 52620 "ORB Sales Order Subform" extends "Sales Order Subform"
 {
     layout
     {
-        addlast(Control1)
-        {
-            field("ORB Magento Artwork Job ID"; Rec."ORB Magento Artwork Job ID")
-            {
-                ApplicationArea = all;
-                ToolTip = 'Specifies the Magento Artwork Job ID of Sales';
-            }
-        }
-
         modify(Quantity)
         {
             trigger OnAfterValidate()
@@ -18,8 +9,6 @@ pageextension 52620 "ORB Sales Order Subform" extends "Sales Order Subform"
                 DocumentTotals: Codeunit "Document Totals";
                 ItemRecLcl: Record Item;
             begin
-                if not GuiAllowed then
-                    exit;
                 if (rec.Type = rec.Type::Item) and (rec.Quantity <> 0) then begin
                     OrbusSingleInstanceCUGbl.SetExplodeBOMConfirm(true);
                     if (ItemRecLcl.get(rec."No.")) and (rec."Prepmt. Amt. Inv." = 0) then begin
@@ -32,7 +21,6 @@ pageextension 52620 "ORB Sales Order Subform" extends "Sales Order Subform"
                     OrbusSingleInstanceCUGbl.SetExplodeBOMConfirm(false);
                     CurrPage.Update(false);
                 end;
-
             end;
         }
     }

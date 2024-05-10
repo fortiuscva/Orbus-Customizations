@@ -54,8 +54,29 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
     end;
 
     trigger OnAfterInsert()
+    var
+        contactRecLcl: Record Contact;
     begin
-        Rec.Validate("Location Code", "ORB Magento Location Code");
+        if GuiAllowed then
+            exit;
+        if "ORB Magento Location Code" <> '' then
+            Rec.Validate("Location Code", "ORB Magento Location Code");
+        if "Sell-To Contact No. (Custom)" <> '' then begin
+            contactRecLcl.SetRange("No.", "Sell-To Contact No. (Custom)");
+            if contactRecLcl.FindFirst() then begin
+                Rec."Sell-To Contact No. (Custom)" := contactRecLcl."No.";
+                Rec."Sell-to Contact No." := contactRecLcl."No.";
+                Rec."Sell-To Email (Custom)" := contactRecLcl."E-Mail";
+                Rec."Sell-to E-Mail" := contactRecLcl."E-Mail";
+                Rec."Sell-To Phone No. (Custom)" := contactRecLcl."Phone No.";
+                Rec."Sell-to Phone No." := contactRecLcl."Phone No.";
+                Rec."Sell-To Contact Name (Custom)" := contactRecLcl.Name;
+                Rec."Sell-to Contact" := contactRecLcl.Name;
+                Rec."Bill-to Contact No." := contactRecLcl."No.";
+                Rec."Bill-to Contact" := contactRecLcl.Name;
+                Rec."Ship-to Contact" := contactRecLcl.Name;
+            end;
+        end;
         Rec.Modify();
     end;
 }

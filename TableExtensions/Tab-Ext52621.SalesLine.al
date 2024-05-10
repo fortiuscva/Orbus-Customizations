@@ -7,12 +7,12 @@ tableextension 52621 "ORB Sales Line" extends "Sales Line"
             Caption = 'Magento Artwork Job ID';
             DataClassification = ToBeClassified;
         }
-        field(50118; "ORB Ship-to State_fl"; Text[50])
+        field(52118; "ORB Ship-to State_fl"; Text[50])
         {
             Caption = 'State';
             Editable = false;
             FieldClass = FlowField;
-            CalcFormula = lookup("Sales Header"."Ship-to County" where("No." = field("Document No.")));
+            CalcFormula = lookup("Sales Header"."Ship-to County" where("Document Type" = field("Document Type"), "No." = field("Document No.")));
         }
         field(50119; "ORB Explode"; Boolean)
         {
@@ -57,22 +57,24 @@ tableextension 52621 "ORB Sales Line" extends "Sales Line"
                 DocumentTotals: Codeunit "Document Totals";
             begin
                 //if CurrFieldNo = FieldNo(Quantity) then begin
-
+                //end;
             end;
-
-            //end;
         }
     }
 
     trigger OnAfterModify()
     begin
-
+        if GuiAllowed then
+            exit;
         Rec.Validate("ORB Explode", true);
         Rec.Modify();
     end;
 
     trigger OnAfterInsert()
     begin
+        if GuiAllowed then
+            exit;
+
         if Rec.Quantity <> 0 then begin
             Rec.Validate("ORB Explode", true);
             Rec.Modify();
