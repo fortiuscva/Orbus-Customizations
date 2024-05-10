@@ -17,5 +17,38 @@ pageextension 52608 "ORB Posted Sales Invoice" extends "Posted Sales Invoice"
                 Editable = false;
             }
         }
+        addlast(General)
+        {
+            field("Magento Order #"; Rec."ORB Magento Order #")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Specifies the Magento Order # of Sales';
+            }
+            // field("ORB Magento Artwork Job ID"; Rec."ORB Magento Artwork Job ID")
+            // {
+            //     ApplicationArea = all;
+            //     ToolTip = 'Specifies the Magento Artwork Job ID of Sales';
+            // }
+            field("ORB Magento CC 4 Digits"; Rec."ORB Magento CC 4 Digits")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Specifies the Magento CC 4 Digits of Sales';
+            }
+        }
     }
+    actions
+    {
+        addlast(Invoice)
+        {
+            action("ORB Sales Inv Header Addl Fields")
+            {
+                Caption = 'Additional Fields';
+                Image = RelatedInformation;
+                ApplicationArea = all;
+                RunObject = page "ORB Sales Inv. Hdr Add. Fields";
+                RunPageLink = "No." = field("No.");
+            }
+        }
+    }
+
 }

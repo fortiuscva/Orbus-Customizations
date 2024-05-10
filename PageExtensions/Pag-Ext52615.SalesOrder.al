@@ -19,7 +19,39 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 ApplicationArea = all;
                 ToolTip = 'Specifies the International Contact of Sales';
             }
+            field("Magento Order #"; Rec."ORB Magento Order #")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Specifies the Magento Order # of Sales';
+            }
+            // field("ORB Magento Artwork Job ID"; Rec."ORB Magento Artwork Job ID")
+            // {
+            //     ApplicationArea = all;
+            //     ToolTip = 'Specifies the Magento Artwork Job ID of Sales';
+            // }
+            field("ORB Magento CC 4 Digits"; Rec."ORB Magento CC 4 Digits")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Specifies the Magento CC 4 Digits of Sales';
+            }
+            field("ORB On Hold"; Rec."On Hold")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies if the document was put on hold when it was posted, for example because payment of the resulting customer ledger entries is overdue.';
+            }
+            field("ORB Require Review"; Rec."ORB Require Review")
+            {
+                ApplicationArea = All;
+            }
+            field("ORB Magento Location Code"; Rec."ORB Magento Location Code")
+            {
+                ApplicationArea = All;
+                Editable = false;
+                Visible = false;
+            }
         }
+
+
         modify("Payment Terms Code")
         {
             trigger OnBeforeValidate()
@@ -111,6 +143,17 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
             begin
                 OrbusFunctions.RestrictZeroTransactionAmountforCreditCardPayment(rec);
             end;
+        }
+        addafter("S&hipments")
+        {
+            action("ORB Sales Header Additional Fields")
+            {
+                Caption = 'Additional Fields';
+                Image = RelatedInformation;
+                ApplicationArea = all;
+                RunObject = page "ORB Sales Header Add. Fields";
+                RunPageLink = "Document Type" = field("Document Type"), "No." = field("No.");
+            }
         }
     }
 

@@ -150,6 +150,118 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
 
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::ArchiveManagement, OnAfterStoreSalesDocument, '', false, false)]
+    local procedure ArchiveManagement_OnAfterStoreSalesDocument(var SalesHeader: Record "Sales Header"; var SalesHeaderArchive: Record "Sales Header Archive")
+    var
+        SalesHeaderAdditionalFields: Record "ORB Sales Header Add. Fields";
+        SalesHeaderArchAddFields: Record "ORB Sales Hdr. Arch. Add. Flds";
+    begin
+        if SalesHeaderAdditionalFields.Get(SalesHeader."Document Type", SalesHeader."No.") then begin
+            SalesHeaderArchAddFields.Init();
+            SalesHeaderArchAddFields.TransferFields(SalesHeaderAdditionalFields);
+            SalesHeaderArchAddFields."Version No." := SalesHeaderArchive."Version No.";
+            SalesHeaderArchAddFields."Doc. No. Occurrence" := SalesHeaderArchive."Doc. No. Occurrence";
+            if not SalesHeaderArchAddFields.Insert() then
+                SalesHeaderArchAddFields.Modify();
+        end;
+    end;
+
+    /*
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::ArchiveManagement, OnAfterAutoArchiveSalesDocument, '', false, false)]
+    local procedure ArchiveManagement_OnAfterAutoArchiveSalesDocument(var SalesHeader: Record "Sales Header")
+    var
+        SalesHeaderAdditionalFields: Record "ORB Sales Header Add. Fields";
+        SalesHeaderArchAddFields: Record "ORB Sales Hdr. Arch. Add. Flds";
+    begin
+        if SalesHeaderAdditionalFields.Get(SalesHeader."Document Type", SalesHeader."No.") then begin
+            SalesHeaderArchAddFields.Init();
+            SalesHeaderArchAddFields.TransferFields(SalesHeaderAdditionalFields);
+            if not SalesHeaderArchAddFields.Insert() then
+                SalesHeaderArchAddFields.Modify();
+        end;
+    end;
+    */
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnAfterInsertShipmentHeader, '', false, false)]
+    local procedure "Sales-Post_OnAfterInsertShipmentHeader"(var SalesHeader: Record "Sales Header"; var SalesShipmentHeader: Record "Sales Shipment Header")
+    var
+        SalesHeaderAdditionalFields: Record "ORB Sales Header Add. Fields";
+        SalesShipmentHeaderAddFields: Record "ORB Sales Ship. Hdr Add. Flds";
+    begin
+        if SalesHeaderAdditionalFields.Get(SalesHeader."Document Type", SalesHeader."No.") then begin
+            SalesShipmentHeaderAddFields.Init();
+            SalesShipmentHeaderAddFields.TransferFields(SalesHeaderAdditionalFields);
+            SalesShipmentHeaderAddFields."No." := SalesShipmentHeader."No.";
+            if not SalesShipmentHeaderAddFields.Insert() then
+                SalesShipmentHeaderAddFields.Modify();
+        end;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnAfterInsertInvoiceHeader, '', false, false)]
+    local procedure "Sales-Post_OnAfterInsertInvoiceHeader"(var SalesHeader: Record "Sales Header"; var SalesInvHeader: Record "Sales Invoice Header")
+    var
+        SalesHeaderAdditionalFields: Record "ORB Sales Header Add. Fields";
+        SalesInvHeaderAddFields: Record "ORB Sales Inv. Hdr. Add. Flds";
+    begin
+        if SalesHeaderAdditionalFields.Get(SalesHeader."Document Type", SalesHeader."No.") then begin
+            SalesInvHeaderAddFields.Init();
+            SalesInvHeaderAddFields.TransferFields(SalesHeaderAdditionalFields);
+            SalesInvHeaderAddFields."No." := SalesInvHeader."No.";
+            if not SalesInvHeaderAddFields.Insert() then
+                SalesInvHeaderAddFields.Modify();
+        end;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnAfterInsertCrMemoHeader, '', false, false)]
+    local procedure "Sales-Post_OnAfterInsertCrMemoHeader"(var SalesHeader: Record "Sales Header"; var SalesCrMemoHeader: Record "Sales Cr.Memo Header")
+    var
+        SalesHeaderAdditionalFields: Record "ORB Sales Header Add. Fields";
+        SalesCrMemoHeaderAddFields: Record "ORB Sales Cr.M Hdr Add. Flds";
+    begin
+        if SalesHeaderAdditionalFields.Get(SalesHeader."Document Type", SalesHeader."No.") then begin
+            SalesCrMemoHeaderAddFields.Init();
+            SalesCrMemoHeaderAddFields.TransferFields(SalesHeaderAdditionalFields);
+            SalesCrMemoHeaderAddFields."No." := SalesCrMemoHeader."No.";
+            if not SalesCrMemoHeaderAddFields.Insert() then
+                SalesCrMemoHeaderAddFields.Modify();
+        end;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"PostSales-Delete", OnAfterInitDeleteHeader, '', false, false)]
+    local procedure "PostSales-Delete_OnAfterInitDeleteHeader"(SalesHeader: Record "Sales Header"; var SalesShipmentHeader: Record "Sales Shipment Header"; var SalesInvoiceHeader: Record "Sales Invoice Header"; var SalesCrMemoHeader: Record "Sales Cr.Memo Header"; var ReturnReceiptHeader: Record "Return Receipt Header"; var SalesInvoiceHeaderPrepmt: Record "Sales Invoice Header"; var SalesCrMemoHeaderPrepmt: Record "Sales Cr.Memo Header")
+    var
+        SalesHeaderAdditionalFields: Record "ORB Sales Header Add. Fields";
+    begin
+        if SalesHeaderAdditionalFields.Get(SalesHeader."Document Type", SalesHeader."No.") then
+            SalesHeaderAdditionalFields.Delete();
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"DSHIP Event Publisher", OnAfterBuildPackageOptions, '', false, false)]
+    local procedure "DSHIP Event Publisher_OnAfterBuildPackageOptions"(docType: Enum "DSHIP Document Type"; docNo: Code[50]; licensePlate: Code[20]; var packOptions: Record "DSHIP Package Options")
+    var
+        SalesHeaderAdditionalFields: Record "ORB Sales Header Add. Fields";
+    begin
+        if docType <> docType::"Sales Order" then
+            exit;
+        SalesHeaderAdditionalFields.SetRange("Document Type", SalesHeaderAdditionalFields."Document Type"::Order);
+        SalesHeaderAdditionalFields.SetRange("No.", docNo);
+        if SalesHeaderAdditionalFields.FindFirst() then begin
+            if SalesHeaderAdditionalFields."Payment Type" <> SalesHeaderAdditionalFields."Payment Type"::" " then
+                packOptions.Validate("Payment Type", SalesHeaderAdditionalFields."Payment Type");
+            if SalesHeaderAdditionalFields."Payment Account No." <> '' then
+                packOptions.Validate("Payment Account No.", SalesHeaderAdditionalFields."Payment Account No.");
+            if SalesHeaderAdditionalFields."Payment Country Code" <> '' then
+                packOptions.Validate("Payment Country Code", SalesHeaderAdditionalFields."Payment Country Code");
+            if SalesHeaderAdditionalFields."Payment Postal Code" <> '' then
+                packOptions.Validate("Payment Postal Code", SalesHeaderAdditionalFields."Payment Postal Code");
+            if SalesHeaderAdditionalFields."Payment Province" <> '' then
+                packOptions.Validate("Payment Province", SalesHeaderAdditionalFields."Payment Province");
+        end;
+        packOptions.Modify();
+
+
+    end;
+
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
 }
