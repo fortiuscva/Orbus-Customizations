@@ -23,5 +23,17 @@ tableextension 52609 "ORB Sales Line Archive" extends "Sales Line Archive"
                                                             "Version No." = field("Version No.")));
             Editable = false;
         }
+        field(52605; "ORB Magento Artwork Job ID"; Text[20])
+        {
+            Caption = 'Magento Artwork Job ID';
+            DataClassification = ToBeClassified;
+        }
+        field(52118; "ORB Ship-to State_fl"; Text[50])
+        {
+            Caption = 'State';
+            Editable = false;
+            FieldClass = FlowField;
+            CalcFormula = lookup("Sales Header Archive"."Ship-to County" where("Document Type" = field("Document Type"), "No." = field("Document No."), "Version No." = field("Version No.")));
+        }
     }
 }
