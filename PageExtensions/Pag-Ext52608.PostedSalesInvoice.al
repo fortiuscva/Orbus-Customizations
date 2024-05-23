@@ -2,6 +2,14 @@ pageextension 52608 "ORB Posted Sales Invoice" extends "Posted Sales Invoice"
 {
     layout
     {
+        addafter("No.")
+        {
+            field("ORB Magento Order #"; Rec."ORB Magento Order #")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Magento Order #';
+            }
+        }
         addbefore("Work Description")
         {
             field("ORB Email Sent by JQ"; Rec."ORB Email Sent by JQ")
