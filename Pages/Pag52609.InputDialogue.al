@@ -28,6 +28,8 @@ page 52609 "ORB Input Dialogue"
     begin
         if CloseAction = CloseAction::Cancel then
             exit;
+        if CloseAction = CloseAction::No then
+            exit;
         if ArtworkId = '' then
             if not confirmManagement.GetResponse(BlankQst, false) then
                 exit;
