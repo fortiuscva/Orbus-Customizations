@@ -44,5 +44,5 @@ page 52609 "ORB Input Dialogue"
     var
         OriginalSalesLine: Record "Sales Line";
         ArtworkId: Text[20];
-        BlankQst: Label 'You have not enetred any value. Do you want to update BLANK value?';
+        BlankQst: Label 'You have not assigned any value. Do you want to update BLANK value?';
 }
