@@ -2,6 +2,16 @@ pageextension 52620 "ORB Sales Order Subform" extends "Sales Order Subform"
 {
     layout
     {
+
+        addafter("No.")
+        {
+            field("ORB Magento Artwork Job ID"; Rec."ORB Magento Artwork Job ID")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Magento Artwork Job ID field.';
+                Editable = false;
+            }
+        }
         modify(Quantity)
         {
             trigger OnAfterValidate()
@@ -22,6 +32,30 @@ pageextension 52620 "ORB Sales Order Subform" extends "Sales Order Subform"
                     CurrPage.Update(false);
                 end;
             end;
+        }
+    }
+
+    actions
+    {
+
+        addafter(SelectMultiItems)
+        {
+            action("ORB Change JobWorkID")
+            {
+                ApplicationArea = All;
+                Caption = 'Change JobWork ID';
+                Image = UpdateDescription;
+                trigger OnAction()
+                var
+                    salesLine: Record "Sales Line";
+                    InputDialogue: Page "ORB Input Dialogue";
+                begin
+                    //Page.Run(Page::"ORB Input Dialogue", Rec);
+                    InputDialogue.SetOrderLine(Rec);
+                    InputDialogue.RunModal();
+                    CurrPage.Update(false);
+                end;
+            }
         }
     }
     var
