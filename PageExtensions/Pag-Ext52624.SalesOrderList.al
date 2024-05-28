@@ -1,5 +1,16 @@
 pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
 {
+    layout
+    {
+        addafter("No.")
+        {
+            field("ORB Magento Order #"; Rec."ORB Magento Order #")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Magento Order #';
+            }
+        }
+    }
     actions
     {
         addlast("O&rder")
