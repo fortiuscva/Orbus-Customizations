@@ -43,6 +43,13 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             Caption = 'Require Review';
             DataClassification = ToBeClassified;
         }
+        field(52625; "ORB Last Followup By"; Code[20])
+        {
+            Caption = 'Last Followup By';
+            TableRelation = "Salesperson/Purchaser";
+            DataClassification = CustomerContent;
+        }
+
     }
 
     trigger OnDelete()
