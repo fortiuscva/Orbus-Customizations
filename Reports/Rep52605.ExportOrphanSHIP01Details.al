@@ -103,15 +103,6 @@ report 52605 "Export Orphan SHIP01 Details"
         {
             area(content)
             {
-                group(Options)
-                {
-                    Caption = 'Options';
-                    field(InspectDataGbl; InspectDataGbl)
-                    {
-                        Caption = 'Inspect Data';
-                        ApplicationArea = All;
-                    }
-                }
             }
         }
     }
