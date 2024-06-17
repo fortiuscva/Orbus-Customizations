@@ -117,6 +117,8 @@ report 52605 "Export Orphan SHIP01 Details"
         //SHIP01OrderDetailsTempRecGbl.SetFilter("Orphan Qty.", '<>%1', 0);
         if SHIP01OrderDetailsTempRecGbl.FindSet() then
             repeat
+                clear(SalesShptLineRecLcl);
+                SalesShptLineRecLcl.Init();
                 if SHIP01OrderDetailsTempRecGbl."Source Document" = SHIP01OrderDetailsTempRecGbl."Source Document"::"S. Order" then begin
                     SalesShptLineRecLcl.Reset();
                     SalesShptLineRecLcl.SetRange("Order No.", SHIP01OrderDetailsTempRecGbl."Source No.");
