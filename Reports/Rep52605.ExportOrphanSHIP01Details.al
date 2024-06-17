@@ -127,7 +127,10 @@ report 52605 "Export Orphan SHIP01 Details"
         if SHIP01OrderDetailsTempRecGbl.FindSet() then
             repeat
                 if SHIP01OrderDetailsTempRecGbl."Source Document" = SHIP01OrderDetailsTempRecGbl."Source Document"::"S. Order" then begin
-                    if not SalesShptLineRecLcl.get(SHIP01OrderDetailsTempRecGbl."Source No.", SHIP01OrderDetailsTempRecGbl."Source Line No.") then
+                    SalesShptLineRecLcl.Reset();
+                    SalesShptLineRecLcl.SetRange("Order No.", SHIP01OrderDetailsTempRecGbl."Source No.");
+                    SalesShptLineRecLcl.SetRange("Order Line No.", SHIP01OrderDetailsTempRecGbl."Source Line No.");
+                    if not SalesShptLineRecLcl.FindFirst() then
                         SalesShptLineRecLcl.Init();
                 end;
                 PostedVarLcl := (SalesShptLineRecLcl."Document No." <> '');
