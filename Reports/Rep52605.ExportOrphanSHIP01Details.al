@@ -9,7 +9,7 @@ report 52605 "Export Orphan SHIP01 Details"
     {
         dataitem("Warehouse Entry"; "Warehouse Entry")
         {
-            RequestFilterFields = "Item No.", "Registering Date", "Source No.", "Reference No.";
+            RequestFilterFields = "Item No.", "Registering Date", "Source No.";
 
             trigger OnPreDataItem()
             var
@@ -23,9 +23,12 @@ report 52605 "Export Orphan SHIP01 Details"
                 TempExcelBufferRecGbl.AddColumn('Item No.', false, '', true, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
                 TempExcelBufferRecGbl.AddColumn('Variant Code', false, '', true, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
                 TempExcelBufferRecGbl.AddColumn('Bin Code', false, '', true, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
+                TempExcelBufferRecGbl.AddColumn('Description', false, '', true, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
+                TempExcelBufferRecGbl.AddColumn('Source Document', false, '', true, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
                 TempExcelBufferRecGbl.AddColumn('Order No.', false, '', true, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
                 TempExcelBufferRecGbl.AddColumn('Order Line No.', false, '', true, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
                 TempExcelBufferRecGbl.AddColumn('Quantity', false, '', true, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
+                TempExcelBufferRecGbl.AddColumn('Posted', false, '', true, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
                 TempExcelBufferRecGbl.AddColumn('Invoice No.', false, '', true, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
                 TempExcelBufferRecGbl.AddColumn('User ID', false, '', true, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
                 TempExcelBufferRecGbl.AddColumn('Deleted Date', false, '', true, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
@@ -33,11 +36,11 @@ report 52605 "Export Orphan SHIP01 Details"
                 TempExcelBufferRecGbl.AddColumn('Cancelled Date', false, '', true, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
                 TempExcelBufferRecGbl.NewRow();
 
-
                 //Retrieve all shipments posted for Bin Code SHIP01
                 SHIP01OrderDetailsTempRecGbl.Reset();
                 Clear(SHIP01OrderDetailsTempRecGbl);
                 SHIP01OrderDetailsTempRecGbl.DeleteAll();
+
 
                 SHIP01OrderDetailsTempRecGbl.Reset();
                 if SHIP01OrderDetailsTempRecGbl.FindLast() then
@@ -62,6 +65,7 @@ report 52605 "Export Orphan SHIP01 Details"
                 while GroupWhseOrderSHIP01QueryGbl.Read() do begin
                     SHIP01OrderDetailsTempRecGbl.Init();
                     SHIP01OrderDetailsTempRecGbl."Entry No." := NextEntryNoGbl;
+                    SHIP01OrderDetailsTempRecGbl."Source Document" := GroupWhseOrderSHIP01QueryGbl.Source_Document;
                     SHIP01OrderDetailsTempRecGbl."Source No." := GroupWhseOrderSHIP01QueryGbl.Source_No_;
                     SHIP01OrderDetailsTempRecGbl."Source Line No." := GroupWhseOrderSHIP01QueryGbl.Source_Line_No_;
                     SHIP01OrderDetailsTempRecGbl."Item No." := GroupWhseOrderSHIP01QueryGbl.Item_No_;
@@ -85,91 +89,53 @@ report 52605 "Export Orphan SHIP01 Details"
                     SHIP01OrderDetailsTempRecGbl.Insert();
                     NextEntryNoGbl += 1;
                 end;
-
-                //Retrieve all movements for all items after the first transaction date in this execution.
-                Clear(FirstTransDateVarLcl);
-                SHIP01OrderDetailsTempRecGbl.Reset();
-                SHIP01OrderDetailsTempRecGbl.SetCurrentKey("Last Transaction Date");
-                if SHIP01OrderDetailsTempRecGbl.FindFirst() then
-                    FirstTransDateVarLcl := SHIP01OrderDetailsTempRecGbl."Last Transaction Date";
-
-                clear(SHIP01WhseMvmtDetailsTempRecGbl);
-                SHIP01WhseMvmtDetailsTempRecGbl.Reset();
-                SHIP01WhseMvmtDetailsTempRecGbl.DeleteAll();
-
-                SHIP01WhseMvmtDetailsTempRecGbl.Init();
-                if SHIP01WhseMvmtDetailsTempRecGbl.FindLast() then
-                    NextMvmtEntryNoGbl := (SHIP01WhseMvmtDetailsTempRecGbl."Entry No." + 1)
-                else
-                    NextMvmtEntryNoGbl := 1;
-
-                if FirstTransDateVarLcl <> 0D then begin
-                    GroupWhseMvmtSHIP01QueryGbl.SetFilter("Registering_Date_Filter", '>%1', FirstTransDateVarLcl);
-                    GroupWhseMvmtSHIP01QueryGbl.Open();
-                    while GroupWhseMvmtSHIP01QueryGbl.Read() do begin
-                        SHIP01WhseMvmtDetailsTempRecGbl.Init();
-                        SHIP01WhseMvmtDetailsTempRecGbl."Entry No." := NextMvmtEntryNoGbl;
-                        SHIP01WhseMvmtDetailsTempRecGbl."Item No." := GroupWhseMvmtSHIP01QueryGbl.Item_No_;
-                        SHIP01WhseMvmtDetailsTempRecGbl."Variant Code" := GroupWhseMvmtSHIP01QueryGbl.Variant_Code;
-                        SHIP01WhseMvmtDetailsTempRecGbl."Location Code" := GroupWhseMvmtSHIP01QueryGbl.Location_Code;
-                        SHIP01WhseMvmtDetailsTempRecGbl."Bin Code" := GroupWhseMvmtSHIP01QueryGbl.Bin_Code;
-                        SHIP01WhseMvmtDetailsTempRecGbl."Movement Qty." := GroupWhseMvmtSHIP01QueryGbl.Qty___Base_;
-                        SHIP01WhseMvmtDetailsTempRecGbl."Remaining Mvmt. Qty." := GroupWhseMvmtSHIP01QueryGbl.Qty___Base_;
-                        SHIP01WhseMvmtDetailsTempRecGbl.Insert();
-                        NextMvmtEntryNoGbl += 1;
-                    end;
-                end;
-
-                //Loop through all entries and apply the movement to calculate real orphan qty. after the movement.    
-                SHIP01OrderDetailsTempRecGbl.Reset();
-                if SHIP01OrderDetailsTempRecGbl.FindSet() then
-                    repeat
-                        SHIP01WhseMvmtDetailsTempRecGbl.reset;
-                        SHIP01WhseMvmtDetailsTempRecGbl.SetRange("Item No.", SHIP01OrderDetailsTempRecGbl."Item No.");
-                        SHIP01WhseMvmtDetailsTempRecGbl.SetRange("Variant Code", SHIP01OrderDetailsTempRecGbl."Variant Code");
-                        SHIP01WhseMvmtDetailsTempRecGbl.SetRange("Location Code", SHIP01OrderDetailsTempRecGbl."Location Code");
-                        SHIP01WhseMvmtDetailsTempRecGbl.SetRange("Bin Code", SHIP01OrderDetailsTempRecGbl."Bin Code");
-                        SHIP01WhseMvmtDetailsTempRecGbl.SetFilter("Remaining Mvmt. Qty.", '>%1', 0);
-                        if SHIP01WhseMvmtDetailsTempRecGbl.FindSet() then
-                            repeat
-                                if SHIP01OrderDetailsTempRecGbl."Remaining Whse. Qty." > SHIP01WhseMvmtDetailsTempRecGbl."Remaining Mvmt. Qty." then begin
-                                    //AppliedQtyVarLcl := SHIP01OrderDetailsTempRecGbl."Remaining Whse. Qty." - SHIP01WhseMvmtDetailsTempRecGbl."Remaining Mvmt. Qty.";
-                                    AppliedQtyVarLcl := SHIP01WhseMvmtDetailsTempRecGbl."Remaining Mvmt. Qty.";
-                                    SHIP01OrderDetailsTempRecGbl."Applied Qty." += AppliedQtyVarLcl;
-                                    SHIP01OrderDetailsTempRecGbl."Remaining Whse. Qty." -= AppliedQtyVarLcl;
-                                    SHIP01WhseMvmtDetailsTempRecGbl."Remaining Mvmt. Qty." := 0
-                                end else begin
-                                    //AppliedQtyVarLcl := (SHIP01WhseMvmtDetailsTempRecGbl."Remaining Mvmt. Qty." - SHIP01OrderDetailsTempRecGbl."Remaining Whse. Qty.");
-                                    AppliedQtyVarLcl := SHIP01OrderDetailsTempRecGbl."Remaining Whse. Qty.";
-                                    SHIP01OrderDetailsTempRecGbl."Applied Qty." += AppliedQtyVarLcl;
-                                    SHIP01WhseMvmtDetailsTempRecGbl."Remaining Mvmt. Qty." -= AppliedQtyVarLcl;
-                                    SHIP01OrderDetailsTempRecGbl."Remaining Whse. Qty." := 0;
-                                end;
-                                SHIP01OrderDetailsTempRecGbl.Modify();
-                                SHIP01WhseMvmtDetailsTempRecGbl.Modify();
-                            until SHIP01WhseMvmtDetailsTempRecGbl.Next() = 0;
-                        if SHIP01OrderDetailsTempRecGbl."Remaining Whse. Qty." > 0 then begin
-                            SHIP01OrderDetailsTempRecGbl."Orphan Qty." := SHIP01OrderDetailsTempRecGbl."Remaining Whse. Qty.";
-                            SHIP01OrderDetailsTempRecGbl.Modify();
-                        end;
-                    until SHIP01OrderDetailsTempRecGbl.Next() = 0;
                 ExportToExcel();
+                OpenExcel();
             end;
         }
     }
+
+    requestpage
+    {
+        SaveValues = true;
+
+        layout
+        {
+            area(content)
+            {
+            }
+        }
+    }
     procedure ExportToExcel()
+    var
+        SalesShptLineRecLcl: Record "Sales Shipment Line";
+        PostedVarLcl: Boolean;
     begin
         //export data to excel
         SHIP01OrderDetailsTempRecGbl.Reset();
-        SHIP01OrderDetailsTempRecGbl.SetFilter("Orphan Qty.", '<>%1', 0);
+        SHIP01OrderDetailsTempRecGbl.SetFilter("Qty. in Warehouse", '<>%1', 0);
+        //SHIP01OrderDetailsTempRecGbl.SetFilter("Orphan Qty.", '<>%1', 0);
         if SHIP01OrderDetailsTempRecGbl.FindSet() then
             repeat
+                clear(SalesShptLineRecLcl);
+                SalesShptLineRecLcl.Init();
+                if SHIP01OrderDetailsTempRecGbl."Source Document" = SHIP01OrderDetailsTempRecGbl."Source Document"::"S. Order" then begin
+                    SalesShptLineRecLcl.Reset();
+                    SalesShptLineRecLcl.SetRange("Order No.", SHIP01OrderDetailsTempRecGbl."Source No.");
+                    SalesShptLineRecLcl.SetRange("Order Line No.", SHIP01OrderDetailsTempRecGbl."Source Line No.");
+                    if not SalesShptLineRecLcl.FindFirst() then
+                        SalesShptLineRecLcl.Init();
+                end;
+                PostedVarLcl := (SalesShptLineRecLcl."Document No." <> '');
                 TempExcelBufferRecGbl.AddColumn(SHIP01OrderDetailsTempRecGbl."Item No.", false, '', false, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
                 TempExcelBufferRecGbl.AddColumn(SHIP01OrderDetailsTempRecGbl."Variant Code", false, '', false, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
                 TempExcelBufferRecGbl.AddColumn(SHIP01OrderDetailsTempRecGbl."Bin Code", false, '', false, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
+                TempExcelBufferRecGbl.AddColumn(SHIP01OrderDetailsTempRecGbl.Description, false, '', false, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
+                TempExcelBufferRecGbl.AddColumn(SHIP01OrderDetailsTempRecGbl."Source Document", false, '', true, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
                 TempExcelBufferRecGbl.AddColumn(SHIP01OrderDetailsTempRecGbl."Source No.", false, '', false, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
                 TempExcelBufferRecGbl.AddColumn(SHIP01OrderDetailsTempRecGbl."Source Line No.", false, '', false, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
-                TempExcelBufferRecGbl.AddColumn(Format(SHIP01OrderDetailsTempRecGbl."Orphan Qty."), false, '', false, false, false, '', TempExcelBufferRecGbl."Cell Type"::Number);
+                TempExcelBufferRecGbl.AddColumn(Format(SHIP01OrderDetailsTempRecGbl."Qty. in Warehouse"), false, '', false, false, false, '', TempExcelBufferRecGbl."Cell Type"::Number);
+                TempExcelBufferRecGbl.AddColumn(Format(PostedVarLcl), false, '', false, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
                 TempExcelBufferRecGbl.AddColumn('', false, '', false, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
                 TempExcelBufferRecGbl.AddColumn('', false, '', false, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
                 TempExcelBufferRecGbl.AddColumn('', false, '', false, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
@@ -177,7 +143,10 @@ report 52605 "Export Orphan SHIP01 Details"
                 TempExcelBufferRecGbl.AddColumn('', false, '', false, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
                 TempExcelBufferRecGbl.NewRow();
             until SHIP01OrderDetailsTempRecGbl.Next() = 0;
+    end;
 
+    procedure OpenExcel()
+    begin
         TempExcelBufferRecGbl.CreateNewBook('Orphan SHIP01 Details');
         TempExcelBufferRecGbl.WriteSheet('SHIP01 Entries', CompanyName, UserId);
         TempExcelBufferRecGbl.CloseBook();
@@ -185,6 +154,7 @@ report 52605 "Export Orphan SHIP01 Details"
         TempExcelBufferRecGbl.SetFriendlyFilename('Orphan SHIP01 Details');
         TempExcelBufferRecGbl.OpenExcel();
     end;
+
 
 
     var
@@ -200,6 +170,12 @@ report 52605 "Export Orphan SHIP01 Details"
         ItemNoFilter: Text;
         NextEntryNoGbl: Integer;
         NextMvmtEntryNoGbl: Integer;
+        InspectDataGbl: Boolean;
+        NextOrderRawEntryNo: Integer;
+        NextMovementRawEntryNo: Integer;
+
+
+
 }
 
 
