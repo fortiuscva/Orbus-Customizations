@@ -19,7 +19,7 @@
             "type": "al",
             "tenant": "09c433f2-4ad2-49f4-b0e7-8562e0331493",
             "environmentType": "Sandbox",
-            "environmentName": "SandBoxUserTest060224",
+            "environmentName": "SandBox_ISV_UAT_033124",
             "startupObjectId": 9305,
             "startupObjectType": "Page",
             "breakOnError": true,
