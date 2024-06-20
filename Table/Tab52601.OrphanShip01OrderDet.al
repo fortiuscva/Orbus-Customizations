@@ -82,10 +82,25 @@ table 52601 "ORB Orphan Ship01 Order Det."
             Caption = 'Registration Date';
             DataClassification = CustomerContent;
         }
+        field(30; "Source Document"; Enum "Warehouse Journal Source Document")
+        {
+            BlankZero = true;
+            Caption = 'Source Document';
+        }
 
         field(67; "User ID"; Code[50])
         {
             Caption = 'User ID';
+            DataClassification = CustomerContent;
+        }
+        field(100; Description; Text[100])
+        {
+            Caption = 'Description';
+            DataClassification = CustomerContent;
+        }
+        field(102; Posted; Boolean)
+        {
+            Caption = 'Posted';
             DataClassification = CustomerContent;
         }
     }

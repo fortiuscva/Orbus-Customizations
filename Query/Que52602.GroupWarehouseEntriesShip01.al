@@ -7,7 +7,7 @@ query 52602 "Group Warehouse Entries Ship01"
     {
         dataitem(Warehouse_Entry; "Warehouse Entry")
         {
-            DataItemTableFilter = "Source Type" = const(37), "Source Subtype" = const(1), "Bin Code" = filter('SHIP01');
+            DataItemTableFilter = "Bin Code" = filter('SHIP01');
             filter(Registering_Date_Filter; "Registering Date")
             {
             }
@@ -15,6 +15,9 @@ query 52602 "Group Warehouse Entries Ship01"
             {
             }
             filter(Reference_No_Filter; "Reference No.")
+            {
+            }
+            column(Source_Document; "Source Document")
             {
             }
             column(Source_No_; "Source No.")
