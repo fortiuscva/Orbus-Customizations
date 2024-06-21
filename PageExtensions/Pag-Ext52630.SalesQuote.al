@@ -1,4 +1,4 @@
-pageextension 52630 "ORB SalesQuote" extends "Sales Quote"
+pageextension 52630 "ORB Sales Quote" extends "Sales Quote"
 {
     layout
     {
@@ -6,7 +6,7 @@ pageextension 52630 "ORB SalesQuote" extends "Sales Quote"
         {
             field("ORB Last Followup By"; Rec."ORB Last Followup By")
             {
-                Caption = 'Last Folloup By';
+                Caption = 'Last Followup By';
                 ApplicationArea = All;
                 ToolTip = 'Followup by the sales person';
             }
