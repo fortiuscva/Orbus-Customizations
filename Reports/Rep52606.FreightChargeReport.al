@@ -61,7 +61,7 @@ report 52606 "ORB Freight Charge Report"
 
             }
 
-            column(LicensepaymentType; LiceplatePaymentTypeGvar)
+            column(License_Plate_PaymentType; LiceplatePaymentTypeGvar)
             {
 
             }
@@ -97,7 +97,7 @@ report 52606 "ORB Freight Charge Report"
                 SalesInvoiceLineRecLvar.SetFilter("No.", 'RES0000018');
                 IF SalesInvoiceLineRecLvar.FINDSET() then begin
                     repeat
-                        InvoicedFreightChargeGvar := InvoicedFreightChargeGvar + SalesInvoiceLineRecLvar."Amount Including VAT";
+                        InvoicedFreightChargeGvar := InvoicedFreightChargeGvar + SalesInvoiceLineRecLvar.Amount;
                     until (SalesInvoiceLineRecLvar.next = 0);
                 end;
 
