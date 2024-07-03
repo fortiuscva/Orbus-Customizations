@@ -49,7 +49,12 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             TableRelation = "Salesperson/Purchaser";
             DataClassification = CustomerContent;
         }
-
+        field(52626; "ORB RUSH"; Text[20])
+        {
+            Caption = 'RUSH';
+            DataClassification = CustomerContent;
+            TableRelation = Priority;
+        }
     }
 
     trigger OnDelete()
