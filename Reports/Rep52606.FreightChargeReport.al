@@ -71,6 +71,11 @@ report 52606 "ORB Freight Charge Report"
 
             }
 
+            column(Location_Code; "Location Code")
+            {
+
+            }
+
             column(Order_CreatedBy; FreightOptionUserIDGvar)
             {
 
