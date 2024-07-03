@@ -71,6 +71,17 @@ report 52606 "ORB Freight Charge Report"
 
             }
 
+            column(Order_CreatedBy; FreightOptionUserIDGvar)
+            {
+
+            }
+            column(LicensePlate_ShipmentDate; LicenePlateShipmentDtTxGvar)
+            {
+
+            }
+
+
+
             trigger OnPreDataItem()
             begin
                 SetFilter("No.", 'PS*');
@@ -90,6 +101,8 @@ report 52606 "ORB Freight Charge Report"
                 LiceplatePaymentTypeGvar := '';
                 FreightCostGvar := 0;
                 LicenseplateFreightOption := '';
+                LicenePlateShipmentDtTxGvar := '';
+                FreightOptionUserIDGvar := '';
                 SalesInvoiceLineRecLvar.Reset();
                 SalesInvoiceLineRecLvar.SetCurrentKey(Type, "No.");
                 SalesInvoiceLineRecLvar.SetRange("Document No.", "Sales Invoice Header"."No.");
@@ -115,8 +128,11 @@ report 52606 "ORB Freight Charge Report"
                         LiceplatePaymentTypeGvar := Format(DSHIPPackageOptionsRecLvar."Payment Type");
                     DSHIPShipmentOptionsRecLvar.Reset();
                     DSHIPShipmentOptionsRecLvar.SetRange("Order ID", IWXLPHeaderRecLvar."Package Order ID");
-                    IF DSHIPShipmentOptionsRecLvar.FindFirst() then
+                    IF DSHIPShipmentOptionsRecLvar.FindFirst() then begin
                         LicenseplateFreightOption := Format(DSHIPShipmentOptionsRecLvar."Add Freight Line");
+                        IF (LicenseplateFreightOption) = 'Manual' then
+                            FreightOptionUserIDGvar := "Sales Invoice Header"."Sales Order Created By";
+                    end;
 
                 end;
             end;
@@ -139,5 +155,7 @@ report 52606 "ORB Freight Charge Report"
         LiceplatePaymentTypeGvar: Code[20];
         FreightCostGvar: Decimal;
         LicenseplateFreightOption: Text[20];
+        FreightOptionUserIDGvar: Text[100];
+        LicenePlateShipmentDtTxGvar: Text[10];
 
 }
