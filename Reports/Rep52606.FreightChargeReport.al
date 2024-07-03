@@ -123,6 +123,7 @@ report 52606 "ORB Freight Charge Report"
                 IWXLPHeaderRecLvar.Reset();
                 IWXLPHeaderRecLvar.SetRange("Shipped Source No.", "Order No.");
                 IF IWXLPHeaderRecLvar.FindSet() then begin
+                    LicenePlateShipmentDtTxGvar := Format(IWXLPHeaderRecLvar."Shipment Date");
                     DSHIPLabelDataRecLvar.Reset();
                     DSHIPLabelDataRecLvar.SetRange("License Plate No.", IWXLPHeaderRecLvar."No.");
                     IF DSHIPLabelDataRecLvar.FindFirst() then
