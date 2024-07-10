@@ -1,4 +1,4 @@
-table 52609 "ORB Sales Line Arch.Add.Fields"
+table 52613 "ORB Sales Line Arch.Add.Fields"
 {
     Caption = 'Sales Line Arch. Additional Fields';
     DataClassification = ToBeClassified;
