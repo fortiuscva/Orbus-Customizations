@@ -49,6 +49,11 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 Editable = false;
                 Visible = false;
             }
+            field("ORB RUSH"; Rec."ORB RUSH")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Specifies the value of the RUSH field.';
+            }
         }
 
 
