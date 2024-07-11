@@ -94,4 +94,46 @@ codeunit 52606 "ORB Functions"
 
         exit(WarehouseActLinRecLcl.Quantity + WarehouseEntryRecLcl.Quantity - Abs(WarehouseEntry2RecLcl.Quantity));
     end;
+
+    procedure UpdateTakeZone(WarehouseActHeaderPar: Record "Warehouse Activity Header")
+    var
+        WarehouseActLineRecLcl: Record "Warehouse Activity Line";
+        WarehouseActLine2RecLcl: Record "Warehouse Activity Line";
+        BinContentsRecLcl: Record "Bin Content";
+    begin
+        if not Confirm('Are you sure you want to update the "Take" line zone code', false) then
+            exit;
+
+        WarehouseActLineRecLcl.Reset();
+        WarehouseActLineRecLcl.SetRange("Activity Type", WarehouseActLineRecLcl."Activity Type"::Pick);
+        WarehouseActLineRecLcl.SetRange("No.", WarehouseActHeaderPar."No.");
+        WarehouseActLineRecLcl.SetRange("Action Type", WarehouseActLineRecLcl."Action Type"::Place);
+        if WarehouseActLineRecLcl.FindSet() then
+            repeat
+                WarehouseActLine2RecLcl.Reset();
+                WarehouseActLine2RecLcl.SetRange("Activity Type", WarehouseActLine2RecLcl."Activity Type"::Pick);
+                WarehouseActLine2RecLcl.SetRange("No.", WarehouseActLineRecLcl."No.");
+                WarehouseActLine2RecLcl.SetRange("Item No.", WarehouseActLineRecLcl."Item No.");
+                WarehouseActLine2RecLcl.SetRange("Source No.", WarehouseActLineRecLcl."Source No.");
+                WarehouseActLine2RecLcl.SetRange("Source Line No.", WarehouseActLineRecLcl."Source Line No.");
+                WarehouseActLine2RecLcl.SetRange("Action Type", WarehouseActLine2RecLcl."Action Type"::Place);
+                WarehouseActLine2RecLcl.SetFilter("Line No.", '<%1', WarehouseActLineRecLcl."Line No.");
+                if WarehouseActLine2RecLcl.FindLast() then begin
+                    WarehouseActLine2RecLcl.Validate("Zone Code", WarehouseActLineRecLcl."Zone Code");
+
+                    BinContentsRecLcl.Reset();
+                    BinContentsRecLcl.SetRange("Item No.", WarehouseActLine2RecLcl."Item No.");
+                    BinContentsRecLcl.SetRange("Location Code", WarehouseActLine2RecLcl."Location Code");
+                    BinContentsRecLcl.SetRange("Zone Code", WarehouseActLine2RecLcl."Zone Code");
+                    BinContentsRecLcl.SetFilter(Quantity, '>=%1', WarehouseActLine2RecLcl.Quantity);
+                    if BinContentsRecLcl.FindFirst() then
+                        WarehouseActLine2RecLcl.Validate("Bin Code", BinContentsRecLcl."Bin Code");
+
+                    WarehouseActLine2RecLcl.Modify();
+                end;
+            until WarehouseActLineRecLcl.Next() = 0;
+
+        if GuiAllowed then
+            Message('Warehouse Pick Lines updated.');
+    end;
 }
