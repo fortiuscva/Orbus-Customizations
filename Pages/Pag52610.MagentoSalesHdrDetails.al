@@ -122,7 +122,7 @@ page 52610 "ORB Magento Sales Hdr. Details"
                 {
                     ToolTip = 'Specifies the value of the Shipping Agent Service Code field.';
                 }
-                field(ShipmentDate; Rec."Shipment Date")
+                field(ShipmentDate; Rec."ORB Shipment Date")
                 {
                     ToolTip = 'Specifies the value of the Shipment Date field.';
                 }
