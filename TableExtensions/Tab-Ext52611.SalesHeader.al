@@ -43,6 +43,10 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             Caption = 'Require Review';
             DataClassification = ToBeClassified;
         }
+        field(52627; "ORB Shipment Date"; Date)
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
     trigger OnDelete()
@@ -61,6 +65,9 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             exit;
         if "ORB Magento Location Code" <> '' then
             Rec.Validate("Location Code", "ORB Magento Location Code");
+        if "ORB Shipment Date" <> 0D then
+            Rec.Validate("Shipment Date", "ORB Shipment Date");
+
         if "Sell-To Contact No. (Custom)" <> '' then begin
             contactRecLcl.SetRange("No.", "Sell-To Contact No. (Custom)");
             if contactRecLcl.FindFirst() then begin
