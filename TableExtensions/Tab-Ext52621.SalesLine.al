@@ -70,11 +70,20 @@ tableextension 52621 "ORB Sales Line" extends "Sales Line"
     }
 
     trigger OnAfterModify()
+    var
+        SalesHeader: Record "Sales Header";
     begin
         if GuiAllowed then
             exit;
         Rec.Validate("ORB Explode", true);
         Rec.Modify();
+        if Rec."Shortcut Dimension 2 Code" = '01' then
+            if SalesHeader.get(Rec."Document Type"::Order, Rec."Document No.") then
+                if not SalesHeader."Graphics Only" then begin
+                    SalesHeader.Validate("Graphics Only", true);
+                    SalesHeader.Modify();
+                end;
+
     end;
 
     trigger OnAfterInsert()
