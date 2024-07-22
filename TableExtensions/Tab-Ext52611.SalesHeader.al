@@ -2,6 +2,18 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
 {
     fields
     {
+        modify("Order Status")
+        {
+            trigger OnAfterValidate()
+            var
+                salesHeader: Record "Sales Header";
+                ORBFunctions: codeunit "ORB Functions";
+            begin
+                if Xrec."Order Status" = Xrec."Order Status"::Draft then
+                    ORBFunctions.SendOrderConfirmationEmailItem(Rec, true);
+            end;
+        }
+
         field(52610; "ORB Tax ID"; Code[20])
         {
             Caption = 'Tax ID';
@@ -59,6 +71,7 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         {
             DataClassification = ToBeClassified;
         }
+
     }
 
     trigger OnDelete()
@@ -79,6 +92,13 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             Rec.Validate("Location Code", "ORB Magento Location Code");
         if "ORB Shipment Date" <> 0D then
             Rec.Validate("Shipment Date", "ORB Shipment Date");
+        Rec.Validate("Ship-to Code", '');
+        Rec.Validate("Ship-to Name", Rec."Ship-to Name (Custom)");
+        Rec."Ship-to Address" := Rec."Ship-to Address (Custom)";
+        rec."Ship-to Address 2" := Rec."Ship-to Address 2 (Custom)";
+        rec."Ship-to City" := Rec."Ship-to City (Custom)";
+        Rec."Ship-to Post Code" := Rec."Ship-To Post Code (Custom)";
+        Rec."Ship-to Country/Region Code" := Rec."Ship-To CountryRegion (Custom)";
 
         if "Sell-To Contact No. (Custom)" <> '' then begin
             contactRecLcl.SetRange("No.", "Sell-To Contact No. (Custom)");
