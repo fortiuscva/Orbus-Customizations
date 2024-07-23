@@ -92,4 +92,48 @@ codeunit 52606 "ORB Functions"
 
         exit(WarehouseActLinRecLcl.Quantity + WarehouseEntryRecLcl.Quantity - Abs(WarehouseEntry2RecLcl.Quantity));
     end;
+
+    procedure SendOrderConfirmationEmailItem(SalesHeader: Record "Sales Header"; HideEditor: Boolean)
+    var
+        TempEmailItem: Record "Email Item" temporary;
+        Customer: Record Customer;
+        EmailScenrio: Enum "Email Scenario";
+    begin
+        Customer.Get(SalesHeader."Sell-to Customer No.");
+        TempEmailItem."Send to" := customer."E-Mail";
+        TempEmailItem."Subject" := 'Order Confirmation - ' + SalesHeader."No.";
+        TempEmailItem.SetBodyText(GenerateOrderConfirmationEmailBody());
+        TempEmailItem.Send(HideEditor, EmailScenrio::Default);
+    end;
+
+    procedure GetOrderConfirmationReportandLayoutCode(var ReportId: Integer; var LayoutCode: Code[20]; var ReportLayoutSelection: Record "Report Layout Selection")
+    var
+        Reportselections: Record "Report Selections";
+    begin
+        ReportId := Report::"ORB Email Confirmation Layout";
+        if ReportLayoutSelection.Get(ReportId, CompanyName) then;
+    end;
+
+
+    procedure GenerateOrderConfirmationEmailBody() BodyText: Text
+    var
+        ReportLayoutSelection: Record "Report Layout Selection";
+        TempBlob: Codeunit "Temp Blob";
+        ReportInStream: InStream;
+        ReportOutStream: OutStream;
+        LayoutCode: Code[20];
+        ReportId: Integer;
+        StartDate: Date;
+        EndDate: Date;
+    begin
+        TempBlob.CreateOutStream(ReportOutStream);
+        GetOrderConfirmationReportandLayoutCode(ReportId, LayoutCode, ReportLayoutSelection);
+        LayoutCode := ReportLayoutSelection."Custom Report Layout Code";
+        ReportLayoutSelection.SetTempLayoutSelected(LayoutCode);
+        Report.SaveAs(Report::"ORB Email Confirmation Layout", '', ReportFormat::Html, ReportOutStream);
+        ReportLayoutSelection.SetTempLayoutSelected('');
+        TempBlob.CreateInStream(ReportInStream);
+        ReportInStream.ReadText(BodyText);
+    end;
+
 }
