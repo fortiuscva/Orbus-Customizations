@@ -150,9 +150,10 @@ codeunit 52606 "ORB Functions"
         EmailScenrio: Enum "Email Scenario";
     begin
         Customer.Get(SalesHeader."Sell-to Customer No.");
-        TempEmailItem."Send to" := customer."E-Mail";
-        TempEmailItem."Subject" := 'Order Confirmation - ' + SalesHeader."No.";
+        TempEmailItem."Send to" := SalesHeader."Sell-To Email (Custom)";
+        TempEmailItem."Subject" := 'Orbus - Sales Order' + SalesHeader."No.";
         TempEmailItem.SetBodyText(GenerateOrderConfirmationEmailBody());
+        AddAttachmentToCustomerOrderConfirmation(TempEmailItem, SalesHeader);
         TempEmailItem.Send(HideEditor, EmailScenrio::Default);
     end;
 
@@ -163,7 +164,6 @@ codeunit 52606 "ORB Functions"
         ReportId := Report::"ORB Email Confirmation Layout";
         if ReportLayoutSelection.Get(ReportId, CompanyName) then;
     end;
-
 
     procedure GenerateOrderConfirmationEmailBody() BodyText: Text
     var
@@ -185,5 +185,37 @@ codeunit 52606 "ORB Functions"
         TempBlob.CreateInStream(ReportInStream);
         ReportInStream.ReadText(BodyText);
     end;
+
+    local procedure AddAttachmentToCustomerOrderConfirmation(var TempEmailItem: Record "Email Item" temporary; SalesHeader: Record "Sales Header")
+    var
+        ReportSelection: Record "Report Selections";
+        TempBlob: Codeunit "Temp Blob";
+        CustomerRecordRef: RecordRef;
+        StartDate: Date;
+        EndDate: Date;
+        ReportInStream: InStream;
+        ReportOutStream: OutStream;
+        IntialDate: Date;
+        ReportId: Integer;
+        ReportUsage: Enum "Report Selection Usage";
+        AttachmentFileNameLbl: Label 'Sales Order %1.pdf', Comment = '%1 Order No.';
+    begin
+        if SalesHeader."Document Type" = SalesHeader."Document Type"::Order then
+            ReportUsage := ReportSelection.Usage::"S.Order";
+        ReportSelection.SetRange(Usage, ReportUsage);
+        if ReportSelection.FindFirst() then;
+
+        //CustomerStatement.InitializeRequest(false, false, false, false, false, false, '', 0, false, StartDate, EndDate);
+
+        TempBlob.CreateOutStream(ReportOutStream);
+
+        CustomerRecordRef.GetTable(SalesHeader);
+
+        Report.SaveAs(ReportSelection."Report ID", '', ReportFormat::Pdf, ReportOutStream, CustomerRecordRef);
+
+        TempBlob.CreateInStream(ReportInStream);
+        TempEmailItem.AddAttachment(ReportInStream, StrSubstNo(AttachmentFileNameLbl, SalesHeader."No."));
+    end;
+
 
 }
