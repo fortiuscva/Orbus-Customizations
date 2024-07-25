@@ -199,20 +199,14 @@ codeunit 52606 "ORB Functions"
         ReportId: Integer;
         ReportUsage: Enum "Report Selection Usage";
         AttachmentFileNameLbl: Label 'Sales Order %1.pdf', Comment = '%1 Order No.';
+        ReportParameter: Label '<?xml version="1.0" standalone="yes"?><ReportParameters name="Standard Sales - Order Conf." id="1305"><Options><Field name="LogInteraction">true</Field><Field name="DisplayAssemblyInformation">false</Field><Field name="ArchiveDocument">false</Field></Options><DataItems><DataItem name="Header">VERSION(1) SORTING(Field1,Field3) WHERE(Field3=1(%1))</DataItem></DataItems></ReportParameters>';
     begin
         if SalesHeader."Document Type" = SalesHeader."Document Type"::Order then
             ReportUsage := ReportSelection.Usage::"S.Order";
         ReportSelection.SetRange(Usage, ReportUsage);
         if ReportSelection.FindFirst() then;
-
-        //CustomerStatement.InitializeRequest(false, false, false, false, false, false, '', 0, false, StartDate, EndDate);
-
         TempBlob.CreateOutStream(ReportOutStream);
-
-        CustomerRecordRef.GetTable(SalesHeader);
-
-        Report.SaveAs(ReportSelection."Report ID", '', ReportFormat::Pdf, ReportOutStream, CustomerRecordRef);
-
+        Report.SaveAs(ReportSelection."Report ID", StrSubstNo(ReportParameter, SalesHeader."No."), ReportFormat::Pdf, ReportOutStream);
         TempBlob.CreateInStream(ReportInStream);
         TempEmailItem.AddAttachment(ReportInStream, StrSubstNo(AttachmentFileNameLbl, SalesHeader."No."));
     end;
