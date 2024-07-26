@@ -151,7 +151,7 @@ codeunit 52606 "ORB Functions"
     begin
         Customer.Get(SalesHeader."Sell-to Customer No.");
         TempEmailItem."Send to" := SalesHeader."Sell-To Email (Custom)";
-        TempEmailItem."Subject" := 'Orbus - Sales Order' + SalesHeader."No.";
+        TempEmailItem."Subject" := 'Orbus Order #' + SalesHeader."No." + 'confirmation';
         TempEmailItem.SetBodyText(GenerateOrderConfirmationEmailBody());
         AddAttachmentToCustomerOrderConfirmation(TempEmailItem, SalesHeader);
         TempEmailItem.Send(HideEditor, EmailScenrio::Default);
