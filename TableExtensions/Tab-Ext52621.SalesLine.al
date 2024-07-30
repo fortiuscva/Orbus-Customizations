@@ -7,14 +7,20 @@ tableextension 52621 "ORB Sales Line" extends "Sales Line"
             trigger OnAfterValidate()
             var
                 salesHeader: Record "Sales Header";
+                SalesLine: Record "sales line";
             begin
-                if not GuiAllowed then
-                    if Rec."Shortcut Dimension 2 Code" = '01' then
+                if not GuiAllowed then begin
+                    SalesLine.SetRange("Document Type", Rec."Document Type");
+                    SalesLine.SetRange("Document No.", SalesLine."Document No.");
+                    SalesLine.SetRange("Shortcut Dimension 2 Code", '01');
+                    if SalesLine.IsEmpty then begin
                         if SalesHeader.get(Rec."Document Type"::Order, Rec."Document No.") then
                             if not SalesHeader."Graphics Only" then begin
                                 SalesHeader.Validate("Graphics Only", true);
                                 SalesHeader.Modify();
                             end;
+                    end;
+                end;
             end;
         }
         field(52605; "ORB Magento Artwork Job ID"; Text[20])
