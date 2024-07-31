@@ -326,8 +326,8 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
 
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Prod. Order Lines", OnBeforeProdOrderLineInsert, '', false, false)]
-    local procedure "Create Prod. Order Lines_OnBeforeProdOrderLineInsert"(var ProdOrderLine: Record "Prod. Order Line"; var ProductionOrder: Record "Production Order"; SalesLineIsSet: Boolean; var SalesLine: Record "Sales Line")
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Prod. Order from Sale", OnAfterCreateProdOrderFromSalesLine, '', false, false)]
+    local procedure "Create Prod. Order from Sale_OnAfterCreateProdOrderFromSalesLine"(var ProdOrder: Record "Production Order"; var SalesLine: Record "Sales Line")
     var
         SalesLineAddFieldsRecLcl: Record "ORB Sales Line Add. Fields";
         NewRecLink: Record "Record Link";
@@ -336,7 +336,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
     begin
         if SalesLineAddFieldsRecLcl.get(SalesLine."Document Type", SalesLine."Document No.", SalesLine."Line No.") then begin
             NewRecLink.Reset();
-            NewRecLink.SetRange("Record ID", ProdOrderLine.RecordId);
+            NewRecLink.SetRange("Record ID", ProdOrder.RecordId);
             if NewRecLink.FindLast() then
                 EntryNo := NewRecLink."Link ID" + 1
             else
@@ -344,7 +344,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
 
             NewRecLink.INIT;
             NewRecLink."Link ID" := EntryNo;
-            NewRecLink."Record ID" := ProdOrderLine.RECORDID;
+            NewRecLink."Record ID" := ProdOrder.RECORDID;
             NewRecLink.Note.CreateOutStream(outStr);
             outStr.WriteText(SalesLineAddFieldsRecLcl."Job URL");
             NewRecLink.INSERT;
