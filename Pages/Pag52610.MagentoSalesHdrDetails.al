@@ -146,6 +146,14 @@ page 52610 "ORB Magento Sales Hdr. Details"
                 {
                     Caption = 'createdAt', Locked = true;
                 }
+                field(modifiedAt; Rec.SystemModifiedAt)
+                {
+                    Caption = 'modifiedAt', Locked = true;
+                }
+                field(orderStatus; Rec."Order Status")
+                {
+                    Caption = 'orderStatus', Locked = true;
+                }
                 field(billToCountryRegionCode; DSHIPPackageOptionsRecGbl."Payment Country Code")
                 {
                     Caption = 'billToCountryRegionCode', Locked = true;
