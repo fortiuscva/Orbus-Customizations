@@ -80,6 +80,13 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             Rec.Validate("Location Code", "ORB Magento Location Code");
         if "ORB Shipment Date" <> 0D then
             Rec.Validate("Shipment Date", "ORB Shipment Date");
+        Rec.Validate("Ship-to Code", '');
+        Rec.Validate("Ship-to Name", Rec."Ship-to Name (Custom)");
+        Rec."Ship-to Address" := Rec."Ship-to Address (Custom)";
+        rec."Ship-to Address 2" := Rec."Ship-to Address 2 (Custom)";
+        rec."Ship-to City" := Rec."Ship-to City (Custom)";
+        Rec."Ship-to Post Code" := Rec."Ship-To Post Code (Custom)";
+        Rec."Ship-to Country/Region Code" := Rec."Ship-To CountryRegion (Custom)";
 
         if "Sell-To Contact No. (Custom)" <> '' then begin
             contactRecLcl.SetRange("No.", "Sell-To Contact No. (Custom)");

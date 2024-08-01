@@ -62,31 +62,31 @@ page 52610 "ORB Magento Sales Hdr. Details"
                 {
                     ToolTip = 'Specifies the value of the Ship-to Contact field.';
                 }
-                field(ShiptoName; Rec."Ship-to Name")
+                field(ShiptoName; Rec."Ship-to Name (Custom)")
                 {
                     ToolTip = 'Specifies the value of the Ship-to Name field.';
                 }
-                field(ShiptoAddress; Rec."Ship-to Address")
+                field(ShiptoAddress; Rec."Ship-to Address (Custom)")
                 {
                     ToolTip = 'Specifies the value of the Ship-to Address field.';
                 }
-                field(ShiptoAddress2; Rec."Ship-to Address 2")
+                field(ShiptoAddress2; Rec."Ship-to Address 2 (Custom)")
                 {
                     ToolTip = 'Specifies the value of the Ship-to-Address 2 field.';
                 }
-                field(ShiptoCity; Rec."Ship-to City")
+                field(ShiptoCity; Rec."Ship-to City (Custom)")
                 {
                     ToolTip = 'Specifies the value of the Ship-to City field.';
                 }
-                field(ShiptoCounty; Rec."Ship-to County")
+                field(ShiptoCounty; Rec."Ship-to County (Custom)")
                 {
                     ToolTip = 'Specifies the value of the Ship-to County field.';
                 }
-                field(ShiptoPostCode; Rec."Ship-to Post Code")
+                field(ShiptoPostCode; Rec."Ship-to Post Code (Custom)")
                 {
                     ToolTip = 'Specifies the value of the Ship-to Post Code field.';
                 }
-                field(ShiptoCountryRegionCode; Rec."Ship-to Country/Region Code")
+                field(ShiptoCountryRegionCode; Rec."Ship-To CountryRegion (Custom)")
                 {
                     ToolTip = 'Specifies the value of the Ship-to Country/Region Code field.';
                 }
@@ -202,4 +202,18 @@ page 52610 "ORB Magento Sales Hdr. Details"
 
         rec.CalcFields("Invoice Discount Amount");
     end;
+
+    trigger OnNewRecord(BelowxRec: Boolean)
+    begin
+        Rec."Ship-to Name" := Rec."Ship-to Name";
+        Rec."Ship-to Address" := Rec."Ship-to Address";
+    end;
+
+    trigger OnInsertRecord(BelowxRec: Boolean): Boolean
+    begin
+        Rec."Ship-to Name" := Rec."Ship-to Name";
+        Rec."Ship-to Address" := Rec."Ship-to Address";
+
+    end;
+
 }
