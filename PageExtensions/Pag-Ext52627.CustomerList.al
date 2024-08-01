@@ -12,7 +12,7 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
                 Caption = 'Default Street Address';
 
             }
-            field("ORB ShiptoState"; ShiptoStateVarGbl)
+            field("ORB Ship-to State"; Rec."ORB Ship-to State")
             {
                 ApplicationArea = All;
                 Editable = false;
@@ -35,7 +35,6 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
 
     Var
         StreetAddressVarGbl: Text;
-        ShiptoStateVarGbl: Text;
         ShiptoZipcodeVarGbl: Text;
 
     trigger OnAfterGetRecord()
@@ -46,11 +45,9 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
         ShiptoAddressRecLcl.SetRange("Customer No.", Rec."No.");
         ShiptoAddressRecLcl.SetRange(Code, Rec."Ship-to Code");
         If ShiptoAddressRecLcl.FindFirst() then begin
-            ShiptoStateVarGbl := ShiptoAddressRecLcl.County;
             StreetAddressVarGbl := ShiptoAddressRecLcl.Address;
             ShiptoZipcodeVarGbl := ShiptoAddressRecLcl."Post Code";
         end else begin
-            ShiptoStateVarGbl := '';
             StreetAddressVarGbl := '';
             ShiptoZipcodeVarGbl := '';
         end;
