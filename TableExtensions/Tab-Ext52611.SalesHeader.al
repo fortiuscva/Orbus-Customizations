@@ -10,7 +10,7 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
                 ORBFunctions: codeunit "ORB Functions";
             begin
                 if Xrec."Order Status" = Xrec."Order Status"::Draft then
-                    ORBFunctions.SendOrderConfirmationEmailItem(Rec, true);
+                    ORBFunctions.SendOrderConfirmationEmailItem(Rec, false);
             end;
         }
 
