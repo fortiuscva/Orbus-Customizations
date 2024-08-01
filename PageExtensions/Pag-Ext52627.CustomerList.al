@@ -12,9 +12,6 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
                 Caption = 'Ship-to Street Address';
 
             }
-
-
-
             field("ORB Ship-to State"; Rec."ORB Ship-to State")
             {
                 ApplicationArea = All;
@@ -39,7 +36,6 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
 
     Var
         StreetAddressVarGbl: Text;
-        ShiptoStateVarGbl: Text;
         ShiptoZipcodeVarGbl: Text;
 
     trigger OnAfterGetRecord()

@@ -56,7 +56,6 @@ tableextension 52603 "ORB Customer" extends Customer
             FieldClass = FlowField;
 
         }
-
     }
 
     var
