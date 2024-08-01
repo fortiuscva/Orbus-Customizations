@@ -2,6 +2,32 @@ tableextension 52621 "ORB Sales Line" extends "Sales Line"
 {
     fields
     {
+        modify("No.")
+        {
+            trigger OnAfterValidate()
+            var
+                salesHeader: Record "Sales Header";
+                SalesLine: Record "Sales Line";
+                SetGraphicsFlag: Boolean;
+            begin
+                SetGraphicsFlag := false;
+                if not GuiAllowed then begin
+                    SalesLine.SetRange("Document Type", Rec."Document Type");
+                    SalesLine.SetRange("Document No.", Rec."Document No.");
+                    SalesLine.SetRange("Shortcut Dimension 2 Code", '01');
+                    if not SalesLine.IsEmpty then
+                        SetGraphicsFlag := false
+                    else
+                        SetGraphicsFlag := true;
+                    if Rec."Shortcut Dimension 2 Code" = '01' then
+                        SetGraphicsFlag := false
+                end;
+                if SalesHeader.get(Rec."Document Type"::Order, Rec."Document No.") then begin
+                    SalesHeader.Validate("Graphics Only", SetGraphicsFlag);
+                    SalesHeader.Modify();
+                end;
+            end;
+        }
         field(52605; "ORB Magento Artwork Job ID"; Text[20])
         {
             Caption = 'Magento Artwork Job ID';
@@ -47,6 +73,13 @@ tableextension 52621 "ORB Sales Line" extends "Sales Line"
                 end;
             end;
         }
+        field(52119; "ORB Order Status"; Enum OrderStatus)
+        {
+            Caption = 'State';
+            Editable = false;
+            FieldClass = FlowField;
+            calcformula = Lookup("Sales Header"."Order Status" where("Document Type" = const(Order), "No." = field("Document No.")));
+        }
 
         modify(Quantity)
         {
@@ -63,11 +96,20 @@ tableextension 52621 "ORB Sales Line" extends "Sales Line"
     }
 
     trigger OnAfterModify()
+    var
+        SalesHeader: Record "Sales Header";
     begin
         if GuiAllowed then
             exit;
         Rec.Validate("ORB Explode", true);
         Rec.Modify();
+        if Rec."Shortcut Dimension 2 Code" = '01' then
+            if SalesHeader.get(Rec."Document Type"::Order, Rec."Document No.") then
+                if not SalesHeader."Graphics Only" then begin
+                    SalesHeader.Validate("Graphics Only", true);
+                    SalesHeader.Modify();
+                end;
+
     end;
 
     trigger OnAfterInsert()

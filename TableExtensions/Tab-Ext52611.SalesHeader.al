@@ -2,6 +2,18 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
 {
     fields
     {
+        modify("Order Status")
+        {
+            trigger OnAfterValidate()
+            var
+                salesHeader: Record "Sales Header";
+                ORBFunctions: codeunit "ORB Functions";
+            begin
+                if Xrec."Order Status" = Xrec."Order Status"::Draft then
+                    ORBFunctions.SendOrderConfirmationEmailItem(Rec, false);
+            end;
+        }
+
         field(52610; "ORB Tax ID"; Code[20])
         {
             Caption = 'Tax ID';
@@ -49,6 +61,16 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             TableRelation = "Salesperson/Purchaser";
             DataClassification = CustomerContent;
         }
+        field(52626; "ORB RUSH"; Text[20])
+        {
+            Caption = 'RUSH';
+            DataClassification = CustomerContent;
+            TableRelation = Priority;
+        }
+        field(52627; "ORB Shipment Date"; Date)
+        {
+            DataClassification = ToBeClassified;
+        }
 
     }
 
@@ -68,6 +90,16 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             exit;
         if "ORB Magento Location Code" <> '' then
             Rec.Validate("Location Code", "ORB Magento Location Code");
+        if "ORB Shipment Date" <> 0D then
+            Rec.Validate("Shipment Date", "ORB Shipment Date");
+        Rec.Validate("Ship-to Code", '');
+        Rec.Validate("Ship-to Name", Rec."Ship-to Name (Custom)");
+        Rec."Ship-to Address" := Rec."Ship-to Address (Custom)";
+        rec."Ship-to Address 2" := Rec."Ship-to Address 2 (Custom)";
+        rec."Ship-to City" := Rec."Ship-to City (Custom)";
+        Rec."Ship-to Post Code" := Rec."Ship-To Post Code (Custom)";
+        Rec."Ship-to Country/Region Code" := Rec."Ship-To CountryRegion (Custom)";
+
         if "Sell-To Contact No. (Custom)" <> '' then begin
             contactRecLcl.SetRange("No.", "Sell-To Contact No. (Custom)");
             if contactRecLcl.FindFirst() then begin

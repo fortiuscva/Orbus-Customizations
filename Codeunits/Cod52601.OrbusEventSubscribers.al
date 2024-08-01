@@ -166,6 +166,20 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         end;
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::ArchiveManagement, OnAfterStoreSalesLineArchive, '', false, false)]
+    local procedure ArchiveManagement_OnAfterStoreSalesLineArchive(var SalesHeader: Record "Sales Header"; var SalesLine: Record "Sales Line"; var SalesHeaderArchive: Record "Sales Header Archive"; var SalesLineArchive: Record "Sales Line Archive")
+    var
+        SalesLineAdditionalFields: Record "ORB Sales Line Add. Fields";
+        SalesLineArchAdditonalFields: Record "ORB Sales Line Arch.Add.Fields";
+    begin
+        if SaleslineAdditionalFields.Get(SalesLine."Document Type", SalesLine."Document No.", SalesLine."Line No.") then begin
+            SalesLineArchAdditonalFields.Init();
+            SalesLineArchAdditonalFields.TransferFields(SaleslineAdditionalFields);
+            if not SalesLineArchAdditonalFields.Insert() then
+                SalesLineArchAdditonalFields.Modify();
+        end;
+    end;
+
     /*
     [EventSubscriber(ObjectType::Codeunit, Codeunit::ArchiveManagement, OnAfterAutoArchiveSalesDocument, '', false, false)]
     local procedure ArchiveManagement_OnAfterAutoArchiveSalesDocument(var SalesHeader: Record "Sales Header")
@@ -197,6 +211,22 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         end;
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnAfterInsertShipmentLine, '', false, false)]
+    local procedure "Sales-Post_OnAfterInsertShipmentLine"(var SalesHeader: Record "Sales Header"; var SalesLine: Record "Sales Line"; var SalesShptLine: Record "Sales Shipment Line"; PreviewMode: Boolean; xSalesLine: Record "Sales Line")
+    var
+        SalesLineAdditionalFields: Record "ORB Sales Line Add. Fields";
+        SalesShipLineAddtionalFields: Record "ORB Sales Ship. Line Add Flds";
+    begin
+        if SalesLineAdditionalFields.Get(SalesLine."Document Type", SalesLine."Document No.", SalesLine."Line No.") then begin
+            SalesShipLineAddtionalFields.Init();
+            SalesShipLineAddtionalFields.TransferFields(SalesLineAdditionalFields);
+            SalesShipLineAddtionalFields."Document No." := SalesShptLine."Document No.";
+            SalesShipLineAddtionalFields."Line No." := SalesShptLine."Line No.";
+            if not SalesShipLineAddtionalFields.Insert() then
+                SalesShipLineAddtionalFields.Modify();
+        end;
+    end;
+
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnAfterInsertInvoiceHeader, '', false, false)]
     local procedure "Sales-Post_OnAfterInsertInvoiceHeader"(var SalesHeader: Record "Sales Header"; var SalesInvHeader: Record "Sales Invoice Header")
     var
@@ -212,6 +242,23 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         end;
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnAfterSalesInvLineInsert, '', false, false)]
+    local procedure "Sales-Post_OnAfterSalesInvLineInsert"(var SalesInvLine: Record "Sales Invoice Line"; SalesInvHeader: Record "Sales Invoice Header"; SalesLine: Record "Sales Line"; ItemLedgShptEntryNo: Integer; WhseShip: Boolean; WhseReceive: Boolean; CommitIsSuppressed: Boolean; var SalesHeader: Record "Sales Header"; var TempItemChargeAssgntSales: Record "Item Charge Assignment (Sales)" temporary; var TempWhseShptHeader: Record "Warehouse Shipment Header" temporary; var TempWhseRcptHeader: Record "Warehouse Receipt Header" temporary; PreviewMode: Boolean)
+    var
+        SalesLineAdditionalFields: Record "ORB Sales Line Add. Fields";
+        SalesInvLineAdditonalFields: Record "ORB Sales Inv. Line Add. Flds";
+    begin
+        if SalesLineAdditionalFields.Get(SalesLine."Document Type", SalesLine."Document No.", SalesLine."Line No.") then begin
+            SalesInvLineAdditonalFields.Init();
+            SalesInvLineAdditonalFields.TransferFields(SalesLineAdditionalFields);
+            SalesInvLineAdditonalFields."Document No." := SalesInvLine."Document No.";
+            SalesInvLineAdditonalFields."Line No." := SalesInvLine."Line No.";
+            if not SalesInvLineAdditonalFields.Insert() then
+                SalesInvLineAdditonalFields.Modify();
+        end;
+    end;
+
+
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnAfterInsertCrMemoHeader, '', false, false)]
     local procedure "Sales-Post_OnAfterInsertCrMemoHeader"(var SalesHeader: Record "Sales Header"; var SalesCrMemoHeader: Record "Sales Cr.Memo Header")
     var
@@ -226,6 +273,23 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
                 SalesCrMemoHeaderAddFields.Modify();
         end;
     end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnAfterSalesCrMemoLineInsert, '', false, false)]
+    local procedure "Sales-Post_OnAfterSalesCrMemoLineInsert"(var SalesCrMemoLine: Record "Sales Cr.Memo Line"; SalesCrMemoHeader: Record "Sales Cr.Memo Header"; var SalesHeader: Record "Sales Header"; SalesLine: Record "Sales Line"; var TempItemChargeAssgntSales: Record "Item Charge Assignment (Sales)" temporary; CommitIsSuppressed: Boolean; WhseShip: Boolean; WhseReceive: Boolean; var TempWhseShptHeader: Record "Warehouse Shipment Header" temporary; var TempWhseRcptHeader: Record "Warehouse Receipt Header" temporary)
+    var
+        SalesLineAdditionalFields: Record "ORB Sales Line Add. Fields";
+        SalesCrMemoLineAdditonalFields: Record "ORB Sales CrM. Line Add. Flds";
+    begin
+        if SalesLineAdditionalFields.Get(SalesLine."Document Type", SalesLine."Document No.", SalesLine."Line No.") then begin
+            SalesCrMemoLineAdditonalFields.Init();
+            SalesCrMemoLineAdditonalFields.TransferFields(SalesLineAdditionalFields);
+            SalesCrMemoLineAdditonalFields."Document No." := SalesCrMemoLine."Document No.";
+            SalesCrMemoLineAdditonalFields."Line No." := SalesCrMemoLine."Line No.";
+            if not SalesCrMemoLineAdditonalFields.Insert() then
+                SalesCrMemoLineAdditonalFields.Modify();
+        end;
+    end;
+
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"PostSales-Delete", OnAfterInitDeleteHeader, '', false, false)]
     local procedure "PostSales-Delete_OnAfterInitDeleteHeader"(SalesHeader: Record "Sales Header"; var SalesShipmentHeader: Record "Sales Shipment Header"; var SalesInvoiceHeader: Record "Sales Invoice Header"; var SalesCrMemoHeader: Record "Sales Cr.Memo Header"; var ReturnReceiptHeader: Record "Return Receipt Header"; var SalesInvoiceHeaderPrepmt: Record "Sales Invoice Header"; var SalesCrMemoHeaderPrepmt: Record "Sales Cr.Memo Header")
@@ -260,6 +324,32 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         packOptions.Modify();
 
 
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Prod. Order from Sale", OnAfterCreateProdOrderFromSalesLine, '', false, false)]
+    local procedure "Create Prod. Order from Sale_OnAfterCreateProdOrderFromSalesLine"(var ProdOrder: Record "Production Order"; var SalesLine: Record "Sales Line")
+    var
+        SalesLineAddFieldsRecLcl: Record "ORB Sales Line Add. Fields";
+        NewRecLink: Record "Record Link";
+        EntryNo: Integer;
+    begin
+        if SalesLineAddFieldsRecLcl.get(SalesLine."Document Type", SalesLine."Document No.", SalesLine."Line No.") then begin
+            NewRecLink.Reset();
+            if NewRecLink.FindLast() then
+                EntryNo := NewRecLink."Link ID" + 1
+            else
+                EntryNo := 1;
+
+            NewRecLink.INIT;
+            NewRecLink."Link ID" := EntryNo;
+            NewRecLink."Record ID" := ProdOrder.RECORDID;
+            NewRecLink.URL1 := SalesLineAddFieldsRecLcl."Job URL";
+            NewRecLink.Type := NewRecLink.Type::Link;
+            NewRecLink."User ID" := UserId;
+            NewRecLink.Created := CreateDateTime(Today, Time);
+            NewRecLink.Company := CompanyName;
+            NewRecLink.INSERT;
+        end;
     end;
 
     var
