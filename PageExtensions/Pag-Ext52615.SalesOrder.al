@@ -65,6 +65,13 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 end;
             end;
         }
+        modify("Order Status")
+        {
+            trigger OnAfterValidate()
+            begin
+                CurrPage.Update(true);
+            end;
+        }
     }
     actions
     {

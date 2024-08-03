@@ -8,11 +8,16 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             var
                 salesHeader: Record "Sales Header";
                 ORBFunctions: codeunit "ORB Functions";
+                DocPrint: Codeunit "Document-Print";
             begin
-                /*
-                if Xrec."Order Status" = Xrec."Order Status"::Draft then
+
+                if Xrec."Order Status" = Xrec."Order Status"::Draft then begin
                     ORBFunctions.SendOrderConfirmationEmailItem(Rec, false);
-                */
+
+                    salesHeader.get(Rec."Document Type"::Order, Rec."No.");
+                    salesHeader."Order Status" := Rec."Order Status";
+                    Rec := salesHeader;
+                end;
             end;
         }
 
