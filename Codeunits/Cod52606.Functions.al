@@ -6,24 +6,26 @@ codeunit 52606 "ORB Functions"
         PaymentMethodLbl: label 'CREDITCARD';
         NoValidCreditCardErrorLbl: Label 'No Valid Credit Card Authorization Charged, Please Authorize Valid Credit Card to Release Sales Order.';
     begin
-        if SalesHeader."Payment Method Code" = PaymentMethodLbl then begin
-            EFTTransactionRecLcl.Reset();
-            EFTTransactionRecLcl.SetRange("Document Type", SalesHeader."Document Type");
-            EFTTransactionRecLcl.SetRange("Document No.", SalesHeader."No.");
-            //Charge|Settle|Capture|Refund|Credit|Return Settle|Authorize|Return Authorize|Voice Authorize
+        SalesHeader.CalcFields("Amount Including VAT");
+        if SalesHeader."Amount Including VAT" > 0 then
+            if SalesHeader."Payment Method Code" = PaymentMethodLbl then begin
+                EFTTransactionRecLcl.Reset();
+                EFTTransactionRecLcl.SetRange("Document Type", SalesHeader."Document Type");
+                EFTTransactionRecLcl.SetRange("Document No.", SalesHeader."No.");
+                //Charge|Settle|Capture|Refund|Credit|Return Settle|Authorize|Return Authorize|Voice Authorize
 
-            EFTTransactionRecLcl.SetFilter("Method Type", '%1|%2|%3|%4|%5|%6|%7|%8|%9', EFTTransactionRecLcl."Method Type"::Charge, EFTTransactionRecLcl."Method Type"::Settle,
-            EFTTransactionRecLcl."Method Type"::Capture, EFTTransactionRecLcl."Method Type"::Refund, EFTTransactionRecLcl."Method Type"::Credit, EFTTransactionRecLcl."Method Type"::"Return Settle",
-            EFTTransactionRecLcl."Method Type"::Authorize, EFTTransactionRecLcl."Method Type"::"Return Authorize", EFTTransactionRecLcl."Method Type"::"Voice Authorize");
+                EFTTransactionRecLcl.SetFilter("Method Type", '%1|%2|%3|%4|%5|%6|%7|%8|%9', EFTTransactionRecLcl."Method Type"::Charge, EFTTransactionRecLcl."Method Type"::Settle,
+                EFTTransactionRecLcl."Method Type"::Capture, EFTTransactionRecLcl."Method Type"::Refund, EFTTransactionRecLcl."Method Type"::Credit, EFTTransactionRecLcl."Method Type"::"Return Settle",
+                EFTTransactionRecLcl."Method Type"::Authorize, EFTTransactionRecLcl."Method Type"::"Return Authorize", EFTTransactionRecLcl."Method Type"::"Voice Authorize");
 
-            EFTTransactionRecLcl.Setfilter("Transaction Status", '%1|%2|%3', EFTTransactionRecLcl."Transaction Status"::Queued, EFTTransactionRecLcl."Transaction Status"::Batched,
-            EFTTransactionRecLcl."Transaction Status"::Approved);
-            EFTTransactionRecLcl.SetFilter("Expiration Filter", '<%1', WorkDate());
-            EFTTransactionRecLcl.CalcSums("Transaction Amount");
+                EFTTransactionRecLcl.Setfilter("Transaction Status", '%1|%2|%3', EFTTransactionRecLcl."Transaction Status"::Queued, EFTTransactionRecLcl."Transaction Status"::Batched,
+                EFTTransactionRecLcl."Transaction Status"::Approved);
+                EFTTransactionRecLcl.SetFilter("Expiration Filter", '<%1', WorkDate());
+                EFTTransactionRecLcl.CalcSums("Transaction Amount");
 
-            if EFTTransactionRecLcl."Transaction Amount" <= 0 then
-                Error(NoValidCreditCardErrorLbl);
-        end;
+                if EFTTransactionRecLcl."Transaction Amount" <= 0 then
+                    Error(NoValidCreditCardErrorLbl);
+            end;
     end;
 
     procedure CalcINBINQty(ProdOrderComponents: Record "Prod. Order Component"): Decimal
@@ -91,6 +93,55 @@ codeunit 52606 "ORB Functions"
             WarehouseEntry2RecLcl.CalcSums(Quantity);
 
         exit(WarehouseActLinRecLcl.Quantity + WarehouseEntryRecLcl.Quantity - Abs(WarehouseEntry2RecLcl.Quantity));
+    end;
+
+
+    procedure UpdateTakeZone(WarehouseActHeaderPar: Record "Warehouse Activity Header")
+    var
+        WarehouseActLineRecLcl: Record "Warehouse Activity Line";
+        WarehouseActLine2RecLcl: Record "Warehouse Activity Line";
+        BinContentsRecLcl: Record "Bin Content";
+        BinQtyFoundVarLcl: Boolean;
+    begin
+        if not Confirm('Are you sure you want to update the "Take" line zone code', false) then
+            exit;
+
+        WarehouseActLineRecLcl.Reset();
+        WarehouseActLineRecLcl.SetRange("Activity Type", WarehouseActLineRecLcl."Activity Type"::Pick);
+        WarehouseActLineRecLcl.SetRange("No.", WarehouseActHeaderPar."No.");
+        WarehouseActLineRecLcl.SetRange("Action Type", WarehouseActLineRecLcl."Action Type"::Place);
+        if WarehouseActLineRecLcl.FindSet() then
+            repeat
+                WarehouseActLine2RecLcl.Reset();
+                WarehouseActLine2RecLcl.SetRange("Activity Type", WarehouseActLine2RecLcl."Activity Type"::Pick);
+                WarehouseActLine2RecLcl.SetRange("No.", WarehouseActLineRecLcl."No.");
+                WarehouseActLine2RecLcl.SetRange("Item No.", WarehouseActLineRecLcl."Item No.");
+                WarehouseActLine2RecLcl.SetRange("Source No.", WarehouseActLineRecLcl."Source No.");
+                WarehouseActLine2RecLcl.SetRange("Source Line No.", WarehouseActLineRecLcl."Source Line No.");
+                WarehouseActLine2RecLcl.SetRange("Action Type", WarehouseActLine2RecLcl."Action Type"::Take);
+                WarehouseActLine2RecLcl.SetFilter("Line No.", '<%1', WarehouseActLineRecLcl."Line No.");
+                if WarehouseActLine2RecLcl.FindLast() then begin
+                    WarehouseActLine2RecLcl.Validate("Zone Code", WarehouseActLineRecLcl."Zone Code");
+
+                    Clear(BinQtyFoundVarLcl);
+                    BinContentsRecLcl.Reset();
+                    BinContentsRecLcl.SetRange("Item No.", WarehouseActLine2RecLcl."Item No.");
+                    BinContentsRecLcl.SetRange("Location Code", WarehouseActLine2RecLcl."Location Code");
+                    BinContentsRecLcl.SetRange("Zone Code", WarehouseActLine2RecLcl."Zone Code");
+                    if BinContentsRecLcl.FindFirst() then
+                        repeat
+                            if BinContentsRecLcl.CalcQtyAvailToTakeUOM() >= WarehouseActLine2RecLcl.Quantity then begin
+                                WarehouseActLine2RecLcl.Validate("Bin Code", BinContentsRecLcl."Bin Code");
+                                BinQtyFoundVarLcl := true;
+                            end;
+                        until (BinContentsRecLcl.Next() = 0) or BinQtyFoundVarLcl;
+
+                    WarehouseActLine2RecLcl.Modify();
+                end;
+            until WarehouseActLineRecLcl.Next() = 0;
+
+        if GuiAllowed then
+            Message('Warehouse Pick Lines updated.');
     end;
 
     procedure SendOrderConfirmationEmailItem(SalesHeader: Record "Sales Header"; HideEditor: Boolean)

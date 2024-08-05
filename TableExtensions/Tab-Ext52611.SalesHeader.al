@@ -8,9 +8,7 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             var
                 salesHeader: Record "Sales Header";
                 ORBFunctions: codeunit "ORB Functions";
-                DocPrint: Codeunit "Document-Print";
             begin
-
                 if Xrec."Order Status" = Xrec."Order Status"::Draft then begin
                     ORBFunctions.SendOrderConfirmationEmailItem(Rec, false);
 
@@ -69,6 +67,13 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             DataClassification = CustomerContent;
         }
 
+        field(52626; "ORB RUSH"; Text[20])
+        {
+            Caption = 'RUSH';
+            DataClassification = CustomerContent;
+            TableRelation = Priority;
+        }
+
         field(52627; "ORB Shipment Date"; Date)
         {
             DataClassification = ToBeClassified;
@@ -100,6 +105,7 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             Rec.Validate("Shipment Date", "ORB Shipment Date");
         ShippinAgenetCode := Rec."Shipping Agent Code";
         ShippingAgentServiceCode := Rec."Shipping Agent Service Code";
+
         Rec.Validate("Ship-to Code", '');
         Rec.Validate("Ship-to Name", Rec."Ship-to Name (Custom)");
         Rec."Ship-to Address" := Rec."Ship-to Address (Custom)";
