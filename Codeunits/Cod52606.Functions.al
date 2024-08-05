@@ -95,6 +95,7 @@ codeunit 52606 "ORB Functions"
         exit(WarehouseActLinRecLcl.Quantity + WarehouseEntryRecLcl.Quantity - Abs(WarehouseEntry2RecLcl.Quantity));
     end;
 
+
     procedure UpdateTakeZone(WarehouseActHeaderPar: Record "Warehouse Activity Header")
     var
         WarehouseActLineRecLcl: Record "Warehouse Activity Line";

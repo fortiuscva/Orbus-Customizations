@@ -9,10 +9,13 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
                 salesHeader: Record "Sales Header";
                 ORBFunctions: codeunit "ORB Functions";
             begin
-                /*
-                if Xrec."Order Status" = Xrec."Order Status"::Draft then
+                if Xrec."Order Status" = Xrec."Order Status"::Draft then begin
                     ORBFunctions.SendOrderConfirmationEmailItem(Rec, false);
-                */
+
+                    salesHeader.get(Rec."Document Type"::Order, Rec."No.");
+                    salesHeader."Order Status" := Rec."Order Status";
+                    Rec := salesHeader;
+                end;
             end;
         }
 
@@ -63,12 +66,14 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             TableRelation = "Salesperson/Purchaser";
             DataClassification = CustomerContent;
         }
+
         field(52626; "ORB RUSH"; Text[20])
         {
             Caption = 'RUSH';
             DataClassification = CustomerContent;
             TableRelation = Priority;
         }
+
         field(52627; "ORB Shipment Date"; Date)
         {
             DataClassification = ToBeClassified;
@@ -87,13 +92,20 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
     trigger OnAfterInsert()
     var
         contactRecLcl: Record Contact;
+        ShippinAgenetCode: Code[10];
+        ShippingAgentServiceCode: Code[20];
+
     begin
         if GuiAllowed then
             exit;
+
         if "ORB Magento Location Code" <> '' then
             Rec.Validate("Location Code", "ORB Magento Location Code");
         if "ORB Shipment Date" <> 0D then
             Rec.Validate("Shipment Date", "ORB Shipment Date");
+        ShippinAgenetCode := Rec."Shipping Agent Code";
+        ShippingAgentServiceCode := Rec."Shipping Agent Service Code";
+
         Rec.Validate("Ship-to Code", '');
         Rec.Validate("Ship-to Name", Rec."Ship-to Name (Custom)");
         Rec."Ship-to Address" := Rec."Ship-to Address (Custom)";
@@ -101,6 +113,8 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         rec."Ship-to City" := Rec."Ship-to City (Custom)";
         Rec."Ship-to Post Code" := Rec."Ship-To Post Code (Custom)";
         Rec."Ship-to Country/Region Code" := Rec."Ship-To CountryRegion (Custom)";
+        Rec.Validate("Shipping Agent Code", ShippinAgenetCode);
+        Rec.Validate("Shipping Agent Service Code", ShippingAgentServiceCode);
 
         if "Sell-To Contact No. (Custom)" <> '' then begin
             contactRecLcl.SetRange("No.", "Sell-To Contact No. (Custom)");

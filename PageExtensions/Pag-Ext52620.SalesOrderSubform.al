@@ -56,6 +56,7 @@ pageextension 52620 "ORB Sales Order Subform" extends "Sales Order Subform"
                     CurrPage.Update(false);
                 end;
             }
+
             action("ORB Sales Line Addtional Fields")
             {
                 ApplicationArea = All;
@@ -64,6 +65,7 @@ pageextension 52620 "ORB Sales Order Subform" extends "Sales Order Subform"
                 RunObject = Page "ORB Sales Line Add. Fields";
                 RunPageLink = "Document Type" = field("Document Type"), "Document No." = field("Document No."), "Line No." = field("Line No.");
             }
+
         }
     }
     var
