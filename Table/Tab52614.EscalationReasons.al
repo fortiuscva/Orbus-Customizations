@@ -1,30 +1,33 @@
 table 52614 "ORB Escalation Reasons"
 {
     Caption = 'Escalation Reasons';
-    DataClassification = ToBeClassified;
-
+    DataClassification = CustomerContent;
     fields
     {
-        field(1; "Entry No"; Integer)
+        field(1; "Code"; Code[20])
         {
-            Caption = 'Entry No';
-            AutoIncrement = true;
-
+            Caption = 'Code';
+            DataClassification = CustomerContent;
         }
-
-        field(2; "Escalation Reason"; Text[1024])
+        field(2; Description; Text[100])
         {
-            Caption = 'Escalation Reason';
-
+            Caption = 'Description';
+            DataClassification = CustomerContent;
         }
     }
     keys
     {
-        key(Key1; "Entry No", "Escalation Reason")
+        key(Key1; Code)
         {
             Clustered = true;
         }
     }
+    trigger OnDelete()
+    var
+        DeleteconfirmFlag: Boolean;
+    begin
+        DeleteconfirmFlag := Dialog.Confirm('Are you sure you want delete?');
+    end;
 
 
 }

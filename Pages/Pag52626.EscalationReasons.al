@@ -5,18 +5,25 @@ page 52626 "ORB Escalation Reasons"
     PageType = List;
     UsageCategory = Lists;
     SourceTable = "ORB Escalation Reasons";
-
+    SourceTableView = order(ascending);
     layout
     {
         area(Content)
         {
             repeater(General)
             {
-                field("Escalation Reason"; Rec."Escalation Reason")
+                field("Code"; Rec.Code)
                 {
-                    ApplicationArea = All;
+                    ToolTip = 'Specifies Escalation Reason Code';
                 }
+                field(Description; Rec.Description)
+                {
+                    ToolTip = 'Specifies Escalation Reason Description';
+                }
+
             }
         }
+
     }
+
 }
