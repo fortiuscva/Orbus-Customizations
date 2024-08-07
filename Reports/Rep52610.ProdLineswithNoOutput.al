@@ -1,6 +1,6 @@
-report 52610 "ORB Prod Lines with No Output"
+report 52610 "ORB Prod. Lines With No Output"
 {
-    Caption = 'Production Orders with No Output';
+    Caption = 'Prod. Order with No Output';
     ApplicationArea = all;
     UsageCategory = ReportsAndAnalysis;
     ProcessingOnly = true;
