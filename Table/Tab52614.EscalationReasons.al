@@ -26,7 +26,7 @@ table 52614 "ORB Escalation Reasons"
     var
         DeleteconfirmFlag: Boolean;
     begin
-        DeleteconfirmFlag := Dialog.Confirm('Are you sure you want delete?');
+        DeleteconfirmFlag := Dialog.Confirm('Do you want to delete?');
     end;
 
 
