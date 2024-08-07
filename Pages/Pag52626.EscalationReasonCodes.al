@@ -1,11 +1,11 @@
-page 52626 "ORB Escalation Reasons"
+page 52626 "ORB Escalation Reason Codes"
 {
     ApplicationArea = All;
-    Caption = 'Escalation Reasons';
+    Caption = 'Escalation Reason Codes';
     PageType = List;
     UsageCategory = Lists;
-    SourceTable = "ORB Escalation Reasons";
-    SourceTableView = order(ascending);
+    SourceTable = "ORB Escalation Reason Codes";
+
     layout
     {
         area(Content)
@@ -20,7 +20,6 @@ page 52626 "ORB Escalation Reasons"
                 {
                     ToolTip = 'Specifies Escalation Reason Description';
                 }
-
             }
         }
 

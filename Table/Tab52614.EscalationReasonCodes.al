@@ -1,6 +1,6 @@
-table 52614 "ORB Escalation Reasons"
+table 52614 "ORB Escalation Reason Codes"
 {
-    Caption = 'Escalation Reasons';
+    Caption = 'Escalation Reason Codes';
     DataClassification = CustomerContent;
     fields
     {
@@ -23,11 +23,14 @@ table 52614 "ORB Escalation Reasons"
         }
     }
     trigger OnDelete()
-    var
-        DeleteconfirmFlag: Boolean;
     begin
-        DeleteconfirmFlag := Dialog.Confirm('Do you want to delete?');
+        if not Confirm(DeleteConfirmMsgLbl, false) then
+            error(ProcessInterruptedMsgLbl);
     end;
+
+    var
+        DeleteConfirmMsgLbl: Label 'Do you want to delete?';
+        ProcessInterruptedMsgLbl: Label 'Process interrupted to respect the warning';
 
 
 }

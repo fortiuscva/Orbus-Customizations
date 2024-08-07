@@ -77,13 +77,13 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         {
             DataClassification = ToBeClassified;
         }
-        field(52628; "ORB Escalation Reason"; Code[20])
+        field(52628; "ORB Escalation Reason Code"; Code[20])
         {
             Caption = 'Escalation Reason';
             DataClassification = CustomerContent;
-            TableRelation = "ORB Escalation Reasons".Code;
+            TableRelation = "ORB Escalation Reason Codes".Code;
         }
-        field(52629; "ORB Resolved By"; Code[50])
+        field(52629; "ORB Resolved By"; Code[20])
         {
             Caption = 'Resolved By';
             DataClassification = CustomerContent;
@@ -91,12 +91,11 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             ValidateTableRelation = false;
             trigger OnValidate()
             var
-                UserSelectionLcu: Codeunit "User Selection";
+                UserSelectionCULcl: Codeunit "User Selection";
             begin
-                UserSelectionLcu.ValidateUserName("ORB Resolved By");
+                UserSelectionCULcl.ValidateUserName("ORB Resolved By");
             end;
         }
-
     }
 
     trigger OnDelete()
