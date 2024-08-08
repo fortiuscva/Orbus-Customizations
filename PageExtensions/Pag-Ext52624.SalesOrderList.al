@@ -9,6 +9,15 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
                 ApplicationArea = all;
                 ToolTip = 'Magento Order #';
             }
+            field("ORB Sales Order Payment Type"; Rec."Sales Order Payment Type")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Sales Order Payment Type';
+            }
+            field("ORB Total Payment Amount($)"; Rec."ORB Total Payment Amount($)")
+            {
+                ApplicationArea = all;
+            }
         }
     }
     actions

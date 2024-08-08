@@ -17,5 +17,7 @@ tableextension 52616 "ORB Sales Cr.Memo Header" extends "Sales Cr.Memo Header"
             Caption = 'Magento CC 4 Digits';
             DataClassification = ToBeClassified;
         }
+        //field(52630; "ORB SO Payment Type"; Option) // Do not use this ID
+        //field(52631; "ORB SO Payment Account No."; Text[100]) // Do not use this ID
     }
 }
