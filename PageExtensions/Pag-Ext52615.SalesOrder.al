@@ -49,6 +49,17 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 Editable = false;
                 Visible = false;
             }
+            field("ORB Escalation Reason"; Rec."ORB Escalation Reason")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Specifies the reasons for escalation';
+            }
+            field("ORB Resolved By"; Rec."ORB Resolved By")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Specifies the user who resolved escalated issue';
+            }
+
         }
 
 
