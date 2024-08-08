@@ -329,7 +329,6 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Prod. Order Lines", OnAfterInitProdOrderLine, '', false, false)]
     local procedure "Create Prod. Order Lines_OnAfterInitProdOrderLine"(var ProdOrderLine: Record "Prod. Order Line"; ProdOrder: Record "Production Order"; SalesLine: Record "Sales Line")
     var
-        ProdOrderLineRecLcl: Record "Prod. Order Line";
         SalesLineAddFieldsRecLcl: Record "ORB Sales Line Add. Fields";
         NewRecLink: Record "Record Link";
         CreateLink: Boolean;
@@ -337,13 +336,8 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
     begin
         Clear(CreateLink);
         if ProdOrder."Source Type" = ProdOrder."Source Type"::Item then begin
-            ProdOrderLineRecLcl.Reset();
-            ProdOrderLineRecLcl.SetRange("Prod. Order No.", ProdOrder."No.");
-            ProdOrderLineRecLcl.SetRange("Line No.", 100000);
-            ProdOrderLineRecLcl.SetFilter("ORB Sales Order No.", '<>%1', '');
-            if not ProdOrderLineRecLcl.FindFirst() then
+            if ProdOrderLine."Item No." = ProdOrder."Source No." then
                 CreateLink := true;
-
         end else
             if ProdOrder."Source Type" = ProdOrder."Source Type"::"Sales Header" then
                 CreateLink := true;
