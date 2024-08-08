@@ -73,6 +73,25 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         {
             DataClassification = ToBeClassified;
         }
+        field(52628; "ORB Resolved By"; Code[50])
+        {
+            Caption = 'Resolved By';
+            DataClassification = CustomerContent;
+            TableRelation = User."User Name";
+            ValidateTableRelation = false;
+            trigger OnValidate()
+            var
+                UserSelectionLcu: Codeunit "User Selection";
+            begin
+                UserSelectionLcu.ValidateUserName("ORB Resolved By");
+            end;
+        }
+        field(52629; "ORB Escalation Reason"; Text[1054])
+        {
+            Caption = 'Escalation Reason';
+            DataClassification = CustomerContent;
+            TableRelation = "ORB Escalation Reasons"."Escalation Reason";
+        }
 
     }
 
