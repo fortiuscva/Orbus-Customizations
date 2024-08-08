@@ -19,7 +19,7 @@ tableextension 52616 "ORB Sales Cr.Memo Header" extends "Sales Cr.Memo Header"
         }
         field(52628; "ORB Escalation Reason Code"; Code[20])
         {
-            Caption = 'Escalation Reason';
+            Caption = 'Escalation Reason Code';
             DataClassification = CustomerContent;
             TableRelation = "ORB Escalation Reason Codes".Code;
         }

@@ -19,7 +19,7 @@ tableextension 52617 "ORB Sales Header Archive" extends "Sales Header Archive"
         }
         field(52628; "ORB Escalation Reason Code"; Code[20])
         {
-            Caption = 'Escalation Reason';
+            Caption = 'Escalation Reason Code';
             DataClassification = CustomerContent;
             TableRelation = "ORB Escalation Reason Codes".Code;
         }
