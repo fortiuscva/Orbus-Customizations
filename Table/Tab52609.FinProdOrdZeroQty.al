@@ -92,7 +92,7 @@ table 52609 "ORB Fin. Prod. Ord. Zero Qty."
         {
             Clustered = true;
         }
-        key(Key2; "Production Order No", "Routing Link Code")
+        key(Key2; "Prod. Order No.", "Routing Link Code")
         {
 
         }
