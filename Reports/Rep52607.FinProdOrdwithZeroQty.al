@@ -19,6 +19,7 @@ report 52607 "Fin. Prod. Ord with Zero Qty."
                 Clear(TempExcelBufferRecGbl);
                 TempExcelBufferRecGbl.DeleteAll();
 
+
                 Clear(ProductionOrderDetailsTempRecGbl);
                 ProductionOrderDetailsTempRecGbl.DeleteAll();
 
@@ -57,7 +58,6 @@ report 52607 "Fin. Prod. Ord with Zero Qty."
                 ProdOrderHeaderRecLcl: Record "Production Order";
                 ShopfloorEmployeeRecLc1: Record "SFI Employee";
                 UserRecLcl: Record User;
-                ProductionOrderDetailsTempRecLcl: record "ORB Fin. Prod. Ord. Zero Qty.";
             begin
 
                 ProdOrderRoutingLineRecLcl.Reset();
@@ -112,43 +112,42 @@ report 52607 "Fin. Prod. Ord with Zero Qty."
                         ProductionOrderDetailsTempRecGbl.SetRange("Routing Link Code", ProdOrderComponentRecLcl."Routing Link Code");
                         if not ProductionOrderDetailsTempRecGbl.FindSet() then begin
                             NextEntryNo += 1;
-                            ProductionOrderDetailsTempRecLcl.Init();
-                            ProductionOrderDetailsTempRecLcl."Entry No." := NextEntryNo;
-                            ProductionOrderDetailsTempRecLcl.Status := "Prod. Order Line".status;
-                            ProductionOrderDetailsTempRecLcl."Prod. Order No." := "Prod. Order Line"."Prod. Order No.";
-                            ProductionOrderDetailsTempRecLcl.Description := ProductionOrderDetailsTempRecGbl.Description;
-                            ProductionOrderDetailsTempRecLcl."Prod. Line Item No." := "Prod. Order Line"."Item No.";
-                            ProductionOrderDetailsTempRecLcl."Routing Link Code" := ProdOrderComponentRecLcl."Routing Link Code";
-                            ProductionOrderDetailsTempRecLcl."Component Item No." := ProdOrderComponentRecLcl."Item No.";
-                            ProductionOrderDetailsTempRecLcl."Prod. Order Line No." := ProdOrderComponentRecLcl."Prod. Order Line No.";
-                            ProductionOrderDetailsTempRecLcl."Remaining Qty." := ProdOrderComponentRecLcl."Remaining Quantity";
-                            ProductionOrderDetailsTempRecLcl."Prod. Order Line No." := ProdOrderComponentRecLcl."Prod. Order Line No.";
+                            ProductionOrderDetailsTempRecGbl.Init();
+                            ProductionOrderDetailsTempRecGbl."Entry No." := NextEntryNo;
+                            ProductionOrderDetailsTempRecGbl.Status := "Prod. Order Line".status;
+                            ProductionOrderDetailsTempRecGbl."Prod. Order No." := "Prod. Order Line"."Prod. Order No.";
+                            ProductionOrderDetailsTempRecGbl.Description := ProductionOrderDetailsTempRecGbl.Description;
+                            ProductionOrderDetailsTempRecGbl."Prod. Line Item No." := "Prod. Order Line"."Item No.";
+                            ProductionOrderDetailsTempRecGbl."Routing Link Code" := ProdOrderComponentRecLcl."Routing Link Code";
+                            ProductionOrderDetailsTempRecGbl."Component Item No." := ProdOrderComponentRecLcl."Item No.";
+                            ProductionOrderDetailsTempRecGbl."Prod. Order Line No." := ProdOrderComponentRecLcl."Prod. Order Line No.";
+                            ProductionOrderDetailsTempRecGbl."Remaining Qty." := ProdOrderComponentRecLcl."Remaining Quantity";
+                            ProductionOrderDetailsTempRecGbl."Prod. Order Line No." := ProdOrderComponentRecLcl."Prod. Order Line No.";
                             ProductionOrderDetailsTempRecGbl."Work Center No." := '';
                             if not UserRecLcl.Get("Prod. Order Line".SystemCreatedBy) then
                                 UserRecLcl.Init();
-                            ProductionOrderDetailsTempRecLcl."Prod. Order Posted By" := UserRecLcl."User Name";
-                            ProductionOrderDetailsTempRecLcl.Insert();
+                            ProductionOrderDetailsTempRecGbl."Prod. Order Posted By" := UserRecLcl."User Name";
+                            ProductionOrderDetailsTempRecGbl.Insert();
                         end else begin
                             if ProductionOrderDetailsTempRecGbl."Component Item No." = '' then begin
                                 ProductionOrderDetailsTempRecGbl."Component Item No." := ProdOrderComponentRecLcl."Item No.";
                                 ProductionOrderDetailsTempRecGbl."Remaining Qty." := ProdOrderComponentRecLcl."Remaining Quantity";
                                 ProductionOrderDetailsTempRecGbl.Modify()
                             end else begin
-                                clear(ProductionOrderDetailsTempRecLcl);
                                 NextEntryNo += 1;
-                                ProductionOrderDetailsTempRecLcl.Init();
-                                ProductionOrderDetailsTempRecLcl."Entry No." := NextEntryNo;
-                                ProductionOrderDetailsTempRecLcl.Status := "Prod. Order Line".Status;
-                                ProductionOrderDetailsTempRecLcl."Prod. Order No." := "Prod. Order Line"."Prod. Order No.";
-                                ProductionOrderDetailsTempRecLcl.Description := ProductionOrderDetailsTempRecGbl.Description;
-                                ProductionOrderDetailsTempRecLcl."Prod. Line Item No." := "Prod. Order Line"."Item No.";
-                                ProductionOrderDetailsTempRecLcl."Routing Link Code" := ProdOrderComponentRecLcl."Routing Link Code";
-                                ProductionOrderDetailsTempRecLcl."Component Item No." := ProdOrderComponentRecLcl."Item No.";
-                                ProductionOrderDetailsTempRecLcl."Prod. Order Line No." := ProdOrderComponentRecLcl."Prod. Order Line No.";
-                                ProductionOrderDetailsTempRecLcl."Remaining Qty." := ProdOrderComponentRecLcl."Remaining Quantity";
-                                ProductionOrderDetailsTempRecLcl."Work Center No." := ProductionOrderDetailsTempRecGbl."Work Center No.";
-                                ProductionOrderDetailsTempRecLcl."Prod. Order Posted by" := ProductionOrderDetailsTempRecGbl."Prod. Order Posted By";
-                                ProductionOrderDetailsTempRecLcl.insert;
+                                ProductionOrderDetailsTempRecGbl.Init();
+                                ProductionOrderDetailsTempRecGbl."Entry No." := NextEntryNo;
+                                ProductionOrderDetailsTempRecGbl.Status := "Prod. Order Line".Status;
+                                ProductionOrderDetailsTempRecGbl."Prod. Order No." := "Prod. Order Line"."Prod. Order No.";
+                                ProductionOrderDetailsTempRecGbl.Description := ProductionOrderDetailsTempRecGbl.Description;
+                                ProductionOrderDetailsTempRecGbl."Prod. Line Item No." := "Prod. Order Line"."Item No.";
+                                ProductionOrderDetailsTempRecGbl."Routing Link Code" := ProdOrderComponentRecLcl."Routing Link Code";
+                                ProductionOrderDetailsTempRecGbl."Component Item No." := ProdOrderComponentRecLcl."Item No.";
+                                ProductionOrderDetailsTempRecGbl."Prod. Order Line No." := ProdOrderComponentRecLcl."Prod. Order Line No.";
+                                ProductionOrderDetailsTempRecGbl."Remaining Qty." := ProdOrderComponentRecLcl."Remaining Quantity";
+                                ProductionOrderDetailsTempRecGbl."Work Center No." := ProductionOrderDetailsTempRecGbl."Work Center No.";
+                                ProductionOrderDetailsTempRecGbl."Prod. Order Posted by" := ProductionOrderDetailsTempRecGbl."Prod. Order Posted By";
+                                ProductionOrderDetailsTempRecGbl.insert;
                             end;
                         end;
                     until (ProdOrderComponentRecLcl.next = 0);
@@ -156,7 +155,6 @@ report 52607 "Fin. Prod. Ord with Zero Qty."
             end;
         }
     }
-
     procedure ExportToExcel()
     var
         SalesShptLineRecLcl: Record "Sales Shipment Line";
@@ -195,6 +193,7 @@ report 52607 "Fin. Prod. Ord with Zero Qty."
 
     var
         ProductionOrderDetailsTempRecGbl: record "ORB Fin. Prod. Ord. Zero Qty." temporary;
+        ProductionOrderDetailsRecGbl: record "ORB Fin. Prod. Ord. Zero Qty.";
         TempExcelBufferRecGbl: Record "Excel Buffer" temporary;
         Entryno: Integer;
         NextEntryNo: Integer;
