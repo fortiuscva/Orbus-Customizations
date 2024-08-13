@@ -22,9 +22,9 @@ report 52607 "Fin. Prod. Ord with Zero Qty."
                 Clear(ProductionOrderDetailsTempRecGbl);
                 ProductionOrderDetailsTempRecGbl.DeleteAll();
 
-                NextEntryNo := 1;
+                NextEntryNo := 0;
                 if ProductionOrderDetailsTempRecGbl.FindLast() then
-                    NextEntryNo := ProductionOrderDetailsTempRecGbl."Entry No." + 1;
+                    NextEntryNo := ProductionOrderDetailsTempRecGbl."Entry No.";
 
 
                 TempExcelBufferRecGbl.AddColumn('Prodcution Order No.', false, '', true, false, false, '', TempExcelBufferRecGbl."Cell Type"::Text);
@@ -67,6 +67,7 @@ report 52607 "Fin. Prod. Ord with Zero Qty."
                 ProdOrderRoutingLineRecLcl.SetRange("SFI Finished Quantity", 0);
                 If ProdOrderRoutingLineRecLcl.FindSet() then
                     repeat
+                        NextEntryNo += 1;
                         ProductionOrderDetailsTempRecGbl.Init();
                         ProductionOrderDetailsTempRecGbl."Entry No." := NextEntryNo;
                         ProductionOrderDetailsTempRecGbl."Prod. Order No." := "Prod. Order Line"."Prod. Order No.";
@@ -91,7 +92,7 @@ report 52607 "Fin. Prod. Ord with Zero Qty."
                         ProductionOrderDetailsTempRecGbl."Remaining Qty." := 0;
                         ProductionOrderDetailsTempRecGbl."Component Item No." := '';
                         ProductionOrderDetailsTempRecGbl.Insert;
-                        NextEntryNo += 1;
+
                     until (ProdOrderRoutingLineRecLcl.next = 0);
 
 
