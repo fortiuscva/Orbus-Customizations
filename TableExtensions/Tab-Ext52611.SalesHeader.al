@@ -96,6 +96,33 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
                 UserSelectionCULcl.ValidateUserName("ORB Resolved By");
             end;
         }
+        field(52630; "ORB Original Promised Ship Dt."; Date)
+        {
+            Caption = 'Original Promised Shipment Date';
+            DataClassification = ToBeClassified;
+        }
+        field(52631; "ORB Delayed Ship Reason Code"; Code[20])
+        {
+            Caption = 'Delayed Shipment Reason';
+            DataClassification = ToBeClassified;
+            TableRelation = "Case Reason Code WSG";
+        }
+        field(52632; "ORB Delayed Ship Sub-Reason"; Code[100])
+        {
+            Caption = 'Delayed Ship Sub Func. Reason';
+            DataClassification = ToBeClassified;
+            trigger OnLookup()
+            var
+                CaseReasonDetailRecLcl: Record CaseReasonDetail;
+            begin
+                CaseReasonDetailRecLcl.Reset;
+                CaseReasonDetailRecLcl.SetFilter("Reason Code", Rec."ORB Delayed Ship Reason Code");
+                if Page.RunModal(Page::CaseReasonDetailList, CaseReasonDetailRecLcl) = Action::LookupOK then
+                    Rec."ORB Delayed Ship Sub-Reason" := "ORB Delayed Ship Reason Code";
+            end;
+
+        }
+
     }
 
     trigger OnDelete()
