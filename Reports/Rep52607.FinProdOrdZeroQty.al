@@ -1,4 +1,4 @@
-report 52607 "Fin. Prod. Ord with Zero Qty."
+report 52607 "ORB Fin. Prod. Ord. Zero Qty."
 {
     Caption = 'Finished Production Order With Zero Qty.';
     ApplicationArea = all;
