@@ -96,8 +96,66 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
                 UserSelectionCULcl.ValidateUserName("ORB Resolved By");
             end;
         }
-    }
 
+        field(52630; "ORB Original Promised Ship Dt."; Date)
+        {
+            Caption = 'Original Promised Shipment Date';
+            DataClassification = ToBeClassified;
+        }
+        field(52631; "ORB Delayed Ship Reason Code"; Code[20])
+        {
+            Caption = 'Delayed Shipment Reason';
+            DataClassification = ToBeClassified;
+            TableRelation = "Case Reason Code WSG";
+
+            trigger OnValidate()
+            begin
+                if Rec."ORB Delayed Ship Sub-Reason" <> '' then
+                    clear("ORB Delayed Ship Sub-Reason");
+            end;
+        }
+        field(52632; "ORB Delayed Ship Sub-Reason"; Code[100])
+        {
+            Caption = 'Delayed Ship Sub-Reason';
+            DataClassification = ToBeClassified;
+            trigger OnLookup()
+            var
+                CaseReasonDetailRecLcl: Record CaseReasonDetail;
+            begin
+                CaseReasonDetailRecLcl.Reset;
+                CaseReasonDetailRecLcl.SetFilter("Reason Code", Rec."ORB Delayed Ship Reason Code");
+                if Page.RunModal(Page::CaseReasonDetailList, CaseReasonDetailRecLcl) = Action::LookupOK then
+                    Rec."ORB Delayed Ship Sub-Reason" := "ORB Delayed Ship Reason Code";
+            end;
+
+            trigger OnValidate()
+            var
+                CaseReasonDetailRecLcl: Record CaseReasonDetail;
+                SubReasonCodeLbl: Label 'Not a Valid  Sub reason code based on the reason';
+            begin
+                CaseReasonDetailRecLcl.Reset();
+                CaseReasonDetailRecLcl.Setfilter("Reason Code", Rec."ORB Delayed Ship Reason Code");
+                CaseReasonDetailRecLcl.SetFilter(Code, Rec."ORB Delayed Ship Sub-Reason");
+                If not CaseReasonDetailRecLcl.FindFirst() then
+                    Error(SubReasonCodeLbl);
+            end;
+
+        }
+        modify(Status)
+        {
+            trigger OnAfterValidate()
+            var
+                myInt: Integer;
+            begin
+                if (Rec.Status = Rec.Status::Released) and (Rec."Document Type" = rec."Document Type"::Order) then begin
+                    if Rec."ORB Original Promised Ship Dt." = 0D then begin
+                        Rec."ORB Original Promised Ship Dt." := Today();
+                        Rec.Modify()
+                    end;
+                end;
+            end;
+        }
+    }
     trigger OnDelete()
     var
         SalesHeaderAdditionalFields: Record "ORB Sales Header Add. Fields";
