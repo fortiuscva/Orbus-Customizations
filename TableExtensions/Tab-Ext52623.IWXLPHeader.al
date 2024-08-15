@@ -15,7 +15,7 @@ tableextension 52623 "ORB IWX LP Header" extends "IWX LP Header"
         {
             Caption = 'Posted Sales Invoice No.';
             FieldClass = FlowField;
-            CalcFormula = lookup("Sales Invoice Header"."No." where("Order No." = field("Shipped Source No.")));
+            CalcFormula = lookup("Sales Invoice Header"."No." where("Order No." = field("Shipped Source No."), "Order No." = filter(<> '')));
             Editable = false;
         }
     }
