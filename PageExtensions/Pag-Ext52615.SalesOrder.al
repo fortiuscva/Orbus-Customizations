@@ -75,11 +75,7 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
             {
                 ApplicationArea = All;
                 ToolTip = 'Specifies reasons for delayed shipment';
-                trigger OnValidate()
-                begin
-                    if (xRec."ORB Delayed Ship Reason Code" <> Rec."ORB Delayed Ship Reason Code") then
-                        clear(Rec."ORB Delayed Ship Sub-Reason");
-                end;
+
             }
             field("ORB Delayed Ship Sub-Reason"; Rec."ORB Delayed Ship Sub-Reason")
             {
