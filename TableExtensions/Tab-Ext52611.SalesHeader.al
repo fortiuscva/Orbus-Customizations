@@ -72,7 +72,6 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             DataClassification = CustomerContent;
             TableRelation = Priority;
         }
-
         field(52627; "ORB Shipment Date"; Date)
         {
             DataClassification = ToBeClassified;
@@ -96,28 +95,21 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
                 UserSelectionCULcl.ValidateUserName("ORB Resolved By");
             end;
         }
-
         field(52630; "ORB Original Promised Ship Dt."; Date)
         {
             Caption = 'Original Promised Shipment Date';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(52631; "ORB Delayed Ship Reason Code"; Code[20])
         {
-            Caption = 'Delayed Shipment Reason';
-            DataClassification = ToBeClassified;
+            Caption = 'Delayed Shipment Reason Code';
+            DataClassification = CustomerContent;
             TableRelation = "Case Reason Code WSG";
-
-            trigger OnValidate()
-            begin
-                if Rec."ORB Delayed Ship Sub-Reason" <> '' then
-                    clear("ORB Delayed Ship Sub-Reason");
-            end;
         }
         field(52632; "ORB Delayed Ship Sub-Reason"; Code[100])
         {
-            Caption = 'Delayed Ship Sub-Reason';
-            DataClassification = ToBeClassified;
+            Caption = 'Delayed Shipment Sub-Reason Code';
+            DataClassification = CustomerContent;
             trigger OnLookup()
             var
                 CaseReasonDetailRecLcl: Record CaseReasonDetail;
@@ -131,7 +123,7 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             trigger OnValidate()
             var
                 CaseReasonDetailRecLcl: Record CaseReasonDetail;
-                SubReasonCodeLbl: Label 'Not a Valid  Sub reason code based on the reason';
+                SubReasonCodeLbl: Label 'Not a valid sub-reason code  for the selected  reason code';
             begin
                 CaseReasonDetailRecLcl.Reset();
                 CaseReasonDetailRecLcl.Setfilter("Reason Code", Rec."ORB Delayed Ship Reason Code");
@@ -140,20 +132,6 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
                     Error(SubReasonCodeLbl);
             end;
 
-        }
-        modify(Status)
-        {
-            trigger OnAfterValidate()
-            var
-                myInt: Integer;
-            begin
-                if (Rec.Status = Rec.Status::Released) and (Rec."Document Type" = rec."Document Type"::Order) then begin
-                    if Rec."ORB Original Promised Ship Dt." = 0D then begin
-                        Rec."ORB Original Promised Ship Dt." := Today();
-                        Rec.Modify()
-                    end;
-                end;
-            end;
         }
     }
     trigger OnDelete()
