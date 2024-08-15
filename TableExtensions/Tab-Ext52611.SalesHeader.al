@@ -78,17 +78,22 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         {
             DataClassification = ToBeClassified;
         }
-        //field(52630; "ORB SO Payment Type"; Option) // Do not use this ID
-        //field(52631; "ORB SO Payment Account No."; Text[100]) // Do not use this ID
-        field(52632; "ORB Total Payment Amount($)"; Decimal)
+        field(52628; "ORB DS Payment Type"; Option)
         {
-            Caption = 'Total Payment Amount($)';
+            Caption = 'DS Payment Type';
             FieldClass = FlowField;
-            CalcFormula = sum("EFT Transaction -CL-"."Transaction Amount" where("Document No." = field("No."), "Document Type" = const(Order), "Method Type" = filter('Charge|Settle|Capture|Refund|Credit|Return Settle|Authorize|Return Authorize|Voice Authorize'), "Transaction Status" = filter('Queued|Batched|Approved')));
+            CalcFormula = lookup("DSHIP Package Options"."Payment Type" where("Document Type" = filter("Sales Order"), "Document No." = field("No.")));
+            OptionMembers = " ",SENDER,THIRD_PARTY,RECEIVER,COLLECT;
+            OptionCaption = 'None,Sender,Third Party,Receiver,Collect';
             Editable = false;
-
         }
-
+        field(52629; "ORB DS Payment Account No."; Text[100])
+        {
+            Caption = 'Payment Account No.';
+            FieldClass = FlowField;
+            CalcFormula = lookup("DSHIP Package Options"."Payment Account No." where("Document Type" = filter("Sales Order"), "Document No." = field("No.")));
+            Editable = false;
+        }
     }
 
     trigger OnDelete()
