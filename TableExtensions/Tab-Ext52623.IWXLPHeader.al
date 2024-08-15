@@ -1,4 +1,4 @@
-tableextension 52622 "ORB IWX LP Header" extends "IWX LP Header"
+tableextension 52623 "ORB IWX LP Header" extends "IWX LP Header"
 {
     fields
     {
