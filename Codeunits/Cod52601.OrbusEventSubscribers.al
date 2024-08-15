@@ -326,32 +326,113 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
 
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Prod. Order from Sale", OnAfterCreateProdOrderFromSalesLine, '', false, false)]
-    local procedure "Create Prod. Order from Sale_OnAfterCreateProdOrderFromSalesLine"(var ProdOrder: Record "Production Order"; var SalesLine: Record "Sales Line")
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Prod. Order Lines", OnAfterInitProdOrderLine, '', false, false)]
+    local procedure "Create Prod. Order Lines_OnAfterInitProdOrderLine"(var ProdOrderLine: Record "Prod. Order Line"; ProdOrder: Record "Production Order"; SalesLine: Record "Sales Line")
     var
         SalesLineAddFieldsRecLcl: Record "ORB Sales Line Add. Fields";
         NewRecLink: Record "Record Link";
+        CreateLink: Boolean;
         EntryNo: Integer;
     begin
-        if SalesLineAddFieldsRecLcl.get(SalesLine."Document Type", SalesLine."Document No.", SalesLine."Line No.") then begin
-            NewRecLink.Reset();
-            if NewRecLink.FindLast() then
-                EntryNo := NewRecLink."Link ID" + 1
-            else
-                EntryNo := 1;
+        Clear(CreateLink);
+        if ProdOrder."Source Type" = ProdOrder."Source Type"::Item then begin
+            if ProdOrderLine."Item No." = ProdOrder."Source No." then
+                CreateLink := true;
+        end else
+            if ProdOrder."Source Type" = ProdOrder."Source Type"::"Sales Header" then
+                CreateLink := true;
 
-            NewRecLink.INIT;
-            NewRecLink."Link ID" := EntryNo;
-            NewRecLink."Record ID" := ProdOrder.RECORDID;
-            NewRecLink.URL1 := SalesLineAddFieldsRecLcl."Job URL";
-            NewRecLink.Type := NewRecLink.Type::Link;
-            NewRecLink."User ID" := UserId;
-            NewRecLink.Created := CreateDateTime(Today, Time);
-            NewRecLink.Company := CompanyName;
-            NewRecLink.INSERT;
+
+        if CreateLink then begin
+            ProdOrderLine."ORB Sales Order No." := SalesLine."Document No.";
+            ProdOrderLine."ORB Sales Order Line No." := SalesLine."Line No.";
+
+            if SalesLineAddFieldsRecLcl.get(SalesLine."Document Type", SalesLine."Document No.", SalesLine."Line No.") then begin
+                NewRecLink.Reset();
+                if NewRecLink.FindLast() then
+                    EntryNo := NewRecLink."Link ID" + 1
+                else
+                    EntryNo := 1;
+
+                NewRecLink.INIT;
+                NewRecLink."Link ID" := EntryNo;
+                NewRecLink."Record ID" := ProdOrder.RECORDID;
+                NewRecLink.URL1 := SalesLineAddFieldsRecLcl."Job URL";
+                NewRecLink.Description := SalesLine."No.";
+                NewRecLink.Type := NewRecLink.Type::Link;
+                NewRecLink."User ID" := UserId;
+                NewRecLink.Created := CreateDateTime(Today, Time);
+                NewRecLink.Company := CompanyName;
+                NewRecLink.INSERT;
+            end;
         end;
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Prod. Order from Sale", OnAfterCreateProdOrderFromSalesLine, '', false, false)]
+    local procedure "Create Prod. Order from Sale_OnAfterCreateProdOrderFromSalesLine"(var ProdOrder: Record "Production Order"; var SalesLine: Record "Sales Line")
+    var
+        SalesHdrAddFields: Record "ORB Sales Header Add. Fields";
+        NewRecLink: Record "Record Link";
+        EntryNo: Integer;
+    begin
+        if ProdOrder."Source Type" = ProdOrder."Source Type"::"Sales Header" then
+            if SalesHdrAddFields.get(SalesLine."Document Type", SalesLine."Document No.") then begin
+                NewRecLink.Reset();
+                if NewRecLink.FindLast() then
+                    EntryNo := NewRecLink."Link ID" + 1
+                else
+                    EntryNo := 1;
+
+                NewRecLink.INIT;
+                NewRecLink."Link ID" := EntryNo;
+                NewRecLink."Record ID" := ProdOrder.RECORDID;
+                NewRecLink.URL1 := SalesHdrAddFields."Job URL";
+                NewRecLink.Description := '<' + SalesLine."Document No." + '>' + 'Merged URL';
+                NewRecLink.Type := NewRecLink.Type::Link;
+                NewRecLink."User ID" := UserId;
+                NewRecLink.Created := CreateDateTime(Today, Time);
+                NewRecLink.Company := CompanyName;
+                NewRecLink.INSERT;
+            end;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Prod. Order from Sale", OnAfterCreateProdOrder, '', false, false)]
+    local procedure "Create Prod. Order from Sale_OnAfterCreateProdOrder"(var ProdOrder: Record "Production Order"; var SalesLine: Record "Sales Line")
+    var
+        ProdOrderLine: Record "Prod. Order Line";
+        SalesHdrAddFields: Record "ORB Sales Header Add. Fields";
+        NewRecLink: Record "Record Link";
+        EntryNo: Integer;
+    begin
+        if ProdOrder."Source Type" = ProdOrder."Source Type"::Item then begin
+            ProdOrderLine.Reset();
+            ProdOrderLine.SetRange("Prod. Order No.", ProdOrder."No.");
+            if ProdOrder.FindFirst() then begin
+                if SalesHdrAddFields.get(SalesLine."Document Type", SalesLine."Document No.") then begin
+                    NewRecLink.Reset();
+                    if NewRecLink.FindLast() then
+                        EntryNo := NewRecLink."Link ID" + 1
+                    else
+                        EntryNo := 1;
+
+                    NewRecLink.INIT;
+                    NewRecLink."Link ID" := EntryNo;
+                    NewRecLink."Record ID" := ProdOrder.RECORDID;
+                    NewRecLink.URL1 := SalesHdrAddFields."Job URL";
+                    NewRecLink.Description := '<' + SalesLine."Document No." + '>' + 'Merged URL';
+                    NewRecLink.Type := NewRecLink.Type::Link;
+                    NewRecLink."User ID" := UserId;
+                    NewRecLink.Created := CreateDateTime(Today, Time);
+                    NewRecLink.Company := CompanyName;
+                    NewRecLink.INSERT;
+                end;
+            end;
+        end;
+    end;
+
+
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
+        SOPla: page "Sales Order Planning";
+
 }

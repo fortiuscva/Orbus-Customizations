@@ -51,6 +51,10 @@ table 52604 "ORB Sales Hdr. Arch. Add. Flds"
         {
             Caption = 'Payment Country';
         }
+        field(52607; "Job URL"; text[200])
+        {
+            Caption = 'Job URL';
+        }
     }
     keys
     {

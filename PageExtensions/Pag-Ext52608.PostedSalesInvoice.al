@@ -42,6 +42,16 @@ pageextension 52608 "ORB Posted Sales Invoice" extends "Posted Sales Invoice"
                 ApplicationArea = all;
                 ToolTip = 'Specifies the Magento CC 4 Digits of Sales';
             }
+            field("ORB Escalation Reason Code"; Rec."ORB Escalation Reason Code")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Escalation Reason field.', Comment = '%';
+            }
+            field("ORB Resolved By"; Rec."ORB Resolved By")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Specifies the user who resolved escalated issue';
+            }
         }
     }
     actions

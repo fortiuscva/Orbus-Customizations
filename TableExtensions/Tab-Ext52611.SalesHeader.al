@@ -66,7 +66,6 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             TableRelation = "Salesperson/Purchaser";
             DataClassification = CustomerContent;
         }
-
         field(52626; "ORB RUSH"; Text[20])
         {
             Caption = 'RUSH';
@@ -78,7 +77,52 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         {
             DataClassification = ToBeClassified;
         }
-        field(52630; "ORB DS Payment Type"; Option)
+        field(52628; "ORB Escalation Reason Code"; Code[20])
+        {
+            Caption = 'Escalation Reason Code';
+            DataClassification = CustomerContent;
+            TableRelation = "ORB Escalation Reason Codes".Code;
+        }
+        field(52629; "ORB Resolved By"; Code[20])
+        {
+            Caption = 'Resolved By';
+            DataClassification = CustomerContent;
+            TableRelation = User."User Name";
+            ValidateTableRelation = false;
+            trigger OnValidate()
+            var
+                UserSelectionCULcl: Codeunit "User Selection";
+            begin
+                UserSelectionCULcl.ValidateUserName("ORB Resolved By");
+            end;
+        }
+        field(52630; "ORB Original Promised Ship Dt."; Date)
+        {
+            Caption = 'Original Promised Shipment Date';
+            DataClassification = ToBeClassified;
+        }
+        field(52631; "ORB Delayed Ship Reason Code"; Code[20])
+        {
+            Caption = 'Delayed Shipment Reason';
+            DataClassification = ToBeClassified;
+            TableRelation = "Case Reason Code WSG";
+        }
+        field(52632; "ORB Delayed Ship Sub-Reason"; Code[100])
+        {
+            Caption = 'Delayed Ship Sub Func. Reason';
+            DataClassification = ToBeClassified;
+            trigger OnLookup()
+            var
+                CaseReasonDetailRecLcl: Record CaseReasonDetail;
+            begin
+                CaseReasonDetailRecLcl.Reset;
+                CaseReasonDetailRecLcl.SetFilter("Reason Code", Rec."ORB Delayed Ship Reason Code");
+                if Page.RunModal(Page::CaseReasonDetailList, CaseReasonDetailRecLcl) = Action::LookupOK then
+                    Rec."ORB Delayed Ship Sub-Reason" := "ORB Delayed Ship Reason Code";
+            end;
+
+        }
+        field(52633; "ORB DS Payment Type"; Option)
         {
             Caption = 'DS Payment Type';
             FieldClass = FlowField;
@@ -87,12 +131,30 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             OptionCaption = 'None,Sender,Third Party,Receiver,Collect';
             Editable = false;
         }
-        field(52631; "ORB DS Payment Account No."; Text[100])
+        field(52634; "ORB DS Payment Account No."; Text[100])
         {
             Caption = 'Payment Account No.';
             FieldClass = FlowField;
             CalcFormula = lookup("DSHIP Package Options"."Payment Account No." where("Document Type" = filter("Sales Order"), "Document No." = field("No.")));
             Editable = false;
+        }
+        field(52650; "ORB Total Payment Amount"; Decimal)
+        {
+            Caption = 'Total Payment Amount';
+            FieldClass = FlowField;
+            CalcFormula = sum("EFT Transaction -CL-"."Total Amount" where("Transaction Status" = filter(Queued | Batched | Approved), "Document Type" = field("Document Type"), "Document No." = field("No."), "Method Type" = filter(Charge | Settle | Capture | Refund | Credit | Authorize | "Return Settle" | "Return Authorize" | "Voice Authorize")));
+        }
+        field(52651; "ORB Freight Line"; Option)
+        {
+            FieldClass = FlowField;
+            CalcFormula = lookup("DSHIP Shipment Options"."Add Freight Line" where("Document Type" = filter("Sales Order"), "Document No." = field("No.")));
+            OptionMembers = Automatic,Manual;
+            Caption = 'Freight Line';
+        }
+        field(52652; "ORB ETF Date Filter"; Date)
+        {
+            FieldClass = FlowFilter;
+            Caption = 'ETF Date Filter';
         }
     }
 
