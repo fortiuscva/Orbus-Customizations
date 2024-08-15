@@ -17,7 +17,7 @@ tableextension 52617 "ORB Sales Header Archive" extends "Sales Header Archive"
             Caption = 'Magento CC 4 Digits';
             DataClassification = ToBeClassified;
         }
-        //field(52628 ; used on sales header.
-        //field(52629 ; used on sales header.
+        //field(52630 ; used on sales header.
+        //field(52631 ; used on sales header.
     }
 }

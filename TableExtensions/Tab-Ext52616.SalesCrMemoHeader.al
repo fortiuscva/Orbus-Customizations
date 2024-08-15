@@ -17,7 +17,7 @@ tableextension 52616 "ORB Sales Cr.Memo Header" extends "Sales Cr.Memo Header"
             Caption = 'Magento CC 4 Digits';
             DataClassification = ToBeClassified;
         }
-        //field(52628 ; used on sales header.
-        //field(52629 ; used on sales header.
+        //field(52630 ; used on sales header.
+        //field(52631 ; used on sales header.
     }
 }
