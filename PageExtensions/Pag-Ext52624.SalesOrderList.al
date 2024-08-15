@@ -48,9 +48,4 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
 
         }
     }
-    trigger OnAfterGetRecord()
-    begin
-
-
-    end;
 }
