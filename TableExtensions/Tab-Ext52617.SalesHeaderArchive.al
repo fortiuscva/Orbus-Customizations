@@ -29,5 +29,7 @@ tableextension 52617 "ORB Sales Header Archive" extends "Sales Header Archive"
             DataClassification = CustomerContent;
             TableRelation = User."User Name";
         }
+        //field(52633 ; used on sales header.
+        //field(52634 ; used on sales header.
     }
 }
