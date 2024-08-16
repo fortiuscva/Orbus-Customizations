@@ -92,6 +92,19 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
                 UserSelectionCULcl.ValidateUserName("ORB Resolved By");
             end;
         }
+        field(52650; "ORB Total Payment Amount"; Decimal)
+        {
+            Caption = 'Total Payment Amount';
+            DataClassification = ToBeClassified;
+
+        }
+        field(52651; "ORB Freight Line"; Option)
+        {
+            DataClassification = ToBeClassified;
+            OptionMembers = Automatic,Manual;
+            Caption = 'Freight Line';
+        }
+
     }
 
     trigger OnDelete()
