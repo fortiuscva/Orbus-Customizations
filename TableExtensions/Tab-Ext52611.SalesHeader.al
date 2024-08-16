@@ -96,8 +96,7 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         {
             Caption = 'Total Payment Amount';
             FieldClass = FlowField;
-            CalcFormula = sum("EFT Transaction -CL-"."Total Amount" where("Transaction Status" = filter(Queued | Batched | Approved), "Document Type" = field("Document Type"), "Document No." = field("No."), "Method Type" = filter(Charge | Settle | Capture | Refund | Credit | Authorize | "Return Settle" | "Return Authorize" | "Voice Authorize"),
-            "Expiration Filter" = field("ORB ETF Date Filter")));
+            CalcFormula = sum("EFT Transaction -CL-"."Total Amount" where("Transaction Status" = filter(Queued | Batched | Approved), "Document Type" = field("Document Type"), "Document No." = field("No."), "Method Type" = filter(Charge | Settle | Capture | Refund | Credit | Authorize | "Return Settle" | "Return Authorize" | "Voice Authorize")));
         }
         field(52651; "ORB Freight Line"; Option)
         {
