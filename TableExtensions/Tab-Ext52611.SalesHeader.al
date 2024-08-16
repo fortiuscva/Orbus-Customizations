@@ -107,12 +107,6 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             Caption = 'Freight Line';
             Editable = false;
         }
-        field(52652; "ORB ETF Date Filter"; Date)
-        {
-            FieldClass = FlowFilter;
-            Caption = 'ETF Date Filter';
-        }
-
     }
 
     trigger OnDelete()
