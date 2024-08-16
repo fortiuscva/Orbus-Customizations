@@ -60,13 +60,13 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
 
         }
     }
-    trigger OnAfterGetCurrRecord()
+    trigger OnAfterGetRecord()
     var
         DSHIPShipmentOptions: Record "DSHIP Shipment Options";
         EFTTransactionCL: Record "EFT Transaction -CL-";
         TotalAmount: Decimal;
     begin
-        if DSHIPShipmentOptions.Get(Rec."Document Type", Rec."No.") then
+        if DSHIPShipmentOptions.Get(DSHIPShipmentOptions."Document Type"::"Sales Order", Rec."No.") then
             Rec."ORB Freight Line" := DSHIPShipmentOptions."Add Freight Line";
 
         TotalAmount := 0;
