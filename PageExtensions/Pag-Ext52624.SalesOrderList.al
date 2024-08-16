@@ -9,6 +9,28 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
                 ApplicationArea = all;
                 ToolTip = 'Magento Order #';
             }
+            field("ORB Escalation Reason Code"; Rec."ORB Escalation Reason Code")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Specifies the issue that is stopping the order release';
+
+            }
+            field("ORB Resolved By"; Rec."ORB Resolved By")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Specifies the user who resolved the escalated reason';
+            }
+            field("ORB Total Payment Amount"; Rec."ORB Total Payment Amount")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Specifies the Total Payment Amount Field value';
+            }
+            field("ORB Freight Line"; Rec."ORB Freight Line")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Specifies the field Freight Line value';
+            }
+
         }
     }
     actions
