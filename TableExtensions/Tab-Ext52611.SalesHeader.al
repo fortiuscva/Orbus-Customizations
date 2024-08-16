@@ -95,14 +95,21 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         field(52650; "ORB Total Payment Amount"; Decimal)
         {
             Caption = 'Total Payment Amount';
-            DataClassification = ToBeClassified;
-
+            FieldClass = FlowField;
+            CalcFormula = sum("EFT Transaction -CL-"."Total Amount" where("Transaction Status" = filter(Queued | Batched | Approved), "Document Type" = field("Document Type"), "Document No." = field("No."), "Method Type" = filter(Charge | Settle | Capture | Refund | Credit | Authorize | "Return Settle" | "Return Authorize" | "Voice Authorize"),
+            "Expiration Filter" = field("ORB ETF Date Filter")));
         }
         field(52651; "ORB Freight Line"; Option)
         {
-            DataClassification = ToBeClassified;
+            FieldClass = FlowField;
+            CalcFormula = lookup("DSHIP Shipment Options"."Add Freight Line" where("Document Type" = filter("Sales Order"), "Document No." = field("No.")));
             OptionMembers = Automatic,Manual;
             Caption = 'Freight Line';
+        }
+        field(52652; "ORB ETF Date Filter"; Date)
+        {
+            FieldClass = FlowFilter;
+            Caption = 'ETF Date Filter';
         }
 
     }
