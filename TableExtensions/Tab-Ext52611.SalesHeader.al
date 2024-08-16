@@ -127,6 +127,7 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             Caption = 'Total Payment Amount';
             FieldClass = FlowField;
             CalcFormula = sum("EFT Transaction -CL-"."Total Amount" where("Transaction Status" = filter(Queued | Batched | Approved), "Document Type" = field("Document Type"), "Document No." = field("No."), "Method Type" = filter(Charge | Settle | Capture | Refund | Credit | Authorize | "Return Settle" | "Return Authorize" | "Voice Authorize")));
+            Editable = false;
         }
         field(52651; "ORB Freight Line"; Option)
         {
@@ -134,6 +135,7 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             CalcFormula = lookup("DSHIP Shipment Options"."Add Freight Line" where("Document Type" = filter("Sales Order"), "Document No." = field("No.")));
             OptionMembers = Automatic,Manual;
             Caption = 'Freight Line';
+            Editable = false;
         }
         field(52652; "ORB ETF Date Filter"; Date)
         {
