@@ -120,6 +120,11 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             Caption = 'Delayed Shipment Reason Code';
             DataClassification = CustomerContent;
             TableRelation = "Case Reason Code WSG";
+            trigger OnValidate()
+            begin
+                if (xRec."ORB Delayed Ship Reason Code" <> Rec."ORB Delayed Ship Reason Code") then
+                    clear(Rec."ORB Delayed Ship Sub-Reason");
+            end;
         }
         field(52632; "ORB Delayed Ship Sub-Reason"; Code[100])
         {
