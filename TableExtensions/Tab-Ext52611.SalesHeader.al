@@ -19,6 +19,21 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             end;
         }
 
+        modify(Status)
+        {
+            trigger OnAfterValidate()
+            var
+                myInt: Integer;
+            begin
+                if (Rec.Status = Rec.Status::Released) and (Rec."Document Type" = rec."Document Type"::Order) then begin
+                    if Rec."ORB Original Promised Ship Dt." = 0D then begin
+                        Rec."ORB Original Promised Ship Dt." := Today();
+                        Rec.Modify()
+                    end;
+                end;
+            end;
+        }
+
         field(52610; "ORB Tax ID"; Code[20])
         {
             Caption = 'Tax ID';
@@ -72,7 +87,6 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             DataClassification = CustomerContent;
             TableRelation = Priority;
         }
-
         field(52627; "ORB Shipment Date"; Date)
         {
             DataClassification = ToBeClassified;
@@ -99,18 +113,23 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         field(52630; "ORB Original Promised Ship Dt."; Date)
         {
             Caption = 'Original Promised Shipment Date';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(52631; "ORB Delayed Ship Reason Code"; Code[20])
         {
-            Caption = 'Delayed Shipment Reason';
-            DataClassification = ToBeClassified;
+            Caption = 'Delayed Shipment Reason Code';
+            DataClassification = CustomerContent;
             TableRelation = "Case Reason Code WSG";
+            trigger OnValidate()
+            begin
+                if (xRec."ORB Delayed Ship Reason Code" <> Rec."ORB Delayed Ship Reason Code") then
+                    clear(Rec."ORB Delayed Ship Sub-Reason");
+            end;
         }
         field(52632; "ORB Delayed Ship Sub-Reason"; Code[100])
         {
-            Caption = 'Delayed Ship Sub Func. Reason';
-            DataClassification = ToBeClassified;
+            Caption = 'Delayed Shipment Sub-Reason Code';
+            DataClassification = CustomerContent;
             trigger OnLookup()
             var
                 CaseReasonDetailRecLcl: Record CaseReasonDetail;
@@ -119,6 +138,18 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
                 CaseReasonDetailRecLcl.SetFilter("Reason Code", Rec."ORB Delayed Ship Reason Code");
                 if Page.RunModal(Page::CaseReasonDetailList, CaseReasonDetailRecLcl) = Action::LookupOK then
                     Rec."ORB Delayed Ship Sub-Reason" := "ORB Delayed Ship Reason Code";
+            end;
+
+            trigger OnValidate()
+            var
+                CaseReasonDetailRecLcl: Record CaseReasonDetail;
+                SubReasonCodeLbl: Label 'Not a valid sub-reason code  for the selected  reason code';
+            begin
+                CaseReasonDetailRecLcl.Reset();
+                CaseReasonDetailRecLcl.Setfilter("Reason Code", Rec."ORB Delayed Ship Reason Code");
+                CaseReasonDetailRecLcl.SetFilter(Code, Rec."ORB Delayed Ship Sub-Reason");
+                If not CaseReasonDetailRecLcl.FindFirst() then
+                    Error(SubReasonCodeLbl);
             end;
 
         }
@@ -154,6 +185,7 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             Editable = false;
         }
     }
+
 
     trigger OnDelete()
     var
