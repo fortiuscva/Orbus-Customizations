@@ -236,7 +236,7 @@ codeunit 52606 "ORB Functions"
         salesline.Type := salesline.Type::Resource;
         salesline.Validate("No.", SalesSetup."ORB Default Resource for DSHIP");
         salesline.Validate(Quantity, 1);
-        salesline.Validate("Unit Cost", SingleInstance.GetHandlingPrice());
+        salesline.Validate("Unit Cost", SingleInstance.GetFrieghtPrice());
         salesline.Validate("Unit Price", SingleInstance.GetHandlingPrice());
         salesline.Insert();
     end;
