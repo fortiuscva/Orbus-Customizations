@@ -51,7 +51,7 @@ tableextension 52603 "ORB Customer" extends Customer
         field(52601; "ORB Ship-to State"; Code[30])
         {
             Caption = 'Default State';
-            CalcFormula = lookup("Ship-to Address".County where(Code = Field("Ship-to Code")));
+            CalcFormula = lookup("Ship-to Address".County where(Code = Field("Ship-to Code"), "Customer No." = Field("No.")));
             Editable = false;
             FieldClass = FlowField;
         }
