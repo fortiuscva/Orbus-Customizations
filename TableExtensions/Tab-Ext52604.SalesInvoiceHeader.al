@@ -54,7 +54,23 @@ tableextension 52604 "ORB Sales Invoice Header" extends "Sales Invoice Header"
             DataClassification = CustomerContent;
             TableRelation = User."User Name";
         }
+        field(52630; "ORB Original Promised Ship Dt."; Date)
+        {
+            Caption = 'Original Promised Shipment Date';
+            DataClassification = CustomerContent;
+        }
+        field(52631; "ORB Delayed Ship Reason Code"; Code[20])
+        {
+            Caption = 'Delayed Shipment Reason Code';
+            DataClassification = CustomerContent;
+            TableRelation = "Case Reason Code WSG";
+        }
+        field(52632; "ORB Delayed Ship Sub-Reason"; Code[100])
+        {
+            Caption = 'Delayed Shipment Sub-Reason Code';
+            DataClassification = CustomerContent;
+        }
+        //field(52633 ; used on sales header.
+        //field(52634 ; used on sales header.
     }
-
-
 }
