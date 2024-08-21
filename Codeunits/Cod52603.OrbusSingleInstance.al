@@ -178,6 +178,8 @@ codeunit 52603 "ORB Orbus Single Instance"
         SendEmailVarGbl: Boolean;
         ExplodeConfirmVarGbl: Boolean;
         ExplodeBOMExecutionVarGbl: Boolean;
+        HandlingGbl: Decimal;
+        FrieghtCostGbl: Decimal;
         ShippedNotInvoicedGbl: Boolean;
         MarkupAmountGbl: Decimal;
         FirstActivityNoGbl: Code[20];
