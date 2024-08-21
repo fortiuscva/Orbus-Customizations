@@ -300,6 +300,52 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             SalesHeaderAdditionalFields.Delete();
     end;
 
+
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"DSHIP Event Publisher", OnBeforeAddRateToOrder, '', false, false)]
+
+    internal procedure OnBeforeAddRateToOrder(docType: Enum "DSHIP Document Type"; docNo: Code[50]; rateRequestSource: Enum "DSHIP Rate Request Source"; var selectedRate: Record "DSHIP Carrier Rate Buffer" temporary; var isHandled: Boolean)
+    var
+        shipmentheader: Record "Warehouse Shipment Header";
+        shipmentLine: Record "Warehouse Shipment Line";
+        SalesHeader: Record "Sales Header";
+        OrbusFunctions: Codeunit "ORB Functions";
+    begin
+        if (docType = docType::"Warehouse Shipment")
+        then begin
+            shipmentheader.Get(docNo);
+            shipmentLine.SetRange("No.", shipmentheader."No.");
+            if shipmentLine.FindFirst() then;
+
+            SalesHeader.Get(SalesHeader."Document Type"::Order, shipmentLine."Source No.");
+            OrbusFunctions.CreateSalesLine(SalesHeader);
+        end;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"DSHIP Event Publisher", OnBeforeSetShipmentDetails, '', false, false)]
+    internal procedure OnBeforeSetShipmentDetails(recRef: RecordRef; shipAgent: Code[50]; shipAgentSvc: Code[50]; trackingNo: Text; deliveryDays: Integer; var isHandled: Boolean)
+    var
+        WhseShipmentHeader: Record "Warehouse Shipment Header";
+        labelData: Record "DSHIP Label Data";
+        lpHeader: Record "IWX LP Header";
+        SingleInstance: Codeunit "ORB Orbus Single Instance";
+    begin
+        if recRef.Number() = Database::"Warehouse Shipment Header" then
+            recRef.SetTable(WhseShipmentHeader);
+        Message(Format(recRef.Number()));
+        lpHeader.SetRange("Source No.", WhseShipmentHeader."No.");
+        if lpHeader.FindFirst() then begin
+            labelData.SetRange("Label Type", labelData."Label Type"::Shipping);
+            labelData.SetRange("Label Format", labelData."Label Format"::PNG);
+            labelData.SetRange("License Plate No.", lpHeader."No.");
+            if labelData.FindFirst() then begin
+                labelData."ORB Handling" := SingleInstance.GetHandlingPrice();
+                labelData.Modify();
+            end;
+
+        end;
+    end;
+
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"DSHIP Event Publisher", OnAfterBuildPackageOptions, '', false, false)]
     local procedure "DSHIP Event Publisher_OnAfterBuildPackageOptions"(docType: Enum "DSHIP Document Type"; docNo: Code[50]; licensePlate: Code[20]; var packOptions: Record "DSHIP Package Options")
     var

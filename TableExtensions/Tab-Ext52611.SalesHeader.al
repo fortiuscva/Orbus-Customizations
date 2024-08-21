@@ -218,6 +218,7 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         rec."Ship-to Address 2" := Rec."Ship-to Address 2 (Custom)";
         rec."Ship-to City" := Rec."Ship-to City (Custom)";
         Rec."Ship-to Post Code" := Rec."Ship-To Post Code (Custom)";
+        Rec."Ship-to County" := Rec."Ship-To County (Custom)";
         Rec."Ship-to Country/Region Code" := Rec."Ship-To CountryRegion (Custom)";
         Rec.Validate("Shipping Agent Code", ShippinAgenetCode);
         Rec.Validate("Shipping Agent Service Code", ShippingAgentServiceCode);
