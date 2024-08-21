@@ -4,7 +4,10 @@ pageextension 52634 "ORB DSHIP External Rate Entry" extends "DSHIP External Rate
     {
         modify(Rate)
         {
+<<<<<<< HEAD
             Caption = 'Orbus Freight Cost';
+=======
+>>>>>>> 06fb238 (ORB-013 - Trucking Cost/Price Enhancement Object renumber)
             trigger OnAfterValidate()
             var
                 SingleInstance: Codeunit "ORB Orbus Single Instance";
@@ -12,6 +15,7 @@ pageextension 52634 "ORB DSHIP External Rate Entry" extends "DSHIP External Rate
                 SingleInstance.SetFrieghtPrice(Rec.Rate);
             end;
         }
+<<<<<<< HEAD
 
         addbefore(Rate)
         {
@@ -28,6 +32,8 @@ pageextension 52634 "ORB DSHIP External Rate Entry" extends "DSHIP External Rate
             }
 
         }
+=======
+>>>>>>> 06fb238 (ORB-013 - Trucking Cost/Price Enhancement Object renumber)
         addafter(Rate)
         {
             field("ORB Handling"; Rec."ORB Handling")
