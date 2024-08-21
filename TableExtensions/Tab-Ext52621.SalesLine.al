@@ -64,6 +64,7 @@ tableextension 52621 "ORB Sales Line" extends "Sales Line"
                                 Rec.Description := SalesLineLoc.Description;
                                 Rec."Description 2" := SalesLineLoc."Description 2";
                                 Rec."BOM Item No." := SalesLineLoc."BOM Item No.";
+                                Rec."ORB Magento Artwork Job ID" := SalesLineLoc."ORB Magento Artwork Job ID";
                                 Rec.MODIFY;
                             end;
                         end;
