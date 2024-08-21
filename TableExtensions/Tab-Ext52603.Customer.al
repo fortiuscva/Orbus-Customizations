@@ -54,8 +54,8 @@ tableextension 52603 "ORB Customer" extends Customer
             CalcFormula = lookup("Ship-to Address".County where(Code = Field("Ship-to Code")));
             Editable = false;
             FieldClass = FlowField;
-
         }
+
     }
 
     var
