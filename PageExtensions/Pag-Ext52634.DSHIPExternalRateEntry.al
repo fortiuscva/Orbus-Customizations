@@ -1,4 +1,4 @@
-pageextension 52632 "ORB DSHIP External Rate Entry" extends "DSHIP External Rate Entry"
+pageextension 52634 "ORB DSHIP External Rate Entry" extends "DSHIP External Rate Entry"
 {
     layout
     {
