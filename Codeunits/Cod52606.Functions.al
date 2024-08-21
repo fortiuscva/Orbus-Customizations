@@ -212,5 +212,32 @@ codeunit 52606 "ORB Functions"
         TempEmailItem.AddAttachment(ReportInStream, StrSubstNo(AttachmentFileNameLbl, SalesHeader."No."));
     end;
 
-
+    procedure CreateSalesLine(SalesHeader: Record "Sales Header")
+    var
+        salesline: Record "Sales Line";
+        salesline2: Record "Sales Line";
+        SalesSetup: Record "Sales & Receivables Setup";
+        SingleInstance: Codeunit "ORB Orbus Single Instance";
+        LineNo: Integer;
+    begin
+        SalesSetup.Get();
+        SalesSetup.TestField("ORB Default Resource for DSHIP");
+        salesline2.SetRange("Document Type", salesline."Document Type"::Order);
+        salesline2.SetRange("Document No.", SalesHeader."No.");
+        if salesline2.FindLast() then
+            LineNo := salesline2."Line No." + 10000
+        else
+            LineNo := 10000;
+        salesline.init();
+        salesline.SuspendStatusCheck(true);
+        salesline."Document No." := SalesHeader."No.";
+        salesline."Document Type" := salesline."Document Type"::Order;
+        salesline."Line No." := LineNo;
+        salesline.Type := salesline.Type::Resource;
+        salesline.Validate("No.", SalesSetup."ORB Default Resource for DSHIP");
+        salesline.Validate(Quantity, 1);
+        salesline.Validate("Unit Cost", SingleInstance.GetHandlingPrice());
+        salesline.Validate("Unit Price", SingleInstance.GetHandlingPrice());
+        salesline.Insert();
+    end;
 }

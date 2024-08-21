@@ -81,6 +81,26 @@ codeunit 52603 "ORB Orbus Single Instance"
         exit(ExplodeConfirmVarGbl);
     end;
 
+    procedure SetHandlingPrice(Handling: Decimal)
+    begin
+        HandlingGbl := Handling;
+    end;
+
+    procedure GetHandlingPrice(): Decimal
+    begin
+        exit(HandlingGbl);
+    end;
+
+    procedure SetFrieghtPrice(FrieghtCost: Decimal)
+    begin
+        FrieghtCostGbl := FrieghtCost;
+    end;
+
+    procedure GetFrieghtPrice(): Decimal
+    begin
+        exit(FrieghtCostGbl);
+    end;
+
     var
         ShowDialogLookupProfileVarGbl: Boolean;
         ShowDialogSendEmailToCustVarGbl: Boolean;
@@ -91,4 +111,6 @@ codeunit 52603 "ORB Orbus Single Instance"
         SendEmailVarGbl: Boolean;
         ExplodeConfirmVarGbl: Boolean;
         ExplodeBOMExecutionVarGbl: Boolean;
+        HandlingGbl: Decimal;
+        FrieghtCostGbl: Decimal;
 }

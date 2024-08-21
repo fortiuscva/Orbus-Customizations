@@ -300,6 +300,28 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             SalesHeaderAdditionalFields.Delete();
     end;
 
+
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"DSHIP Event Publisher", OnBeforeAddRateToOrder, '', false, false)]
+
+    internal procedure OnBeforeAddRateToOrder(docType: Enum "DSHIP Document Type"; docNo: Code[50]; rateRequestSource: Enum "DSHIP Rate Request Source"; var selectedRate: Record "DSHIP Carrier Rate Buffer" temporary; var isHandled: Boolean)
+    var
+        shipmentheader: Record "Warehouse Shipment Header";
+        shipmentLine: Record "Warehouse Shipment Line";
+        SalesHeader: Record "Sales Header";
+        OrbusFunctions: Codeunit "ORB Functions";
+    begin
+        if (docType = docType::"Warehouse Shipment")
+        then begin
+            shipmentheader.Get(docNo);
+            shipmentLine.SetRange("No.", shipmentheader."No.");
+            if shipmentLine.FindFirst() then;
+
+            SalesHeader.Get(SalesHeader."Document Type"::Order, shipmentLine."Source No.");
+            OrbusFunctions.CreateSalesLine(SalesHeader);
+        end;
+    end;
+
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"DSHIP Event Publisher", OnAfterBuildPackageOptions, '', false, false)]
     local procedure "DSHIP Event Publisher_OnAfterBuildPackageOptions"(docType: Enum "DSHIP Document Type"; docNo: Code[50]; licensePlate: Code[20]; var packOptions: Record "DSHIP Package Options")
     var
