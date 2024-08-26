@@ -42,6 +42,36 @@ pageextension 52608 "ORB Posted Sales Invoice" extends "Posted Sales Invoice"
                 ApplicationArea = all;
                 ToolTip = 'Specifies the Magento CC 4 Digits of Sales';
             }
+            field("ORB Escalation Reason Code"; Rec."ORB Escalation Reason Code")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Escalation Reason field.', Comment = '%';
+                Editable = false;
+            }
+            field("ORB Resolved By"; Rec."ORB Resolved By")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Specifies the user who resolved escalated issue';
+                Editable = false;
+            }
+            field("ORB Original Promised Ship Dt."; Rec."ORB Original Promised Ship Dt.")
+            {
+                ApplicationArea = all;
+                Tooltip = 'Specifies the original promised shipment date';
+                Editable = false;
+            }
+            field("ORB Delayed Ship Reason Code"; Rec."ORB Delayed Ship Reason Code")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Specifies the reason for Shipment Delay';
+                Editable = false;
+            }
+            field("ORB Delayed Ship Sub-Reason"; Rec."ORB Delayed Ship Sub-Reason")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Specifies the sub-reason code for Shipment Delay';
+                Editable = false;
+            }
         }
     }
     actions

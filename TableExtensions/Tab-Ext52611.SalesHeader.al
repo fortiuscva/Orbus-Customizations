@@ -2,6 +2,38 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
 {
     fields
     {
+        modify("Order Status")
+        {
+            trigger OnAfterValidate()
+            var
+                salesHeader: Record "Sales Header";
+                ORBFunctions: codeunit "ORB Functions";
+            begin
+                if Xrec."Order Status" = Xrec."Order Status"::Draft then begin
+                    ORBFunctions.SendOrderConfirmationEmailItem(Rec, false);
+
+                    salesHeader.get(Rec."Document Type"::Order, Rec."No.");
+                    salesHeader."Order Status" := Rec."Order Status";
+                    Rec := salesHeader;
+                end;
+            end;
+        }
+
+        modify(Status)
+        {
+            trigger OnAfterValidate()
+            var
+                myInt: Integer;
+            begin
+                if (Rec.Status = Rec.Status::Released) and (Rec."Document Type" = rec."Document Type"::Order) then begin
+                    if Rec."ORB Original Promised Ship Dt." = 0D then begin
+                        Rec."ORB Original Promised Ship Dt." := Today();
+                        Rec.Modify()
+                    end;
+                end;
+            end;
+        }
+
         field(52610; "ORB Tax ID"; Code[20])
         {
             Caption = 'Tax ID';
@@ -55,7 +87,105 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             DataClassification = CustomerContent;
             TableRelation = Priority;
         }
+        field(52627; "ORB Shipment Date"; Date)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(52628; "ORB Escalation Reason Code"; Code[20])
+        {
+            Caption = 'Escalation Reason Code';
+            DataClassification = CustomerContent;
+            TableRelation = "ORB Escalation Reason Codes".Code;
+        }
+        field(52629; "ORB Resolved By"; Code[20])
+        {
+            Caption = 'Resolved By';
+            DataClassification = CustomerContent;
+            TableRelation = User."User Name";
+            ValidateTableRelation = false;
+            trigger OnValidate()
+            var
+                UserSelectionCULcl: Codeunit "User Selection";
+            begin
+                UserSelectionCULcl.ValidateUserName("ORB Resolved By");
+            end;
+        }
+        field(52630; "ORB Original Promised Ship Dt."; Date)
+        {
+            Caption = 'Original Promised Shipment Date';
+            DataClassification = CustomerContent;
+        }
+        field(52631; "ORB Delayed Ship Reason Code"; Code[20])
+        {
+            Caption = 'Delayed Shipment Reason Code';
+            DataClassification = CustomerContent;
+            TableRelation = "Case Reason Code WSG";
+            trigger OnValidate()
+            begin
+                if (xRec."ORB Delayed Ship Reason Code" <> Rec."ORB Delayed Ship Reason Code") then
+                    clear(Rec."ORB Delayed Ship Sub-Reason");
+            end;
+        }
+        field(52632; "ORB Delayed Ship Sub-Reason"; Code[100])
+        {
+            Caption = 'Delayed Shipment Sub-Reason Code';
+            DataClassification = CustomerContent;
+            trigger OnLookup()
+            var
+                CaseReasonDetailRecLcl: Record CaseReasonDetail;
+            begin
+                CaseReasonDetailRecLcl.Reset;
+                CaseReasonDetailRecLcl.SetFilter("Reason Code", Rec."ORB Delayed Ship Reason Code");
+                if Page.RunModal(Page::CaseReasonDetailList, CaseReasonDetailRecLcl) = Action::LookupOK then
+                    Rec."ORB Delayed Ship Sub-Reason" := CaseReasonDetailRecLcl.Code;
+            end;
+
+            trigger OnValidate()
+            var
+                CaseReasonDetailRecLcl: Record CaseReasonDetail;
+                SubReasonCodeLbl: Label 'Not a valid sub-reason code  for the selected  reason code';
+            begin
+                CaseReasonDetailRecLcl.Reset();
+                CaseReasonDetailRecLcl.Setfilter("Reason Code", Rec."ORB Delayed Ship Reason Code");
+                CaseReasonDetailRecLcl.SetFilter(Code, Rec."ORB Delayed Ship Sub-Reason");
+                If not CaseReasonDetailRecLcl.FindFirst() then
+                    Error(SubReasonCodeLbl);
+            end;
+
+        }
+        field(52633; "ORB DS Payment Type"; Option)
+        {
+            Caption = 'DS Payment Type';
+            FieldClass = FlowField;
+            CalcFormula = lookup("DSHIP Package Options"."Payment Type" where("Document Type" = filter("Sales Order"), "Document No." = field("No.")));
+            OptionMembers = " ",SENDER,THIRD_PARTY,RECEIVER,COLLECT;
+            OptionCaption = 'None,Sender,Third Party,Receiver,Collect';
+            Editable = false;
+        }
+        field(52634; "ORB DS Payment Account No."; Text[100])
+        {
+            Caption = 'Payment Account No.';
+            FieldClass = FlowField;
+            CalcFormula = lookup("DSHIP Package Options"."Payment Account No." where("Document Type" = filter("Sales Order"), "Document No." = field("No.")));
+            Editable = false;
+        }
+        field(52650; "ORB Total Payment Amount"; Decimal)
+        {
+            Caption = 'Total Payment Amount';
+            FieldClass = FlowField;
+            CalcFormula = sum("EFT Transaction -CL-"."Total Amount" where("Transaction Status" = filter(Queued | Batched | Approved), "Document Type" = field("Document Type"), "Document No." = field("No."), "Method Type" = filter(Charge | Settle | Capture | Refund | Credit | Authorize | "Return Settle" | "Return Authorize" | "Voice Authorize")));
+            Editable = false;
+        }
+        field(52651; "ORB Freight Line"; Option)
+        {
+            FieldClass = FlowField;
+            CalcFormula = lookup("DSHIP Shipment Options"."Add Freight Line" where("Document Type" = filter("Sales Order"), "Document No." = field("No.")));
+            OptionMembers = Automatic,Manual;
+            Caption = 'Freight Line';
+            Editable = false;
+        }
     }
+
 
     trigger OnDelete()
     var
@@ -68,11 +198,31 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
     trigger OnAfterInsert()
     var
         contactRecLcl: Record Contact;
+        ShippinAgenetCode: Code[10];
+        ShippingAgentServiceCode: Code[20];
+
     begin
         if GuiAllowed then
             exit;
+
         if "ORB Magento Location Code" <> '' then
             Rec.Validate("Location Code", "ORB Magento Location Code");
+        if "ORB Shipment Date" <> 0D then
+            Rec.Validate("Shipment Date", "ORB Shipment Date");
+        ShippinAgenetCode := Rec."Shipping Agent Code";
+        ShippingAgentServiceCode := Rec."Shipping Agent Service Code";
+
+        Rec.Validate("Ship-to Code", '');
+        Rec.Validate("Ship-to Name", Rec."Ship-to Name (Custom)");
+        Rec."Ship-to Address" := Rec."Ship-to Address (Custom)";
+        rec."Ship-to Address 2" := Rec."Ship-to Address 2 (Custom)";
+        rec."Ship-to City" := Rec."Ship-to City (Custom)";
+        Rec."Ship-to Post Code" := Rec."Ship-To Post Code (Custom)";
+        Rec."Ship-to County" := Rec."Ship-To County (Custom)";
+        Rec."Ship-to Country/Region Code" := Rec."Ship-To CountryRegion (Custom)";
+        Rec.Validate("Shipping Agent Code", ShippinAgenetCode);
+        Rec.Validate("Shipping Agent Service Code", ShippingAgentServiceCode);
+
         if "Sell-To Contact No. (Custom)" <> '' then begin
             contactRecLcl.SetRange("No.", "Sell-To Contact No. (Custom)");
             if contactRecLcl.FindFirst() then begin

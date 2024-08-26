@@ -9,23 +9,24 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
                 ApplicationArea = All;
                 Editable = false;
                 ToolTip = 'Customer Street Address';
-                Caption = 'Default Street Address';
+                Caption = 'Ship-to Street Address';
 
             }
-            field("ORB ShiptoState"; ShiptoStateVarGbl)
+            field("ORB Ship-to State"; Rec."ORB Ship-to State")
             {
                 ApplicationArea = All;
                 Editable = false;
-                ToolTip = 'Customer ship to State';
-                Caption = 'Default Ship-to State';
+                ToolTip = 'Filter By State';
+                Caption = 'Ship-to State';
 
             }
-            field("ORB ShiptoZipCode"; ShiptoZipcodeVarGbl)
+
+            field("ORB Ship-to Zip"; ShiptoZipcodeVarGbl)
             {
                 ApplicationArea = All;
                 Editable = false;
-                ToolTip = 'Customer Ship-to State';
-                Caption = 'Default Zip Code';
+                ToolTip = 'Customer Street Address';
+                Caption = 'Ship-to Street Address';
 
             }
 
@@ -35,7 +36,6 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
 
     Var
         StreetAddressVarGbl: Text;
-        ShiptoStateVarGbl: Text;
         ShiptoZipcodeVarGbl: Text;
 
     trigger OnAfterGetRecord()
@@ -46,11 +46,9 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
         ShiptoAddressRecLcl.SetRange("Customer No.", Rec."No.");
         ShiptoAddressRecLcl.SetRange(Code, Rec."Ship-to Code");
         If ShiptoAddressRecLcl.FindFirst() then begin
-            ShiptoStateVarGbl := ShiptoAddressRecLcl.County;
             StreetAddressVarGbl := ShiptoAddressRecLcl.Address;
             ShiptoZipcodeVarGbl := ShiptoAddressRecLcl."Post Code";
         end else begin
-            ShiptoStateVarGbl := '';
             StreetAddressVarGbl := '';
             ShiptoZipcodeVarGbl := '';
         end;
