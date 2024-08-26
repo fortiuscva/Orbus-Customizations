@@ -70,6 +70,17 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 end;
             end;
         }
+        addfirst(factboxes)
+        {
+            part(ORBSalesLineAddFieldsFB; "ORB Sales Line Add. Fields FB")
+            {
+                ApplicationArea = Suite;
+                Provider = SalesLines;
+                SubPageLink = "Document Type" = field("Document Type"),
+                              "Document No." = field("Document No."),
+                              "Line No." = field("Line No.");
+            }
+        }
     }
     actions
     {
