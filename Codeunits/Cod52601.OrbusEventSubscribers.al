@@ -332,7 +332,6 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
     begin
         if recRef.Number() = Database::"Warehouse Shipment Header" then
             recRef.SetTable(WhseShipmentHeader);
-        Message(Format(recRef.Number()));
         lpHeader.SetRange("Source No.", WhseShipmentHeader."No.");
         if lpHeader.FindFirst() then begin
             labelData.SetRange("Label Type", labelData."Label Type"::Shipping);
