@@ -24,4 +24,18 @@ page 52627 "ORB Sales Line Add. Fields FB"
             }
         }
     }
+    actions
+    {
+        area(Processing)
+        {
+            action(ORBOpenLink)
+            {
+                Caption = 'Open URL';
+                trigger OnAction()
+                begin
+                    Hyperlink(Rec."Job URL");
+                end;
+            }
+        }
+    }
 }
