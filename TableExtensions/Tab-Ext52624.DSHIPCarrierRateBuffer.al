@@ -7,5 +7,10 @@ tableextension 52624 "ORB DSHIP Carrier Rate Buffer" extends "DSHIP Carrier Rate
             Caption = 'Handling';
             DataClassification = ToBeClassified;
         }
+        field(52601; "ORB Freight Quote"; Decimal)
+        {
+            Caption = 'Freight Quote';
+            DataClassification = ToBeClassified;
+        }
     }
 }
