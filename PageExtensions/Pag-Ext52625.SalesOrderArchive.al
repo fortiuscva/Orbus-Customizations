@@ -1,5 +1,16 @@
 pageextension 52625 "ORB Sales Order Archive" extends "Sales Order Archive"
 {
+    layout
+    {
+        addlast(General)
+        {
+            field("ORB Resolved By"; Rec."ORB Resolved By")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Specifies the user who resolved escalated issue';
+            }
+        }
+    }
     actions
     {
         addlast("Ver&sion")

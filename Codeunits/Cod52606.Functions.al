@@ -94,4 +94,164 @@ codeunit 52606 "ORB Functions"
 
         exit(WarehouseActLinRecLcl.Quantity + WarehouseEntryRecLcl.Quantity - Abs(WarehouseEntry2RecLcl.Quantity));
     end;
+
+
+    procedure UpdateTakeZone(WarehouseActHeaderPar: Record "Warehouse Activity Header")
+    var
+        WarehouseActLineRecLcl: Record "Warehouse Activity Line";
+        WarehouseActLine2RecLcl: Record "Warehouse Activity Line";
+        BinContentsRecLcl: Record "Bin Content";
+        BinQtyFoundVarLcl: Boolean;
+    begin
+        if not Confirm('Are you sure you want to update the "Take" line zone code', false) then
+            exit;
+
+        WarehouseActLineRecLcl.Reset();
+        WarehouseActLineRecLcl.SetRange("Activity Type", WarehouseActLineRecLcl."Activity Type"::Pick);
+        WarehouseActLineRecLcl.SetRange("No.", WarehouseActHeaderPar."No.");
+        WarehouseActLineRecLcl.SetRange("Action Type", WarehouseActLineRecLcl."Action Type"::Place);
+        if WarehouseActLineRecLcl.FindSet() then
+            repeat
+                WarehouseActLine2RecLcl.Reset();
+                WarehouseActLine2RecLcl.SetRange("Activity Type", WarehouseActLine2RecLcl."Activity Type"::Pick);
+                WarehouseActLine2RecLcl.SetRange("No.", WarehouseActLineRecLcl."No.");
+                WarehouseActLine2RecLcl.SetRange("Item No.", WarehouseActLineRecLcl."Item No.");
+                WarehouseActLine2RecLcl.SetRange("Source No.", WarehouseActLineRecLcl."Source No.");
+                WarehouseActLine2RecLcl.SetRange("Source Line No.", WarehouseActLineRecLcl."Source Line No.");
+                WarehouseActLine2RecLcl.SetRange("Action Type", WarehouseActLine2RecLcl."Action Type"::Take);
+                WarehouseActLine2RecLcl.SetFilter("Line No.", '<%1', WarehouseActLineRecLcl."Line No.");
+                if WarehouseActLine2RecLcl.FindLast() then begin
+                    WarehouseActLine2RecLcl.Validate("Zone Code", WarehouseActLineRecLcl."Zone Code");
+
+                    Clear(BinQtyFoundVarLcl);
+                    BinContentsRecLcl.Reset();
+                    BinContentsRecLcl.SetRange("Item No.", WarehouseActLine2RecLcl."Item No.");
+                    BinContentsRecLcl.SetRange("Location Code", WarehouseActLine2RecLcl."Location Code");
+                    BinContentsRecLcl.SetRange("Zone Code", WarehouseActLine2RecLcl."Zone Code");
+                    if BinContentsRecLcl.FindFirst() then
+                        repeat
+                            if BinContentsRecLcl.CalcQtyAvailToTakeUOM() >= WarehouseActLine2RecLcl.Quantity then begin
+                                WarehouseActLine2RecLcl.Validate("Bin Code", BinContentsRecLcl."Bin Code");
+                                BinQtyFoundVarLcl := true;
+                            end;
+                        until (BinContentsRecLcl.Next() = 0) or BinQtyFoundVarLcl;
+
+                    WarehouseActLine2RecLcl.Modify();
+                end;
+            until WarehouseActLineRecLcl.Next() = 0;
+
+        if GuiAllowed then
+            Message('Warehouse Pick Lines updated.');
+    end;
+
+    procedure SendOrderConfirmationEmailItem(SalesHeader: Record "Sales Header"; HideEditor: Boolean)
+    var
+        TempEmailItem: Record "Email Item" temporary;
+        Customer: Record Customer;
+        EmailScenrio: Enum "Email Scenario";
+    begin
+        Customer.Get(SalesHeader."Sell-to Customer No.");
+        TempEmailItem."Send to" := SalesHeader."Sell-To Email (Custom)";
+        TempEmailItem."Subject" := 'Orbus Order #' + SalesHeader."No." + 'confirmation';
+        TempEmailItem.SetBodyText(GenerateOrderConfirmationEmailBody());
+        AddAttachmentToCustomerOrderConfirmation(TempEmailItem, SalesHeader);
+        TempEmailItem.Send(HideEditor, EmailScenrio::Default);
+    end;
+
+    procedure GetOrderConfirmationReportandLayoutCode(var ReportId: Integer; var LayoutCode: Code[20]; var ReportLayoutSelection: Record "Report Layout Selection")
+    var
+        Reportselections: Record "Report Selections";
+    begin
+        ReportId := Report::"ORB Email Confirmation Layout";
+        if ReportLayoutSelection.Get(ReportId, CompanyName) then;
+    end;
+
+    procedure GenerateOrderConfirmationEmailBody() BodyText: Text
+    var
+        ReportLayoutSelection: Record "Report Layout Selection";
+        TempBlob: Codeunit "Temp Blob";
+        ReportInStream: InStream;
+        ReportOutStream: OutStream;
+        LayoutCode: Code[20];
+        ReportId: Integer;
+        StartDate: Date;
+        EndDate: Date;
+    begin
+        TempBlob.CreateOutStream(ReportOutStream);
+        GetOrderConfirmationReportandLayoutCode(ReportId, LayoutCode, ReportLayoutSelection);
+        LayoutCode := ReportLayoutSelection."Custom Report Layout Code";
+        ReportLayoutSelection.SetTempLayoutSelected(LayoutCode);
+        Report.SaveAs(Report::"ORB Email Confirmation Layout", '', ReportFormat::Html, ReportOutStream);
+        ReportLayoutSelection.SetTempLayoutSelected('');
+        TempBlob.CreateInStream(ReportInStream);
+        ReportInStream.ReadText(BodyText);
+    end;
+
+    local procedure AddAttachmentToCustomerOrderConfirmation(var TempEmailItem: Record "Email Item" temporary; SalesHeader: Record "Sales Header")
+    var
+        ReportSelection: Record "Report Selections";
+        TempBlob: Codeunit "Temp Blob";
+        CustomerRecordRef: RecordRef;
+        StartDate: Date;
+        EndDate: Date;
+        ReportInStream: InStream;
+        ReportOutStream: OutStream;
+        IntialDate: Date;
+        ReportId: Integer;
+        ReportUsage: Enum "Report Selection Usage";
+        AttachmentFileNameLbl: Label 'Sales Order %1.pdf', Comment = '%1 Order No.';
+        ReportParameter: Label '<?xml version="1.0" standalone="yes"?><ReportParameters name="Standard Sales - Order Conf." id="1305"><Options><Field name="LogInteraction">true</Field><Field name="DisplayAssemblyInformation">false</Field><Field name="ArchiveDocument">false</Field></Options><DataItems><DataItem name="Header">VERSION(1) SORTING(Field1,Field3) WHERE(Field3=1(%1))</DataItem></DataItems></ReportParameters>';
+    begin
+        if SalesHeader."Document Type" = SalesHeader."Document Type"::Order then
+            ReportUsage := ReportSelection.Usage::"S.Order";
+        ReportSelection.SetRange(Usage, ReportUsage);
+        if ReportSelection.FindFirst() then;
+        TempBlob.CreateOutStream(ReportOutStream);
+        Report.SaveAs(ReportSelection."Report ID", StrSubstNo(ReportParameter, SalesHeader."No."), ReportFormat::Pdf, ReportOutStream);
+        TempBlob.CreateInStream(ReportInStream);
+        TempEmailItem.AddAttachment(ReportInStream, StrSubstNo(AttachmentFileNameLbl, SalesHeader."No."));
+    end;
+
+    procedure CreateSalesLine(SalesHeader: Record "Sales Header")
+    var
+        salesline: Record "Sales Line";
+        salesline2: Record "Sales Line";
+        SalesSetup: Record "Sales & Receivables Setup";
+        DSHIPCarrierRateBuffer: Record "DSHIP Carrier Rate Buffer" temporary;
+        DSHIPFreightPrice: Record "DSHIP Freight Price";
+        SingleInstance: Codeunit "ORB Orbus Single Instance";
+        DSHIPPackageRateManagement: Codeunit "DSHIP Package Rate Management";
+        salesType: Option " ",Customer,"Customer Price Group","All Customers",Campaign;
+        LineNo: Integer;
+        TotalUnitPrice: Decimal;
+    begin
+        SalesSetup.Get();
+        SalesSetup.TestField("ORB Default Resource for DSHIP");
+        salesline2.SetRange("Document Type", salesline."Document Type"::Order);
+        salesline2.SetRange("Document No.", SalesHeader."No.");
+        if salesline2.FindLast() then
+            LineNo := salesline2."Line No." + 10000
+        else
+            LineNo := 10000;
+        DSHIPPackageRateManagement.getSpecificSalesTypeRate(
+                                    DSHIPFreightPrice,
+                                    SalesHeader."Shipping Agent Code",
+                                    DSHIPCarrierRateBuffer,
+                                    salesType::"All Customers",
+                                    '',
+                                    SalesHeader.Amount);
+        salesline.init();
+        salesline.SuspendStatusCheck(true);
+        salesline."Document No." := SalesHeader."No.";
+        salesline."Document Type" := salesline."Document Type"::Order;
+        salesline."Line No." := LineNo;
+        salesline.Type := salesline.Type::Resource;
+        salesline.Validate("No.", SalesSetup."ORB Default Resource for DSHIP");
+        salesline.Validate(Quantity, 1);
+        salesline.Validate("Unit Cost", SingleInstance.GetFrieghtPrice());
+        //ldRateToReturn * (lrecDShipRatePrice."Markup %" / 100 + 1);
+        TotalUnitPrice := (SingleInstance.GetHandlingPrice() + SingleInstance.GetFrieghtPrice()) * (DSHIPFreightPrice."Markup %" / 100 + 1);
+        salesline.Validate("Unit Price", TotalUnitPrice);
+        salesline.Insert();
+    end;
 }
