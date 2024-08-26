@@ -1,4 +1,4 @@
-page 52626 "ORB Sales Line Add. Fields FB"
+page 52627 "ORB Sales Line Add. Fields FB"
 {
     ApplicationArea = All;
     Caption = 'ORB Sales Line Add. Fields Details';
