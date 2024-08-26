@@ -34,6 +34,17 @@ pageextension 52605 "ORB Posted Sales Inv. - Update" extends "Posted Sales Inv. 
             {
                 ApplicationArea = all;
             }
+            field("ORB Delayed Ship Reason Code"; Rec."ORB Delayed Ship Reason Code")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies reasons for delayed shipment';
+            }
+            field("ORB Delayed Ship Sub-Reason"; Rec."ORB Delayed Ship Sub-Reason")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the sub-reason code for Shipment Delay';
+            }
+
         }
     }
 }
