@@ -9,6 +9,11 @@ pageextension 52635 "DSHIP LP Freight Information" extends "DSHIP LP Freight Inf
                 ApplicationArea = all;
                 ToolTip = 'Handling Price';
             }
+            field("ORB Freight Quote"; Rec."ORB Freight Quote")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Freight Quote';
+            }
         }
     }
 }

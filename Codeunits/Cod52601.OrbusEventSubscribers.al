@@ -322,6 +322,33 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         end;
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"DSHIP Event Publisher", OnAfterProcessMultipleCommands, '', false, false)]
+    internal procedure OnAfterProcessMultipleCommands(docType: Enum "DSHIP Document Type"; docNo: Code[50]; var licensePlateNo: Code[50]; var itemNo: Code[50]; scanValue: Text)
+    var
+        shipmentheader: Record "Warehouse Shipment Header";
+        shipmentLine: Record "Warehouse Shipment Line";
+        SalesHeader: Record "Sales Header";
+        salesline: Record "Sales Line";
+    begin
+        case scanValue of
+            '--unpackall',
+                '--upa':
+                if (docType = docType::"Warehouse Shipment") then begin
+                    shipmentheader.Get(docNo);
+                    shipmentLine.SetRange("No.", shipmentheader."No.");
+                    if shipmentLine.FindFirst() then;
+                    SalesHeader.Get(SalesHeader."Document Type"::Order, shipmentLine."Source No.");
+                    salesline.SetRange("Document Type", SalesHeader."Document Type");
+                    salesline.SetRange("Document No.", SalesHeader."No.");
+                    salesline.SetRange(Type, salesline.Type::Resource);
+                    if not salesline.IsEmpty then begin
+                        salesline.SuspendStatusCheck(true);
+                        salesline.Delete();
+                    end;
+                end;
+        end;
+    end;
+
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"DSHIP Event Publisher", OnBeforeSetShipmentDetails, '', false, false)]
     internal procedure OnBeforeSetShipmentDetails(recRef: RecordRef; shipAgent: Code[50]; shipAgentSvc: Code[50]; trackingNo: Text; deliveryDays: Integer; var isHandled: Boolean)
     var
@@ -339,6 +366,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             labelData.SetRange("License Plate No.", lpHeader."No.");
             if labelData.FindFirst() then begin
                 labelData."ORB Handling" := SingleInstance.GetHandlingPrice();
+                labelData."ORB Freight Quote" := SingleInstance.GetFreightQuote();
                 labelData.Modify();
             end;
 

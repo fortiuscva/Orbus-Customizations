@@ -101,6 +101,16 @@ codeunit 52603 "ORB Orbus Single Instance"
         exit(FrieghtCostGbl);
     end;
 
+    procedure SetFreightQuote(FreightQuote: Decimal)
+    begin
+        FreightQuoteGbl := FreightQuote;
+    end;
+
+    procedure GetFreightQuote(): Decimal
+    begin
+        exit(FreightQuoteGbl);
+    end;
+
     var
         ShowDialogLookupProfileVarGbl: Boolean;
         ShowDialogSendEmailToCustVarGbl: Boolean;
@@ -113,4 +123,5 @@ codeunit 52603 "ORB Orbus Single Instance"
         ExplodeBOMExecutionVarGbl: Boolean;
         HandlingGbl: Decimal;
         FrieghtCostGbl: Decimal;
+        FreightQuoteGbl: Decimal;
 }
