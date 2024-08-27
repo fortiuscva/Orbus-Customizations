@@ -217,8 +217,13 @@ codeunit 52606 "ORB Functions"
         salesline: Record "Sales Line";
         salesline2: Record "Sales Line";
         SalesSetup: Record "Sales & Receivables Setup";
+        DSHIPCarrierRateBuffer: Record "DSHIP Carrier Rate Buffer" temporary;
+        DSHIPFreightPrice: Record "DSHIP Freight Price";
         SingleInstance: Codeunit "ORB Orbus Single Instance";
+        DSHIPPackageRateManagement: Codeunit "DSHIP Package Rate Management";
+        salesType: Option " ",Customer,"Customer Price Group","All Customers",Campaign;
         LineNo: Integer;
+        TotalUnitPrice: Decimal;
     begin
         SalesSetup.Get();
         SalesSetup.TestField("ORB Default Resource for DSHIP");
@@ -228,6 +233,13 @@ codeunit 52606 "ORB Functions"
             LineNo := salesline2."Line No." + 10000
         else
             LineNo := 10000;
+        DSHIPPackageRateManagement.getSpecificSalesTypeRate(
+                                    DSHIPFreightPrice,
+                                    SalesHeader."Shipping Agent Code",
+                                    DSHIPCarrierRateBuffer,
+                                    salesType::"All Customers",
+                                    '',
+                                    SalesHeader.Amount);
         salesline.init();
         salesline.SuspendStatusCheck(true);
         salesline."Document No." := SalesHeader."No.";
@@ -237,7 +249,9 @@ codeunit 52606 "ORB Functions"
         salesline.Validate("No.", SalesSetup."ORB Default Resource for DSHIP");
         salesline.Validate(Quantity, 1);
         salesline.Validate("Unit Cost", SingleInstance.GetFrieghtPrice());
-        salesline.Validate("Unit Price", SingleInstance.GetHandlingPrice());
+        //ldRateToReturn * (lrecDShipRatePrice."Markup %" / 100 + 1);
+        TotalUnitPrice := (SingleInstance.GetHandlingPrice() + SingleInstance.GetFrieghtPrice()) * (DSHIPFreightPrice."Markup %" / 100 + 1);
+        salesline.Validate("Unit Price", TotalUnitPrice);
         salesline.Insert();
     end;
 }
