@@ -180,6 +180,7 @@ codeunit 52603 "ORB Orbus Single Instance"
         ExplodeBOMExecutionVarGbl: Boolean;
         HandlingGbl: Decimal;
         FrieghtCostGbl: Decimal;
+        FreightQuoteGbl: Decimal;
         ShippedNotInvoicedGbl: Boolean;
         MarkupAmountGbl: Decimal;
         FirstActivityNoGbl: Code[20];

@@ -1,4 +1,4 @@
-tableextension 52624 "ORB DSHIP Carrier Rate Buffer" extends "DSHIP Carrier Rate Buffer"
+tableextension 52625 "ORB DSHIP Label Data" extends "DSHIP Label Data"
 {
     fields
     {

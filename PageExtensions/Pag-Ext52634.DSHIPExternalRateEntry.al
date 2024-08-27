@@ -36,6 +36,17 @@ pageextension 52634 "ORB DSHIP External Rate Entry" extends "DSHIP External Rate
 >>>>>>> 06fb238 (ORB-013 - Trucking Cost/Price Enhancement Object renumber)
         addafter(Rate)
         {
+            field("ORB Freight Quote"; Rec."ORB Freight Quote")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Freight Quote';
+                trigger OnValidate()
+                var
+                    SingleInstance: Codeunit "ORB Orbus Single Instance";
+                begin
+                    SingleInstance.SetFreightQuote(Rec."ORB Freight Quote");
+                end;
+            }
             field("ORB Handling"; Rec."ORB Handling")
             {
                 ApplicationArea = all;
