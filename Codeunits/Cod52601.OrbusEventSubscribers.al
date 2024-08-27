@@ -342,8 +342,9 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
                     salesline.SetRange("Document No.", SalesHeader."No.");
                     salesline.SetRange(Type, salesline.Type::Resource);
                     if not salesline.IsEmpty then begin
+                        salesline.FindSet();
                         salesline.SuspendStatusCheck(true);
-                        salesline.Delete();
+                        salesline.Deleteall();
                     end;
                 end;
         end;
