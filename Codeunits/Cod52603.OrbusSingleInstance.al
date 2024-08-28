@@ -121,6 +121,21 @@ codeunit 52603 "ORB Orbus Single Instance"
         exit(LastCommandRanGbl);
     end;
 
+    procedure SetMarkupPercentage(MarkupPercentage: Decimal)
+    begin
+        MarkupPercentageGbl := MarkupPercentage
+    end;
+
+    procedure GetMarkupPercentage(): Decimal
+    begin
+        exit(MarkupPercentageGbl);
+    end;
+
+    procedure Reset()
+    begin
+        ClearAll();
+    end;
+
     var
         ShowDialogLookupProfileVarGbl: Boolean;
         ShowDialogSendEmailToCustVarGbl: Boolean;
@@ -135,5 +150,6 @@ codeunit 52603 "ORB Orbus Single Instance"
         FrieghtCostGbl: Decimal;
         FreightQuoteGbl: Decimal;
         LastCommandRanGbl: Text;
+        MarkupPercentageGbl: Decimal;
 
 }
