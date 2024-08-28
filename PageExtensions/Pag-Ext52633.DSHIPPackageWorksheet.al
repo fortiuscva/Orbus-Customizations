@@ -6,7 +6,8 @@ pageextension 52633 "ORB DSHIP Package Worksheet" extends "DSHIP Package Workshe
         {
             trigger OnAfterValidate()
             begin
-
+                FactBoxUpdates();
+                CurrPage.shipInfoFactBox.Page.SetORBValues(189);
             end;
         }
     }
