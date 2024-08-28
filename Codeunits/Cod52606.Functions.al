@@ -212,7 +212,7 @@ codeunit 52606 "ORB Functions"
         TempEmailItem.AddAttachment(ReportInStream, StrSubstNo(AttachmentFileNameLbl, SalesHeader."No."));
     end;
 
-    procedure CreateSalesLine(SalesHeader: Record "Sales Header")
+    procedure CreateSalesLine(SalesHeader: Record "Sales Header"; shipmentLine: Record "Warehouse Shipment Line")
     var
         salesline: Record "Sales Line";
         salesline2: Record "Sales Line";
@@ -253,5 +253,26 @@ codeunit 52606 "ORB Functions"
         TotalUnitPrice := (SingleInstance.GetHandlingPrice() + SingleInstance.GetFrieghtPrice()) * (DSHIPFreightPrice."Markup %" / 100 + 1);
         salesline.Validate("Unit Price", TotalUnitPrice);
         salesline.Insert();
+        ModifyLabelDataWithMarginPecentage(shipmentLine."Source No.", DSHIPFreightPrice."Markup %");
+    end;
+
+
+    procedure ModifyLabelDataWithMarginPecentage(SourceNo: Code[20]; Margin: Decimal)
+    var
+        WhseShipmentHeader: Record "Warehouse Shipment Header";
+        labelData: Record "DSHIP Label Data";
+        lpHeader: Record "IWX LP Header";
+        SingleInstance: Codeunit "ORB Orbus Single Instance";
+    begin
+        lpHeader.SetRange("Source No.", SourceNo);
+        if lpHeader.FindFirst() then begin
+            labelData.SetRange("Label Type", labelData."Label Type"::Shipping);
+            labelData.SetRange("Label Format", labelData."Label Format"::PNG);
+            labelData.SetRange("License Plate No.", lpHeader."No.");
+            if labelData.FindFirst() then begin
+                labelData."ORB Margin %" := Margin;
+                labelData.Modify();
+            end;
+        end;
     end;
 }

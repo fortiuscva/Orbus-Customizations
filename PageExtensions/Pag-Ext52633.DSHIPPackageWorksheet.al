@@ -5,9 +5,15 @@ pageextension 52633 "ORB DSHIP Package Worksheet" extends "DSHIP Package Workshe
         modify(edtScan)
         {
             trigger OnAfterValidate()
+            var
+                SingleInstanceCU: Codeunit "ORB Orbus Single Instance";
+                LastCommandRan: Text;
             begin
-                FactBoxUpdates();
-                CurrPage.shipInfoFactBox.Page.SetORBValues(189);
+                LastCommandRan := SingleInstanceCU.GetLastCommandRan();
+                if (LastCommandRan = '--upa') or (LastCommandRan = '--unpackall') then begin
+                    FactBoxUpdates();
+                    CurrPage.shipInfoFactBox.Page.InitializeValues();
+                end;
             end;
         }
     }

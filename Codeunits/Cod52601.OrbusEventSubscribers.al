@@ -318,7 +318,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             if shipmentLine.FindFirst() then;
 
             SalesHeader.Get(SalesHeader."Document Type"::Order, shipmentLine."Source No.");
-            OrbusFunctions.CreateSalesLine(SalesHeader);
+            OrbusFunctions.CreateSalesLine(SalesHeader, shipmentLine);
         end;
     end;
 
@@ -370,8 +370,15 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
                 labelData."ORB Freight Quote" := SingleInstance.GetFreightQuote();
                 labelData.Modify();
             end;
-
         end;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"DSHIP Event Publisher", OnBeforeProcessMultipleCommands, '', false, false)]
+    internal procedure OnBeforeProcessMultipleCommands(docType: Enum "DSHIP Document Type"; docNo: Code[50]; var licensePlateNo: Code[50]; var itemNo: Code[50]; var scanValue: Text; var isHandled: Boolean)
+    var
+        SingleInstanceCU: Codeunit "ORB Orbus Single Instance";
+    begin
+        SingleInstanceCU.SetLastCommandRan(scanValue);
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"DSHIP Event Publisher", OnAfterBuildPackageOptions, '', false, false)]
