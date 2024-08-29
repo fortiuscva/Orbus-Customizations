@@ -11,7 +11,7 @@ pageextension 52634 "ORB DSHIP External Rate Entry" extends "DSHIP External Rate
                 SingleInstance.SetFrieghtPrice(Rec.Rate);
             end;
         }
-        addafter(Rate)
+        addbefore(Rate)
         {
             field("ORB Freight Quote"; Rec."ORB Freight Quote")
             {
@@ -24,6 +24,10 @@ pageextension 52634 "ORB DSHIP External Rate Entry" extends "DSHIP External Rate
                     SingleInstance.SetFreightQuote(Rec."ORB Freight Quote");
                 end;
             }
+
+        }
+        addafter(Rate)
+        {
             field("ORB Handling"; Rec."ORB Handling")
             {
                 ApplicationArea = all;
