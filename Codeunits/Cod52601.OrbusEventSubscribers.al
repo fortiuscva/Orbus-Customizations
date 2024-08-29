@@ -368,6 +368,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             if labelData.FindFirst() then begin
                 labelData."ORB Handling" := SingleInstance.GetHandlingPrice();
                 labelData."ORB Freight Quote" := SingleInstance.GetFreightQuote();
+                labelData."ORB Margin %" := SingleInstance.GetMarginPercentage();
                 labelData.Modify();
             end;
         end;
