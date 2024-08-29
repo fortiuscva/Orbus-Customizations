@@ -6,21 +6,33 @@ pageextension 52636 "ORB DSHIP Order Info. Factbox" extends "DSHIP Order Info. F
         {
             group("ORB Freight")
             {
+                Caption = 'Freight';
                 field("ORB FreightCOst"; ORBFreightCOst)
                 {
                     ApplicationArea = all;
                     ToolTip = 'Frieght cost';
+                    Caption = 'Frieght Cost';
                 }
                 field("ORB Margin"; Margin)
                 {
                     ApplicationArea = all;
-                    ToolTip = 'MArgin';
+                    ToolTip = 'Margin %';
+                    Caption = 'Margin %';
                 }
                 field("ORB Handling"; Handling)
                 {
                     ApplicationArea = all;
                     ToolTip = 'Handling';
+                    Caption = 'Handling';
                 }
+                field("ORB FreightQuote"; FreightQuote)
+                {
+                    ApplicationArea = all;
+                    ToolTip = 'Freight Quote';
+                    Caption = 'Freight Quote';
+                }
+
+
             }
 
         }
@@ -30,10 +42,15 @@ pageextension 52636 "ORB DSHIP Order Info. Factbox" extends "DSHIP Order Info. F
         ORBFreightCOst: Decimal;
         Margin: Decimal;
         Handling: Decimal;
+        FreightQuote: Decimal;
 
-    procedure SetORBValues(HandlingVar: Decimal)
+
+    procedure InitializeValues()
     begin
-        Handling := HandlingVar
+        Margin := 0;
+        Handling := 0;
+        ORBFreightCOst := 0;
+        FreightQuote := 0;
     end;
 
     trigger OnAfterGetRecord()
@@ -59,6 +76,8 @@ pageextension 52636 "ORB DSHIP Order Info. Factbox" extends "DSHIP Order Info. F
             if labelData.FindFirst() then begin
                 Handling := labelData."ORB Handling";
                 ORBFreightCOst := labelData.Cost;
+                Margin := labelData."ORB Margin %";
+                FreightQuote := labelData."ORB Freight Quote";
                 //labelData.Modify();
             end;
 
