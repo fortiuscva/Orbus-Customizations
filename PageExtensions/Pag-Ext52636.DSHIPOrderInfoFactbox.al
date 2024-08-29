@@ -44,7 +44,10 @@ pageextension 52636 "ORB DSHIP Order Info. Factbox" extends "DSHIP Order Info. F
         Handling: Decimal;
         FreightQuote: Decimal;
 
+        FreightQuote: Decimal;
 
+
+    procedure InitializeValues()
     procedure InitializeValues()
     begin
         Markup := 0;

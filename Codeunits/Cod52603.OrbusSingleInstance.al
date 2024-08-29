@@ -131,6 +131,16 @@ codeunit 52603 "ORB Orbus Single Instance"
         exit(LastCommandRanGbl);
     end;
 
+    procedure SetLastCommandRan(LastCommand: Text)
+    begin
+        LastCommandRanGbl := LastCommand;
+    end;
+
+    procedure GetLastCommandRan(): Text
+    begin
+        exit(LastCommandRanGbl);
+    end;
+
     procedure SetMarkupPercentage(MarkupPercentage: Decimal)
     begin
         MarkupPercentageGbl := MarkupPercentage
@@ -181,6 +191,8 @@ codeunit 52603 "ORB Orbus Single Instance"
         HandlingGbl: Decimal;
         FrieghtCostGbl: Decimal;
         FreightQuoteGbl: Decimal;
+        LastCommandRanGbl: Text;
+
         ShippedNotInvoicedGbl: Boolean;
         MarkupAmountGbl: Decimal;
         FirstActivityNoGbl: Code[20];

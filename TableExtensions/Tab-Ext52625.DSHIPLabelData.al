@@ -12,5 +12,10 @@ tableextension 52625 "ORB DSHIP Label Data" extends "DSHIP Label Data"
             Caption = 'Freight Quote';
             DataClassification = ToBeClassified;
         }
+        field(52602; "ORB Margin %"; Decimal)
+        {
+            Caption = 'Margin %';
+            DataClassification = ToBeClassified;
+        }
     }
 }
