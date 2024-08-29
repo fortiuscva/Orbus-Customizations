@@ -67,25 +67,22 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
             field("ORB Original Promised Ship Dt."; Rec."ORB Original Promised Ship Dt.")
             {
                 ApplicationArea = All;
-                Caption = 'Original Shipment Date';
                 ToolTip = 'Specifies Original Ship. Date';
-
+                Editable = false;
             }
+
             field("ORB Delayed Ship Reason Code"; Rec."ORB Delayed Ship Reason Code")
             {
                 ApplicationArea = All;
-                Caption = 'Delayed Shipment Reason';
-                ToolTip = 'Delayed Shipment Reason Codes';
+                ToolTip = 'Specifies reasons for delayed shipment';
+
             }
             field("ORB Delayed Ship Sub-Reason"; Rec."ORB Delayed Ship Sub-Reason")
             {
                 ApplicationArea = All;
-                Caption = 'Delayed Shipment Sub-Reason';
-                ToolTip = 'Delayed Shipment Reason Codes';
+                ToolTip = 'Specifies the sub-reason code for Shipment Delay';
             }
         }
-
-
         modify("Payment Terms Code")
         {
             trigger OnBeforeValidate()
@@ -98,6 +95,17 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                         Error(AccessNotallowedlbl, UserId);
                 end;
             end;
+        }
+        addfirst(factboxes)
+        {
+            part(ORBSalesLineAddFieldsFB; "ORB Sales Line Add. Fields FB")
+            {
+                ApplicationArea = Suite;
+                Provider = SalesLines;
+                SubPageLink = "Document Type" = field("Document Type"),
+                              "Document No." = field("Document No."),
+                              "Line No." = field("Line No.");
+            }
         }
         modify("Order Status")
         {

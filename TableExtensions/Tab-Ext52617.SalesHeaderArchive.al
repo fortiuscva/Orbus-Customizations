@@ -29,6 +29,22 @@ tableextension 52617 "ORB Sales Header Archive" extends "Sales Header Archive"
             DataClassification = CustomerContent;
             TableRelation = User."User Name";
         }
+        field(52630; "ORB Original Promised Ship Dt."; Date)
+        {
+            Caption = 'Original Promised Shipment Date';
+            DataClassification = CustomerContent;
+        }
+        field(52631; "ORB Delayed Ship Reason Code"; Code[20])
+        {
+            Caption = 'Delayed Shipment Reason Code';
+            DataClassification = CustomerContent;
+            TableRelation = "Case Reason Code WSG";
+        }
+        field(52632; "ORB Delayed Ship Sub-Reason"; Code[100])
+        {
+            Caption = 'Delayed Shipment Sub-Reason Code';
+            DataClassification = CustomerContent;
+        }
         field(52633; "ORB DS Payment Type"; Option)
         {
             Caption = 'DS Payment Type';
@@ -45,6 +61,5 @@ tableextension 52617 "ORB Sales Header Archive" extends "Sales Header Archive"
             CalcFormula = lookup("DSHIP Package Options"."Payment Account No." where("Document Type" = filter("Sales Order"), "Document No." = field("No.")));
             Editable = false;
         }
-
     }
 }
