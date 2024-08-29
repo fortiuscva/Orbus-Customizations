@@ -6,7 +6,7 @@ tableextension 52623 "ORB IWX LP Header" extends "IWX LP Header"
         {
             Caption = 'DS Payment Type';
             FieldClass = FlowField;
-            CalcFormula = lookup("DSHIP Package Options"."Payment Type" where("Document Type" = filter("Sales Order"), "Document No." = field("Shipped Source No."), "Document No." = filter(<> '')));
+            CalcFormula = lookup("DSHIP Package Options"."Payment Type" where("License Plate No." = field("No."));
             OptionMembers = " ",SENDER,THIRD_PARTY,RECEIVER,COLLECT;
             OptionCaption = 'None,Sender,Third Party,Receiver,Collect';
             Editable = false;
@@ -15,7 +15,7 @@ tableextension 52623 "ORB IWX LP Header" extends "IWX LP Header"
         {
             Caption = 'Posted Sales Invoice No.';
             FieldClass = FlowField;
-            CalcFormula = lookup("Sales Invoice Header"."No." where("Order No." = field("Shipped Source No."), "Order No." = filter(<> '')));
+            CalcFormula = lookup("Sales Invoice Header"."No." where("Order No." = field("Shipped Source No.")));
             Editable = false;
         }
     }
