@@ -25,8 +25,9 @@ pageextension 52632 "ORB IWX License Plate List" extends "IWX License Plate List
         InvFound: Boolean;
     begin
         Clear(InvFound);
+        InvoiceDocNo := '';
         SalesShptLine.Reset();
-        SalesShptLine.SetRange("Document No.", Rec."No.");
+        SalesShptLine.SetRange("Document No.", Rec."Shipment No.");
         SalesShptLine.SetFilter("No.", '<>%1', '');
         if SalesShptLine.FindSet() then begin
             repeat
