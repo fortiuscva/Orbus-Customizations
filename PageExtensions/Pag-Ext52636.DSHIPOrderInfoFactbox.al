@@ -7,17 +7,17 @@ pageextension 52636 "ORB DSHIP Order Info. Factbox" extends "DSHIP Order Info. F
             group("ORB Freight")
             {
                 Caption = 'Freight';
+                field("ORB FreightQuote"; FreightQuote)
+                {
+                    ApplicationArea = all;
+                    ToolTip = 'Freight Quote';
+                    Caption = 'Freight Quote';
+                }
                 field("ORB FreightCOst"; ORBFreightCOst)
                 {
                     ApplicationArea = all;
                     ToolTip = 'Frieght cost';
                     Caption = 'Frieght Cost';
-                }
-                field("ORB Markup"; Markup)
-                {
-                    ApplicationArea = all;
-                    ToolTip = 'Markup %';
-                    Caption = 'Markup %';
                 }
                 field("ORB Handling"; Handling)
                 {
@@ -25,11 +25,11 @@ pageextension 52636 "ORB DSHIP Order Info. Factbox" extends "DSHIP Order Info. F
                     ToolTip = 'Handling';
                     Caption = 'Handling';
                 }
-                field("ORB FreightQuote"; FreightQuote)
+                field("ORB Markup"; Markup)
                 {
                     ApplicationArea = all;
-                    ToolTip = 'Freight Quote';
-                    Caption = 'Freight Quote';
+                    ToolTip = 'Markup %';
+                    Caption = 'Markup %';
                 }
 
 
