@@ -121,14 +121,14 @@ codeunit 52603 "ORB Orbus Single Instance"
         exit(LastCommandRanGbl);
     end;
 
-    procedure SetMarginPercentage(MarginPercentage: Decimal)
+    procedure SetMarkupPercentage(MarkupPercentage: Decimal)
     begin
-        MarginPercentageGbl := MarginPercentage
+        MarkupPercentageGbl := MarkupPercentage
     end;
 
-    procedure GetMarginPercentage(): Decimal
+    procedure GetMarkupPercentage(): Decimal
     begin
-        exit(MarginPercentageGbl);
+        exit(MarkupPercentageGbl);
     end;
 
     procedure Reset()
@@ -150,6 +150,6 @@ codeunit 52603 "ORB Orbus Single Instance"
         FrieghtCostGbl: Decimal;
         FreightQuoteGbl: Decimal;
         LastCommandRanGbl: Text;
-        MarginPercentageGbl: Decimal;
+        MarkupPercentageGbl: Decimal;
 
 }

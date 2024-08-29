@@ -13,11 +13,11 @@ pageextension 52636 "ORB DSHIP Order Info. Factbox" extends "DSHIP Order Info. F
                     ToolTip = 'Frieght cost';
                     Caption = 'Frieght Cost';
                 }
-                field("ORB Margin"; Margin)
+                field("ORB Markup"; Markup)
                 {
                     ApplicationArea = all;
-                    ToolTip = 'Margin %';
-                    Caption = 'Margin %';
+                    ToolTip = 'Markup %';
+                    Caption = 'Markup %';
                 }
                 field("ORB Handling"; Handling)
                 {
@@ -40,14 +40,14 @@ pageextension 52636 "ORB DSHIP Order Info. Factbox" extends "DSHIP Order Info. F
     }
     var
         ORBFreightCOst: Decimal;
-        Margin: Decimal;
+        Markup: Decimal;
         Handling: Decimal;
         FreightQuote: Decimal;
 
 
     procedure InitializeValues()
     begin
-        Margin := 0;
+        Markup := 0;
         Handling := 0;
         ORBFreightCOst := 0;
         FreightQuote := 0;
@@ -76,7 +76,7 @@ pageextension 52636 "ORB DSHIP Order Info. Factbox" extends "DSHIP Order Info. F
             if labelData.FindFirst() then begin
                 Handling := labelData."ORB Handling";
                 ORBFreightCOst := labelData.Cost;
-                Margin := labelData."ORB Margin %";
+                Markup := labelData."ORB Markup %";
                 FreightQuote := labelData."ORB Freight Quote";
                 //labelData.Modify();
             end;

@@ -253,7 +253,7 @@ codeunit 52606 "ORB Functions"
         TotalUnitPrice := (SingleInstance.GetHandlingPrice() + SingleInstance.GetFrieghtPrice()) * (DSHIPFreightPrice."Markup %" / 100 + 1);
         salesline.Validate("Unit Price", TotalUnitPrice);
         salesline.Insert();
-        SingleInstance.SetMarginPercentage(DSHIPFreightPrice."Markup %");
+        SingleInstance.SetMarkupPercentage(DSHIPFreightPrice."Markup %");
     end;
 
 }
