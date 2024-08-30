@@ -73,6 +73,16 @@ pageextension 52608 "ORB Posted Sales Invoice" extends "Posted Sales Invoice"
                 Editable = false;
             }
         }
+        addfirst(factboxes)
+        {
+            part(ORBSalesInvLineAddFieldsFB; "ORB Sal Inv Lin Add. Fields FB")
+            {
+                ApplicationArea = Suite;
+                Provider = SalesInvLines;
+                SubPageLink = "Document No." = field("Document No."),
+                              "Line No." = field("Line No.");
+            }
+        }
     }
     actions
     {
