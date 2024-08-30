@@ -29,22 +29,6 @@ tableextension 52617 "ORB Sales Header Archive" extends "Sales Header Archive"
             DataClassification = CustomerContent;
             TableRelation = User."User Name";
         }
-        field(52630; "ORB SO Payment Type"; Option)
-        {
-            Caption = 'SO Payment Type';
-            DataClassification = CustomerContent;
-            OptionCaption = 'None,Sender,Third Party,Receiver,Collect';
-            OptionMembers = "None","Sender","Third Party","Receiver","Collect";
-        }
-        field(52631; "ORB SO Payment Account No."; Text[100])
-        {
-            Caption = 'SO Payment Account No.';
-            DataClassification = CustomerContent;
-        }
-        //field(52628 ; used on sales header.
-        //field(52629 ; used on sales header.
-        //field(52630 ; used on sales header.
-        //field(52631 ; used on sales header.
         field(52633; "ORB DS Payment Type"; Option)
         {
             Caption = 'DS Payment Type';
