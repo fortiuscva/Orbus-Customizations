@@ -33,6 +33,8 @@ tableextension 52615 "ORB Sales Shipment Header" extends "Sales Shipment Header"
         //field(52631; "ORB SO Payment Account No."; Text[100]) // Do not use this ID
         //field(52628 ; used on sales header.
         //field(52629 ; used on sales header.
+        //field(52630 ; used on sales header.
+        //field(52631 ; used on sales header.
 
     }
 }

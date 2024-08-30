@@ -109,7 +109,7 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         }
         //field(52630; "ORB SO Payment Type"; Option) // Do not use this ID
         //field(52631; "ORB SO Payment Account No."; Text[100]) // Do not use this ID
-        field(52628; "ORB DS Payment Type"; Option)
+        field(52630; "ORB DS Payment Type"; Option)
         {
             Caption = 'DS Payment Type';
             FieldClass = FlowField;
@@ -118,7 +118,7 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             OptionCaption = 'None,Sender,Third Party,Receiver,Collect';
             Editable = false;
         }
-        field(52629; "ORB DS Payment Account No."; Text[100])
+        field(52631; "ORB DS Payment Account No."; Text[100])
         {
             Caption = 'Payment Account No.';
             FieldClass = FlowField;
