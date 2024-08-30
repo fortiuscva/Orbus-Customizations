@@ -164,8 +164,6 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             if not SalesHeaderArchAddFields.Insert() then
                 SalesHeaderArchAddFields.Modify();
         end;
-        SalesHeaderArchive."ORB SO Payment Account No." := SalesHeader."SO Payment Account No.";
-        SalesHeaderArchive."ORB SO Payment Type" := SalesHeader."Sales Order Payment Type";
     end;
 
     /*

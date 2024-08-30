@@ -32,5 +32,7 @@ tableextension 52616 "ORB Sales Cr.Memo Header" extends "Sales Cr.Memo Header"
 
         //field(52630; "ORB SO Payment Type"; Option) // Do not use this ID
         //field(52631; "ORB SO Payment Account No."; Text[100]) // Do not use this ID
+        //field(52628 ; used on sales header.
+        //field(52629 ; used on sales header.
     }
 }

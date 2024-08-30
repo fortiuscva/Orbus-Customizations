@@ -41,5 +41,7 @@ tableextension 52617 "ORB Sales Header Archive" extends "Sales Header Archive"
             Caption = 'SO Payment Account No.';
             DataClassification = CustomerContent;
         }
+        //field(52628 ; used on sales header.
+        //field(52629 ; used on sales header.
     }
 }
