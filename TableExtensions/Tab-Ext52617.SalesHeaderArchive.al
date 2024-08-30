@@ -45,5 +45,22 @@ tableextension 52617 "ORB Sales Header Archive" extends "Sales Header Archive"
         //field(52629 ; used on sales header.
         //field(52630 ; used on sales header.
         //field(52631 ; used on sales header.
+        field(52633; "ORB DS Payment Type"; Option)
+        {
+            Caption = 'DS Payment Type';
+            FieldClass = FlowField;
+            CalcFormula = lookup("DSHIP Package Options"."Payment Type" where("Document Type" = filter("Sales Order"), "Document No." = field("No.")));
+            OptionMembers = " ",SENDER,THIRD_PARTY,RECEIVER,COLLECT;
+            OptionCaption = 'None,Sender,Third Party,Receiver,Collect';
+            Editable = false;
+        }
+        field(52634; "ORB DS Payment Account No."; Text[100])
+        {
+            Caption = 'DS Payment Account No.';
+            FieldClass = FlowField;
+            CalcFormula = lookup("DSHIP Package Options"."Payment Account No." where("Document Type" = filter("Sales Order"), "Document No." = field("No.")));
+            Editable = false;
+        }
+
     }
 }

@@ -120,7 +120,7 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         }
         field(52631; "ORB DS Payment Account No."; Text[100])
         {
-            Caption = 'Payment Account No.';
+            Caption = 'DS Payment Account No.';
             FieldClass = FlowField;
             CalcFormula = lookup("DSHIP Package Options"."Payment Account No." where("Document Type" = filter("Sales Order"), "Document No." = field("No.")));
             Editable = false;
