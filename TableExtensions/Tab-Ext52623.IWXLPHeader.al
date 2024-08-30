@@ -6,7 +6,7 @@ tableextension 52623 "ORB IWX LP Header" extends "IWX LP Header"
         {
             Caption = 'DS Payment Type';
             FieldClass = FlowField;
-            CalcFormula = lookup("DSHIP Package Options"."Payment Type" where("License Plate No." = field("No."));
+            CalcFormula = lookup("DSHIP Package Options"."Payment Type" where("License Plate No." = field("No.")));
             OptionMembers = " ",SENDER,THIRD_PARTY,RECEIVER,COLLECT;
             OptionCaption = 'None,Sender,Third Party,Receiver,Collect';
             Editable = false;
