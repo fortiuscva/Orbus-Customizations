@@ -11,12 +11,5 @@ tableextension 52623 "ORB IWX LP Header" extends "IWX LP Header"
             OptionCaption = 'None,Sender,Third Party,Receiver,Collect';
             Editable = false;
         }
-        field(52601; "ORB Posted Sales Invoice No."; Code[20])
-        {
-            Caption = 'Posted Sales Invoice No.';
-            FieldClass = FlowField;
-            CalcFormula = lookup("Sales Invoice Header"."No." where("Order No." = field("Shipped Source No."), "Order No." = filter(<> '')));
-            Editable = false;
-        }
     }
 }
