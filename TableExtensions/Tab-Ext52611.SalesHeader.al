@@ -92,6 +92,22 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
                 UserSelectionCULcl.ValidateUserName("ORB Resolved By");
             end;
         }
+        field(52630; "ORB DS Payment Type"; Option)
+        {
+            Caption = 'DS Payment Type';
+            FieldClass = FlowField;
+            CalcFormula = lookup("DSHIP Package Options"."Payment Type" where("Document Type" = filter("Sales Order"), "Document No." = field("No.")));
+            OptionMembers = " ",SENDER,THIRD_PARTY,RECEIVER,COLLECT;
+            OptionCaption = 'None,Sender,Third Party,Receiver,Collect';
+            Editable = false;
+        }
+        field(52631; "ORB DS Payment Account No."; Text[100])
+        {
+            Caption = 'DS Payment Account No.';
+            FieldClass = FlowField;
+            CalcFormula = lookup("DSHIP Package Options"."Payment Account No." where("Document Type" = filter("Sales Order"), "Document No." = field("No.")));
+            Editable = false;
+        }
         field(52650; "ORB Total Payment Amount"; Decimal)
         {
             Caption = 'Total Payment Amount';

@@ -54,7 +54,8 @@ tableextension 52604 "ORB Sales Invoice Header" extends "Sales Invoice Header"
             DataClassification = CustomerContent;
             TableRelation = User."User Name";
         }
+
+        //field(52633 ; used on sales header.
+        //field(52634 ; used on sales header.
     }
-
-
 }

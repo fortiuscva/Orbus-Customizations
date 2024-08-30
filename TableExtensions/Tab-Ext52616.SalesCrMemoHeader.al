@@ -30,5 +30,7 @@ tableextension 52616 "ORB Sales Cr.Memo Header" extends "Sales Cr.Memo Header"
             TableRelation = User."User Name";
         }
 
+        //field(52633 ; used on sales header.
+        //field(52634 ; used on sales header.
     }
 }
