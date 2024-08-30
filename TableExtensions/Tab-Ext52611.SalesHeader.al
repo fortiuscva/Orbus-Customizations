@@ -92,23 +92,6 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
                 UserSelectionCULcl.ValidateUserName("ORB Resolved By");
             end;
         }
-        field(52650; "ORB Total Payment Amount"; Decimal)
-        {
-            Caption = 'Total Payment Amount';
-            FieldClass = FlowField;
-            CalcFormula = sum("EFT Transaction -CL-"."Total Amount" where("Transaction Status" = filter(Queued | Batched | Approved), "Document Type" = field("Document Type"), "Document No." = field("No."), "Method Type" = filter(Charge | Settle | Capture | Refund | Credit | Authorize | "Return Settle" | "Return Authorize" | "Voice Authorize")));
-            Editable = false;
-        }
-        field(52651; "ORB Freight Line"; Option)
-        {
-            FieldClass = FlowField;
-            CalcFormula = lookup("DSHIP Shipment Options"."Add Freight Line" where("Document Type" = filter("Sales Order"), "Document No." = field("No.")));
-            OptionMembers = Automatic,Manual;
-            Caption = 'Freight Line';
-            Editable = false;
-        }
-        //field(52630; "ORB SO Payment Type"; Option) // Do not use this ID
-        //field(52631; "ORB SO Payment Account No."; Text[100]) // Do not use this ID
         field(52630; "ORB DS Payment Type"; Option)
         {
             Caption = 'DS Payment Type';
@@ -123,6 +106,21 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             Caption = 'DS Payment Account No.';
             FieldClass = FlowField;
             CalcFormula = lookup("DSHIP Package Options"."Payment Account No." where("Document Type" = filter("Sales Order"), "Document No." = field("No.")));
+            Editable = false;
+        }
+        field(52650; "ORB Total Payment Amount"; Decimal)
+        {
+            Caption = 'Total Payment Amount';
+            FieldClass = FlowField;
+            CalcFormula = sum("EFT Transaction -CL-"."Total Amount" where("Transaction Status" = filter(Queued | Batched | Approved), "Document Type" = field("Document Type"), "Document No." = field("No."), "Method Type" = filter(Charge | Settle | Capture | Refund | Credit | Authorize | "Return Settle" | "Return Authorize" | "Voice Authorize")));
+            Editable = false;
+        }
+        field(52651; "ORB Freight Line"; Option)
+        {
+            FieldClass = FlowField;
+            CalcFormula = lookup("DSHIP Shipment Options"."Add Freight Line" where("Document Type" = filter("Sales Order"), "Document No." = field("No.")));
+            OptionMembers = Automatic,Manual;
+            Caption = 'Freight Line';
             Editable = false;
         }
     }
