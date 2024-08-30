@@ -54,6 +54,8 @@ tableextension 52604 "ORB Sales Invoice Header" extends "Sales Invoice Header"
             DataClassification = CustomerContent;
             TableRelation = User."User Name";
         }
+        //field(52630; "ORB SO Payment Type"; Option) // Do not use this ID
+        //field(52631; "ORB SO Payment Account No."; Text[100]) // Do not use this ID
     }
 
 

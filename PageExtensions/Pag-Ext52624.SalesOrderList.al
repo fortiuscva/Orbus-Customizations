@@ -31,6 +31,15 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
                 ToolTip = 'Specifies the field Freight Line value';
             }
 
+            field("ORB Sales Order Payment Type"; Rec."Sales Order Payment Type")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Sales Order Payment Type';
+            }
+            field("ORB Total Payment Amount($)"; Rec."ORB Total Payment Amount($)")
+            {
+                ApplicationArea = all;
+            }
         }
     }
     actions
