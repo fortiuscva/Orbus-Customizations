@@ -1,17 +1,17 @@
-page 52630 "ORB Sales Order API"
+page 52630 "ORB PRD Sales Order API"
 {
     APIGroup = 'orbus';
     APIPublisher = 'orbus';
     APIVersion = 'v1.0';
 
     ApplicationArea = All;
-    Caption = 'Sales Order API';
+    Caption = 'PRD Sales Order API';
     DelayedInsert = true;
 
     EntityName = 'SalesOrder';
-    EntityCaption = 'Sales Order';
+    EntityCaption = 'PRD Sales Order';
     EntitySetName = 'SalesOrders';
-    EntitySetCaption = 'Sales Orders';
+    EntitySetCaption = 'PRD Sales Orders';
 
     PageType = API;
     SourceTable = "Sales Header";
