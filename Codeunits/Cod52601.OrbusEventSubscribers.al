@@ -9,7 +9,9 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
                      (SalesInvoiceHeader."Ship-to Name" <> xSalesInvoiceHeader."Ship-to Name") or
                      (SalesInvoiceHeader."Sell-to E-Mail" <> xSalesInvoiceHeader."Sell-to E-Mail") or
                      (SalesInvoiceHeader."ORB Email Sent by JQ" <> xSalesInvoiceHeader."ORB Email Sent by JQ") or
-                     (SalesInvoiceHeader."External Document No." <> xSalesInvoiceHeader."External Document No.");
+                     (SalesInvoiceHeader."External Document No." <> xSalesInvoiceHeader."External Document No.") or
+                     (SalesInvoiceHeader."ORB Delayed Ship Reason Code" <> xSalesInvoiceHeader."ORB Delayed Ship Reason Code") or
+                     (SalesInvoiceHeader."ORB Delayed Ship Sub-Reason" <> xSalesInvoiceHeader."ORB Delayed Ship Sub-Reason");
     end;
 
 
@@ -22,6 +24,8 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         SalesInvoiceHeader."Sell-to E-Mail" := SalesInvoiceHeaderRec."Sell-to E-Mail";
         SalesInvoiceHeader."ORB Email Sent by JQ" := SalesInvoiceHeaderRec."ORB Email Sent by JQ";
         SalesInvoiceHeader."External Document No." := SalesInvoiceHeaderRec."External Document No.";
+        SalesInvoiceHeader."ORB Delayed Ship Reason Code" := SalesInvoiceHeaderRec."ORB Delayed Ship Reason Code";
+        SalesInvoiceHeader."ORB Delayed Ship Sub-Reason" := SalesInvoiceHeaderRec."ORB Delayed Ship Sub-Reason";
     end;
 
     [EventSubscriber(ObjectType::Page, Page::"Pstd. Sales Cr. Memo - Update", OnAfterRecordChanged, '', false, false)]
