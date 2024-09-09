@@ -64,11 +64,37 @@ tableextension 52604 "ORB Sales Invoice Header" extends "Sales Invoice Header"
             Caption = 'Delayed Shipment Reason Code';
             DataClassification = CustomerContent;
             TableRelation = "Case Reason Code WSG";
+            trigger OnValidate()
+            begin
+                if (xRec."ORB Delayed Ship Reason Code" <> Rec."ORB Delayed Ship Reason Code") then
+                    clear(Rec."ORB Delayed Ship Sub-Reason");
+            end;
         }
         field(52632; "ORB Delayed Ship Sub-Reason"; Code[100])
         {
             Caption = 'Delayed Shipment Sub-Reason Code';
             DataClassification = CustomerContent;
+            trigger OnLookup()
+            var
+                CaseReasonDetailRecLcl: Record CaseReasonDetail;
+            begin
+                CaseReasonDetailRecLcl.Reset;
+                CaseReasonDetailRecLcl.SetFilter("Reason Code", Rec."ORB Delayed Ship Reason Code");
+                if Page.RunModal(Page::CaseReasonDetailList, CaseReasonDetailRecLcl) = Action::LookupOK then
+                    Rec."ORB Delayed Ship Sub-Reason" := CaseReasonDetailRecLcl.Code;
+            end;
+
+            trigger OnValidate()
+            var
+                CaseReasonDetailRecLcl: Record CaseReasonDetail;
+                SubReasonCodeLbl: Label 'Not a valid sub-reason code  for the selected  reason code';
+            begin
+                CaseReasonDetailRecLcl.Reset();
+                CaseReasonDetailRecLcl.Setfilter("Reason Code", Rec."ORB Delayed Ship Reason Code");
+                CaseReasonDetailRecLcl.SetFilter(Code, Rec."ORB Delayed Ship Sub-Reason");
+                If not CaseReasonDetailRecLcl.FindFirst() then
+                    Error(SubReasonCodeLbl);
+            end;
         }
         //field(52633 ; used on sales header.
         //field(52634 ; used on sales header.
