@@ -23,6 +23,24 @@ pageextension 52606 "ORB Posted Sales Invoices" extends "Posted Sales Invoices"
                 ApplicationArea = All;
                 ToolTip = 'Specifies the Last Email Sent Date&Time for the invoice';
             }
+            field("ORB Original Promised Ship Dt."; Rec."ORB Original Promised Ship Dt.")
+            {
+                ApplicationArea = ALL;
+                ToolTip = 'Specifies the fist warehouse release date for the order';
+                Editable = false;
+            }
+            field("ORB Delayed Ship Reason Code"; Rec."ORB Delayed Ship Reason Code")
+            {
+                ApplicationArea = ALL;
+                ToolTip = 'Specifies the reason for shipment delay';
+                Editable = false;
+            }
+            field("ORB Delayed Ship Sub-Reason"; Rec."ORB Delayed Ship Sub-Reason")
+            {
+                ApplicationArea = ALL;
+                ToolTip = 'Specifies the sub-reason for shipment delay';
+                Editable = false;
+            }
         }
     }
     actions
