@@ -68,6 +68,12 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             TableRelation = "Salesperson/Purchaser";
             DataClassification = CustomerContent;
         }
+        field(52626; "ORB RUSH"; Text[20])
+        {
+            Caption = 'RUSH';
+            DataClassification = CustomerContent;
+            TableRelation = Priority;
+        }
 
         field(52627; "ORB Shipment Date"; Date)
         {
@@ -92,7 +98,45 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
                 UserSelectionCULcl.ValidateUserName("ORB Resolved By");
             end;
         }
-        field(52630; "ORB DS Payment Type"; Option)
+        field(52630; "ORB Original Promised Ship Dt."; Date)
+        {
+            Caption = 'Original Promised Shipment Date';
+            DataClassification = CustomerContent;
+        }
+        field(52631; "ORB Delayed Ship Reason Code"; Code[20])
+        {
+            Caption = 'Delayed Shipment Reason Code';
+            DataClassification = CustomerContent;
+            TableRelation = "Case Reason Code WSG";
+        }
+        field(52632; "ORB Delayed Ship Sub-Reason"; Code[100])
+        {
+            Caption = 'Delayed Shipment Sub-Reason Code';
+            DataClassification = CustomerContent;
+            trigger OnLookup()
+            var
+                CaseReasonDetailRecLcl: Record CaseReasonDetail;
+            begin
+                CaseReasonDetailRecLcl.Reset;
+                CaseReasonDetailRecLcl.SetFilter("Reason Code", Rec."ORB Delayed Ship Reason Code");
+                if Page.RunModal(Page::CaseReasonDetailList, CaseReasonDetailRecLcl) = Action::LookupOK then
+                    Rec."ORB Delayed Ship Sub-Reason" := "ORB Delayed Ship Reason Code";
+            end;
+
+            trigger OnValidate()
+            var
+                CaseReasonDetailRecLcl: Record CaseReasonDetail;
+                SubReasonCodeLbl: Label 'Not a valid sub-reason code  for the selected  reason code';
+            begin
+                CaseReasonDetailRecLcl.Reset();
+                CaseReasonDetailRecLcl.Setfilter("Reason Code", Rec."ORB Delayed Ship Reason Code");
+                CaseReasonDetailRecLcl.SetFilter(Code, Rec."ORB Delayed Ship Sub-Reason");
+                If not CaseReasonDetailRecLcl.FindFirst() then
+                    Error(SubReasonCodeLbl);
+            end;
+
+        }
+        field(52633; "ORB DS Payment Type"; Option)
         {
             Caption = 'DS Payment Type';
             FieldClass = FlowField;

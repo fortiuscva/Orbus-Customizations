@@ -262,6 +262,16 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
 
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", 'OnAfterReleaseSalesDoc', '', false, false)]
+    local procedure Cod414_OnAfterReleaseSalesDoc(var SalesHeader: Record "Sales Header"; PreviewMode: Boolean; var LinesWereModified: Boolean; SkipWhseRequestOperations: Boolean)
+    var
+    begin
+        IF (SalesHeader."Document Type" = SalesHeader."Document Type"::Order) and (SalesHeader.Status = SalesHeader.Status::Released) and (SalesHeader."ORB Original Promised Ship Dt." = 0D) then begin
+            SalesHeader.Validate("ORB Original Promised Ship Dt.", today);
+            SalesHeader.Modify;
+        end;
+    end;
+
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
 }
