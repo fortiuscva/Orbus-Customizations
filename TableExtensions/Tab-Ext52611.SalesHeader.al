@@ -150,7 +150,7 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             OptionCaption = 'None,Sender,Third Party,Receiver,Collect';
             Editable = false;
         }
-        field(52631; "ORB DS Payment Account No."; Text[100])
+        field(52634; "ORB DS Payment Account No."; Text[100])
         {
             Caption = 'DS Payment Account No.';
             FieldClass = FlowField;
