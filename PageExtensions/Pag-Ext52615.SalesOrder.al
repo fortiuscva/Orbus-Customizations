@@ -59,9 +59,25 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 ApplicationArea = all;
                 ToolTip = 'Specifies the user who resolved escalated issue';
             }
+            field("ORB Original Promised Ship Dt."; Rec."ORB Original Promised Ship Dt.")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies Original Ship. Date';
+                Editable = false;
+            }
+
+            field("ORB Delayed Ship Reason Code"; Rec."ORB Delayed Ship Reason Code")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies reasons for delayed shipment';
+
+            }
+            field("ORB Delayed Ship Sub-Reason"; Rec."ORB Delayed Ship Sub-Reason")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the sub-reason code for Shipment Delay';
+            }
         }
-
-
         modify("Payment Terms Code")
         {
             trigger OnBeforeValidate()
