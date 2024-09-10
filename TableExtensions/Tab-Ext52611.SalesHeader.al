@@ -125,7 +125,7 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
                 CaseReasonDetailRecLcl.Reset;
                 CaseReasonDetailRecLcl.SetFilter("Reason Code", Rec."ORB Delayed Ship Reason Code");
                 if Page.RunModal(Page::CaseReasonDetailList, CaseReasonDetailRecLcl) = Action::LookupOK then
-                    Rec."ORB Delayed Ship Sub-Reason" := "ORB Delayed Ship Reason Code";
+                    Rec."ORB Delayed Ship Sub-Reason" := CaseReasonDetailRecLcl.Code;
             end;
 
             trigger OnValidate()
