@@ -131,6 +131,16 @@ codeunit 52603 "ORB Orbus Single Instance"
         exit(MarkupPercentageGbl);
     end;
 
+    procedure SetShippedNotInvoiced(ShippedNotInvoicedPar: Boolean)
+    begin
+        ShippedNotInvoicedGbl := ShippedNotInvoicedPar;
+    end;
+
+    procedure GetShippedNotInvoiced(): Boolean
+    begin
+        exit(ShippedNotInvoicedGbl);
+    end;
+
     procedure Reset()
     begin
         ClearAll();
@@ -151,5 +161,6 @@ codeunit 52603 "ORB Orbus Single Instance"
         FreightQuoteGbl: Decimal;
         LastCommandRanGbl: Text;
         MarkupPercentageGbl: Decimal;
+        ShippedNotInvoicedGbl: Boolean;
 
 }
