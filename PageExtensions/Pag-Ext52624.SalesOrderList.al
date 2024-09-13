@@ -87,5 +87,23 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
             }
 
         }
+        modify("Release & Pick")
+        {
+
+            trigger OnBeforeAction()
+            var
+                SalesHeaderRecLcl: Record "Sales Header";
+            begin
+                CurrPage.SetSelectionFilter(SalesHeaderRecLcl);
+                SalesHeaderRecLcl.MarkedOnly(true);
+                IF SalesHeaderRecLcl.FindSet() then
+                    repeat
+                        OrbusFunctions.RestrictZeroTransactionAmountforCreditCardPayment(SalesHeaderRecLcl);
+                    Until SalesHeaderRecLcl.Next() = 0;
+
+            end;
+        }
     }
+    var
+        OrbusFunctions: Codeunit "ORB Functions";
 }

@@ -276,6 +276,14 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         end;
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", OnBeforeReleaseSalesDoc, '', false, false)]
+    local procedure "Release Sales Document_OnBeforeReleaseSalesDoc"(var SalesHeader: Record "Sales Header"; PreviewMode: Boolean; var IsHandled: Boolean; var SkipCheckReleaseRestrictions: Boolean; SkipWhseRequestOperations: Boolean)
+    begin
+        OrbusFunctionsCUGbl.ValidateOnSalesRelease(SalesHeader);
+    end;
+
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
+        OrbusFunctionsCUGbl: Codeunit "ORB Functions";
+
 }
