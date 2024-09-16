@@ -285,8 +285,10 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
     [EventSubscriber(ObjectType::Report, Report::"Batch Post Sales Orders", OnBeforeSalesBatchPostMgt, '', false, false)]
     local procedure "Batch Post Sales Orders_OnBeforeSalesBatchPostMgt"(var SalesHeader: Record "Sales Header"; var ShipReq: Boolean; var InvReq: Boolean; var SalesBatchPostMgt: Codeunit "Sales Batch Post Mgt."; var IsHandled: Boolean)
     begin
-        if OrbusSingleInstanceCUGbl.GetShippedNotInvoiced() then
+        if OrbusSingleInstanceCUGbl.GetShippedNotInvoiced() then begin
+            SalesHeader.SetRange("Document Type", SalesHeader."Document Type"::Order);
             SalesHeader.SetRange("Shipped Not Invoiced", true);
+        end;
     end;
 
 
