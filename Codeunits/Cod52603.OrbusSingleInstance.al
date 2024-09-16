@@ -81,6 +81,21 @@ codeunit 52603 "ORB Orbus Single Instance"
         exit(ExplodeConfirmVarGbl);
     end;
 
+    procedure SetShippedNotInvoiced(ShippedNotInvoicedPar: Boolean)
+    begin
+        ShippedNotInvoicedGbl := ShippedNotInvoicedPar;
+    end;
+
+    procedure GetShippedNotInvoiced(): Boolean
+    begin
+        exit(ShippedNotInvoicedGbl);
+    end;
+
+    procedure Reset()
+    begin
+        ClearAll();
+    end;
+
     var
         ShowDialogLookupProfileVarGbl: Boolean;
         ShowDialogSendEmailToCustVarGbl: Boolean;
@@ -91,4 +106,11 @@ codeunit 52603 "ORB Orbus Single Instance"
         SendEmailVarGbl: Boolean;
         ExplodeConfirmVarGbl: Boolean;
         ExplodeBOMExecutionVarGbl: Boolean;
+        HandlingGbl: Decimal;
+        FrieghtCostGbl: Decimal;
+        FreightQuoteGbl: Decimal;
+        LastCommandRanGbl: Text;
+        MarkupPercentageGbl: Decimal;
+        ShippedNotInvoicedGbl: Boolean;
+
 }
