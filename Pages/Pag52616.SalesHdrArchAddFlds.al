@@ -46,6 +46,10 @@ page 52616 "ORB Sales Hdr Arch. Add. Flds"
                 {
                     ToolTip = 'Specifies the value of the Job URL field.', Comment = '%';
                 }
+                field("Polaraid URL"; Rec."Polaraid URL")
+                {
+                    ToolTip = 'Specifies the value of the Polaraid URL field.', Comment = '%';
+                }
             }
         }
     }

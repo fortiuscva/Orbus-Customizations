@@ -46,6 +46,10 @@ table 52603 "ORB Sales Header Add. Fields"
         {
             Caption = 'Job URL';
         }
+        field(52610; "Polaraid URL"; Text[500])
+        {
+            Caption = 'Polaraid URL';
+        }
     }
     keys
     {
