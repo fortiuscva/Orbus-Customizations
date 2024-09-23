@@ -63,7 +63,10 @@ page 52614 "ORB Magento Sal. Hdr. Adl. Det"
                 {
                     ToolTip = 'Specifies the value of the Job URL field.';
                 }
-
+                field(PolaraidURL; Rec."Polaraid URL")
+                {
+                    ToolTip = 'Specifies the value of the Polaraid URL field.';
+                }
             }
         }
     }
