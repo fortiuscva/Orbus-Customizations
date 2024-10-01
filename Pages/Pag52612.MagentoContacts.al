@@ -17,6 +17,10 @@ page 52612 "ORB MagentoContacts"
         {
             repeater(General)
             {
+                field(ContactType; Rec."Type")
+                {
+                    ToolTip = 'Specifies the type of contact, either company or person.';
+                }
                 field(No; Rec."No.")
                 {
                     ToolTip = 'Specifies the number of the contact, click to navigate to the contact card.';
@@ -93,10 +97,7 @@ page 52612 "ORB MagentoContacts"
                 {
                     ToolTip = 'Specifies the value of the Email 2 field.';
                 }
-                field(ContactType; Rec."Type")
-                {
-                    ToolTip = 'Specifies the type of contact, either company or person.';
-                }
+
                 field(PhoneNo; Rec."Phone No.")
                 {
                     ToolTip = 'Specifies the contact''s phone number.';
@@ -163,7 +164,16 @@ page 52612 "ORB MagentoContacts"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
+        if Rec."No." = '' then begin
+            Rec.Insert(true);
+        end;
+
         CheckDuplicateEmailContact();
+    end;
+
+    trigger OnNewRecord(BelowxRec: Boolean)
+    begin
+        Rec.Insert(true);
     end;
 
     trigger OnModifyRecord(): Boolean
