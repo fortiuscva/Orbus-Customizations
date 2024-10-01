@@ -16,14 +16,14 @@ pageextension 52636 "ORB DSHIP Order Info. Factbox" extends "DSHIP Order Info. F
                 field("ORB FreightCOst"; ORBFreightCOst)
                 {
                     ApplicationArea = all;
-                    ToolTip = 'Frieght cost';
-                    Caption = 'Frieght Cost';
+                    ToolTip = 'Orbus Frieght cost';
+                    Caption = 'Orbus Frieght Cost';
                 }
                 field("ORB Handling"; Handling)
                 {
                     ApplicationArea = all;
-                    ToolTip = 'Handling';
-                    Caption = 'Handling';
+                    ToolTip = 'Handling (or) Handling per Package';
+                    Caption = 'Handling (or) Handling per Package';
                 }
                 field("ORB Markup"; Markup)
                 {
