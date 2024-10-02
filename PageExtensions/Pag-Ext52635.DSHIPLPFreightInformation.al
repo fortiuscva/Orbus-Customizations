@@ -2,6 +2,10 @@ pageextension 52635 "DSHIP LP Freight Information" extends "DSHIP LP Freight Inf
 {
     layout
     {
+        modify(Cost)
+        {
+            Caption = 'Orbus Freight Cost';
+        }
         addafter(Cost)
         {
             field("ORB Handling"; Rec."ORB Handling")

@@ -542,6 +542,21 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         end;
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, codeunit::"DSHIP Event Publisher", OnAfterGetShippingRate, '', false, false)]
+    internal procedure OnAfterGetShippingRate(orderBuffer: Record "DSHIP Package Order Buffer" temporary; var rateBuffer: Record "DSHIP Carrier Rate Buffer" temporary; var messageBuffer: Record "DSHIP Shipment Message Buffer" temporary; var objectId: Text[100])
+    var
+        DSHIPPackageRateManagement: Codeunit "DSHIP Package Rate Management";
+        DShipFreightPrice: Record "DSHIP Freight Price";
+        salesType: Option " ",Customer,"Customer Price Group","All Customers",Campaign;
+    begin
+        DSHIPPackageRateManagement.getSpecificSalesTypeRate(
+                            DShipFreightPrice,
+                            orderBuffer."Shipping Agent Code",
+                            rateBuffer,
+                            salesType::"All Customers",
+                            '',
+                            0);
+    end;
 
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
