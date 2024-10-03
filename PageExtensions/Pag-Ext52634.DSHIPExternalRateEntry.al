@@ -4,6 +4,7 @@ pageextension 52634 "ORB DSHIP External Rate Entry" extends "DSHIP External Rate
     {
         modify(Rate)
         {
+            Caption = 'Orbus Freight Cost';
             trigger OnAfterValidate()
             var
                 SingleInstance: Codeunit "ORB Orbus Single Instance";
@@ -11,6 +12,7 @@ pageextension 52634 "ORB DSHIP External Rate Entry" extends "DSHIP External Rate
                 SingleInstance.SetFrieghtPrice(Rec.Rate);
             end;
         }
+
         addbefore(Rate)
         {
             field("ORB Freight Quote"; Rec."ORB Freight Quote")
