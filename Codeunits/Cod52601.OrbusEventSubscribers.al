@@ -371,6 +371,8 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             labelData.SetRange("License Plate No.", lpHeader."No.");
             if labelData.FindFirst() then begin
                 labelData."ORB Handling" := SingleInstance.GetHandlingPrice();
+                if labelData."ORB Handling" = 0 then
+                    labelData."ORB Handling" := SingleInstance.GetMarkupAmountPrice();
                 labelData."ORB Freight Quote" := SingleInstance.GetFreightQuote();
                 labelData."ORB Markup %" := SingleInstance.GetMarkupPercentage();
                 labelData.Modify();
@@ -578,6 +580,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         rateBuffer."ORB Handling" := DShipFreightPrice."Markup Amount";
         rateBuffer."ORB Freight Quote" := DShipFreightPrice."Maximum Rate";
         rateBuffer.Modify(false);
+        OrbusSingleInstanceCUGbl.SetMarkupAmountPrice(rateBuffer."ORB Handling");
     end;
 
     var

@@ -101,9 +101,19 @@ codeunit 52603 "ORB Orbus Single Instance"
         exit(FrieghtCostGbl);
     end;
 
+    procedure GetMarkupAmountPrice(): Decimal
+    begin
+        exit(MarkupAmountGbl);
+    end;
+
     procedure SetFreightQuote(FreightQuote: Decimal)
     begin
         FreightQuoteGbl := FreightQuote;
+    end;
+
+    procedure SetMarkupAmountPrice(MarkupAmount: Decimal)
+    begin
+        MarkupAmountGbl := MarkupAmount;
     end;
 
     procedure GetFreightQuote(): Decimal
@@ -162,5 +172,5 @@ codeunit 52603 "ORB Orbus Single Instance"
         LastCommandRanGbl: Text;
         MarkupPercentageGbl: Decimal;
         ShippedNotInvoicedGbl: Boolean;
-
+        MarkupAmountGbl: Decimal;
 }
