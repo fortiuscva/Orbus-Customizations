@@ -85,6 +85,18 @@ page 52608 "ORB Customer API"
                 {
                     Caption = 'Payment Terms Code';
                 }
+                field(SystemCreatedAt; Rec.SystemCreatedAt)
+                {
+                    Caption = 'System Created At';
+                }
+                field(systemModifiedAt; Rec.SystemModifiedAt)
+                {
+                    Caption = 'systemModifiedAt', Locked = true;
+                }
+                field(magentoContactNo; Rec."Magento Contact No.")
+                {
+                    Caption = 'magentoContactNo', Locked = true;
+                }
             }
         }
     }
