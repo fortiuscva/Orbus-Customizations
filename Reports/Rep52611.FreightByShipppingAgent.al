@@ -3,7 +3,7 @@ report 52611 "ORB Freight By ShipppingAgent"
     Caption = 'Freight Charge Report';
     UsageCategory = ReportsAndAnalysis;
     ApplicationArea = All;
-    DefaultRenderingLayout = "FreightDet";
+    //DefaultRenderingLayout = "FreightDet";
 
     dataset
     {
@@ -201,16 +201,16 @@ report 52611 "ORB Freight By ShipppingAgent"
         }
 
     }
-    rendering
-    {
-        layout(FreightDet)
+    // rendering
+    // {
+    //     layout(FreightDet)
 
-        {
-            Type = Excel;
-            LayoutFile = 'FreightChargeReport.xlsx';
+    //     {
+    //         Type = Excel;
+    //         LayoutFile = 'FreightChargeReport.xlsx';
 
-        }
-    }
+    //     }
+    // }
     var
         InvoicedFreightChargeGvar: Decimal;
         LicenPlateNoGVar: Code[20];
