@@ -6,7 +6,8 @@ tableextension 52626 "ORB Contact" extends Contact
         {
             trigger OnAfterValidate()
             begin
-                CheckDuplicateEmailContact();
+                if GuiAllowed then
+                    CheckDuplicateEmailContact();
             end;
         }
     }
