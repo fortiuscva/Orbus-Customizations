@@ -85,6 +85,10 @@ page 52608 "ORB Customer API"
                 {
                     Caption = 'Payment Terms Code';
                 }
+                field(SystemCreatedAt; Rec.SystemCreatedAt)
+                {
+                    Caption = 'System Created At';
+                }
             }
         }
     }
