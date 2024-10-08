@@ -344,7 +344,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             ProdOrderLineRecLcl.Reset();
             ProdOrderLineRecLcl.SetRange("Prod. Order No.", ProdOrder."No.");
             ProdOrderLineRecLcl.SetRange("Line No.", 100000);
-            ProdOrderLineRecLcl.SetFilter("ORB Sales Order No.", '%1', '');
+            ProdOrderLineRecLcl.SetFilter("ORB Sales Order No.", '<>%1', '');
             if not ProdOrderLineRecLcl.FindFirst() then
                 CreateLink := true;
 
