@@ -10,6 +10,18 @@ pageextension 52625 "ORB Sales Order Archive" extends "Sales Order Archive"
                 ToolTip = 'Specifies the user who resolved escalated issue';
             }
         }
+
+        addfirst(factboxes)
+        {
+            part(ORBSalesLineArchAddFieldsFB; "ORB SL Arch. Add. Fields FB")
+            {
+                ApplicationArea = Suite;
+                Provider = SalesLinesArchive;
+                SubPageLink = "Document Type" = field("Document Type"),
+                              "Document No." = field("Document No."),
+                              "Line No." = field("Line No.");
+            }
+        }
     }
     actions
     {
