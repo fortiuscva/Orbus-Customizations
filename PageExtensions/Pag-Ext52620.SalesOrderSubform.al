@@ -62,7 +62,7 @@ pageextension 52620 "ORB Sales Order Subform" extends "Sales Order Subform"
                 Caption = 'Additional Fields';
                 Image = RelatedInformation;
                 RunObject = Page "ORB Sales Line Add. Fields";
-                RunPageLink = "Document No." = field("Document No."), "Line No." = field("Line No.");
+                RunPageLink = "Document Type" = field("Document Type"), "Document No." = field("Document No."), "Line No." = field("Line No.");
             }
         }
     }
