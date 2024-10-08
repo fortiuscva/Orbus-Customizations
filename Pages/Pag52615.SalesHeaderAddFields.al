@@ -40,10 +40,6 @@ page 52615 "ORB Sales Header Add. Fields"
                 {
                     ToolTip = 'Specifies the value of the Payment Country Code field.';
                 }
-                field("Job URL"; Rec."Job URL")
-                {
-                    ToolTip = 'Specifies the value of the Job URL field.', Comment = '%';
-                }
 
             }
         }

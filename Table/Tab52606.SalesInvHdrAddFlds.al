@@ -39,10 +39,6 @@ table 52606 "ORB Sales Inv. Hdr. Add. Flds"
         {
             Caption = 'Payment Country';
         }
-        field(52607; "Job URL"; text[200])
-        {
-            Caption = 'Job URL';
-        }
     }
     keys
     {

@@ -42,10 +42,6 @@ page 52618 "ORB Sales Inv. Hdr Add. Fields"
                 {
                     ToolTip = 'Specifies the value of the Payment Country Code field.';
                 }
-                field("Job URL"; Rec."Job URL")
-                {
-                    ToolTip = 'Specifies the value of the Job URL field.', Comment = '%';
-                }
             }
         }
     }
