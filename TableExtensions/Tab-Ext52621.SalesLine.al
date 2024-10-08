@@ -74,6 +74,13 @@ tableextension 52621 "ORB Sales Line" extends "Sales Line"
                 end;
             end;
         }
+        field(52119; "ORB Order Status"; Enum OrderStatus)
+        {
+            Caption = 'State';
+            Editable = false;
+            FieldClass = FlowField;
+            calcformula = Lookup("Sales Header"."Order Status" where("Document Type" = const(Order), "No." = field("Document No.")));
+        }
 
         modify(Quantity)
         {
