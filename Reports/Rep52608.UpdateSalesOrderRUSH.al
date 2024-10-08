@@ -1,4 +1,4 @@
-report 52607 "ORB Update Sales Order RUSH"
+report 52608 "ORB Update Sales Order RUSH"
 {
     ApplicationArea = All;
     Caption = 'Update Sales Order RUSH';
