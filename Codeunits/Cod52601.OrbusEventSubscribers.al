@@ -330,6 +330,31 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
 
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Prod. Order Lines", OnBeforeProdOrderLineInsert, '', false, false)]
+    local procedure "Create Prod. Order Lines_OnBeforeProdOrderLineInsert"(var ProdOrderLine: Record "Prod. Order Line"; var ProductionOrder: Record "Production Order"; SalesLineIsSet: Boolean; var SalesLine: Record "Sales Line")
+    var
+        SalesLineAddFieldsRecLcl: Record "ORB Sales Line Add. Fields";
+        NewRecLink: Record "Record Link";
+        outStr: OutStream;
+        EntryNo: Integer;
+    begin
+        if SalesLineAddFieldsRecLcl.get(SalesLine."Document Type", SalesLine."Document No.", SalesLine."Line No.") then begin
+            NewRecLink.Reset();
+            NewRecLink.SetRange("Record ID", ProdOrderLine.RecordId);
+            if NewRecLink.FindLast() then
+                EntryNo := NewRecLink."Link ID" + 1
+            else
+                EntryNo := 1;
+
+            NewRecLink.INIT;
+            NewRecLink."Link ID" := EntryNo;
+            NewRecLink."Record ID" := ProdOrderLine.RECORDID;
+            NewRecLink.Note.CreateOutStream(outStr);
+            outStr.WriteText(SalesLineAddFieldsRecLcl."Job URL");
+            NewRecLink.INSERT;
+        end;
+    end;
+
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", 'OnAfterReleaseSalesDoc', '', false, false)]
     local procedure Cod414_OnAfterReleaseSalesDoc(var SalesHeader: Record "Sales Header"; PreviewMode: Boolean; var LinesWereModified: Boolean; SkipWhseRequestOperations: Boolean)
     var
