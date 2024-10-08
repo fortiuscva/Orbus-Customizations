@@ -1,7 +1,7 @@
 page 52627 "ORB Sales Line Add. Fields FB"
 {
     ApplicationArea = All;
-    Caption = 'ORB Sales Line Add. Fields Details';
+    Caption = 'Sales Line Add. Fields Details';
     PageType = CardPart;
     SourceTable = "ORB Sales Line Add. Fields";
 
