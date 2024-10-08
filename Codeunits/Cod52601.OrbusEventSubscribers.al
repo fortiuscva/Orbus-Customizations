@@ -330,36 +330,8 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
 
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Prod. Order from Sale", OnAfterCreateProdOrderFromSalesLine, '', false, false)]
-    local procedure "Create Prod. Order from Sale_OnAfterCreateProdOrderFromSalesLine"(var ProdOrder: Record "Production Order"; var SalesLine: Record "Sales Line")
-    var
-        SalesHdrAddFields: Record "ORB Sales Header Add. Fields";
-        NewRecLink: Record "Record Link";
-        EntryNo: Integer;
-    begin
-        if ProdOrder."Source Type" = ProdOrder."Source Type"::"Sales Header" then
-            if SalesHdrAddFields.get(SalesLine."Document Type", SalesLine."Document No.") then begin
-                NewRecLink.Reset();
-                if NewRecLink.FindLast() then
-                    EntryNo := NewRecLink."Link ID" + 1
-                else
-                    EntryNo := 1;
-
-                NewRecLink.INIT;
-                NewRecLink."Link ID" := EntryNo;
-                NewRecLink."Record ID" := ProdOrder.RECORDID;
-                NewRecLink.URL1 := SalesHdrAddFields."Job URL";
-                NewRecLink.Description := 'Merged';
-                NewRecLink.Type := NewRecLink.Type::Link;
-                NewRecLink."User ID" := UserId;
-                NewRecLink.Created := CreateDateTime(Today, Time);
-                NewRecLink.Company := CompanyName;
-                NewRecLink.INSERT;
-            end;
-    end;
-
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Prod. Order from Sale", OnCreateProductionOrderOnBeforeProdOrderLineModify, '', false, false)]
-    local procedure "Create Prod. Order from Sale_OnCreateProductionOrderOnBeforeProdOrderLineModify"(var ProdOrderLine: Record "Prod. Order Line"; var SalesLine: Record "Sales Line"; var ProdOrder: Record "Production Order"; var SalesLineReserve: Codeunit "Sales Line-Reserve")
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Prod. Order Lines", OnAfterInitProdOrderLine, '', false, false)]
+    local procedure "Create Prod. Order Lines_OnAfterInitProdOrderLine"(var ProdOrderLine: Record "Prod. Order Line"; ProdOrder: Record "Production Order"; SalesLine: Record "Sales Line")
     var
         SalesLineAddFieldsRecLcl: Record "ORB Sales Line Add. Fields";
         NewRecLink: Record "Record Link";
@@ -386,6 +358,34 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             NewRecLink.Company := CompanyName;
             NewRecLink.INSERT;
         end;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Prod. Order from Sale", OnAfterCreateProdOrderFromSalesLine, '', false, false)]
+    local procedure "Create Prod. Order from Sale_OnAfterCreateProdOrderFromSalesLine"(var ProdOrder: Record "Production Order"; var SalesLine: Record "Sales Line")
+    var
+        SalesHdrAddFields: Record "ORB Sales Header Add. Fields";
+        NewRecLink: Record "Record Link";
+        EntryNo: Integer;
+    begin
+        if ProdOrder."Source Type" = ProdOrder."Source Type"::"Sales Header" then
+            if SalesHdrAddFields.get(SalesLine."Document Type", SalesLine."Document No.") then begin
+                NewRecLink.Reset();
+                if NewRecLink.FindLast() then
+                    EntryNo := NewRecLink."Link ID" + 1
+                else
+                    EntryNo := 1;
+
+                NewRecLink.INIT;
+                NewRecLink."Link ID" := EntryNo;
+                NewRecLink."Record ID" := ProdOrder.RECORDID;
+                NewRecLink.URL1 := SalesHdrAddFields."Job URL";
+                NewRecLink.Description := 'Merged';
+                NewRecLink.Type := NewRecLink.Type::Link;
+                NewRecLink."User ID" := UserId;
+                NewRecLink.Created := CreateDateTime(Today, Time);
+                NewRecLink.Company := CompanyName;
+                NewRecLink.INSERT;
+            end;
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Prod. Order from Sale", OnAfterCreateProdOrder, '', false, false)]
