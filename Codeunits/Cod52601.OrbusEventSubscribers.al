@@ -336,7 +336,6 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         SalesLineAddFieldsRecLcl: Record "ORB Sales Line Add. Fields";
         NewRecLink: Record "Record Link";
         EntryNo: Integer;
-        outStr: OutStream;
     begin
         if SalesLineAddFieldsRecLcl.get(SalesLine."Document Type", SalesLine."Document No.", SalesLine."Line No.") then begin
             NewRecLink.Reset();
@@ -349,9 +348,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             NewRecLink."Link ID" := EntryNo;
             NewRecLink."Record ID" := ProdOrder.RECORDID;
             NewRecLink.URL1 := SalesLineAddFieldsRecLcl."Job URL";
-            NewRecLink.Type := NewRecLink.Type::Note;
-            NewRecLink.note.CreateOutStream(outStr);
-            outStr.WriteText(SalesLineAddFieldsRecLcl."Job URL");
+            NewRecLink.Type := NewRecLink.Type::Link;
             NewRecLink."User ID" := UserId;
             NewRecLink.Created := CreateDateTime(Today, Time);
             NewRecLink.Company := CompanyName;
