@@ -1,7 +1,7 @@
 page 52628 "ORB Sal Inv Lin Add. Fields FB"
 {
     ApplicationArea = All;
-    Caption = 'ORB Sales Invoive Line Add. Fields FB';
+    Caption = 'Sales Invoice Line Add. Fields Details';
     PageType = CardPart;
     SourceTable = "ORB Sales Inv. Line Add. Flds";
 
