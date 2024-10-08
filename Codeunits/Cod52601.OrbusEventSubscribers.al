@@ -362,7 +362,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
                 NewRecLink."Link ID" := EntryNo;
                 NewRecLink."Record ID" := ProdOrder.RECORDID;
                 NewRecLink.URL1 := SalesLineAddFieldsRecLcl."Job URL";
-                NewRecLink.Description := format(SalesLine.RecordId);
+                NewRecLink.Description := SalesLine."No.";
                 NewRecLink.Type := NewRecLink.Type::Link;
                 NewRecLink."User ID" := UserId;
                 NewRecLink.Created := CreateDateTime(Today, Time);
@@ -391,7 +391,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
                 NewRecLink."Link ID" := EntryNo;
                 NewRecLink."Record ID" := ProdOrder.RECORDID;
                 NewRecLink.URL1 := SalesHdrAddFields."Job URL";
-                NewRecLink.Description := 'Merged';
+                NewRecLink.Description := '<' + SalesLine."Document No." + '>' + 'Merged URL';
                 NewRecLink.Type := NewRecLink.Type::Link;
                 NewRecLink."User ID" := UserId;
                 NewRecLink.Created := CreateDateTime(Today, Time);
@@ -423,7 +423,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
                     NewRecLink."Link ID" := EntryNo;
                     NewRecLink."Record ID" := ProdOrder.RECORDID;
                     NewRecLink.URL1 := SalesHdrAddFields."Job URL";
-                    NewRecLink.Description := 'Merged';
+                    NewRecLink.Description := '<' + SalesLine."Document No." + '>' + 'Merged URL';
                     NewRecLink.Type := NewRecLink.Type::Link;
                     NewRecLink."User ID" := UserId;
                     NewRecLink.Created := CreateDateTime(Today, Time);
