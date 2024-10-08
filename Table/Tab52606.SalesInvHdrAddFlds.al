@@ -43,6 +43,10 @@ table 52606 "ORB Sales Inv. Hdr. Add. Flds"
         {
             Caption = 'Job URL';
         }
+        field(52610; "Polaraid URL"; Text[500])
+        {
+            Caption = 'Polaraid URL';
+        }
     }
     keys
     {
