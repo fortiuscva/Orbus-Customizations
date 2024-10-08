@@ -340,7 +340,6 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
     begin
         if SalesLineAddFieldsRecLcl.get(SalesLine."Document Type", SalesLine."Document No.", SalesLine."Line No.") then begin
             NewRecLink.Reset();
-            NewRecLink.SetRange("Record ID", ProdOrder.RecordId);
             if NewRecLink.FindLast() then
                 EntryNo := NewRecLink."Link ID" + 1
             else
