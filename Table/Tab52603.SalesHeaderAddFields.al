@@ -42,6 +42,14 @@ table 52603 "ORB Sales Header Add. Fields"
         {
             Caption = 'Payment Country';
         }
+        field(52607; "Job URL"; text[200])
+        {
+            Caption = 'Job URL';
+        }
+        field(52610; "Polaraid URL"; Text[500])
+        {
+            Caption = 'Polaraid URL';
+        }
     }
     keys
     {

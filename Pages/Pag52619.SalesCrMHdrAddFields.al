@@ -42,6 +42,14 @@ page 52619 "ORB Sales Cr.M Hdr Add. Fields"
                 {
                     ToolTip = 'Specifies the value of the Payment Country Code field.';
                 }
+                field("Job URL"; Rec."Job URL")
+                {
+                    ToolTip = 'Specifies the value of the Job URL field.', Comment = '%';
+                }
+                field("Polaraid URL"; Rec."Polaraid URL")
+                {
+                    ToolTip = 'Specifies the value of the Polaraid URL field.', Comment = '%';
+                }
             }
         }
     }

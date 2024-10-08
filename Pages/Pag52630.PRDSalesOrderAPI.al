@@ -1,21 +1,21 @@
-page 52632 "ORB PRD Sales Return Order API"
+page 52630 "ORB PRD Sales Order API"
 {
     APIGroup = 'orbus';
     APIPublisher = 'orbus';
     APIVersion = 'v1.0';
 
     ApplicationArea = All;
-    Caption = 'PRD Sales Return Order API';
+    Caption = 'PRD Sales Order API';
     DelayedInsert = true;
 
-    EntityName = 'PRDSalesReturnOrder';
-    EntityCaption = ' Sales Return Order';
-    EntitySetName = 'SalesReturnOrders';
-    EntitySetCaption = 'Sales Return Orders';
-    PageType = API;
+    EntityName = 'SalesOrder';
+    EntityCaption = 'PRD Sales Order';
+    EntitySetName = 'SalesOrders';
+    EntitySetCaption = 'PRD Sales Orders';
 
+    PageType = API;
     SourceTable = "Sales Header";
-    SourceTableView = where("Document Type" = const("Return Order"));
+    SourceTableView = where("Document Type" = const(Order));
 
     layout
     {

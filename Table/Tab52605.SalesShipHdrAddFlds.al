@@ -39,6 +39,14 @@ table 52605 "ORB Sales Ship. Hdr Add. Flds"
         {
             Caption = 'Payment Country';
         }
+        field(52607; "Job URL"; text[200])
+        {
+            Caption = 'Job URL';
+        }
+        field(52610; "Polaraid URL"; Text[500])
+        {
+            Caption = 'Polaraid URL';
+        }
     }
     keys
     {
