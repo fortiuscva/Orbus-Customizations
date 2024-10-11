@@ -2,7 +2,7 @@ tableextension 52627 "ORB Prod. Order Routing Line" extends "Prod. Order Routing
 {
     fields
     {
-        field(52600; "ORB Prduct Line"; Text[50])
+        field(52600; "ORB Product Line"; Text[50])
         {
             Caption = 'PrdLn Dimension';
             DataClassification = ToBeClassified;
