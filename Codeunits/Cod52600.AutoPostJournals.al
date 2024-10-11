@@ -23,6 +23,7 @@ codeunit 52600 "ORB Auto-Post Journals"
         lbJnlSelected: Boolean;
         lrecItemJnlBatch: Record "Item Journal Batch";
     begin
+
         // Commits after each line.
         lcuItemJnlMgmt.TemplateSelection(
           PAGE::"Output Journal",
