@@ -34,14 +34,14 @@ pageextension 52638 "ORB SFI WS - Dispatch" extends "SFI WS - Dispatch"
             Rec."ORB Material" := '';
             DimensionManagement.GetShortcutDimensions(ProdOrderLine."Dimension Set ID", ShortcutDimensionCode);
             DimValueRecLcl.Reset();
-            DimValueRecLcl.SetRange(Code, GeneralLedgerSetup."Shortcut Dimension 4 Code");
-            DimValueRecLcl.SetRange("Dimension Code", ShortcutDimensionCode[4]);
+            DimValueRecLcl.SetRange("Dimension Code", GeneralLedgerSetup."Shortcut Dimension 4 Code");
+            DimValueRecLcl.SetRange(Code, ShortcutDimensionCode[4]);
             if DimValueRecLcl.FindFirst() then
                 Rec."ORB Product Line" := DimValueRecLcl.Name;
 
             DimValueRecLcl.Reset();
-            DimValueRecLcl.SetRange(Code, GeneralLedgerSetup."Shortcut Dimension 7 Code");
-            DimValueRecLcl.SetRange("Dimension Code", ShortcutDimensionCode[7]);
+            DimValueRecLcl.SetRange("Dimension Code", GeneralLedgerSetup."Shortcut Dimension 7 Code");
+            DimValueRecLcl.SetRange(Code, ShortcutDimensionCode[7]);
             if DimValueRecLcl.FindFirst() then
                 Rec."ORB Material" := DimValueRecLcl.Name;
             Rec.Modify();
