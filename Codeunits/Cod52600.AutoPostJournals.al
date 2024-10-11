@@ -22,7 +22,6 @@ codeunit 52600 "ORB Auto-Post Journals"
         lcuItemJnlMgmt: codeunit ItemJnlManagement;
         lbJnlSelected: Boolean;
         lrecItemJnlBatch: Record "Item Journal Batch";
-        dd: Record "Prod. Order Line";
     begin
 
         // Commits after each line.
