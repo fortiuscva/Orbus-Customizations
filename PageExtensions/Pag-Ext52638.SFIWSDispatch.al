@@ -4,7 +4,7 @@ pageextension 52638 "ORB SFI WS - Dispatch" extends "SFI WS - Dispatch"
     {
         addafter("Run Time")
         {
-            field("ORB Prduct Line"; Rec."ORB Prduct Line")
+            field("ORB Prduct Line"; Rec."ORB Product Line")
             {
                 ApplicationArea = all;
                 ToolTip = 'PrdLn Dimension';
@@ -30,14 +30,14 @@ pageextension 52638 "ORB SFI WS - Dispatch" extends "SFI WS - Dispatch"
             GeneralLedgerSetup.Init();
 
         if ProdOrderLine.Get(Rec.Status, Rec."Prod. Order No.", Rec."Routing Reference No.") then begin
-            Rec."ORB Prduct Line" := '';
+            Rec."ORB Product Line" := '';
             Rec."ORB Material" := '';
             DimensionManagement.GetShortcutDimensions(ProdOrderLine."Dimension Set ID", ShortcutDimensionCode);
             DimValueRecLcl.Reset();
             DimValueRecLcl.SetRange(Code, GeneralLedgerSetup."Shortcut Dimension 4 Code");
             DimValueRecLcl.SetRange("Dimension Code", ShortcutDimensionCode[4]);
             if DimValueRecLcl.FindFirst() then
-                Rec."ORB Prduct Line" := DimValueRecLcl.Name;
+                Rec."ORB Product Line" := DimValueRecLcl.Name;
 
             DimValueRecLcl.Reset();
             DimValueRecLcl.SetRange(Code, GeneralLedgerSetup."Shortcut Dimension 7 Code");
