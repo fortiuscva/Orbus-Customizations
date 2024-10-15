@@ -70,4 +70,67 @@ page 52614 "ORB Magento Sal. Hdr. Adl. Det"
             }
         }
     }
+
+    trigger OnInsertRecord(BelowxRec: Boolean): Boolean
+    var
+        NewRecLink: Record "Record Link";
+        EntryNo: Integer;
+        SalesHeader: Record "Sales Header";
+    begin
+        if SalesHeader.get(Rec."Document Type", Rec."No.") then begin
+            if Rec."Polaraid URL" <> '' then begin
+                NewRecLink.Reset();
+                if NewRecLink.FindLast() then
+                    EntryNo := NewRecLink."Link ID" + 1
+                else
+                    EntryNo := 1;
+                NewRecLink.INIT;
+                NewRecLink."Link ID" := EntryNo;
+                NewRecLink."Record ID" := SalesHeader.RECORDID;
+                NewRecLink.URL1 := Rec."Polaraid URL";
+                NewRecLink.Description := 'Polarid URL';
+                NewRecLink.Type := NewRecLink.Type::Link;
+                NewRecLink."User ID" := UserId;
+                NewRecLink.Created := CreateDateTime(Today, Time);
+                NewRecLink.Company := CompanyName;
+                NewRecLink.INSERT;
+            end;
+        end;
+    end;
+
+    trigger OnModifyRecord(): Boolean
+    Var
+        NewRecLink: Record "Record Link";
+        SalesHeader: Record "Sales Header";
+        EntryNo: Integer;
+    begin
+        if SalesHeader.get(Rec."Document Type", Rec."No.") then begin
+            if (rec."Polaraid URL" <> xRec."Polaraid URL") and (rec."Polaraid URL" <> '') then begin
+                NewRecLink.Reset();
+                if NewRecLink.FindLast() then
+                    EntryNo := NewRecLink."Link ID" + 1
+                else
+                    EntryNo := 1;
+
+                NewRecLink.reset;
+                NewRecLink.SetFilter("Record ID", format(SalesHeader.RecordId));
+                NewRecLink.SetRange(Description, 'Polarid URL');
+                if NewRecLink.FindFirst() then begin
+                    NewRecLink.URL1 := Rec."Polaraid URL";
+                    NewRecLink.Modify();
+                end else begin
+                    NewRecLink.INIT;
+                    NewRecLink."Link ID" := EntryNo;
+                    NewRecLink."Record ID" := SalesHeader.RECORDID;
+                    NewRecLink.URL1 := Rec."Polaraid URL";
+                    NewRecLink.Description := 'Polarid URL';
+                    NewRecLink.Type := NewRecLink.Type::Link;
+                    NewRecLink."User ID" := UserId;
+                    NewRecLink.Created := CreateDateTime(Today, Time);
+                    NewRecLink.Company := CompanyName;
+                    NewRecLink.INSERT;
+                end;
+            end;
+        end;
+    end;
 }
