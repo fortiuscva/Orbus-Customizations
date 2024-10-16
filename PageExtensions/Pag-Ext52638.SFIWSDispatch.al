@@ -4,7 +4,7 @@ pageextension 52638 "ORB SFI WS - Dispatch" extends "SFI WS - Dispatch"
     {
         addafter("Run Time")
         {
-            field("ORB Prduct Line"; Rec."ORB Product Line")
+            field("ORB Product Line"; Rec."ORB Product Line")
             {
                 ApplicationArea = all;
                 ToolTip = 'PrdLn Dimension';
