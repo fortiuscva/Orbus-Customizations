@@ -1,4 +1,4 @@
-page 52634 "ORB Users"
+page 52634 "ORB Users API"
 {
     UsageCategory = Lists;
     APIGroup = 'orbus';
@@ -7,7 +7,7 @@ page 52634 "ORB Users"
     ApplicationArea = All;
     Caption = 'UsersAPI';
     DelayedInsert = true;
-    EntityName = 'v';
+    EntityName = 'UsersAPI';
     EntitySetName = 'UsersAPI';
     PageType = API;
     ModifyAllowed = false;
