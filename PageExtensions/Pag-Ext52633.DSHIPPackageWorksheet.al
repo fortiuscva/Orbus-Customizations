@@ -16,5 +16,14 @@ pageextension 52633 "ORB DSHIP Package Worksheet" extends "DSHIP Package Workshe
                 end;
             end;
         }
+        modify("New License Plate No.")
+        {
+            trigger OnAfterValidate()
+            var
+                FactBox: page "DSHIP Order Info. Factbox";
+            begin
+                CurrPage.shipInfoFactBox.Page.SetLicensePlateNo(Rec."New License Plate No.");
+            end;
+        }
     }
 }
