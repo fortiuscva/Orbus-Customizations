@@ -72,7 +72,8 @@ pageextension 52636 "ORB DSHIP Order Info. Factbox" extends "DSHIP Order Info. F
         if lpHeader.FindFirst() then begin
             labelData.SetRange("Label Type", labelData."Label Type"::Shipping);
             labelData.SetRange("Label Format", labelData."Label Format"::PNG);
-            labelData.SetRange("License Plate No.", lpHeader."No.");
+            //labelData.SetRange("License Plate No.", lpHeader."No.");
+            labelData.SetRange("License Plate No.", LicensePlate);
             if labelData.FindFirst() then begin
                 Handling := labelData."ORB Handling";
                 ORBFreightCOst := labelData.Cost;
@@ -83,4 +84,12 @@ pageextension 52636 "ORB DSHIP Order Info. Factbox" extends "DSHIP Order Info. F
 
         end;
     end;
+
+    procedure SetLicensePlateNo(LicensePlateNoVar: Code[50])
+    begin
+        LicensePlate := LicensePlateNoVar;
+    end;
+
+    var
+        LicensePlate: Code[20];
 }
