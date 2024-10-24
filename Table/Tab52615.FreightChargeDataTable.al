@@ -1,5 +1,6 @@
-table 52615 FreightChargeDataTable
+table 52615 "ORB FreightChargeDataTable"
 {
+    Caption = 'FreightChargeDataTable';
     DataClassification = ToBeClassified;
 
     fields
@@ -132,10 +133,6 @@ table 52615 FreightChargeDataTable
             Clustered = true;
         }
     }
-    fieldgroups
-    {
-        // Add changes to field groups here
-    }
-    var
-        FreightTempTable_chk: Record FreightChargedataTable temporary;
+
+
 }

@@ -1,4 +1,4 @@
-report 52611 "ORB  PB Freightreport"
+report 52611 "ORB PB Freightreport"
 {
     Caption = 'Freight Charge Report for PB';
     UsageCategory = ReportsAndAnalysis;
@@ -44,7 +44,6 @@ report 52611 "ORB  PB Freightreport"
                 HandlingChargedecimal := 0;
                 DynamicShipFreightPriceRecLcl.reset;
                 InvoicedFreightChargeGvar := 0;
-                FreightDataRecord.Invoice := "Sales Invoice Header"."No.";
                 FreightChargedataTableRecLcl.init;
                 reccount += 1;
                 FreightChargedataTableRecLcl.RowNo := reccount;
@@ -184,9 +183,8 @@ report 52611 "ORB  PB Freightreport"
         LicenePlateShipmentDtTxGvar: Text[10];
         prevOrderNoGbl: Code[20];
         prevEasyCostGbl: Decimal;
-        FreightDataRecord: Record FreightChargedataTable;
         DynamicShipFreightPriceRecLcl: Record "DSHIP Freight Price";
         HandlingChargedecimal: Decimal;
         reccount: Integer;
-        FreightChargedataTableRecLcl: Record FreightChargeDataTable;
+        FreightChargedataTableRecLcl: Record "ORB FreightChargeDataTable";
 }

@@ -1,10 +1,11 @@
-page 52635 "Invoice Freight Details PB"
+page 52635 "ORB Invoice Freight Details PB"
 {
     ApplicationArea = All;
     Caption = 'Invoice Freight PB';
     PageType = List;
     UsageCategory = ReportsAndAnalysis;
-    SourceTable = FreightChargeDataTable;
+    SourceTable = "ORB FreightChargeDataTable";
+    Editable = false;
 
     layout
     {
