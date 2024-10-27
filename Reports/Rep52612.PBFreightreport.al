@@ -86,7 +86,7 @@ report 52612 "ORB PB Freightreport"
                                 DSHIPLabelDataRecLcl.SetFilter(Cost, '>%1', 0);
                                 IF DSHIPLabelDataRecLcl.FindFirst() then begin
                                     FreightCostGvar := DSHIPLabelDataRecLcl.Cost;
-                                    FreightChargedataTableRecLcl.Handling := DSHIPLabelDataRecLcl."ORB Handling";
+                                    //FreightChargedataTableRecLcl.Handling := DSHIPLabelDataRecLcl."ORB Handling";
                                 end;
                                 LicensePlateNoVarLcl := IWXLPHeaderRecLcl."No.";
                                 LicensePlatepkgNoVarLcl := IWXLPHeaderRecLcl."Package Order ID";
@@ -129,7 +129,7 @@ report 52612 "ORB PB Freightreport"
                                                 if FreightCostGvar > 0 then bcostFoundVarLcl := true;
                                                 if bcostFoundVarLcl then begin
                                                     FreightChargedataTableRecLcl.LP_EasyPostFreightCost := FreightCostGvar;
-                                                    FreightChargedataTableRecLcl.Handling := DSHIPLabelDataRecLcl."ORB Handling";
+                                                    //FreightChargedataTableRecLcl.Handling := DSHIPLabelDataRecLcl."ORB Handling";
                                                 end;
                                             until (IWXLPHeaderRecLcl.next = 0) or (bcostFoundVarLcl = true);
                                             DSHIPPackageOptionsRecLcl.Reset();
