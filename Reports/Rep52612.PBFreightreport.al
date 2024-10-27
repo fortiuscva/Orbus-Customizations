@@ -1,4 +1,4 @@
-report 52611 "ORB PB Freightreport"
+report 52612 "ORB PB Freightreport"
 {
     Caption = 'Freight Charge Report for PB';
     UsageCategory = ReportsAndAnalysis;
