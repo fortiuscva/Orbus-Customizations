@@ -1263,7 +1263,7 @@ report 52600 "ORB Check (Stub/Check/Stub)"
                                     FormatAddr.Vendor(CheckToAddr, Vend)
                                 else begin
                                     RemitAddress.Get(GenJnlLine."Remit-to Code", GenJnlLine."Account No.");
-                                    FormatAddr.VendorRemitToAddress(RemitAddress, CheckToAddr);
+                                    FormatAddr.VendorRemitToAddress(CheckToAddr, RemitAddress);
                                 end;
                                 if BankAcc2."Currency Code" <> "Currency Code" then
                                     Error(Text005);
