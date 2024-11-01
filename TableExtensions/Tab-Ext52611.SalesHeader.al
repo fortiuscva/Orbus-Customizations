@@ -8,11 +8,10 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             var
                 salesHeader: Record "Sales Header";
                 ORBFunctions: codeunit "ORB Functions";
-                LocationNotFoundlbl: Label 'Location is missing for this order: %1';
-
             begin
                 if Rec."Location Code" = '' then
                     Error(LocationNotFoundlbl, Rec."No.");
+
                 if Xrec."Order Status" = Xrec."Order Status"::Draft then begin
                     ORBFunctions.SendOrderConfirmationEmailItem(Rec, false);
 
@@ -245,4 +244,7 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         end;
         Rec.Modify();
     end;
+
+    var
+        LocationNotFoundlbl: Label 'Location is missing for this order: %1';
 }
