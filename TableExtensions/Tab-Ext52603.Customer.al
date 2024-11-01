@@ -68,6 +68,12 @@ tableextension 52603 "ORB Customer" extends Customer
             TableRelation = "Salesperson/Purchaser" where(Blocked = const(false));
             DataClassification = CustomerContent;
         }
+        field(52604; "ORB Business Development"; Code[20])
+        {
+            Caption = 'Business Development';
+            TableRelation = "Salesperson/Purchaser" where(Blocked = const(false));
+            DataClassification = CustomerContent;
+        }
         modify("Salesperson Code")
         {
             Caption = 'Key/National Account Manager';

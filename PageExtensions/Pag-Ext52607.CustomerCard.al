@@ -15,8 +15,14 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
             field("ORB Customer Support"; Rec."ORB Customer Support")
             {
                 ApplicationArea = all;
-                ToolTip = 'Specifies Orbus ustomer Support';
+                ToolTip = 'Specifies Orbus Customer Support';
             }
+            field("ORB Business Development"; Rec."ORB Business Development")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Specifies Orbus Business Development';
+            }
+
         }
         addlast(General)
         {
@@ -26,6 +32,7 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
                 ToolTip = 'Specifies Auto Send Email from JQ for the customer';
             }
         }
+
         modify("Salesperson Code")
         {
             Caption = 'Key/National Account Manager';
