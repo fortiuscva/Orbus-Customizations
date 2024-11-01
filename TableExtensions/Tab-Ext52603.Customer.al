@@ -55,7 +55,23 @@ tableextension 52603 "ORB Customer" extends Customer
             Editable = false;
             FieldClass = FlowField;
         }
+        field(52602; "ORB Regional Sales Executive"; Code[20])
+        {
+            Caption = 'Regional Sales Executive';
+            TableRelation = "Salesperson/Purchaser" where(Blocked = const(false));
+            DataClassification = CustomerContent;
 
+        }
+        field(52603; "ORB Customer Support"; Code[20])
+        {
+            Caption = 'Customer Support';
+            TableRelation = "Salesperson/Purchaser" where(Blocked = const(false));
+            DataClassification = CustomerContent;
+        }
+        modify("Salesperson Code")
+        {
+            Caption = 'Key/National Account Manager';
+        }
     }
 
     var
