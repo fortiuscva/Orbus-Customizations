@@ -43,6 +43,13 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
                 ToolTip = 'Regional Sales Executive';
                 Caption = 'Regional Sales Executive';
             }
+            field("ORB Business Development"; Rec."ORB Business Development")
+            {
+                ApplicationArea = All;
+                Editable = false;
+                ToolTip = 'Business Development';
+                Caption = 'Business Development';
+            }
 
         }
         modify("Salesperson Code")
