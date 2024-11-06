@@ -94,10 +94,24 @@ page 52635 "ORB Invoice Freight Details PB"
                 {
                     Caption = 'Handling';
                 }
-                field(Creatredat; Rec.CreatedDate)
+                field(Createdate; Rec.CreatedDate)
                 {
-                    Caption = 'Creatred at';
+                    Caption = 'Created at';
                 }
+                field("No of License Plates"; Rec."No of License Plates")
+                {
+                    Caption = 'No of License Plates';
+                }
+                field("Mark up%"; Rec."Mark up%")
+                {
+                    Caption = 'Mark up%';
+                }
+                field("Markup Amount"; Rec."Markup Amount")
+                {
+                    Caption = 'Markup Amount';
+                }
+
+
             }
         }
     }
