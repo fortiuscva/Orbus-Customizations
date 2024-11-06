@@ -1,10 +1,15 @@
 page 52642 "ORB LIFT Item Journal Line"
 {
+    APIGroup = 'Orbus';
+    APIPublisher = 'Orbus';
+    APIVersion = 'v2.0';
     ApplicationArea = All;
-    Caption = 'LIFT Item Journal Line';
-    PageType = List;
+    Caption = 'liftItemJournalLine';
+    DelayedInsert = true;
+    EntityName = 'LIFTItemJournalLine';
+    EntitySetName = 'LIFTItemJournalLine';
+    PageType = API;
     SourceTable = "Item Journal Line";
-    UsageCategory = None;
 
     layout
     {
@@ -12,813 +17,813 @@ page 52642 "ORB LIFT Item Journal Line"
         {
             repeater(General)
             {
-                field("Journal Template Name"; Rec."Journal Template Name")
+                field(journalTemplateName; Rec."Journal Template Name")
                 {
-                    ToolTip = 'Specifies the name of the journal template, the basis of the journal batch, that the entries were posted from.';
+                    Caption = 'Journal Template Name';
                 }
-                field("Line No."; Rec."Line No.")
+                field(lineNo; Rec."Line No.")
                 {
-                    ToolTip = 'Specifies the number of the journal line.';
+                    Caption = 'Line No.';
                 }
-                field("Item No."; Rec."Item No.")
+                field(itemNo; Rec."Item No.")
                 {
-                    ToolTip = 'The item to consume.';
+                    Caption = 'Item No.';
                 }
-                field("Posting Date"; Rec."Posting Date")
+                field(postingDate; Rec."Posting Date")
                 {
-                    ToolTip = 'Specifies the posting date for the entry.';
+                    Caption = 'Posting Date';
                 }
-                field("Entry Type"; Rec."Entry Type")
+                field(entryType; Rec."Entry Type")
                 {
-                    ToolTip = 'Specifies the type of transaction that will be posted from the item journal line.';
+                    Caption = 'Entry Type';
                 }
-                field("Source No."; Rec."Source No.")
+                field(sourceNo; Rec."Source No.")
                 {
-                    ToolTip = 'Specifies the value of the Source No. field.';
+                    Caption = 'Source No.';
                 }
-                field("Document No."; Rec."Document No.")
+                field(documentNo; Rec."Document No.")
                 {
-                    ToolTip = 'Specifies a document number for the journal line.';
+                    Caption = 'Document No.';
                 }
-                field(Description; Rec.Description)
+                field(description; Rec.Description)
                 {
-                    ToolTip = 'Description of the item being consumed.';
+                    Caption = 'Description';
                 }
-                field("Location Code"; Rec."Location Code")
+                field(locationCode; Rec."Location Code")
                 {
-                    ToolTip = 'Specifies the code for the inventory location where the item on the journal line will be registered.';
+                    Caption = 'Location Code';
                 }
-                field("Inventory Posting Group"; Rec."Inventory Posting Group")
+                field(inventoryPostingGroup; Rec."Inventory Posting Group")
                 {
-                    ToolTip = 'Specifies the value of the Inventory Posting Group field.';
+                    Caption = 'Inventory Posting Group';
                 }
-                field("Source Posting Group"; Rec."Source Posting Group")
+                field(sourcePostingGroup; Rec."Source Posting Group")
                 {
-                    ToolTip = 'Specifies the value of the Source Posting Group field.';
+                    Caption = 'Source Posting Group';
                 }
-                field(Quantity; Rec.Quantity)
+                field(quantity; Rec.Quantity)
                 {
-                    ToolTip = 'Specifies the quantity of the produced item that can be posted as output on the journal line.';
+                    Caption = 'Quantity';
                 }
-                field("Invoiced Quantity"; Rec."Invoiced Quantity")
+                field(invoicedQuantity; Rec."Invoiced Quantity")
                 {
-                    ToolTip = 'Specifies the value of the Invoiced Quantity field.';
+                    Caption = 'Invoiced Quantity';
                 }
-                field("Unit Amount"; Rec."Unit Amount")
+                field(unitAmount; Rec."Unit Amount")
                 {
-                    ToolTip = 'Specifies the price of one unit of the item on the journal line.';
+                    Caption = 'Unit Amount';
                 }
-                field("Unit Cost"; Rec."Unit Cost")
+                field(unitCost; Rec."Unit Cost")
                 {
-                    ToolTip = 'Specifies the cost of one unit of the item or resource on the line.';
+                    Caption = 'Unit Cost';
                 }
-                field(Amount; Rec.Amount)
+                field(amount; Rec.Amount)
                 {
-                    ToolTip = 'Specifies the line''s net amount.';
+                    Caption = 'Amount';
                 }
-                field("Discount Amount"; Rec."Discount Amount")
+                field(discountAmount; Rec."Discount Amount")
                 {
-                    ToolTip = 'Specifies the discount amount of this entry on the line.';
+                    Caption = 'Discount Amount';
                 }
-                field("Salespers./Purch. Code"; Rec."Salespers./Purch. Code")
+                field(salespersPurchCode; Rec."Salespers./Purch. Code")
                 {
-                    ToolTip = 'Specifies the code for the salesperson or purchaser who is linked to the sale or purchase on the journal line.';
+                    Caption = 'Salespers./Purch. Code';
                 }
-                field("Source Code"; Rec."Source Code")
+                field(sourceCode; Rec."Source Code")
                 {
-                    ToolTip = 'Specifies the value of the Source Code field.';
+                    Caption = 'Source Code';
                 }
-                field("Applies-to Entry"; Rec."Applies-to Entry")
+                field(appliesToEntry; Rec."Applies-to Entry")
                 {
-                    ToolTip = 'Specifies if the quantity on the journal line must be applied to an already-posted entry. In that case, enter the entry number that the quantity will be applied to.';
+                    Caption = 'Applies-to Entry';
                 }
-                field("Item Shpt. Entry No."; Rec."Item Shpt. Entry No.")
+                field(itemShptEntryNo; Rec."Item Shpt. Entry No.")
                 {
-                    ToolTip = 'Specifies the value of the Item Shpt. Entry No. field.';
+                    Caption = 'Item Shpt. Entry No.';
                 }
-                field("Shortcut Dimension 1 Code"; Rec."Shortcut Dimension 1 Code")
+                field(shortcutDimension1Code; Rec."Shortcut Dimension 1 Code")
                 {
-                    ToolTip = 'Specifies the code for Shortcut Dimension 1, which is one of two global dimension codes that you set up in the General Ledger Setup window.';
+                    Caption = 'Shortcut Dimension 1 Code';
                 }
-                field("Shortcut Dimension 2 Code"; Rec."Shortcut Dimension 2 Code")
+                field(shortcutDimension2Code; Rec."Shortcut Dimension 2 Code")
                 {
-                    ToolTip = 'Specifies the code for Shortcut Dimension 2, which is one of two global dimension codes that you set up in the General Ledger Setup window.';
+                    Caption = 'Shortcut Dimension 2 Code';
                 }
-                field("Indirect Cost %"; Rec."Indirect Cost %")
+                field(indirectCost; Rec."Indirect Cost %")
                 {
-                    ToolTip = 'Specifies the percentage of the item''s last purchase cost that includes indirect costs, such as freight that is associated with the purchase of the item.';
+                    Caption = 'Indirect Cost %';
                 }
-                field("Source Type"; Rec."Source Type")
+                field(sourceType; Rec."Source Type")
                 {
-                    ToolTip = 'Specifies the value of the Source Type field.';
+                    Caption = 'Source Type';
                 }
-                field("Shpt. Method Code"; Rec."Shpt. Method Code")
+                field(shptMethodCode; Rec."Shpt. Method Code")
                 {
-                    ToolTip = 'Specifies the value of the Shpt. Method Code field.';
+                    Caption = 'Shpt. Method Code';
                 }
-                field("Journal Batch Name"; Rec."Journal Batch Name")
+                field(journalBatchName; Rec."Journal Batch Name")
                 {
-                    ToolTip = 'Specifies the name of the journal batch, a personalized journal layout, that the entries were posted from.';
+                    Caption = 'Journal Batch Name';
                 }
-                field("Reason Code"; Rec."Reason Code")
+                field(reasonCode; Rec."Reason Code")
                 {
-                    ToolTip = 'Specifies the reason code, a supplementary source code that enables you to trace the entry.';
+                    Caption = 'Reason Code';
                 }
-                field("Recurring Method"; Rec."Recurring Method")
+                field(recurringMethod; Rec."Recurring Method")
                 {
-                    ToolTip = 'Specifies a recurring method, if you have indicated that the journal is recurring.';
+                    Caption = 'Recurring Method';
                 }
-                field("Expiration Date"; Rec."Expiration Date")
+                field(expirationDate; Rec."Expiration Date")
                 {
-                    ToolTip = 'Specifies the expiration date, if any, of the item carrying the item tracking number.';
+                    Caption = 'Expiration Date';
                 }
-                field("Recurring Frequency"; Rec."Recurring Frequency")
+                field(recurringFrequency; Rec."Recurring Frequency")
                 {
-                    ToolTip = 'Specifies a recurring frequency if you have indicated that the journal is recurring.';
+                    Caption = 'Recurring Frequency';
                 }
-                field("Drop Shipment"; Rec."Drop Shipment")
+                field(dropShipment; Rec."Drop Shipment")
                 {
-                    ToolTip = 'Specifies the value of the Drop Shipment field.';
+                    Caption = 'Drop Shipment';
                 }
-                field("Transaction Type"; Rec."Transaction Type")
+                field(transactionType; Rec."Transaction Type")
                 {
-                    ToolTip = 'Specifies the type of transaction that the document represents, for the purpose of reporting to INTRASTAT.';
+                    Caption = 'Transaction Type';
                 }
-                field("Transport Method"; Rec."Transport Method")
+                field(transportMethod; Rec."Transport Method")
                 {
-                    ToolTip = 'Specifies the transport method, for the purpose of reporting to INTRASTAT.';
+                    Caption = 'Transport Method';
                 }
-                field("Country/Region Code"; Rec."Country/Region Code")
+                field(countryRegionCode; Rec."Country/Region Code")
                 {
-                    ToolTip = 'Specifies the country/region of the address.';
+                    Caption = 'Country/Region Code';
                 }
-                field("New Location Code"; Rec."New Location Code")
+                field(newLocationCode; Rec."New Location Code")
                 {
-                    ToolTip = 'Specifies the new location to link the items on this journal line.';
+                    Caption = 'New Location Code';
                 }
-                field("New Shortcut Dimension 1 Code"; Rec."New Shortcut Dimension 1 Code")
+                field(newShortcutDimension1Code; Rec."New Shortcut Dimension 1 Code")
                 {
-                    ToolTip = 'Specifies the new dimension value code that will link to the items on the journal line.';
+                    Caption = 'New Shortcut Dimension 1 Code';
                 }
-                field("New Shortcut Dimension 2 Code"; Rec."New Shortcut Dimension 2 Code")
+                field(newShortcutDimension2Code; Rec."New Shortcut Dimension 2 Code")
                 {
-                    ToolTip = 'Specifies the new dimension value code that will link to the items on the journal line.';
+                    Caption = 'New Shortcut Dimension 2 Code';
                 }
-                field("Qty. (Calculated)"; Rec."Qty. (Calculated)")
+                field(qtyCalculated; Rec."Qty. (Calculated)")
                 {
-                    ToolTip = 'Specifies the quantity on hand of the item.';
+                    Caption = 'Qty. (Calculated)';
                 }
-                field("Qty. (Phys. Inventory)"; Rec."Qty. (Phys. Inventory)")
+                field(qtyPhysInventory; Rec."Qty. (Phys. Inventory)")
                 {
-                    ToolTip = 'Specifies the quantity on hand of the item as determined from a physical count.';
+                    Caption = 'Qty. (Phys. Inventory)';
                 }
-                field("Last Item Ledger Entry No."; Rec."Last Item Ledger Entry No.")
+                field(lastItemLedgerEntryNo; Rec."Last Item Ledger Entry No.")
                 {
-                    ToolTip = 'Specifies the value of the Last Item Ledger Entry No. field.';
+                    Caption = 'Last Item Ledger Entry No.';
                 }
-                field("Phys. Inventory"; Rec."Phys. Inventory")
+                field(physInventory; Rec."Phys. Inventory")
                 {
-                    ToolTip = 'Specifies the value of the Phys. Inventory field.';
+                    Caption = 'Phys. Inventory';
                 }
-                field("Gen. Bus. Posting Group"; Rec."Gen. Bus. Posting Group")
+                field(genBusPostingGroup; Rec."Gen. Bus. Posting Group")
                 {
-                    ToolTip = 'Specifies the vendor''s or customer''s trade type to link transactions made for this business partner with the appropriate general ledger account according to the general posting setup.';
+                    Caption = 'Gen. Bus. Posting Group';
                 }
-                field("Gen. Prod. Posting Group"; Rec."Gen. Prod. Posting Group")
+                field(genProdPostingGroup; Rec."Gen. Prod. Posting Group")
                 {
-                    ToolTip = 'Specifies the item''s product type to link transactions made for this item with the appropriate general ledger account according to the general posting setup.';
+                    Caption = 'Gen. Prod. Posting Group';
                 }
-                field("Entry/Exit Point"; Rec."Entry/Exit Point")
+                field(entryExitPoint; Rec."Entry/Exit Point")
                 {
-                    ToolTip = 'Specifies the value of the Entry/Exit Point field.';
+                    Caption = 'Entry/Exit Point';
                 }
-                field("Document Date"; Rec."Document Date")
+                field(documentDate; Rec."Document Date")
                 {
-                    ToolTip = 'Specifies the date when the related document was created.';
+                    Caption = 'Document Date';
                 }
-                field("External Document No."; Rec."External Document No.")
+                field(externalDocumentNo; Rec."External Document No.")
                 {
-                    ToolTip = 'Specifies a document number that refers to the customer''s or vendor''s numbering system.';
+                    Caption = 'External Document No.';
                 }
-                field("Area"; Rec."Area")
+                field("area"; Rec."Area")
                 {
-                    ToolTip = 'Specifies the value of the Area field.';
+                    Caption = 'Area';
                 }
-                field("Transaction Specification"; Rec."Transaction Specification")
+                field(transactionSpecification; Rec."Transaction Specification")
                 {
-                    ToolTip = 'Specifies the value of the Transaction Specification field.';
+                    Caption = 'Transaction Specification';
                 }
-                field("Posting No. Series"; Rec."Posting No. Series")
+                field(postingNoSeries; Rec."Posting No. Series")
                 {
-                    ToolTip = 'Specifies the value of the Posting No. Series field.';
+                    Caption = 'Posting No. Series';
                 }
-                field("Reserved Quantity"; Rec."Reserved Quantity")
+                field(reservedQuantity; Rec."Reserved Quantity")
                 {
-                    ToolTip = 'Specifies the value of the Reserved Quantity field.';
+                    Caption = 'Reserved Quantity';
                 }
-                field("Unit Cost (ACY)"; Rec."Unit Cost (ACY)")
+                field(unitCostACY; Rec."Unit Cost (ACY)")
                 {
-                    ToolTip = 'Specifies the value of the Unit Cost (ACY) field.';
+                    Caption = 'Unit Cost (ACY)';
                 }
-                field("Source Currency Code"; Rec."Source Currency Code")
+                field(sourceCurrencyCode; Rec."Source Currency Code")
                 {
-                    ToolTip = 'Specifies the value of the Source Currency Code field.';
+                    Caption = 'Source Currency Code';
                 }
-                field("Document Type"; Rec."Document Type")
+                field(documentType; Rec."Document Type")
                 {
-                    ToolTip = 'Specifies the value of the Document Type field.';
+                    Caption = 'Document Type';
                 }
-                field("Document Line No."; Rec."Document Line No.")
+                field(documentLineNo; Rec."Document Line No.")
                 {
-                    ToolTip = 'Specifies the value of the Document Line No. field.';
+                    Caption = 'Document Line No.';
                 }
-                field("VAT Reporting Date"; Rec."VAT Reporting Date")
+                field(vatReportingDate; Rec."VAT Reporting Date")
                 {
-                    ToolTip = 'Specifies the value of the VAT Date field.';
+                    Caption = 'VAT Date';
                 }
-                field("Order Type"; Rec."Order Type")
+                field(orderType; Rec."Order Type")
                 {
-                    ToolTip = 'Specifies the value of the Order Type field.';
+                    Caption = 'Order Type';
                 }
-                field("Order No."; Rec."Order No.")
+                field(orderNo; Rec."Order No.")
                 {
-                    ToolTip = 'Order No.';
+                    Caption = 'Order No.';
                 }
-                field("Order Line No."; Rec."Order Line No.")
+                field(orderLineNo; Rec."Order Line No.")
                 {
-                    ToolTip = 'Specifies the line number of the order that created the entry.';
+                    Caption = 'Order Line No.';
                 }
-                field("Dimension Set ID"; Rec."Dimension Set ID")
+                field(dimensionSetID; Rec."Dimension Set ID")
                 {
-                    ToolTip = 'Specifies the value of the Dimension Set ID field.';
+                    Caption = 'Dimension Set ID';
                 }
-                field("New Dimension Set ID"; Rec."New Dimension Set ID")
+                field(newDimensionSetID; Rec."New Dimension Set ID")
                 {
-                    ToolTip = 'Specifies the value of the New Dimension Set ID field.';
+                    Caption = 'New Dimension Set ID';
                 }
-                field("Assemble to Order"; Rec."Assemble to Order")
+                field(assembleToOrder; Rec."Assemble to Order")
                 {
-                    ToolTip = 'Specifies the value of the Assemble to Order field.';
+                    Caption = 'Assemble to Order';
                 }
-                field("Job No."; Rec."Job No.")
+                field(jobNo; Rec."Job No.")
                 {
-                    ToolTip = 'Specifies the value of the Job No. field.';
+                    Caption = 'Project No.';
                 }
-                field("Job Task No."; Rec."Job Task No.")
+                field(jobTaskNo; Rec."Job Task No.")
                 {
-                    ToolTip = 'Specifies the value of the Job Task No. field.';
+                    Caption = 'Project Task No.';
                 }
-                field("Job Purchase"; Rec."Job Purchase")
+                field(jobPurchase; Rec."Job Purchase")
                 {
-                    ToolTip = 'Specifies the value of the Job Purchase field.';
+                    Caption = 'Project Purchase';
                 }
-                field("Job Contract Entry No."; Rec."Job Contract Entry No.")
+                field(jobContractEntryNo; Rec."Job Contract Entry No.")
                 {
-                    ToolTip = 'Specifies the value of the Job Contract Entry No. field.';
+                    Caption = 'Project Contract Entry No.';
                 }
-                field("Variant Code"; Rec."Variant Code")
+                field(variantCode; Rec."Variant Code")
                 {
-                    ToolTip = 'Variant of the item being consumed.';
+                    Caption = 'Variant Code';
                 }
-                field("Bin Code"; Rec."Bin Code")
+                field(binCode; Rec."Bin Code")
                 {
-                    ToolTip = 'Specifies a bin code for the item.';
+                    Caption = 'Bin Code';
                 }
-                field("Qty. per Unit of Measure"; Rec."Qty. per Unit of Measure")
+                field(qtyPerUnitOfMeasure; Rec."Qty. per Unit of Measure")
                 {
-                    ToolTip = 'Specifies the value of the Qty. per Unit of Measure field.';
+                    Caption = 'Qty. per Unit of Measure';
                 }
-                field("New Bin Code"; Rec."New Bin Code")
+                field(newBinCode; Rec."New Bin Code")
                 {
-                    ToolTip = 'Specifies the new bin code to link to the items on this journal line.';
+                    Caption = 'New Bin Code';
                 }
-                field("Unit of Measure Code"; Rec."Unit of Measure Code")
+                field(unitOfMeasureCode; Rec."Unit of Measure Code")
                 {
-                    ToolTip = 'Unit of measure for recording output.';
+                    Caption = 'Unit of Measure Code';
                 }
-                field("Derived from Blanket Order"; Rec."Derived from Blanket Order")
+                field(derivedFromBlanketOrder; Rec."Derived from Blanket Order")
                 {
-                    ToolTip = 'Specifies the value of the Derived from Blanket Order field.';
+                    Caption = 'Derived from Blanket Order';
                 }
-                field("Qty. Rounding Precision"; Rec."Qty. Rounding Precision")
+                field(qtyRoundingPrecision; Rec."Qty. Rounding Precision")
                 {
-                    ToolTip = 'Specifies the value of the Qty. Rounding Precision field.';
+                    Caption = 'Qty. Rounding Precision';
                 }
-                field("Qty. Rounding Precision (Base)"; Rec."Qty. Rounding Precision (Base)")
+                field(qtyRoundingPrecisionBase; Rec."Qty. Rounding Precision (Base)")
                 {
-                    ToolTip = 'Specifies the value of the Qty. Rounding Precision (Base) field.';
+                    Caption = 'Qty. Rounding Precision (Base)';
                 }
-                field("Quantity (Base)"; Rec."Quantity (Base)")
+                field(quantityBase; Rec."Quantity (Base)")
                 {
-                    ToolTip = 'Specifies the value of the Quantity (Base) field.';
+                    Caption = 'Quantity (Base)';
                 }
-                field("Invoiced Qty. (Base)"; Rec."Invoiced Qty. (Base)")
+                field(invoicedQtyBase; Rec."Invoiced Qty. (Base)")
                 {
-                    ToolTip = 'Specifies the value of the Invoiced Qty. (Base) field.';
+                    Caption = 'Invoiced Qty. (Base)';
                 }
-                field("Reserved Qty. (Base)"; Rec."Reserved Qty. (Base)")
+                field(reservedQtyBase; Rec."Reserved Qty. (Base)")
                 {
-                    ToolTip = 'Specifies the quantity of the item reserved for the line.';
+                    Caption = 'Reserved Qty. (Base)';
                 }
-                field(Level; Rec.Level)
+                field(level; Rec.Level)
                 {
-                    ToolTip = 'Specifies the value of the Level field.';
+                    Caption = 'Level';
                 }
-                field("Flushing Method"; Rec."Flushing Method")
+                field(flushingMethod; Rec."Flushing Method")
                 {
-                    ToolTip = 'Specifies how consumption of the item (component) is calculated and handled in production processes. Manual: Enter and post consumption in the consumption journal manually. Forward: Automatically posts consumption according to the production order component lines when the first operation starts. Backward: Automatically calculates and posts consumption according to the production order component lines when the production order is finished. Pick + Forward / Pick + Backward: Variations with warehousing.';
+                    Caption = 'Flushing Method';
                 }
-                field("Changed by User"; Rec."Changed by User")
+                field(changedByUser; Rec."Changed by User")
                 {
-                    ToolTip = 'Specifies the value of the Changed by User field.';
+                    Caption = 'Changed by User';
                 }
-                field("Originally Ordered No."; Rec."Originally Ordered No.")
+                field(originallyOrderedNo; Rec."Originally Ordered No.")
                 {
-                    ToolTip = 'Specifies the value of the Originally Ordered No. field.';
+                    Caption = 'Originally Ordered No.';
                 }
-                field("Originally Ordered Var. Code"; Rec."Originally Ordered Var. Code")
+                field(originallyOrderedVarCode; Rec."Originally Ordered Var. Code")
                 {
-                    ToolTip = 'Specifies the value of the Originally Ordered Var. Code field.';
+                    Caption = 'Originally Ordered Var. Code';
                 }
-                field("Out-of-Stock Substitution"; Rec."Out-of-Stock Substitution")
+                field(outOfStockSubstitution; Rec."Out-of-Stock Substitution")
                 {
-                    ToolTip = 'Specifies the value of the Out-of-Stock Substitution field.';
+                    Caption = 'Out-of-Stock Substitution';
                 }
-                field("Item Category Code"; Rec."Item Category Code")
+                field(itemCategoryCode; Rec."Item Category Code")
                 {
-                    ToolTip = 'Specifies the value of the Item Category Code field.';
+                    Caption = 'Item Category Code';
                 }
-                field(Nonstock; Rec.Nonstock)
+                field(nonstock; Rec.Nonstock)
                 {
-                    ToolTip = 'Specifies the value of the Catalog field.';
+                    Caption = 'Catalog';
                 }
-                field("Purchasing Code"; Rec."Purchasing Code")
+                field(purchasingCode; Rec."Purchasing Code")
                 {
-                    ToolTip = 'Specifies the value of the Purchasing Code field.';
+                    Caption = 'Purchasing Code';
                 }
-                field("Item Reference No."; Rec."Item Reference No.")
+                field(itemReferenceNo; Rec."Item Reference No.")
                 {
-                    ToolTip = 'Specifies a reference to the item number as defined by the item''s barcode.';
+                    Caption = 'Item Reference No.';
                 }
-                field("Item Reference Unit of Measure"; Rec."Item Reference Unit of Measure")
+                field(itemReferenceUnitOfMeasure; Rec."Item Reference Unit of Measure")
                 {
-                    ToolTip = 'Specifies the value of the Item Reference Unit of Measure field.';
+                    Caption = 'Item Reference Unit of Measure';
                 }
-                field("Item Reference Type"; Rec."Item Reference Type")
+                field(itemReferenceType; Rec."Item Reference Type")
                 {
-                    ToolTip = 'Specifies the value of the Item Reference Type field.';
+                    Caption = 'Item Reference Type';
                 }
-                field("Item Reference Type No."; Rec."Item Reference Type No.")
+                field(itemReferenceTypeNo; Rec."Item Reference Type No.")
                 {
-                    ToolTip = 'Specifies the value of the Item Reference Type No. field.';
+                    Caption = 'Item Reference Type No.';
                 }
-                field("Planned Delivery Date"; Rec."Planned Delivery Date")
+                field(plannedDeliveryDate; Rec."Planned Delivery Date")
                 {
-                    ToolTip = 'Specifies the value of the Planned Delivery Date field.';
+                    Caption = 'Planned Delivery Date';
                 }
-                field("Order Date"; Rec."Order Date")
+                field(orderDate; Rec."Order Date")
                 {
-                    ToolTip = 'Specifies the value of the Order Date field.';
+                    Caption = 'Order Date';
                 }
-                field("Value Entry Type"; Rec."Value Entry Type")
+                field(valueEntryType; Rec."Value Entry Type")
                 {
-                    ToolTip = 'Specifies the value of the Value Entry Type field.';
+                    Caption = 'Value Entry Type';
                 }
-                field("Item Charge No."; Rec."Item Charge No.")
+                field(itemChargeNo; Rec."Item Charge No.")
                 {
-                    ToolTip = 'Specifies the value of the Item Charge No. field.';
+                    Caption = 'Item Charge No.';
                 }
-                field("Inventory Value (Calculated)"; Rec."Inventory Value (Calculated)")
+                field(inventoryValueCalculated; Rec."Inventory Value (Calculated)")
                 {
-                    ToolTip = 'Specifies the calculated inventory value of the item at the specified posting date.';
+                    Caption = 'Inventory Value (Calculated)';
                 }
-                field("Inventory Value (Revalued)"; Rec."Inventory Value (Revalued)")
+                field(inventoryValueRevalued; Rec."Inventory Value (Revalued)")
                 {
-                    ToolTip = 'Specifies the new inventory value.';
+                    Caption = 'Inventory Value (Revalued)';
                 }
-                field("Variance Type"; Rec."Variance Type")
+                field(varianceType; Rec."Variance Type")
                 {
-                    ToolTip = 'Specifies the value of the Variance Type field.';
+                    Caption = 'Variance Type';
                 }
-                field("Inventory Value Per"; Rec."Inventory Value Per")
+                field(inventoryValuePer; Rec."Inventory Value Per")
                 {
-                    ToolTip = 'Specifies the value of the Inventory Value Per field.';
+                    Caption = 'Inventory Value Per';
                 }
-                field("Partial Revaluation"; Rec."Partial Revaluation")
+                field(partialRevaluation; Rec."Partial Revaluation")
                 {
-                    ToolTip = 'Specifies the value of the Partial Revaluation field.';
+                    Caption = 'Partial Revaluation';
                 }
-                field("Applies-from Entry"; Rec."Applies-from Entry")
+                field(appliesFromEntry; Rec."Applies-from Entry")
                 {
-                    ToolTip = 'Specifies the number of the outbound item ledger entry, whose cost is forwarded to the inbound item ledger entry.';
+                    Caption = 'Applies-from Entry';
                 }
-                field("Invoice No."; Rec."Invoice No.")
+                field(invoiceNo; Rec."Invoice No.")
                 {
-                    ToolTip = 'Specifies the value of the Invoice No. field.';
+                    Caption = 'Invoice No.';
                 }
-                field("Unit Cost (Calculated)"; Rec."Unit Cost (Calculated)")
+                field(unitCostCalculated; Rec."Unit Cost (Calculated)")
                 {
-                    ToolTip = 'Specifies the current unit cost of this item before revaluation.';
+                    Caption = 'Unit Cost (Calculated)';
                 }
-                field("Unit Cost (Revalued)"; Rec."Unit Cost (Revalued)")
+                field(unitCostRevalued; Rec."Unit Cost (Revalued)")
                 {
-                    ToolTip = 'Specifies the revalued unit cost of this item.';
+                    Caption = 'Unit Cost (Revalued)';
                 }
-                field("Applied Amount"; Rec."Applied Amount")
+                field(appliedAmount; Rec."Applied Amount")
                 {
-                    ToolTip = 'Specifies the value of the Applied Amount field.';
+                    Caption = 'Applied Amount';
                 }
-                field("Update Standard Cost"; Rec."Update Standard Cost")
+                field(updateStandardCost; Rec."Update Standard Cost")
                 {
-                    ToolTip = 'Specifies the value of the Update Standard Cost field.';
+                    Caption = 'Update Standard Cost';
                 }
-                field("Amount (ACY)"; Rec."Amount (ACY)")
+                field(amountACY; Rec."Amount (ACY)")
                 {
-                    ToolTip = 'Specifies the value of the Amount (ACY) field.';
+                    Caption = 'Amount (ACY)';
                 }
-                field(Correction; Rec.Correction)
+                field(correction; Rec.Correction)
                 {
-                    ToolTip = 'Specifies the value of the Correction field.';
+                    Caption = 'Correction';
                 }
-                field(Adjustment; Rec.Adjustment)
+                field(adjustment; Rec.Adjustment)
                 {
-                    ToolTip = 'Specifies the value of the Adjustment field.';
+                    Caption = 'Adjustment';
                 }
-                field("Applies-to Value Entry"; Rec."Applies-to Value Entry")
+                field(appliesToValueEntry; Rec."Applies-to Value Entry")
                 {
-                    ToolTip = 'Specifies the value of the Applies-to Value Entry field.';
+                    Caption = 'Applies-to Value Entry';
                 }
-                field("Invoice-to Source No."; Rec."Invoice-to Source No.")
+                field(invoiceToSourceNo; Rec."Invoice-to Source No.")
                 {
-                    ToolTip = 'Specifies the value of the Invoice-to Source No. field.';
+                    Caption = 'Invoice-to Source No.';
                 }
-                field(Type; Rec."Type")
+                field(type; Rec."Type")
                 {
-                    ToolTip = 'Specifies the journal type, which is either Work Center or Machine Center.';
+                    Caption = 'Type';
                 }
-                field("No."; Rec."No.")
+                field(no; Rec."No.")
                 {
-                    ToolTip = 'Specifies the number of the involved entry or record, according to the specified number series.';
+                    Caption = 'No.';
                 }
-                field("Operation No."; Rec."Operation No.")
+                field(operationNo; Rec."Operation No.")
                 {
-                    ToolTip = 'Specifies the number of the production operation on the item journal line when the journal functions as an output journal.';
+                    Caption = 'Operation No.';
                 }
-                field("Work Center No."; Rec."Work Center No.")
+                field(workCenterNo; Rec."Work Center No.")
                 {
-                    ToolTip = 'Specifies the value of the Work Center No. field.';
+                    Caption = 'Work Center No.';
                 }
-                field("Setup Time"; Rec."Setup Time")
+                field(setupTime; Rec."Setup Time")
                 {
-                    ToolTip = 'Specifies the time required to set up the machines for this journal line.';
+                    Caption = 'Setup Time';
                 }
-                field("Run Time"; Rec."Run Time")
+                field(runTime; Rec."Run Time")
                 {
-                    ToolTip = 'Specifies the run time of the operations represented by this journal line.';
+                    Caption = 'Run Time';
                 }
-                field("Stop Time"; Rec."Stop Time")
+                field(stopTime; Rec."Stop Time")
                 {
-                    ToolTip = 'Specifies the stop time of this capacity ledger entry.';
+                    Caption = 'Stop Time';
                 }
-                field("Output Quantity"; Rec."Output Quantity")
+                field(outputQuantity; Rec."Output Quantity")
                 {
-                    ToolTip = 'Specifies the quantity of the produced item that can be posted as output on the journal line.';
+                    Caption = 'Output Quantity';
                 }
-                field("Scrap Quantity"; Rec."Scrap Quantity")
+                field(scrapQuantity; Rec."Scrap Quantity")
                 {
-                    ToolTip = 'Specifies the number of units produced incorrectly, and therefore cannot be used.';
+                    Caption = 'Scrap Quantity';
                 }
-                field("Concurrent Capacity"; Rec."Concurrent Capacity")
+                field(concurrentCapacity; Rec."Concurrent Capacity")
                 {
-                    ToolTip = 'Specifies the concurrent capacity.';
+                    Caption = 'Concurrent Capacity';
                 }
-                field("Setup Time (Base)"; Rec."Setup Time (Base)")
+                field(setupTimeBase; Rec."Setup Time (Base)")
                 {
-                    ToolTip = 'Specifies the value of the Setup Time (Base) field.';
+                    Caption = 'Setup Time (Base)';
                 }
-                field("Run Time (Base)"; Rec."Run Time (Base)")
+                field(runTimeBase; Rec."Run Time (Base)")
                 {
-                    ToolTip = 'Specifies the value of the Run Time (Base) field.';
+                    Caption = 'Run Time (Base)';
                 }
-                field("Stop Time (Base)"; Rec."Stop Time (Base)")
+                field(stopTimeBase; Rec."Stop Time (Base)")
                 {
-                    ToolTip = 'Specifies the value of the Stop Time (Base) field.';
+                    Caption = 'Stop Time (Base)';
                 }
-                field("Output Quantity (Base)"; Rec."Output Quantity (Base)")
+                field(outputQuantityBase; Rec."Output Quantity (Base)")
                 {
-                    ToolTip = 'Specifies the value of the Output Quantity (Base) field.';
+                    Caption = 'Output Quantity (Base)';
                 }
-                field("Scrap Quantity (Base)"; Rec."Scrap Quantity (Base)")
+                field(scrapQuantityBase; Rec."Scrap Quantity (Base)")
                 {
-                    ToolTip = 'Specifies the value of the Scrap Quantity (Base) field.';
+                    Caption = 'Scrap Quantity (Base)';
                 }
-                field("Cap. Unit of Measure Code"; Rec."Cap. Unit of Measure Code")
+                field(capUnitOfMeasureCode; Rec."Cap. Unit of Measure Code")
                 {
-                    ToolTip = 'Specifies the unit of measure code for the capacity usage.';
+                    Caption = 'Cap. Unit of Measure Code';
                 }
-                field("Qty. per Cap. Unit of Measure"; Rec."Qty. per Cap. Unit of Measure")
+                field(qtyPerCapUnitOfMeasure; Rec."Qty. per Cap. Unit of Measure")
                 {
-                    ToolTip = 'Specifies the value of the Qty. per Cap. Unit of Measure field.';
+                    Caption = 'Qty. per Cap. Unit of Measure';
                 }
-                field("Starting Time"; Rec."Starting Time")
+                field(startingTime; Rec."Starting Time")
                 {
-                    ToolTip = 'Specifies the starting time of the operation on the item journal line.';
+                    Caption = 'Starting Time';
                 }
-                field("Ending Time"; Rec."Ending Time")
+                field(endingTime; Rec."Ending Time")
                 {
-                    ToolTip = 'Specifies the ending time of the operation on the item journal line.';
+                    Caption = 'Ending Time';
                 }
-                field("Routing No."; Rec."Routing No.")
+                field(routingNo; Rec."Routing No.")
                 {
-                    ToolTip = 'Specifies the value of the Routing No. field.';
+                    Caption = 'Routing No.';
                 }
-                field("Routing Reference No."; Rec."Routing Reference No.")
+                field(routingReferenceNo; Rec."Routing Reference No.")
                 {
-                    ToolTip = 'Specifies the value of the Routing Reference No. field.';
+                    Caption = 'Routing Reference No.';
                 }
-                field("Prod. Order Comp. Line No."; Rec."Prod. Order Comp. Line No.")
+                field(prodOrderCompLineNo; Rec."Prod. Order Comp. Line No.")
                 {
-                    ToolTip = 'Specifies the production order component line number.';
+                    Caption = 'Prod. Order Comp. Line No.';
                 }
-                field(Finished; Rec.Finished)
+                field(finished; Rec.Finished)
                 {
-                    ToolTip = 'Specifies that the operation represented by the output journal line is finished.';
+                    Caption = 'Finished';
                 }
-                field("Unit Cost Calculation"; Rec."Unit Cost Calculation")
+                field(unitCostCalculation; Rec."Unit Cost Calculation")
                 {
-                    ToolTip = 'Specifies the value of the Unit Cost Calculation field.';
+                    Caption = 'Unit Cost Calculation';
                 }
-                field(Subcontracting; Rec.Subcontracting)
+                field(subcontracting; Rec.Subcontracting)
                 {
-                    ToolTip = 'Specifies the value of the Subcontracting field.';
+                    Caption = 'Subcontracting';
                 }
-                field("Stop Code"; Rec."Stop Code")
+                field(stopCode; Rec."Stop Code")
                 {
-                    ToolTip = 'Specifies the stop code.';
+                    Caption = 'Stop Code';
                 }
-                field("Scrap Code"; Rec."Scrap Code")
+                field(scrapCode; Rec."Scrap Code")
                 {
-                    ToolTip = 'Specifies the scrap code.';
+                    Caption = 'Scrap Code';
                 }
-                field("Work Center Group Code"; Rec."Work Center Group Code")
+                field(workCenterGroupCode; Rec."Work Center Group Code")
                 {
-                    ToolTip = 'Specifies the value of the Work Center Group Code field.';
+                    Caption = 'Work Center Group Code';
                 }
-                field("Work Shift Code"; Rec."Work Shift Code")
+                field(workShiftCode; Rec."Work Shift Code")
                 {
-                    ToolTip = 'Specifies the work shift code for this Journal line.';
+                    Caption = 'Work Shift Code';
                 }
-                field("Serial No."; Rec."Serial No.")
+                field(serialNo; Rec."Serial No.")
                 {
-                    ToolTip = 'Specifies the Serial Number.';
+                    Caption = 'Serial No.';
                 }
-                field("Lot No."; Rec."Lot No.")
+                field(lotNo; Rec."Lot No.")
                 {
-                    ToolTip = 'Specifies the Lot Number.';
+                    Caption = 'Lot No.';
                 }
-                field("Warranty Date"; Rec."Warranty Date")
+                field(warrantyDate; Rec."Warranty Date")
                 {
-                    ToolTip = 'Specifies the warranty expiration date of the item.';
+                    Caption = 'Warranty Date';
                 }
-                field("New Serial No."; Rec."New Serial No.")
+                field(newSerialNo; Rec."New Serial No.")
                 {
-                    ToolTip = 'Specifies the value of the New Serial No. field.';
+                    Caption = 'New Serial No.';
                 }
-                field("New Lot No."; Rec."New Lot No.")
+                field(newLotNo; Rec."New Lot No.")
                 {
-                    ToolTip = 'Specifies the value of the New Lot No. field.';
+                    Caption = 'New Lot No.';
                 }
-                field("New Item Expiration Date"; Rec."New Item Expiration Date")
+                field(newItemExpirationDate; Rec."New Item Expiration Date")
                 {
-                    ToolTip = 'Specifies the value of the New Item Expiration Date field.';
+                    Caption = 'New Item Expiration Date';
                 }
-                field("Item Expiration Date"; Rec."Item Expiration Date")
+                field(itemExpirationDate; Rec."Item Expiration Date")
                 {
-                    ToolTip = 'Specifies the value of the Item Expiration Date field.';
+                    Caption = 'Item Expiration Date';
                 }
-                field("Package No."; Rec."Package No.")
+                field(packageNo; Rec."Package No.")
                 {
-                    ToolTip = 'Specifies the package number of the item.';
+                    Caption = 'Package No.';
                 }
-                field("New Package No."; Rec."New Package No.")
+                field(newPackageNo; Rec."New Package No.")
                 {
-                    ToolTip = 'Specifies the value of the New Package No. field.';
+                    Caption = 'New Package No.';
                 }
-                field("Return Reason Code"; Rec."Return Reason Code")
+                field(returnReasonCode; Rec."Return Reason Code")
                 {
-                    ToolTip = 'Specifies the value of the Return Reason Code field.';
+                    Caption = 'Return Reason Code';
                 }
-                field("Price Calculation Method"; Rec."Price Calculation Method")
+                field(priceCalculationMethod; Rec."Price Calculation Method")
                 {
-                    ToolTip = 'Specifies the method that will be used for price calculation in the journal line.';
+                    Caption = 'Price Calculation Method';
                 }
-                field("Warehouse Adjustment"; Rec."Warehouse Adjustment")
+                field(warehouseAdjustment; Rec."Warehouse Adjustment")
                 {
-                    ToolTip = 'Specifies the value of the Warehouse Adjustment field.';
+                    Caption = 'Warehouse Adjustment';
                 }
-                field("Direct Transfer"; Rec."Direct Transfer")
+                field(directTransfer; Rec."Direct Transfer")
                 {
-                    ToolTip = 'Specifies the value of the Direct Transfer field.';
+                    Caption = 'Direct Transfer';
                 }
-                field("Phys Invt Counting Period Code"; Rec."Phys Invt Counting Period Code")
+                field(physInvtCountingPeriodCode; Rec."Phys Invt Counting Period Code")
                 {
-                    ToolTip = 'Specifies the value of the Phys Invt Counting Period Code field.';
+                    Caption = 'Phys Invt Counting Period Code';
                 }
-                field("Phys Invt Counting Period Type"; Rec."Phys Invt Counting Period Type")
+                field(physInvtCountingPeriodType; Rec."Phys Invt Counting Period Type")
                 {
-                    ToolTip = 'Specifies the value of the Phys Invt Counting Period Type field.';
+                    Caption = 'Phys Invt Counting Period Type';
                 }
-                field("ORB IWX AutoPost State"; Rec."ORB IWX AutoPost State")
+                field(orbIWXAutoPostState; Rec."ORB IWX AutoPost State")
                 {
-                    ToolTip = 'Whether or not this has been errored from the auto-post.';
+                    Caption = 'ORB IWX AutoPost State';
                 }
-                field("ORB IWX AutoPost Error Message"; Rec."ORB IWX AutoPost Error Message")
+                field(orbIWXAutoPostErrorMessage; Rec."ORB IWX AutoPost Error Message")
                 {
-                    ToolTip = 'The last error message from the auto-post.';
+                    Caption = 'ORB IWX AutoPost Error Message';
                 }
-                field("ORB IWX AutoPost Error DT"; Rec."ORB IWX AutoPost Error DT")
+                field(orbIWXAutoPostErrorDT; Rec."ORB IWX AutoPost Error DT")
                 {
-                    ToolTip = 'The last time this item journal line encountered an error message.';
+                    Caption = 'IWX AutoPost Error DateTime';
                 }
-                field("SFI Time Card No."; Rec."SFI Time Card No.")
+                field(sfiTimeCardNo; Rec."SFI Time Card No.")
                 {
-                    ToolTip = 'The Shop Floor Time Card that has more information.';
+                    Caption = 'Time Card Header No.';
                 }
-                field("SFI Time Card Line No."; Rec."SFI Time Card Line No.")
+                field(sfiTimeCardLineNo; Rec."SFI Time Card Line No.")
                 {
-                    ToolTip = 'The specific line on the Shop Floor Time Card.';
+                    Caption = 'Time Card Line No.';
                 }
-                field("SFI Employee No."; Rec."SFI Employee No.")
+                field(sfiEmployeeNo; Rec."SFI Employee No.")
                 {
-                    ToolTip = 'Specifies the value of the SFI Employee No. field.', Comment = '%';
+                    Caption = 'SFI Employee No.';
                 }
-                field("SFI Shop Floor Employee No."; Rec."SFI Shop Floor Employee No.")
+                field(sfiShopFloorEmployeeNo; Rec."SFI Shop Floor Employee No.")
                 {
-                    ToolTip = 'The Shop Floor Employee that last modified the operation';
+                    Caption = 'SFI Shop Floor Employee No.';
                 }
-                field("SFI Output Recorded DateTime"; Rec."SFI Output Recorded DateTime")
+                field(sfiOutputRecordedDateTime; Rec."SFI Output Recorded DateTime")
                 {
-                    ToolTip = 'The timestamp when this output was recorded.';
+                    Caption = 'SFI Output Recorded DateTime';
                 }
-                field("SFI Cumulative Output Hours"; Rec."SFI Cumulative Output Hours")
+                field(sfiCumulativeOutputHours; Rec."SFI Cumulative Output Hours")
                 {
-                    ToolTip = 'The cumulative output hours until the point of this record.';
+                    Caption = 'SFI Cumulative Output Hours';
                 }
-                field("SFI Time Since Last Output"; Rec."SFI Time Since Last Output")
+                field(sfiTimeSinceLastOutput; Rec."SFI Time Since Last Output")
                 {
-                    ToolTip = 'The time since the last output.  This can be used in multi-shot reporting and analysis.';
+                    Caption = 'SFI Time Since Last Output';
                 }
-                field("SFI Units per Hour Snapshot"; Rec."SFI Units per Hour Snapshot")
+                field(sfiUnitsPerHourSnapshot; Rec."SFI Units per Hour Snapshot")
                 {
-                    ToolTip = 'The current ratio of units per hour at the time this was recorded. This can be used in multi-shot reporting and analysis.';
+                    Caption = 'SFI Units per Hour Snapshot';
                 }
-                field("SFI Hours per Unit Snapshot"; Rec."SFI Hours per Unit Snapshot")
+                field(sfiHoursPerUnitSnapshot; Rec."SFI Hours per Unit Snapshot")
                 {
-                    ToolTip = 'The current ratio of hours per unit at the time this was recorded. This can be used in multi-shot reporting and analysis.';
+                    Caption = 'SFI Hours per Unit Snapshot';
                 }
-                field("SFI Prod. Order Comp. Line No."; Rec."SFI Prod. Order Comp. Line No.")
+                field(sfiProdOrderCompLineNo; Rec."SFI Prod. Order Comp. Line No.")
                 {
-                    ToolTip = 'Specifies the value of the Workaround Prod. Order Comp. Line No. field.';
+                    Caption = 'Workaround Prod. Order Comp. Line No.';
                 }
-                field("SFI Operation No."; Rec."SFI Operation No.")
+                field(sfiOperationNo; Rec."SFI Operation No.")
                 {
-                    ToolTip = 'Specifies the value of the Workaround Operation No. field.';
+                    Caption = 'Workaround Operation No.';
                 }
-                field("SFI Routing Link Code"; Rec."SFI Routing Link Code")
+                field(sfiRoutingLinkCode; Rec."SFI Routing Link Code")
                 {
-                    ToolTip = 'Specifies the value of the Workaround Routing Link Code field.';
+                    Caption = 'Workaround Routing Link Code';
                 }
-                field("SFI Routing Reference No."; Rec."SFI Routing Reference No.")
+                field(sfiRoutingReferenceNo; Rec."SFI Routing Reference No.")
                 {
-                    ToolTip = 'Specifies the value of the Workaround Routing Reference No. field.';
+                    Caption = 'Workaround Routing Reference No.';
                 }
-                field("SFI License Plate No."; Rec."SFI License Plate No.")
+                field(sfiLicensePlateNo; Rec."SFI License Plate No.")
                 {
-                    ToolTip = 'The license plate to output to when it is the last operation.';
+                    Caption = 'Shop Floor License Plate No.';
                 }
-                field("SFI Client Config No."; Rec."SFI Client Config No.")
+                field(sfiClientConfigNo; Rec."SFI Client Config No.")
                 {
-                    ToolTip = 'The client configuration to use when checking settings such as license plating.';
+                    Caption = 'Shop Floor Client Config No.';
                 }
-                field("WMDM Prod. Serial No."; Rec."WMDM Prod. Serial No.")
+                field(wmdmProdSerialNo; Rec."WMDM Prod. Serial No.")
                 {
-                    ToolTip = 'Specifies the value of the WMDM Prod. Serial No. field.', Comment = '%';
+                    Caption = 'WMDM Prod. Serial No.';
                 }
-                field("WMDM Prod. Lot No."; Rec."WMDM Prod. Lot No.")
+                field(wmdmProdLotNo; Rec."WMDM Prod. Lot No.")
                 {
-                    ToolTip = 'Specifies the value of the WMDM Prod. Lot No. field.', Comment = '%';
+                    Caption = 'WMDM Prod. Lot No.';
                 }
-                field("WMDM Barcode Data"; Rec."WMDM Barcode Data")
+                field(wmdmBarcodeData; Rec."WMDM Barcode Data")
                 {
-                    ToolTip = 'Specifies the value of the WMDM Barcode Data field.', Comment = '%';
+                    Caption = 'WMDM Barcode Data';
                 }
-                field("WMDM Cons. Serial No."; Rec."WMDM Cons. Serial No.")
+                field(wmdmConsSerialNo; Rec."WMDM Cons. Serial No.")
                 {
-                    ToolTip = 'Specifies the value of the WMDM Cons. Serial No. field.', Comment = '%';
+                    Caption = 'WMDM Cons. Serial No.';
                 }
-                field("WMDM Cons. Lot No."; Rec."WMDM Cons. Lot No.")
+                field(wmdmConsLotNo; Rec."WMDM Cons. Lot No.")
                 {
-                    ToolTip = 'Specifies the value of the WMDM Cons. Lot No. field.', Comment = '%';
+                    Caption = 'WMDM Cons. Lot No.';
                 }
-                field("WMDM Quantity Required"; Rec."WMDM Quantity Required")
+                field(wmdmQuantityRequired; Rec."WMDM Quantity Required")
                 {
-                    ToolTip = 'Specifies the value of the WMDM Quantity Required field.', Comment = '%';
+                    Caption = 'WMDM Quantity Required';
                 }
-                field("WMDM Entry"; Rec."WMDM Entry")
+                field(wmdmEntry; Rec."WMDM Entry")
                 {
-                    ToolTip = 'Specifies the value of the WMDM Entry field.', Comment = '%';
+                    Caption = 'WMDM Entry';
                 }
-                field("WMDM Document No."; Rec."WMDM Document No.")
+                field(wmdmDocumentNo; Rec."WMDM Document No.")
                 {
-                    ToolTip = 'Specifies the value of the WMDM Document No. field.', Comment = '%';
+                    Caption = 'WMDM Document No.';
                 }
-                field("LPM License Plate No."; Rec."LPM License Plate No.")
+                field(lpmLicensePlateNo; Rec."LPM License Plate No.")
                 {
-                    ToolTip = 'Specifies the value of the LPM License Plate No. field.', Comment = '%';
+                    Caption = 'LPM License Plate No.';
                 }
-                field("LPM Source Line No."; Rec."LPM Source Line No.")
+                field(lpmSourceLineNo; Rec."LPM Source Line No.")
                 {
-                    ToolTip = 'Specifies the value of the LPM Source Line No. field.', Comment = '%';
+                    Caption = 'LPM Source Line No.';
                 }
-                field("WMDM PDA Config ID"; Rec."WMDM PDA Config ID")
+                field(wmdmPDAConfigID; Rec."WMDM PDA Config ID")
                 {
-                    ToolTip = 'Specifies the value of the WMDM PDA Config ID field.', Comment = '%';
+                    Caption = 'WMDM PDA Config ID';
                 }
-                field("LPM Action"; Rec."LPM Action")
+                field(lpmAction; Rec."LPM Action")
                 {
-                    ToolTip = 'Specifies the value of the LPM Action field.', Comment = '%';
+                    Caption = 'LPM Action';
                 }
-                // field("IWX Prod. Package No."; Rec."IWX Prod. Package No.")
-                // {
-                //     ToolTip = 'Specifies the value of the IWX Prod. Package No. field.', Comment = '%';
-                // }
-                // field("IWX Cons. Package No."; Rec."IWX Cons. Package No.")
-                // {
-                //     ToolTip = 'Specifies the value of the IWX Cons. Package No. field.', Comment = '%';
-                // }
-                field("Overhead Rate"; Rec."Overhead Rate")
+                field(iwxProdPackageNo; Rec."IWX Prod. Package No.")
                 {
-                    ToolTip = 'Specifies the value of the Overhead Rate field.';
+                    Caption = 'IWX Prod. Package No.';
                 }
-                field("Single-Level Material Cost"; Rec."Single-Level Material Cost")
+                field(iwxConsPackageNo; Rec."IWX Cons. Package No.")
                 {
-                    ToolTip = 'Specifies the value of the Single-Level Material Cost field.';
+                    Caption = 'IWX Cons. Package No.';
                 }
-                field("Single-Level Capacity Cost"; Rec."Single-Level Capacity Cost")
+                field(overheadRate; Rec."Overhead Rate")
                 {
-                    ToolTip = 'Specifies the value of the Single-Level Capacity Cost field.';
+                    Caption = 'Overhead Rate';
                 }
-                field("Single-Level Subcontrd. Cost"; Rec."Single-Level Subcontrd. Cost")
+                field(singleLevelMaterialCost; Rec."Single-Level Material Cost")
                 {
-                    ToolTip = 'Specifies the value of the Single-Level Subcontrd. Cost field.';
+                    Caption = 'Single-Level Material Cost';
                 }
-                field("Single-Level Cap. Ovhd Cost"; Rec."Single-Level Cap. Ovhd Cost")
+                field(singleLevelCapacityCost; Rec."Single-Level Capacity Cost")
                 {
-                    ToolTip = 'Specifies the value of the Single-Level Cap. Ovhd Cost field.';
+                    Caption = 'Single-Level Capacity Cost';
                 }
-                field("Single-Level Mfg. Ovhd Cost"; Rec."Single-Level Mfg. Ovhd Cost")
+                field(singleLevelSubcontrdCost; Rec."Single-Level Subcontrd. Cost")
                 {
-                    ToolTip = 'Specifies the value of the Single-Level Mfg. Ovhd Cost field.';
+                    Caption = 'Single-Level Subcontrd. Cost';
                 }
-                field("Rolled-up Material Cost"; Rec."Rolled-up Material Cost")
+                field(singleLevelCapOvhdCost; Rec."Single-Level Cap. Ovhd Cost")
                 {
-                    ToolTip = 'Specifies the value of the Rolled-up Material Cost field.';
+                    Caption = 'Single-Level Cap. Ovhd Cost';
                 }
-                field("Rolled-up Capacity Cost"; Rec."Rolled-up Capacity Cost")
+                field(singleLevelMfgOvhdCost; Rec."Single-Level Mfg. Ovhd Cost")
                 {
-                    ToolTip = 'Specifies the value of the Rolled-up Capacity Cost field.';
+                    Caption = 'Single-Level Mfg. Ovhd Cost';
                 }
-                field("Rolled-up Subcontracted Cost"; Rec."Rolled-up Subcontracted Cost")
+                field(rolledUpMaterialCost; Rec."Rolled-up Material Cost")
                 {
-                    ToolTip = 'Specifies the value of the Rolled-up Subcontracted Cost field.';
+                    Caption = 'Rolled-up Material Cost';
                 }
-                field("Rolled-up Mfg. Ovhd Cost"; Rec."Rolled-up Mfg. Ovhd Cost")
+                field(rolledUpCapacityCost; Rec."Rolled-up Capacity Cost")
                 {
-                    ToolTip = 'Specifies the value of the Rolled-up Mfg. Ovhd Cost field.';
+                    Caption = 'Rolled-up Capacity Cost';
                 }
-                field("Rolled-up Cap. Overhead Cost"; Rec."Rolled-up Cap. Overhead Cost")
+                field(rolledUpSubcontractedCost; Rec."Rolled-up Subcontracted Cost")
                 {
-                    ToolTip = 'Specifies the value of the Rolled-up Cap. Overhead Cost field.';
+                    Caption = 'Rolled-up Subcontracted Cost';
                 }
-                field(SystemCreatedAt; Rec.SystemCreatedAt)
+                field(rolledUpMfgOvhdCost; Rec."Rolled-up Mfg. Ovhd Cost")
                 {
-                    ToolTip = 'Specifies the value of the SystemCreatedAt field.', Comment = '%';
+                    Caption = 'Rolled-up Mfg. Ovhd Cost';
                 }
-                field(SystemCreatedBy; Rec.SystemCreatedBy)
+                field(rolledUpCapOverheadCost; Rec."Rolled-up Cap. Overhead Cost")
                 {
-                    ToolTip = 'Specifies the value of the SystemCreatedBy field.', Comment = '%';
+                    Caption = 'Rolled-up Cap. Overhead Cost';
                 }
-                field(SystemId; Rec.SystemId)
+                field(systemCreatedAt; Rec.SystemCreatedAt)
                 {
-                    ToolTip = 'Specifies the value of the SystemId field.', Comment = '%';
+                    Caption = 'SystemCreatedAt';
                 }
-                field(SystemModifiedAt; Rec.SystemModifiedAt)
+                field(systemCreatedBy; Rec.SystemCreatedBy)
                 {
-                    ToolTip = 'Specifies the value of the SystemModifiedAt field.', Comment = '%';
+                    Caption = 'SystemCreatedBy';
                 }
-                field(SystemModifiedBy; Rec.SystemModifiedBy)
+                field(systemId; Rec.SystemId)
                 {
-                    ToolTip = 'Specifies the value of the SystemModifiedBy field.', Comment = '%';
+                    Caption = 'SystemId';
+                }
+                field(systemModifiedAt; Rec.SystemModifiedAt)
+                {
+                    Caption = 'SystemModifiedAt';
+                }
+                field(systemModifiedBy; Rec.SystemModifiedBy)
+                {
+                    Caption = 'SystemModifiedBy';
                 }
             }
         }
