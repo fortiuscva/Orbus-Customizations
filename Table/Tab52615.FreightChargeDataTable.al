@@ -9,7 +9,7 @@ table 52615 "ORB FreightChargeDataTable"
         {
             Caption = 'Row No';
             DataClassification = ToBeClassified;
-            AutoIncrement = true;
+            //AutoIncrement = true;
         }
         field(2; Invoice; Code[20])
         {
@@ -130,7 +130,7 @@ table 52615 "ORB FreightChargeDataTable"
             Caption = 'No of License Plates';
             DataClassification = ToBeClassified;
         }
-        field(26; "Mark up%"; Integer)
+        field(26; "Mark up%"; Decimal)
         {
             Caption = 'Mark up%';
             DataClassification = ToBeClassified;
