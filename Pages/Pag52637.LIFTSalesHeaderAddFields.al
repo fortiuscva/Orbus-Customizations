@@ -1,10 +1,15 @@
-page 52637 "LIFT Sales Header Add.Fields"
+page 52637 "LIFT Sales Header Add. Fields"
 {
+    APIGroup = 'Orbus';
+    APIPublisher = 'Orbus';
+    APIVersion = 'v2.0';
     ApplicationArea = All;
-    Caption = 'LIFT Sales Header Add. Fields';
-    PageType = List;
+    Caption = 'liftSalesHeaderAddFields';
+    DelayedInsert = true;
+    EntityName = 'LISTSalesHeaderAddFields';
+    EntitySetName = 'LISTSalesHeaderAddFields';
+    PageType = API;
     SourceTable = "ORB Sales Header Add. Fields";
-    UsageCategory = None;
 
     layout
     {
@@ -12,69 +17,69 @@ page 52637 "LIFT Sales Header Add.Fields"
         {
             repeater(General)
             {
-                field("Document Type"; Rec."Document Type")
+                field(documentType; Rec."Document Type")
                 {
-                    ToolTip = 'Specifies the value of the Document Type field.';
+                    Caption = 'Document Type';
                 }
-                field("No."; Rec."No.")
+                field(no; Rec."No.")
                 {
-                    ToolTip = 'Specifies the value of the No. field.';
+                    Caption = 'No.';
                 }
-                field("Direct to show Label"; Rec."Direct to show Label")
+                field(directToShowLabel; Rec."Direct to show Label")
                 {
-                    ToolTip = 'Specifies the value of the Direct to show Label field.';
+                    Caption = 'Direct to show Label';
                 }
-                field("Production timeline"; Rec."Production timeline")
+                field(productionTimeline; Rec."Production timeline")
                 {
-                    ToolTip = 'Specifies the value of the Production timeline field.';
+                    Caption = 'Production timeline';
                 }
-                field("Payment Type"; Rec."Payment Type")
+                field(paymentType; Rec."Payment Type")
                 {
-                    ToolTip = 'Specifies the value of the Payment Type field.';
+                    Caption = 'Payment Type';
                 }
-                field("Payment Account No."; Rec."Payment Account No.")
+                field(paymentAccountNo; Rec."Payment Account No.")
                 {
-                    ToolTip = 'Specifies the value of the Payment Account No. field.';
+                    Caption = 'Payment Account No.';
                 }
-                field("Payment Province"; Rec."Payment Province")
+                field(paymentProvince; Rec."Payment Province")
                 {
-                    ToolTip = 'Specifies the value of the Payment Province field.';
+                    Caption = 'Payment State';
                 }
-                field("Payment Postal Code"; Rec."Payment Postal Code")
+                field(paymentPostalCode; Rec."Payment Postal Code")
                 {
-                    ToolTip = 'Specifies the value of the Payment Postal Code field.';
+                    Caption = 'Payment Zip';
                 }
-                field("Payment Country Code"; Rec."Payment Country Code")
+                field(paymentCountryCode; Rec."Payment Country Code")
                 {
-                    ToolTip = 'Specifies the value of the Payment Country Code field.';
+                    Caption = 'Payment Country';
                 }
-                field("Job URL"; Rec."Job URL")
+                field(jobURL; Rec."Job URL")
                 {
-                    ToolTip = 'Specifies the value of the Job URL field.', Comment = '%';
+                    Caption = 'Job URL';
                 }
-                field("Polaraid URL"; Rec."Polaraid URL")
+                field(polaraidURL; Rec."Polaraid URL")
                 {
-                    ToolTip = 'Specifies the value of the Polaraid URL field.', Comment = '%';
+                    Caption = 'Polaraid URL';
                 }
-                field(SystemCreatedAt; Rec.SystemCreatedAt)
+                field(systemCreatedAt; Rec.SystemCreatedAt)
                 {
-                    ToolTip = 'Specifies the value of the SystemCreatedAt field.', Comment = '%';
+                    Caption = 'SystemCreatedAt';
                 }
-                field(SystemCreatedBy; Rec.SystemCreatedBy)
+                field(systemCreatedBy; Rec.SystemCreatedBy)
                 {
-                    ToolTip = 'Specifies the value of the SystemCreatedBy field.', Comment = '%';
+                    Caption = 'SystemCreatedBy';
                 }
-                field(SystemId; Rec.SystemId)
+                field(systemId; Rec.SystemId)
                 {
-                    ToolTip = 'Specifies the value of the SystemId field.', Comment = '%';
+                    Caption = 'SystemId';
                 }
-                field(SystemModifiedAt; Rec.SystemModifiedAt)
+                field(systemModifiedAt; Rec.SystemModifiedAt)
                 {
-                    ToolTip = 'Specifies the value of the SystemModifiedAt field.', Comment = '%';
+                    Caption = 'SystemModifiedAt';
                 }
-                field(SystemModifiedBy; Rec.SystemModifiedBy)
+                field(systemModifiedBy; Rec.SystemModifiedBy)
                 {
-                    ToolTip = 'Specifies the value of the SystemModifiedBy field.', Comment = '%';
+                    Caption = 'SystemModifiedBy';
                 }
             }
         }

@@ -1,10 +1,15 @@
 page 52636 "ORB LIFT Sales Header"
 {
+    APIGroup = 'Orbus';
+    APIPublisher = 'Orbus';
+    APIVersion = 'v2.0';
     ApplicationArea = All;
-    Caption = 'LIFT Sales Header';
-    PageType = List;
+    Caption = 'liftSalesHeader';
+    DelayedInsert = true;
+    EntityName = 'LIFTSalesHeader';
+    EntitySetName = 'LIFTSalesHeader';
+    PageType = API;
     SourceTable = "Sales Header";
-    UsageCategory = None;
 
     layout
     {
@@ -12,1393 +17,1389 @@ page 52636 "ORB LIFT Sales Header"
         {
             repeater(General)
             {
-                field("Document Type"; Rec."Document Type")
+                field(documentType; Rec."Document Type")
                 {
-                    ToolTip = 'Specifies the type of the document.';
+                    Caption = 'Document Type';
                 }
-                field("Sell-to Customer No."; Rec."Sell-to Customer No.")
+                field(sellToCustomerNo; Rec."Sell-to Customer No.")
                 {
-                    ToolTip = 'Specifies the value of the Sell-to Customer No. field.';
+                    Caption = 'Sell-to Customer No.';
                 }
-                field("No."; Rec."No.")
+                field(no; Rec."No.")
                 {
-                    ToolTip = 'Specifies the number of the estimate.';
+                    Caption = 'No.';
                 }
-                field("Bill-to Customer No."; Rec."Bill-to Customer No.")
+                field(billToCustomerNo; Rec."Bill-to Customer No.")
                 {
-                    ToolTip = 'Specifies the number of the customer that the invoice is sent to.';
+                    Caption = 'Bill-to Customer No.';
                 }
-                field("Bill-to Name"; Rec."Bill-to Name")
+                field(billToName; Rec."Bill-to Name")
                 {
-                    ToolTip = 'Specifies the name of the customer that the items are shipped to.';
+                    Caption = 'Bill-to Name';
                 }
-                field("Bill-to Name 2"; Rec."Bill-to Name 2")
+                field(billToName2; Rec."Bill-to Name 2")
                 {
-                    ToolTip = 'Specifies the value of the Bill-to Name 2 field.', Comment = '%';
+                    Caption = 'Bill-to Name 2';
                 }
-                field("Bill-to Address"; Rec."Bill-to Address")
+                field(billToAddress; Rec."Bill-to Address")
                 {
-                    ToolTip = 'Specifies the address of the customer that you will send the invoice to.';
+                    Caption = 'Bill-to Address';
                 }
-                field("Bill-to Address 2"; Rec."Bill-to Address 2")
+                field(billToAddress2; Rec."Bill-to Address 2")
                 {
-                    ToolTip = 'Specifies an additional part of the billing address.';
+                    Caption = 'Bill-to Address 2';
                 }
-                field("Bill-to City"; Rec."Bill-to City")
+                field(billToCity; Rec."Bill-to City")
                 {
-                    ToolTip = 'Specifies the city of the billing address.';
+                    Caption = 'Bill-to City';
                 }
-                field("Bill-to Contact"; Rec."Bill-to Contact")
+                field(billToContact; Rec."Bill-to Contact")
                 {
-                    ToolTip = 'Specifies the value of the Bill-to Contact field.';
+                    Caption = 'Bill-to Contact';
                 }
-                field("Your Reference"; Rec."Your Reference")
+                field(yourReference; Rec."Your Reference")
                 {
-                    ToolTip = 'Specifies the customer''s reference. The content will be printed on sales documents.';
+                    Caption = 'Your Reference';
                 }
-                field("Ship-to Code"; Rec."Ship-to Code")
+                field(shipToCode; Rec."Ship-to Code")
                 {
-                    ToolTip = 'Specifies the code for another shipment address than the customer''s own address, which is entered by default.';
+                    Caption = 'Ship-to Code';
                 }
-                field("Ship-to Name"; Rec."Ship-to Name")
+                field(shipToName; Rec."Ship-to Name")
                 {
-                    ToolTip = 'Specifies the name that products on the sales document will be shipped to.';
+                    Caption = 'Ship-to Name';
                 }
-                field("Ship-to Name 2"; Rec."Ship-to Name 2")
+                field(shipToName2; Rec."Ship-to Name 2")
                 {
-                    ToolTip = 'Specifies the value of the Ship-to Name 2 field.', Comment = '%';
+                    Caption = 'Ship-to Name 2';
                 }
-                field("Ship-to Address"; Rec."Ship-to Address")
+                field(shipToAddress; Rec."Ship-to Address")
                 {
-                    ToolTip = 'Specifies the address that products on the sales document will be shipped to. By default, the field is filled with the value in the Address field on the customer card or with the value in the Address field in the Ship-to Address window.';
+                    Caption = 'Ship-to Address';
                 }
-                field("Ship-to Address 2"; Rec."Ship-to Address 2")
+                field(shipToAddress2; Rec."Ship-to Address 2")
                 {
-                    ToolTip = 'Specifies an additional part of the shipping address.';
+                    Caption = 'Ship-to Address 2';
                 }
-                field("Ship-to City"; Rec."Ship-to City")
+                field(shipToCity; Rec."Ship-to City")
                 {
-                    ToolTip = 'Specifies the city of the shipping address.';
+                    Caption = 'Ship-to City';
                 }
-                field("Ship-to Contact"; Rec."Ship-to Contact")
+                field(shipToContact; Rec."Ship-to Contact")
                 {
-                    ToolTip = 'Specifies the value of the Ship-to Contact field.';
+                    Caption = 'Ship-to Contact';
                 }
-                field("Order Date"; Rec."Order Date")
+                field(orderDate; Rec."Order Date")
                 {
-                    ToolTip = 'Specifies the date the order was created. The order date is also used to determine the prices and discounts on the document.';
+                    Caption = 'Order Date';
                 }
-                field("Posting Date"; Rec."Posting Date")
+                field(postingDate; Rec."Posting Date")
                 {
-                    ToolTip = 'Specifies the date when the posting of the sales document will be recorded.';
+                    Caption = 'Posting Date';
                 }
-                field("Shipment Date"; Rec."Shipment Date")
+                field(shipmentDate; Rec."Shipment Date")
                 {
-                    ToolTip = 'Specifies when items on the document are shipped or were shipped. A shipment date is usually calculated from a requested delivery date plus lead time.';
+                    Caption = 'Shipment Date';
                 }
-                field("Posting Description"; Rec."Posting Description")
+                field(postingDescription; Rec."Posting Description")
                 {
-                    ToolTip = 'Specifies additional posting information for the document. After you post the document, the description can add detail to vendor and customer ledger entries.';
+                    Caption = 'Posting Description';
                 }
-                field("Payment Terms Code"; Rec."Payment Terms Code")
+                field(paymentTermsCode; Rec."Payment Terms Code")
                 {
-                    ToolTip = 'Specifies a formula that calculates the payment due date, payment discount date, and payment discount amount.';
+                    Caption = 'Payment Terms Code';
                 }
-                field("Due Date"; Rec."Due Date")
+                field(dueDate; Rec."Due Date")
                 {
-                    ToolTip = 'Specifies when the related sales invoice must be paid.';
+                    Caption = 'Due Date';
                 }
-                field("Payment Discount %"; Rec."Payment Discount %")
+                field(paymentDiscount; Rec."Payment Discount %")
                 {
-                    ToolTip = 'Specifies the payment discount percentage that is granted if the customer pays on or before the date entered in the Pmt. Discount Date field. The discount percentage is specified in the Payment Terms Code field.';
+                    Caption = 'Payment Discount %';
                 }
-                field("Pmt. Discount Date"; Rec."Pmt. Discount Date")
+                field(pmtDiscountDate; Rec."Pmt. Discount Date")
                 {
-                    ToolTip = 'Specifies the date on which the amount in the entry must be paid for a payment discount to be granted.';
+                    Caption = 'Pmt. Discount Date';
                 }
-                field("Shipment Method Code"; Rec."Shipment Method Code")
+                field(shipmentMethodCode; Rec."Shipment Method Code")
                 {
-                    ToolTip = 'Specifies how items on the sales document are shipped to the customer.';
+                    Caption = 'Shipment Method Code';
                 }
-                field("Location Code"; Rec."Location Code")
+                field(locationCode; Rec."Location Code")
                 {
-                    ToolTip = 'Specifies the location from where inventory items to the customer on the sales document are to be shipped by default.';
+                    Caption = 'Location Code';
                 }
-                field("Shortcut Dimension 1 Code"; Rec."Shortcut Dimension 1 Code")
+                field(shortcutDimension1Code; Rec."Shortcut Dimension 1 Code")
                 {
-                    ToolTip = 'Specifies the code for Shortcut Dimension 1, which is one of two global dimension codes that you set up in the General Ledger Setup window.';
+                    Caption = 'Shortcut Dimension 1 Code';
                 }
-                field("Shortcut Dimension 2 Code"; Rec."Shortcut Dimension 2 Code")
+                field(shortcutDimension2Code; Rec."Shortcut Dimension 2 Code")
                 {
-                    ToolTip = 'Specifies the code for Shortcut Dimension 2, which is one of two global dimension codes that you set up in the General Ledger Setup window.';
+                    Caption = 'Shortcut Dimension 2 Code';
                 }
-                field("Customer Posting Group"; Rec."Customer Posting Group")
+                field(customerPostingGroup; Rec."Customer Posting Group")
                 {
-                    ToolTip = 'Specifies the customer s market type to link business transactions to.';
+                    Caption = 'Customer Posting Group';
                 }
-                field("Currency Code"; Rec."Currency Code")
+                field(currencyCode; Rec."Currency Code")
                 {
-                    ToolTip = 'Specifies the currency that is used on the entry.';
+                    Caption = 'Currency Code';
                 }
-                field("Currency Factor"; Rec."Currency Factor")
+                field(currencyFactor; Rec."Currency Factor")
                 {
-                    ToolTip = 'Specifies the value of the Currency Factor field.', Comment = '%';
+                    Caption = 'Currency Factor';
                 }
-                field("Customer Price Group"; Rec."Customer Price Group")
+                field(customerPriceGroup; Rec."Customer Price Group")
                 {
-                    ToolTip = 'Specifies the value of the Customer Price Group field.', Comment = '%';
+                    Caption = 'Customer Price Group';
                 }
-                field("Prices Including VAT"; Rec."Prices Including VAT")
+                field(pricesIncludingVAT; Rec."Prices Including VAT")
                 {
-                    ToolTip = 'Specifies if the Unit Price and Line Amount fields on document lines should be shown with or without VAT.';
+                    Caption = 'Prices Including VAT';
                 }
-                field("Invoice Disc. Code"; Rec."Invoice Disc. Code")
+                field(invoiceDiscCode; Rec."Invoice Disc. Code")
                 {
-                    ToolTip = 'Specifies the value of the Invoice Disc. Code field.', Comment = '%';
+                    Caption = 'Invoice Disc. Code';
                 }
-                field("Customer Disc. Group"; Rec."Customer Disc. Group")
+                field(customerDiscGroup; Rec."Customer Disc. Group")
                 {
-                    ToolTip = 'Specifies the value of the Customer Disc. Group field.', Comment = '%';
+                    Caption = 'Customer Disc. Group';
                 }
-                field("Language Code"; Rec."Language Code")
+                field(languageCode; Rec."Language Code")
                 {
-                    ToolTip = 'Specifies the language to be used on printouts for this document.';
+                    Caption = 'Language Code';
                 }
-                field("Format Region"; Rec."Format Region")
+                field(formatRegion; Rec."Format Region")
                 {
-                    ToolTip = 'Specifies the format to be used on printouts for this document.';
+                    Caption = 'Format Region';
                 }
-                field("Salesperson Code"; Rec."Salesperson Code")
+                field(salespersonCode; Rec."Salesperson Code")
                 {
-                    ToolTip = 'Specifies the name of the salesperson who is assigned to the customer.';
+                    Caption = 'Salesperson Code';
                 }
-                field("Order Class"; Rec."Order Class")
+                field(orderClass; Rec."Order Class")
                 {
-                    ToolTip = 'Specifies the value of the Order Class field.', Comment = '%';
+                    Caption = 'Order Class';
                 }
-                field(Comment; Rec.Comment)
+                field(comment; Rec.Comment)
                 {
-                    ToolTip = 'Specifies the value of the Comment field.', Comment = '%';
+                    Caption = 'Comment';
                 }
-                field("No. Printed"; Rec."No. Printed")
+                field(noPrinted; Rec."No. Printed")
                 {
-                    ToolTip = 'Specifies the value of the No. Printed field.', Comment = '%';
+                    Caption = 'No. Printed';
                 }
-                field("On Hold"; Rec."On Hold")
+                field(onHold; Rec."On Hold")
                 {
-                    ToolTip = 'Specifies if the document was put on hold when it was posted, for example because payment of the resulting customer ledger entries is overdue.';
+                    Caption = 'On Hold';
                 }
-                field("Applies-to Doc. Type"; Rec."Applies-to Doc. Type")
+                field(appliesToDocType; Rec."Applies-to Doc. Type")
                 {
-                    ToolTip = 'Specifies the type of the posted document that this document or journal line will be applied to when you post, for example to register payment.';
+                    Caption = 'Applies-to Doc. Type';
                 }
-                field("Applies-to Doc. No."; Rec."Applies-to Doc. No.")
+                field(appliesToDocNo; Rec."Applies-to Doc. No.")
                 {
-                    ToolTip = 'Specifies the number of the posted document that this document or journal line will be applied to when you post, for example to register payment.';
+                    Caption = 'Applies-to Doc. No.';
                 }
-                field("Bal. Account No."; Rec."Bal. Account No.")
+                field(balAccountNo; Rec."Bal. Account No.")
                 {
-                    ToolTip = 'Specifies the value of the Bal. Account No. field.', Comment = '%';
+                    Caption = 'Bal. Account No.';
                 }
-                field("Recalculate Invoice Disc."; Rec."Recalculate Invoice Disc.")
+                field(recalculateInvoiceDisc; Rec."Recalculate Invoice Disc.")
                 {
-                    ToolTip = 'Specifies the value of the Recalculate Invoice Disc. field.', Comment = '%';
+                    Caption = 'Recalculate Invoice Disc.';
                 }
-                field(Ship; Rec.Ship)
+                field(ship; Rec.Ship)
                 {
-                    ToolTip = 'Specifies the value of the Ship field.', Comment = '%';
+                    Caption = 'Ship';
                 }
-                field(Invoice; Rec.Invoice)
+                field(invoice; Rec.Invoice)
                 {
-                    ToolTip = 'Specifies the value of the Invoice field.', Comment = '%';
+                    Caption = 'Invoice';
                 }
-                field("Print Posted Documents"; Rec."Print Posted Documents")
+                field(printPostedDocuments; Rec."Print Posted Documents")
                 {
-                    ToolTip = 'Specifies the value of the Print Posted Documents field.', Comment = '%';
+                    Caption = 'Print Posted Documents';
                 }
-                field(Amount; Rec.Amount)
+                field(amount; Rec.Amount)
                 {
-                    ToolTip = 'Specifies the sum of amounts on all the lines in the document. This will include invoice discounts.';
+                    Caption = 'Amount';
                 }
-                field("Amount Including VAT"; Rec."Amount Including VAT")
+                field(amountIncludingVAT; Rec."Amount Including VAT")
                 {
-                    ToolTip = 'Specifies the sum of the amounts in the Amount Including VAT fields on the associated sales lines.';
+                    Caption = 'Amount Including VAT';
                 }
-                field("Shipping No."; Rec."Shipping No.")
+                field(shippingNo; Rec."Shipping No.")
                 {
-                    ToolTip = 'Specifies the value of the Shipping No. field.', Comment = '%';
+                    Caption = 'Shipping No.';
                 }
-                field("Posting No."; Rec."Posting No.")
+                field(postingNo; Rec."Posting No.")
                 {
-                    ToolTip = 'Specifies the value of the Posting No. field.', Comment = '%';
+                    Caption = 'Posting No.';
                 }
-                field("Last Shipping No."; Rec."Last Shipping No.")
+                field(lastShippingNo; Rec."Last Shipping No.")
                 {
-                    ToolTip = 'Specifies the value of the Last Shipping No. field.', Comment = '%';
+                    Caption = 'Last Shipping No.';
                 }
-                field("Last Posting No."; Rec."Last Posting No.")
+                field(lastPostingNo; Rec."Last Posting No.")
                 {
-                    ToolTip = 'Specifies the value of the Last Posting No. field.', Comment = '%';
+                    Caption = 'Last Posting No.';
                 }
-                field("Prepayment No."; Rec."Prepayment No.")
+                field(prepaymentNo; Rec."Prepayment No.")
                 {
-                    ToolTip = 'Specifies the value of the Prepayment No. field.', Comment = '%';
+                    Caption = 'Prepayment No.';
                 }
-                field("Last Prepayment No."; Rec."Last Prepayment No.")
+                field(lastPrepaymentNo; Rec."Last Prepayment No.")
                 {
-                    ToolTip = 'Specifies the value of the Last Prepayment No. field.', Comment = '%';
+                    Caption = 'Last Prepayment No.';
                 }
-                field("Prepmt. Cr. Memo No."; Rec."Prepmt. Cr. Memo No.")
+                field(prepmtCrMemoNo; Rec."Prepmt. Cr. Memo No.")
                 {
-                    ToolTip = 'Specifies the value of the Prepmt. Cr. Memo No. field.', Comment = '%';
+                    Caption = 'Prepmt. Cr. Memo No.';
                 }
-                field("Last Prepmt. Cr. Memo No."; Rec."Last Prepmt. Cr. Memo No.")
+                field(lastPrepmtCrMemoNo; Rec."Last Prepmt. Cr. Memo No.")
                 {
-                    ToolTip = 'Specifies the value of the Last Prepmt. Cr. Memo No. field.', Comment = '%';
+                    Caption = 'Last Prepmt. Cr. Memo No.';
                 }
-                field("VAT Registration No."; Rec."VAT Registration No.")
+                field(vatRegistrationNo; Rec."VAT Registration No.")
                 {
-                    ToolTip = 'Specifies the customer''s VAT registration number for customers.';
+                    Caption = 'VAT Registration No.';
                 }
-                field("Combine Shipments"; Rec."Combine Shipments")
+                field(combineShipments; Rec."Combine Shipments")
                 {
-                    ToolTip = 'Specifies whether the order will be included when you use the Combine Shipments function.';
+                    Caption = 'Combine Shipments';
                 }
-                // field("Registration Number"; Rec."Registration Number")
-                // {
-                //     ToolTip = 'Specifies the customer''s registration number.';
-                // }
-                field("Reason Code"; Rec."Reason Code")
+                field(registrationNumber; Rec."Registration Number")
                 {
-                    ToolTip = 'Specifies the reason code, a supplementary source code that enables you to trace the document.';
+                    Caption = 'Registration No.';
                 }
-                field("Gen. Bus. Posting Group"; Rec."Gen. Bus. Posting Group")
+                field(reasonCode; Rec."Reason Code")
                 {
-                    ToolTip = 'Specifies the value of the Gen. Bus. Posting Group field.', Comment = '%';
+                    Caption = 'Reason Code';
                 }
-                field("EU 3-Party Trade"; Rec."EU 3-Party Trade")
+                field(genBusPostingGroup; Rec."Gen. Bus. Posting Group")
                 {
-                    ToolTip = 'Specifies if the transaction is related to trade with a third party within the EU.';
+                    Caption = 'Gen. Bus. Posting Group';
                 }
-                field("Transaction Type"; Rec."Transaction Type")
+                field(eu3PartyTrade; Rec."EU 3-Party Trade")
                 {
-                    ToolTip = 'Specifies the type of transaction that the document represents, for the purpose of reporting to INTRASTAT.';
+                    Caption = 'EU 3-Party Trade';
                 }
-                field("Transport Method"; Rec."Transport Method")
+                field(transactionType; Rec."Transaction Type")
                 {
-                    ToolTip = 'Specifies the transport method, for the purpose of reporting to INTRASTAT.';
+                    Caption = 'Transaction Type';
                 }
-                field("VAT Country/Region Code"; Rec."VAT Country/Region Code")
+                field(transportMethod; Rec."Transport Method")
                 {
-                    ToolTip = 'Specifies the value of the VAT Country/Region Code field.', Comment = '%';
+                    Caption = 'Transport Method';
                 }
-                field("Sell-to Customer Name"; Rec."Sell-to Customer Name")
+                field(vatCountryRegionCode; Rec."VAT Country/Region Code")
                 {
-                    ToolTip = 'Specifies the customer''s name.';
+                    Caption = 'VAT Country/Region Code';
                 }
-                field("Sell-to Customer Name 2"; Rec."Sell-to Customer Name 2")
+                field(sellToCustomerName; Rec."Sell-to Customer Name")
                 {
-                    ToolTip = 'Specifies the value of the Sell-to Customer Name 2 field.', Comment = '%';
+                    Caption = 'Sell-to Customer Name';
                 }
-                field("Sell-to Address"; Rec."Sell-to Address")
+                field(sellToCustomerName2; Rec."Sell-to Customer Name 2")
                 {
-                    ToolTip = 'Specifies the customer''s address.';
+                    Caption = 'Sell-to Customer Name 2';
                 }
-                field("Sell-to Address 2"; Rec."Sell-to Address 2")
+                field(sellToAddress; Rec."Sell-to Address")
                 {
-                    ToolTip = 'Specifies an additional part of the customer''s address.';
+                    Caption = 'Sell-to Address';
                 }
-                field("Sell-to City"; Rec."Sell-to City")
+                field(sellToAddress2; Rec."Sell-to Address 2")
                 {
-                    ToolTip = 'Specifies the city of the customer''s address.';
+                    Caption = 'Sell-to Address 2';
                 }
-                field("Sell-to Contact"; Rec."Sell-to Contact")
+                field(sellToCity; Rec."Sell-to City")
                 {
-                    ToolTip = 'Specifies the name of the contact person at the customer.';
+                    Caption = 'Sell-to City';
                 }
-                field("Bill-to Post Code"; Rec."Bill-to Post Code")
+                field(sellToContact; Rec."Sell-to Contact")
                 {
-                    ToolTip = 'Specifies the postal code of the billing address.';
+                    Caption = 'Sell-to Contact';
                 }
-                field("Bill-to County"; Rec."Bill-to County")
+                field(billToPostCode; Rec."Bill-to Post Code")
                 {
-                    ToolTip = 'Specifies the state that is used to calculate and post sales tax.';
+                    Caption = 'Bill-to Post Code';
                 }
-                field("Bill-to Country/Region Code"; Rec."Bill-to Country/Region Code")
+                field(billToCounty; Rec."Bill-to County")
                 {
-                    ToolTip = 'Specifies the country/region code of the customer''s billing address.';
+                    Caption = 'Bill-to County';
                 }
-                field("Sell-to Post Code"; Rec."Sell-to Post Code")
+                field(billToCountryRegionCode; Rec."Bill-to Country/Region Code")
                 {
-                    ToolTip = 'Specifies the postal code of the customer''s address.';
+                    Caption = 'Bill-to Country/Region Code';
                 }
-                field("Sell-to County"; Rec."Sell-to County")
+                field(sellToPostCode; Rec."Sell-to Post Code")
                 {
-                    ToolTip = 'Specifies the state that is used to calculate and post sales tax.';
+                    Caption = 'Sell-to Post Code';
                 }
-                field("Sell-to Country/Region Code"; Rec."Sell-to Country/Region Code")
+                field(sellToCounty; Rec."Sell-to County")
                 {
-                    ToolTip = 'Specifies the country/region code of the customer''s main address.';
+                    Caption = 'Sell-to County';
                 }
-                field("Ship-to Post Code"; Rec."Ship-to Post Code")
+                field(sellToCountryRegionCode; Rec."Sell-to Country/Region Code")
                 {
-                    ToolTip = 'Specifies the postal code of the shipping address.';
+                    Caption = 'Sell-to Country/Region Code';
                 }
-                field("Ship-to County"; Rec."Ship-to County")
+                field(shipToPostCode; Rec."Ship-to Post Code")
                 {
-                    ToolTip = 'Specifies the state that is used to calculate and post sales tax.';
+                    Caption = 'Ship-to Post Code';
                 }
-                field("Ship-to Country/Region Code"; Rec."Ship-to Country/Region Code")
+                field(shipToCounty; Rec."Ship-to County")
                 {
-                    ToolTip = 'Specifies the country/region of the shipping address.';
+                    Caption = 'Ship-to County';
                 }
-                field("Bal. Account Type"; Rec."Bal. Account Type")
+                field(shipToCountryRegionCode; Rec."Ship-to Country/Region Code")
                 {
-                    ToolTip = 'Specifies the value of the Bal. Account Type field.', Comment = '%';
+                    Caption = 'Ship-to Country/Region Code';
                 }
-                field("Exit Point"; Rec."Exit Point")
+                field(balAccountType; Rec."Bal. Account Type")
                 {
-                    ToolTip = 'Specifies the point of exit through which you ship the items out of your country/region, for reporting to Intrastat.';
+                    Caption = 'Bal. Account Type';
                 }
-                field(Correction; Rec.Correction)
+                field(exitPoint; Rec."Exit Point")
                 {
-                    ToolTip = 'Specifies the entry as a corrective entry. You can use the field if you need to post a corrective entry to a customer account. If you place a check mark in this field when posting a corrective entry, the system will post a negative debit instead of a credit or a negative credit instead of a debit. Correction flag does not affect how inventory reconciled with general ledger.';
+                    Caption = 'Exit Point';
                 }
-                field("Document Date"; Rec."Document Date")
+                field(correction; Rec.Correction)
                 {
-                    ToolTip = 'Specifies the date when the related document was created.';
+                    Caption = 'Correction';
                 }
-                field("External Document No."; Rec."External Document No.")
+                field(documentDate; Rec."Document Date")
                 {
-                    ToolTip = 'Specifies the value of the External Document No. field.';
+                    Caption = 'Document Date';
                 }
-                field("Area"; Rec."Area")
+                field(externalDocumentNo; Rec."External Document No.")
                 {
-                    ToolTip = 'Specifies the country or region of origin for the purpose of Intrastat reporting.';
+                    Caption = 'External Document No.';
                 }
-                field("Transaction Specification"; Rec."Transaction Specification")
+                field("area"; Rec."Area")
                 {
-                    ToolTip = 'Specifies a specification of the document''s transaction, for the purpose of reporting to INTRASTAT.';
+                    Caption = 'Area';
                 }
-                field("Payment Method Code"; Rec."Payment Method Code")
+                field(transactionSpecification; Rec."Transaction Specification")
                 {
-                    ToolTip = 'Specifies how to make payment, such as with bank transfer, cash, or check.';
+                    Caption = 'Transaction Specification';
                 }
-                field("Shipping Agent Code"; Rec."Shipping Agent Code")
+                field(paymentMethodCode; Rec."Payment Method Code")
                 {
-                    ToolTip = 'Specifies the value of the Shipping Agent Code field.';
+                    Caption = 'Payment Method Code';
                 }
-                field("Package Tracking No."; Rec."Package Tracking No.")
+                field(shippingAgentCode; Rec."Shipping Agent Code")
                 {
-                    ToolTip = 'Specifies the shipping agent''s package number.';
+                    Caption = 'Shipping Agent Code';
                 }
-                field("No. Series"; Rec."No. Series")
+                field(packageTrackingNo; Rec."Package Tracking No.")
                 {
-                    ToolTip = 'Specifies the value of the No. Series field.', Comment = '%';
+                    Caption = 'Package Tracking No.';
                 }
-                field("Posting No. Series"; Rec."Posting No. Series")
+                field(noSeries; Rec."No. Series")
                 {
-                    ToolTip = 'Specifies the value of the Posting No. Series field.', Comment = '%';
+                    Caption = 'No. Series';
                 }
-                field("Shipping No. Series"; Rec."Shipping No. Series")
+                field(postingNoSeries; Rec."Posting No. Series")
                 {
-                    ToolTip = 'Specifies the value of the Shipping No. Series field.', Comment = '%';
+                    Caption = 'Posting No. Series';
                 }
-                field("Tax Area Code"; Rec."Tax Area Code")
+                field(shippingNoSeries; Rec."Shipping No. Series")
                 {
-                    ToolTip = 'Specifies the tax area that is used to calculate and post sales tax.';
+                    Caption = 'Shipping No. Series';
                 }
-                field("Tax Liable"; Rec."Tax Liable")
+                field(taxAreaCode; Rec."Tax Area Code")
                 {
-                    ToolTip = 'Specifies if this vendor charges you sales tax for purchases.';
+                    Caption = 'Tax Area Code';
                 }
-                field("VAT Bus. Posting Group"; Rec."VAT Bus. Posting Group")
+                field(taxLiable; Rec."Tax Liable")
                 {
-                    ToolTip = 'Specifies the VAT specification of the involved customer or vendor to link transactions made for this record with the appropriate general ledger account according to the VAT posting setup.';
+                    Caption = 'Tax Liable';
                 }
-                field(Reserve; Rec.Reserve)
+                field(vatBusPostingGroup; Rec."VAT Bus. Posting Group")
                 {
-                    ToolTip = 'Specifies the value of the Reserve field.', Comment = '%';
+                    Caption = 'VAT Bus. Posting Group';
                 }
-                field("Applies-to ID"; Rec."Applies-to ID")
+                field(reserve; Rec.Reserve)
                 {
-                    ToolTip = 'Specifies the ID of entries that will be applied to when you choose the Apply Entries action.';
+                    Caption = 'Reserve';
                 }
-                field("VAT Base Discount %"; Rec."VAT Base Discount %")
+                field(appliesToID; Rec."Applies-to ID")
                 {
-                    ToolTip = 'Specifies the value of the VAT Base Discount % field.', Comment = '%';
+                    Caption = 'Applies-to ID';
                 }
-                field(Status; Rec.Status)
+                field(vatBaseDiscount; Rec."VAT Base Discount %")
                 {
-                    ToolTip = 'Specifies whether the document is open, waiting to be approved, has been invoiced for prepayment, or has been released to the next stage of processing.';
+                    Caption = 'VAT Base Discount %';
                 }
-                field("Invoice Discount Calculation"; Rec."Invoice Discount Calculation")
+                field(status; Rec.Status)
                 {
-                    ToolTip = 'Specifies the value of the Invoice Discount Calculation field.', Comment = '%';
+                    Caption = 'Status';
                 }
-                field("Invoice Discount Value"; Rec."Invoice Discount Value")
+                field(invoiceDiscountCalculation; Rec."Invoice Discount Calculation")
                 {
-                    ToolTip = 'Specifies the value of the Invoice Discount Value field.', Comment = '%';
+                    Caption = 'Invoice Discount Calculation';
                 }
-                field("Send IC Document"; Rec."Send IC Document")
+                field(invoiceDiscountValue; Rec."Invoice Discount Value")
                 {
-                    ToolTip = 'Specifies the value of the Send IC Document field.', Comment = '%';
+                    Caption = 'Invoice Discount Value';
                 }
-                field("IC Status"; Rec."IC Status")
+                field(sendICDocument; Rec."Send IC Document")
                 {
-                    ToolTip = 'Specifies the value of the IC Status field.', Comment = '%';
+                    Caption = 'Send IC Document';
                 }
-                field("Sell-to IC Partner Code"; Rec."Sell-to IC Partner Code")
+                field(icStatus; Rec."IC Status")
                 {
-                    ToolTip = 'Specifies the value of the Sell-to IC Partner Code field.', Comment = '%';
+                    Caption = 'IC Status';
                 }
-                field("Bill-to IC Partner Code"; Rec."Bill-to IC Partner Code")
+                field(sellToICPartnerCode; Rec."Sell-to IC Partner Code")
                 {
-                    ToolTip = 'Specifies the value of the Bill-to IC Partner Code field.', Comment = '%';
+                    Caption = 'Sell-to IC Partner Code';
                 }
-                field("IC Reference Document No."; Rec."IC Reference Document No.")
+                field(billToICPartnerCode; Rec."Bill-to IC Partner Code")
                 {
-                    ToolTip = 'Specifies the value of the IC Reference Document No. field.', Comment = '%';
+                    Caption = 'Bill-to IC Partner Code';
                 }
-                field("IC Direction"; Rec."IC Direction")
+                field(icReferenceDocumentNo; Rec."IC Reference Document No.")
                 {
-                    ToolTip = 'Specifies the value of the IC Direction field.', Comment = '%';
+                    Caption = 'IC Reference Document No.';
                 }
-                field("Prepayment %"; Rec."Prepayment %")
+                field(icDirection; Rec."IC Direction")
                 {
-                    ToolTip = 'Specifies the prepayment percentage to use to calculate the prepayment for sales.';
+                    Caption = 'IC Direction';
                 }
-                field("Prepayment No. Series"; Rec."Prepayment No. Series")
+                field(prepayment; Rec."Prepayment %")
                 {
-                    ToolTip = 'Specifies the value of the Prepayment No. Series field.', Comment = '%';
+                    Caption = 'Prepayment %';
                 }
-                field("Compress Prepayment"; Rec."Compress Prepayment")
+                field(prepaymentNoSeries; Rec."Prepayment No. Series")
                 {
-                    ToolTip = 'Specifies that prepayments on the sales order are combined if they have the same general ledger account for prepayments or the same dimensions.';
+                    Caption = 'Prepayment No. Series';
                 }
-                field("Prepayment Due Date"; Rec."Prepayment Due Date")
+                field(compressPrepayment; Rec."Compress Prepayment")
                 {
-                    ToolTip = 'Specifies when the prepayment invoice for this sales order is due.';
+                    Caption = 'Compress Prepayment';
                 }
-                field("Prepmt. Cr. Memo No. Series"; Rec."Prepmt. Cr. Memo No. Series")
+                field(prepaymentDueDate; Rec."Prepayment Due Date")
                 {
-                    ToolTip = 'Specifies the value of the Prepmt. Cr. Memo No. Series field.', Comment = '%';
+                    Caption = 'Prepayment Due Date';
                 }
-                field("Prepmt. Posting Description"; Rec."Prepmt. Posting Description")
+                field(prepmtCrMemoNoSeries; Rec."Prepmt. Cr. Memo No. Series")
                 {
-                    ToolTip = 'Specifies the value of the Prepmt. Posting Description field.', Comment = '%';
+                    Caption = 'Prepmt. Cr. Memo No. Series';
                 }
-                field("Prepmt. Pmt. Discount Date"; Rec."Prepmt. Pmt. Discount Date")
+                field(prepmtPostingDescription; Rec."Prepmt. Posting Description")
                 {
-                    ToolTip = 'Specifies the last date the customer can pay the prepayment invoice and still receive a payment discount on the prepayment amount.';
+                    Caption = 'Prepmt. Posting Description';
                 }
-                field("Prepmt. Payment Terms Code"; Rec."Prepmt. Payment Terms Code")
+                field(prepmtPmtDiscountDate; Rec."Prepmt. Pmt. Discount Date")
                 {
-                    ToolTip = 'Specifies the code that represents the payment terms for prepayment invoices related to the sales document.';
+                    Caption = 'Prepmt. Pmt. Discount Date';
                 }
-                field("Prepmt. Payment Discount %"; Rec."Prepmt. Payment Discount %")
+                field(prepmtPaymentTermsCode; Rec."Prepmt. Payment Terms Code")
                 {
-                    ToolTip = 'Specifies the payment discount percent granted on the prepayment if the customer pays on or before the date entered in the Prepmt. Pmt. Discount Date field.';
+                    Caption = 'Prepmt. Payment Terms Code';
                 }
-                field("Quote No."; Rec."Quote No.")
+                field(prepmtPaymentDiscount; Rec."Prepmt. Payment Discount %")
                 {
-                    ToolTip = 'Specifies the number of the sales quote that the sales order was created from. You can track the number to sales quote documents that you have printed, saved, or emailed.';
+                    Caption = 'Prepmt. Payment Discount %';
                 }
-                field("Quote Valid Until Date"; Rec."Quote Valid Until Date")
+                field(quoteNo; Rec."Quote No.")
                 {
-                    ToolTip = 'Specifies how long the quote is valid.';
+                    Caption = 'Quote No.';
                 }
-                field("Quote Sent to Customer"; Rec."Quote Sent to Customer")
+                field(quoteValidUntilDate; Rec."Quote Valid Until Date")
                 {
-                    ToolTip = 'Specifies the value of the Quote Sent to Customer field.', Comment = '%';
+                    Caption = 'Quote Valid To Date';
                 }
-                field("Quote Accepted"; Rec."Quote Accepted")
+                field(quoteSentToCustomer; Rec."Quote Sent to Customer")
                 {
-                    ToolTip = 'Specifies the value of the Quote Accepted field.', Comment = '%';
+                    Caption = 'Quote Sent to Customer';
                 }
-                field("Quote Accepted Date"; Rec."Quote Accepted Date")
+                field(quoteAccepted; Rec."Quote Accepted")
                 {
-                    ToolTip = 'Specifies the value of the Quote Accepted Date field.', Comment = '%';
+                    Caption = 'Quote Accepted';
                 }
-                field("Job Queue Status"; Rec."Job Queue Status")
+                field(quoteAcceptedDate; Rec."Quote Accepted Date")
                 {
-                    ToolTip = 'Specifies the status of a job queue entry or task that handles the posting of sales credit memos.';
+                    Caption = 'Quote Accepted Date';
                 }
-                field("Job Queue Entry ID"; Rec."Job Queue Entry ID")
+                field(jobQueueStatus; Rec."Job Queue Status")
                 {
-                    ToolTip = 'Specifies the value of the Job Queue Entry ID field.', Comment = '%';
+                    Caption = 'Job Queue Status';
                 }
-                field("Company Bank Account Code"; Rec."Company Bank Account Code")
+                field(jobQueueEntryID; Rec."Job Queue Entry ID")
                 {
-                    ToolTip = 'Specifies the bank account to use for bank information when the document is printed.';
+                    Caption = 'Job Queue Entry ID';
                 }
-                field("Incoming Document Entry No."; Rec."Incoming Document Entry No.")
+                field(companyBankAccountCode; Rec."Company Bank Account Code")
                 {
-                    ToolTip = 'Specifies the number of the incoming document that this sales document is created for.';
+                    Caption = 'Company Bank Account Code';
                 }
-                field(IsTest; Rec.IsTest)
+                field(incomingDocumentEntryNo; Rec."Incoming Document Entry No.")
                 {
-                    ToolTip = 'Specifies the value of the IsTest field.', Comment = '%';
+                    Caption = 'Incoming Document Entry No.';
                 }
-                field("Sell-to Phone No."; Rec."Sell-to Phone No.")
+                field(isTest; Rec.IsTest)
                 {
-                    ToolTip = 'Specifies the customer''s telephone number.';
+                    Caption = 'IsTest';
                 }
-                field("Sell-to E-Mail"; Rec."Sell-to E-Mail")
+                field(sellToPhoneNo; Rec."Sell-to Phone No.")
                 {
-                    ToolTip = 'Specifies the value of the Sell-to E-Mail field.';
+                    Caption = 'Sell-to Phone No.';
                 }
-                field("Journal Templ. Name"; Rec."Journal Templ. Name")
+                field(sellToEMail; Rec."Sell-to E-Mail")
                 {
-                    ToolTip = 'Specifies the name of the journal template in which the sales header is to be posted.';
+                    Caption = 'Email';
                 }
-                field("VAT Reporting Date"; Rec."VAT Reporting Date")
+                field(journalTemplName; Rec."Journal Templ. Name")
                 {
-                    ToolTip = 'Specifies the date used to include entries on VAT reports in a VAT period. This is either the date that the document was created or posted, depending on your setting on the General Ledger Setup page.';
+                    Caption = 'Journal Template Name';
                 }
-                field("Rcvd.-from Count./Region Code"; Rec."Rcvd.-from Count./Region Code")
+                field(vatReportingDate; Rec."VAT Reporting Date")
                 {
-                    ToolTip = 'Specifies the country or region from which the items are returned for the purpose of Intrastat reporting.';
+                    Caption = 'VAT Date';
                 }
-                field("Work Description"; Rec."Work Description")
+                field(rcvdFromCountRegionCode; Rec."Rcvd.-from Count./Region Code")
                 {
-                    ToolTip = 'Specifies the value of the Work Description field.', Comment = '%';
+                    Caption = 'Received-from Country/Region Code';
                 }
-                field("Amt. Ship. Not Inv. (LCY)"; Rec."Amt. Ship. Not Inv. (LCY)")
+                field(workDescription; Rec."Work Description")
                 {
-                    ToolTip = 'Specifies the sum, in LCY, for items that have been shipped but not yet been invoiced. The amount is calculated as Amount Including VAT x Qty. Shipped Not Invoiced / Quantity.';
+                    Caption = 'Work Description';
                 }
-                field("Amt. Ship. Not Inv. (LCY) Base"; Rec."Amt. Ship. Not Inv. (LCY) Base")
+                field(amtShipNotInvLCY; Rec."Amt. Ship. Not Inv. (LCY)")
                 {
-                    ToolTip = 'Specifies the sum, in LCY, for items that have been shipped but not yet been invoiced. The amount is calculated as Amount Including VAT x Qty. Shipped Not Invoiced / Quantity.';
+                    Caption = 'Amount Shipped Not Invoiced (LCY) Incl. VAT';
                 }
-                field("Dimension Set ID"; Rec."Dimension Set ID")
+                field(amtShipNotInvLCYBase; Rec."Amt. Ship. Not Inv. (LCY) Base")
                 {
-                    ToolTip = 'Specifies the value of the Dimension Set ID field.', Comment = '%';
+                    Caption = 'Amount Shipped Not Invoiced (LCY)';
                 }
-                field("Payment Service Set ID"; Rec."Payment Service Set ID")
+                field(dimensionSetID; Rec."Dimension Set ID")
                 {
-                    ToolTip = 'Specifies the value of the Payment Service Set ID field.', Comment = '%';
+                    Caption = 'Dimension Set ID';
                 }
-                field("Coupled to CRM"; Rec."Coupled to CRM")
+                field(paymentServiceSetID; Rec."Payment Service Set ID")
                 {
-                    ToolTip = 'Specifies that the sales order is coupled to an order in Dynamics 365 Sales.';
+                    Caption = 'Payment Service Set ID';
                 }
-                field("Coupled to Dataverse"; Rec."Coupled to Dataverse")
+                field(coupledToCRM; Rec."Coupled to CRM")
                 {
-                    ToolTip = 'Specifies that the sales order is coupled to an order in Dynamics 365 Sales.';
+                    Caption = 'Coupled to Dynamics 365 Sales';
                 }
-                field("Direct Debit Mandate ID"; Rec."Direct Debit Mandate ID")
+                field(coupledToDataverse; Rec."Coupled to Dataverse")
                 {
-                    ToolTip = 'Specifies the direct-debit mandate that the customer has signed to allow direct debit collection of payments.';
+                    Caption = 'Coupled to Dynamics 365 Sales';
                 }
-                field("Invoice Discount Amount"; Rec."Invoice Discount Amount")
+                field(directDebitMandateID; Rec."Direct Debit Mandate ID")
                 {
-                    ToolTip = 'Specifies the value of the Invoice Discount Amount field.', Comment = '%';
+                    Caption = 'Direct Debit Mandate ID';
                 }
-                field("No. of Archived Versions"; Rec."No. of Archived Versions")
+                field(invoiceDiscountAmount; Rec."Invoice Discount Amount")
                 {
-                    ToolTip = 'Specifies the number of archived versions for this document.';
+                    Caption = 'Invoice Discount Amount';
                 }
-                field("Doc. No. Occurrence"; Rec."Doc. No. Occurrence")
+                field(noOfArchivedVersions; Rec."No. of Archived Versions")
                 {
-                    ToolTip = 'Specifies the value of the Doc. No. Occurrence field.', Comment = '%';
+                    Caption = 'No. of Archived Versions';
                 }
-                field("Campaign No."; Rec."Campaign No.")
+                field(docNoOccurrence; Rec."Doc. No. Occurrence")
                 {
-                    ToolTip = 'Specifies the number of the campaign that the document is linked to.';
+                    Caption = 'Doc. No. Occurrence';
                 }
-                field("Sell-to Contact No."; Rec."Sell-to Contact No.")
+                field(campaignNo; Rec."Campaign No.")
                 {
-                    ToolTip = 'Specifies the number of the contact person at the customer.';
+                    Caption = 'Campaign No.';
                 }
-                field("Bill-to Contact No."; Rec."Bill-to Contact No.")
+                field(sellToContactNo; Rec."Sell-to Contact No.")
                 {
-                    ToolTip = 'Specifies the number of the contact person at the billing address.';
+                    Caption = 'Sell-to Contact No.';
                 }
-                field("Opportunity No."; Rec."Opportunity No.")
+                field(billToContactNo; Rec."Bill-to Contact No.")
                 {
-                    ToolTip = 'Specifies the number of the opportunity that the sales quote is assigned to.';
+                    Caption = 'Bill-to Contact No.';
                 }
-                field("Sell-to Customer Templ. Code"; Rec."Sell-to Customer Templ. Code")
+                field(opportunityNo; Rec."Opportunity No.")
                 {
-                    ToolTip = 'Specifies the code for the template to create a new customer';
+                    Caption = 'Opportunity No.';
                 }
-                field("Bill-to Customer Templ. Code"; Rec."Bill-to Customer Templ. Code")
+                field(sellToCustomerTemplCode; Rec."Sell-to Customer Templ. Code")
                 {
-                    ToolTip = 'Specifies the value of the Bill-to Customer Template Code field.', Comment = '%';
+                    Caption = 'Sell-to Customer Template Code';
                 }
-                field("Responsibility Center"; Rec."Responsibility Center")
+                field(billToCustomerTemplCode; Rec."Bill-to Customer Templ. Code")
                 {
-                    ToolTip = 'Specifies the code of the responsibility center, such as a distribution hub, that is associated with the involved user, company, customer, or vendor.';
+                    Caption = 'Bill-to Customer Template Code';
                 }
-                field("Shipping Advice"; Rec."Shipping Advice")
+                field(responsibilityCenter; Rec."Responsibility Center")
                 {
-                    ToolTip = 'Specifies if the customer accepts partial shipment of orders.';
+                    Caption = 'Responsibility Center';
                 }
-                field("Shipped Not Invoiced"; Rec."Shipped Not Invoiced")
+                field(shippingAdvice; Rec."Shipping Advice")
                 {
-                    ToolTip = 'Specifies the value of the Shipped Not Invoiced field.', Comment = '%';
+                    Caption = 'Shipping Advice';
                 }
-                field("Completely Shipped"; Rec."Completely Shipped")
+                field(shippedNotInvoiced; Rec."Shipped Not Invoiced")
                 {
-                    ToolTip = 'Specifies whether all the items on the order have been shipped or, in the case of inbound items, completely received.';
+                    Caption = 'Shipped Not Invoiced';
                 }
-                field("Posting from Whse. Ref."; Rec."Posting from Whse. Ref.")
+                field(completelyShipped; Rec."Completely Shipped")
                 {
-                    ToolTip = 'Specifies the value of the Posting from Whse. Ref. field.', Comment = '%';
+                    Caption = 'Completely Shipped';
                 }
-                field(Shipped; Rec.Shipped)
+                field(postingFromWhseRef; Rec."Posting from Whse. Ref.")
                 {
-                    ToolTip = 'Specifies the value of the Shipped field.', Comment = '%';
+                    Caption = 'Posting from Whse. Ref.';
                 }
-                field("Last Shipment Date"; Rec."Last Shipment Date")
+                field(shipped; Rec.Shipped)
                 {
-                    ToolTip = 'Specifies the value of the Last Shipment Date field.', Comment = '%';
+                    Caption = 'Shipped';
                 }
-                field("Requested Delivery Date"; Rec."Requested Delivery Date")
+                field(lastShipmentDate; Rec."Last Shipment Date")
                 {
-                    ToolTip = 'Specifies the date that the customer has asked for the order to be delivered.';
+                    Caption = 'Last Shipment Date';
                 }
-                field("Promised Delivery Date"; Rec."Promised Delivery Date")
+                field(requestedDeliveryDate; Rec."Requested Delivery Date")
                 {
-                    ToolTip = 'Specifies the date that you have promised to deliver the order, as a result of the Order Promising function.';
+                    Caption = 'Requested Delivery Date';
                 }
-                field("Shipping Time"; Rec."Shipping Time")
+                field(promisedDeliveryDate; Rec."Promised Delivery Date")
                 {
-                    ToolTip = 'Specifies how long it takes from when the items are shipped from the warehouse to when they are delivered.';
+                    Caption = 'Promised Delivery Date';
                 }
-                field("Outbound Whse. Handling Time"; Rec."Outbound Whse. Handling Time")
+                field(shippingTime; Rec."Shipping Time")
                 {
-                    ToolTip = 'Specifies a date formula for the time it takes to get items ready to ship from this location. The time element is used in the calculation of the delivery date as follows: Shipment Date + Outbound Warehouse Handling Time = Planned Shipment Date + Shipping Time = Planned Delivery Date.';
+                    Caption = 'Shipping Time';
                 }
-                field("Shipping Agent Service Code"; Rec."Shipping Agent Service Code")
+                field(outboundWhseHandlingTime; Rec."Outbound Whse. Handling Time")
                 {
-                    ToolTip = 'Specifies the value of the Shipping Agent Service Code field.';
+                    Caption = 'Outbound Whse. Handling Time';
                 }
-                field("Late Order Shipping"; Rec."Late Order Shipping")
+                field(shippingAgentServiceCode; Rec."Shipping Agent Service Code")
                 {
-                    ToolTip = 'Indicates a delay in the shipment of one or more lines, or that the shipment date is either the same as or earlier than the work date.';
+                    Caption = 'Shipping Agent Service Code';
                 }
-                field(Receive; Rec.Receive)
+                field(lateOrderShipping; Rec."Late Order Shipping")
                 {
-                    ToolTip = 'Specifies the value of the Receive field.', Comment = '%';
+                    Caption = 'Late Order Shipping';
                 }
-                field("Return Receipt No."; Rec."Return Receipt No.")
+                field(receive; Rec.Receive)
                 {
-                    ToolTip = 'Specifies the value of the Return Receipt No. field.', Comment = '%';
+                    Caption = 'Receive';
                 }
-                field("Return Receipt No. Series"; Rec."Return Receipt No. Series")
+                field(returnReceiptNo; Rec."Return Receipt No.")
                 {
-                    ToolTip = 'Specifies the value of the Return Receipt No. Series field.', Comment = '%';
+                    Caption = 'Return Receipt No.';
                 }
-                field("Last Return Receipt No."; Rec."Last Return Receipt No.")
+                field(returnReceiptNoSeries; Rec."Return Receipt No. Series")
                 {
-                    ToolTip = 'Specifies the value of the Last Return Receipt No. field.', Comment = '%';
+                    Caption = 'Return Receipt No. Series';
                 }
-                field("Price Calculation Method"; Rec."Price Calculation Method")
+                field(lastReturnReceiptNo; Rec."Last Return Receipt No.")
                 {
-                    ToolTip = 'Specifies the value of the Price Calculation Method field.', Comment = '%';
+                    Caption = 'Last Return Receipt No.';
                 }
-                field("Allow Line Disc."; Rec."Allow Line Disc.")
+                field(priceCalculationMethod; Rec."Price Calculation Method")
                 {
-                    ToolTip = 'Specifies the value of the Allow Line Disc. field.', Comment = '%';
+                    Caption = 'Price Calculation Method';
                 }
-                field("Get Shipment Used"; Rec."Get Shipment Used")
+                field(allowLineDisc; Rec."Allow Line Disc.")
                 {
-                    ToolTip = 'Specifies the value of the Get Shipment Used field.', Comment = '%';
+                    Caption = 'Allow Line Disc.';
                 }
-                field("Assigned User ID"; Rec."Assigned User ID")
+                field(getShipmentUsed; Rec."Get Shipment Used")
                 {
-                    ToolTip = 'Specifies the ID of the user who is responsible for the document.';
+                    Caption = 'Get Shipment Used';
                 }
-                field("Sales Tax Amount Rounding"; Rec."Sales Tax Amount Rounding")
+                field(assignedUserID; Rec."Assigned User ID")
                 {
-                    ToolTip = 'Specifies the value of the Sales Tax Amount Rounding field.', Comment = '%';
+                    Caption = 'Assigned User ID';
                 }
-                field("Prepmt. Sales Tax Rounding Amt"; Rec."Prepmt. Sales Tax Rounding Amt")
+                field(salesTaxAmountRounding; Rec."Sales Tax Amount Rounding")
                 {
-                    ToolTip = 'Specifies the value of the Prepayment Sales Tax Rounding Amount field.', Comment = '%';
+                    Caption = 'Sales Tax Amount Rounding';
                 }
-                field("Ship-to UPS Zone"; Rec."Ship-to UPS Zone")
+                field(prepmtSalesTaxRoundingAmt; Rec."Prepmt. Sales Tax Rounding Amt")
                 {
-                    ToolTip = 'Specifies a UPS Zone code for this document if UPS is used for shipments.';
+                    Caption = 'Prepayment Sales Tax Rounding Amount';
                 }
-                field("Outstanding Amount ($)"; Rec."Outstanding Amount ($)")
+                field(shipToUPSZone; Rec."Ship-to UPS Zone")
                 {
-                    ToolTip = 'Specifies the outstanding amount that is calculated, based on the Sales Line table and the Outstanding Amount (LCY) field.';
+                    Caption = 'Ship-to UPS Zone';
                 }
-                field("Tax Exemption No."; Rec."Tax Exemption No.")
+                field(outstandingAmount; Rec."Outstanding Amount ($)")
                 {
-                    ToolTip = 'Specifies the value of the Tax Exemption No. field.', Comment = '%';
+                    Caption = 'Outstanding Amount ($)';
                 }
-                field("STE Transaction ID"; Rec."STE Transaction ID")
+                field(taxExemptionNo; Rec."Tax Exemption No.")
                 {
-                    ToolTip = 'Specifies the value of the STE Transaction ID field.', Comment = '%';
+                    Caption = 'Tax Exemption No.';
                 }
-                field("Transport Operators"; Rec."Transport Operators")
+                field(steTransactionID; Rec."STE Transaction ID")
                 {
-                    ToolTip = 'Specifies the operator of the vehicle that transports the goods or merchandise.';
+                    Caption = 'STE Transaction ID';
                 }
-                field("Transit-from Date/Time"; Rec."Transit-from Date/Time")
+                field(transportOperators; Rec."Transport Operators")
                 {
-                    ToolTip = 'Specifies the estimated date and time at which the goods or merchandise leave the start address.';
+                    Caption = 'Transport Operators';
                 }
-                field("Transit Hours"; Rec."Transit Hours")
+                field(transitFromDateTime; Rec."Transit-from Date/Time")
                 {
-                    ToolTip = 'Specifies the estimated time in hours that it will take to transit from the start address to the temporary or final destination.';
+                    Caption = 'Transit-from Date/Time';
                 }
-                field("Transit Distance"; Rec."Transit Distance")
+                field(transitHours; Rec."Transit Hours")
                 {
-                    ToolTip = 'Specifies the distance travelled in kilometers from the start address to the temporary or final destination as a combination of the distances that are travelled by the different means of transport that move the goods or merchandise.';
+                    Caption = 'Transit Hours';
                 }
-                field("Insurer Name"; Rec."Insurer Name")
+                field(transitDistance; Rec."Transit Distance")
                 {
-                    ToolTip = 'Specifies the name of the insurer that covers the risks of the motor transport used for the transfer of goods or merchandise.';
+                    Caption = 'Transit Distance';
                 }
-                field("Insurer Policy Number"; Rec."Insurer Policy Number")
+                field(insurerName; Rec."Insurer Name")
                 {
-                    ToolTip = 'Specifies the policy number assigned by the insurer, which covers the risks of the motor transport used for the transfer of goods or merchandise.';
+                    Caption = 'Insurer Name';
                 }
-                field("Foreign Trade"; Rec."Foreign Trade")
+                field(insurerPolicyNumber; Rec."Insurer Policy Number")
                 {
-                    ToolTip = 'Specifies whether the goods or merchandise that are transported enter or leave the national territory.';
+                    Caption = 'Insurer Policy Number';
                 }
-                field("Vehicle Code"; Rec."Vehicle Code")
+                field(foreignTrade; Rec."Foreign Trade")
                 {
-                    ToolTip = 'Specifies the vehicle that transports the goods or merchandise.';
+                    Caption = 'Foreign Trade';
                 }
-                field("Trailer 1"; Rec."Trailer 1")
+                field(vehicleCode; Rec."Vehicle Code")
                 {
-                    ToolTip = 'Specifies the trailer or semi-trailer that is used with the vehicle for the transfer of goods or merchandise.';
+                    Caption = 'Vehicle Code';
                 }
-                field("Trailer 2"; Rec."Trailer 2")
+                field(trailer1; Rec."Trailer 1")
                 {
-                    ToolTip = 'Specifies the second trailer or semi-trailer that is used with the vehicle for the transfer of goods or merchandise.';
+                    Caption = 'Trailer 1';
                 }
-                field("Transit-to Location"; Rec."Transit-to Location")
+                field(trailer2; Rec."Trailer 2")
                 {
-                    ToolTip = 'Specifies the location that the goods or merchandise are moved to.';
+                    Caption = 'Trailer 2';
                 }
-                field("Medical Insurer Name"; Rec."Medical Insurer Name")
+                field(transitToLocation; Rec."Transit-to Location")
                 {
-                    ToolTip = 'Specifies the insurer that covers potential damage to the environment if the transport includes materials, residues or remnants, or hazardous waste.';
+                    Caption = 'Transit-to Location';
                 }
-                field("Medical Ins. Policy Number"; Rec."Medical Ins. Policy Number")
+                field(medicalInsurerName; Rec."Medical Insurer Name")
                 {
-                    ToolTip = 'Specifies the insurance policy number if the transport includes materials, residues or remnants, or hazardous waste.';
+                    Caption = 'Medical Insurer Name';
                 }
-                field("SAT Weight Unit Of Measure"; Rec."SAT Weight Unit Of Measure")
+                field(medicalInsPolicyNumber; Rec."Medical Ins. Policy Number")
                 {
-                    ToolTip = 'Specifies the unit of measurement of the weight of the goods and / or merchandise that are moved in this transport.';
+                    Caption = 'Medical Ins. Policy Number';
                 }
-                field("SAT International Trade Term"; Rec."SAT International Trade Term")
+                field(satWeightUnitOfMeasure; Rec."SAT Weight Unit Of Measure")
                 {
-                    ToolTip = 'Specifies an international commercial terms code that are used in international sale contracts according to the SAT internatoinal trade terms definition.';
+                    Caption = 'SAT Weight Unit Of Measure';
                 }
-                field("Exchange Rate USD"; Rec."Exchange Rate USD")
+                field(satInternationalTradeTerm; Rec."SAT International Trade Term")
                 {
-                    ToolTip = 'Specifies the USD to MXN exchange rate that is used to report foreign trade documents to Mexican SAT authorities. This rate must match the rate used by the Mexican National Bank.';
+                    Caption = 'SAT International Trade Term';
                 }
-                field("SAT Customs Regime"; Rec."SAT Customs Regime")
+                field(exchangeRateUSD; Rec."Exchange Rate USD")
                 {
-                    ToolTip = 'Specifies the system that regulates the transfer of goods of foreign origin when it enters or exits the country. This information is required by Carte Porte in Mexico.';
+                    Caption = 'Exchange Rate USD';
                 }
-                field("SAT Transfer Reason"; Rec."SAT Transfer Reason")
+                field(satCustomsRegime; Rec."SAT Customs Regime")
                 {
-                    ToolTip = 'Specifies the reason that is associated with the transfer of goods and merchandise in exports. This information is required by Carte Porte in Mexico.';
+                    Caption = 'SAT Customs Regime';
                 }
-                field("Prepmt. Include Tax"; Rec."Prepmt. Include Tax")
+                field(satTransferReason; Rec."SAT Transfer Reason")
                 {
-                    ToolTip = 'Specifies if sales tax is calculated during Post Prepayment.';
+                    Caption = 'SAT Transfer Reason';
                 }
-                field("CFDI Purpose"; Rec."CFDI Purpose")
+                field(prepmtIncludeTax; Rec."Prepmt. Include Tax")
                 {
-                    ToolTip = 'Specifies the CFDI purpose required for reporting to the Mexican tax authorities (SAT).';
+                    Caption = 'Prepmt. Include Tax';
                 }
-                field("CFDI Relation"; Rec."CFDI Relation")
+                field(cfdiPurpose; Rec."CFDI Purpose")
                 {
-                    ToolTip = 'Specifies the relation of the CFDI document.';
+                    Caption = 'CFDI Purpose';
                 }
-                field("CFDI Export Code"; Rec."CFDI Export Code")
+                field(cfdiRelation; Rec."CFDI Relation")
                 {
-                    ToolTip = 'Specifies a code to indicate if the document is used for exports to other countries.';
+                    Caption = 'CFDI Relation';
                 }
-                field("CFDI Period"; Rec."CFDI Period")
+                field(cfdiExportCode; Rec."CFDI Export Code")
                 {
-                    ToolTip = 'Specifies the period to use when reporting for general public customers';
+                    Caption = 'CFDI Export Code';
                 }
-                field("SAT Address ID"; Rec."SAT Address ID")
+                field(cfdiPeriod; Rec."CFDI Period")
                 {
-                    ToolTip = 'Specifies the SAT address that the goods or merchandise are moved to.';
+                    Caption = 'CFDI Period';
                 }
-                field("Order Status"; Rec."Order Status")
+                field(satAddressID; Rec."SAT Address ID")
                 {
-                    ToolTip = 'Specifies the value of the Order Status field.';
+                    Caption = 'SAT Address ID';
                 }
-                field("Location Override"; Rec."Location Override")
+                field(orderStatus; Rec."Order Status")
                 {
-                    ToolTip = 'Specifies the value of the Location Override field.', Comment = '%';
+                    Caption = 'Order Status';
                 }
-                field(Created_By; Rec.Created_By)
+                field(locationOverride; Rec."Location Override")
                 {
-                    ToolTip = 'Specifies the value of the Created_By field.', Comment = '%';
+                    Caption = 'Location Override';
                 }
-                field("Assigned User ID 2"; Rec."Assigned User ID 2")
+                field(createdBy; Rec.Created_By)
                 {
-                    ToolTip = 'Specifies the value of the Assigned User ID 2 field.', Comment = '%';
+                    Caption = 'Created_By';
                 }
-                field(Needs_Approval; Rec.Needs_Approval)
+                field(assignedUserID2; Rec."Assigned User ID 2")
                 {
-                    ToolTip = 'Specifies the value of the Needs Approval field.', Comment = '%';
+                    Caption = 'Assigned User ID 2';
                 }
-                field(ArtEmail; Rec.ArtEmail)
+                field(needsApproval; Rec.Needs_Approval)
                 {
-                    ToolTip = 'Specifies the value of the Email (Art) field.', Comment = '%';
+                    Caption = 'Needs Approval';
                 }
-                field("UPS Account Number"; Rec."UPS Account Number")
+                field(upsAccountNumber; Rec."UPS Account Number")
                 {
-                    ToolTip = 'Specifies the value of the UPS Account Number field.', Comment = '%';
+                    Caption = 'UPS Account Number';
                 }
-                field("FedEx Account Number"; Rec."FedEx Account Number")
+                field(fedExAccountNumber; Rec."FedEx Account Number")
                 {
-                    ToolTip = 'Specifies the value of the FedEx Account Number field.', Comment = '%';
+                    Caption = 'FedEx Account Number';
                 }
-                field("Graphics Only"; Rec."Graphics Only")
+                field(graphicsOnly; Rec."Graphics Only")
                 {
-                    ToolTip = 'Specifies the value of the Graphics Only field.', Comment = '%';
+                    Caption = 'Graphics Only';
                 }
-                field(Custom; Rec.Custom)
+                field(custom; Rec.Custom)
                 {
-                    ToolTip = 'Specifies the value of the Custom field.', Comment = '%';
+                    Caption = 'Custom';
                 }
-                field(Rush; Rec.Rush)
+                field(rush; Rec.Rush)
                 {
-                    ToolTip = 'Specifies the value of the Rush field.', Comment = '%';
+                    Caption = 'Rush';
                 }
-                field(TFlowStatus; Rec.TFlowStatus)
+                field(tFlowStatus; Rec.TFlowStatus)
                 {
-                    ToolTip = 'Specifies the value of the TFlowStatus field.', Comment = '%';
+                    Caption = 'TFlowStatus';
                 }
-                field("ORB Tax ID"; Rec."ORB Tax ID")
+                field(orbTaxID; Rec."ORB Tax ID")
                 {
-                    ToolTip = 'Specifies the Tax ID of Sales';
+                    Caption = 'Tax ID';
                 }
-                field("ORB Declared Value"; Rec."ORB Declared Value")
+                field(orbDeclaredValue; Rec."ORB Declared Value")
                 {
-                    ToolTip = 'Specifies the Declared Value of Sales';
+                    Caption = 'Declared Value';
                 }
-                field("ORB International Contact"; Rec."ORB International Contact")
+                field(orbInternationalContact; Rec."ORB International Contact")
                 {
-                    ToolTip = 'Specifies the International Contact of Sales';
+                    Caption = 'International Contact';
                 }
-                field("ORB Magento Order #"; Rec."ORB Magento Order #")
+                field(orbMagentoOrder; Rec."ORB Magento Order #")
                 {
-                    ToolTip = 'Specifies the value of the Magento Order # field.';
+                    Caption = 'Magento Order #';
                 }
-                field("ORB Magento CC 4 Digits"; Rec."ORB Magento CC 4 Digits")
+                field(orbMagentoCC4Digits; Rec."ORB Magento CC 4 Digits")
                 {
-                    ToolTip = 'Specifies the Magento CC 4 Digits of Sales';
+                    Caption = 'Magento CC 4 Digits';
                 }
-                field("ORB Magento Location Code"; Rec."ORB Magento Location Code")
+                field(orbMagentoLocationCode; Rec."ORB Magento Location Code")
                 {
-                    ToolTip = 'Specifies the value of the Location Code" field.';
+                    Caption = 'Magento Location Code';
                 }
-                field("ORB Require Review"; Rec."ORB Require Review")
+                field(orbRequireReview; Rec."ORB Require Review")
                 {
-                    ToolTip = 'Specifies the value of the Require Review field.', Comment = '%';
+                    Caption = 'Require Review';
                 }
-                field("ORB Last Followup By"; Rec."ORB Last Followup By")
+                field(orbLastFollowupBy; Rec."ORB Last Followup By")
                 {
-                    ToolTip = 'Followup by the sales person';
+                    Caption = 'Last Followup By';
                 }
-                field("ORB RUSH"; Rec."ORB RUSH")
+                field(orbRUSH; Rec."ORB RUSH")
                 {
-                    ToolTip = 'Specifies the value of the RUSH field.';
+                    Caption = 'RUSH';
                 }
-                field("ORB Shipment Date"; Rec."ORB Shipment Date")
+                field(orbShipmentDate; Rec."ORB Shipment Date")
                 {
-                    ToolTip = 'Specifies the value of the Shipment Date field.';
+                    Caption = 'ORB Shipment Date';
                 }
-                field("ORB Escalation Reason Code"; Rec."ORB Escalation Reason Code")
+                field(orbEscalationReasonCode; Rec."ORB Escalation Reason Code")
                 {
-                    ToolTip = 'Specifies the reasons for escalation';
+                    Caption = 'Escalation Reason Code';
                 }
-                field("ORB Resolved By"; Rec."ORB Resolved By")
+                field(orbResolvedBy; Rec."ORB Resolved By")
                 {
-                    ToolTip = 'Specifies the user who resolved escalated issue';
+                    Caption = 'Resolved By';
                 }
-                field("ORB Original Promised Ship Dt."; Rec."ORB Original Promised Ship Dt.")
+                field(orbOriginalPromisedShipDt; Rec."ORB Original Promised Ship Dt.")
                 {
-                    ToolTip = 'Specifies Original Ship. Date';
+                    Caption = 'Original Promised Shipment Date';
                 }
-                field("ORB Delayed Ship Reason Code"; Rec."ORB Delayed Ship Reason Code")
+                field(orbDelayedShipReasonCode; Rec."ORB Delayed Ship Reason Code")
                 {
-                    ToolTip = 'Specifies reasons for delayed shipment';
+                    Caption = 'Delayed Shipment Reason Code';
                 }
-                field("ORB Delayed Ship Sub-Reason"; Rec."ORB Delayed Ship Sub-Reason")
+                field(orbDelayedShipSubReason; Rec."ORB Delayed Ship Sub-Reason")
                 {
-                    ToolTip = 'Specifies the sub-reason code for Shipment Delay';
+                    Caption = 'Delayed Shipment Sub-Reason Code';
                 }
-                field("ORB DS Payment Type"; Rec."ORB DS Payment Type")
+                field(orbDSPaymentType; Rec."ORB DS Payment Type")
                 {
-                    ToolTip = 'Specifies the value of the Payment Type field.', Comment = '%';
+                    Caption = 'DS Payment Type';
                 }
-                field("ORB DS Payment Account No."; Rec."ORB DS Payment Account No.")
+                field(orbDSPaymentAccountNo; Rec."ORB DS Payment Account No.")
                 {
-                    ToolTip = 'Specifies the value of the Payment Account No. field.', Comment = '%';
+                    Caption = 'DS Payment Account No.';
                 }
-                field("ORB Total Payment Amount"; Rec."ORB Total Payment Amount")
+                field(orbTotalPaymentAmount; Rec."ORB Total Payment Amount")
                 {
-                    ToolTip = 'Specifies the Total Payment Amount Field value';
+                    Caption = 'Total Payment Amount';
                 }
-                field("ORB Freight Line"; Rec."ORB Freight Line")
+                field(orbFreightLine; Rec."ORB Freight Line")
                 {
-                    ToolTip = 'Specifies the field Freight Line value';
+                    Caption = 'Freight Line';
                 }
-                field("Sales Order Created By"; Rec."Sales Order Created By")
+                field(salesOrderCreatedBy; Rec."Sales Order Created By")
                 {
-                    ToolTip = 'Specifies the value of the Sales Order Created By field.', Comment = '%';
+                    Caption = 'Sales Order Created By';
                 }
-                field("Sales Order Assigned To"; Rec."Sales Order Assigned To")
+                field(salesOrderAssignedTo; Rec."Sales Order Assigned To")
                 {
-                    ToolTip = 'Specifies the value of the Sales Order Assigned To field.', Comment = '%';
+                    Caption = 'Sales Order Assigned To';
                 }
-                field("Sales Order Payment Type"; Rec."Sales Order Payment Type")
+                field(salesOrderPaymentType; Rec."Sales Order Payment Type")
                 {
-                    ToolTip = 'Specifies the value of the Sales Order Payment Type field.', Comment = '%';
+                    Caption = 'Sales Order Payment Type';
                 }
-                field("SO Payment Account No."; Rec."SO Payment Account No.")
+                field(soPaymentAccountNo; Rec."SO Payment Account No.")
                 {
-                    ToolTip = 'Specifies the value of the Sales Order Payment Account No. field.', Comment = '%';
+                    Caption = 'Sales Order Payment Account No.';
                 }
-                field("Sales Order Shipment Method"; Rec."Sales Order Shipment Method")
+                field(salesOrderShipmentMethod; Rec."Sales Order Shipment Method")
                 {
-                    ToolTip = 'Specifies the value of the Sales Order Shipment Method field.', Comment = '%';
+                    Caption = 'Sales Order Shipment Method';
                 }
-                field("Warehouse Pick No."; Rec."Warehouse Pick No.")
+                field(warehousePickNo; Rec."Warehouse Pick No.")
                 {
-                    ToolTip = 'Specifies the value of the Warehouse Pick No. field.', Comment = '%';
+                    Caption = 'Warehouse Pick No.';
                 }
-                field("Registered Warehouse Pick No."; Rec."Registered Warehouse Pick No.")
+                field(registeredWarehousePickNo; Rec."Registered Warehouse Pick No.")
                 {
-                    ToolTip = 'Specifies the value of the Registered Warehouse Pick No. field.', Comment = '%';
+                    Caption = 'Registered Warehouse Pick No.';
                 }
-                field("Industry Shortcut Dimension"; Rec."Industry Shortcut Dimension")
+                field(industryShortcutDimension; Rec."Industry Shortcut Dimension")
                 {
-                    ToolTip = 'Specifies the value of the Industry Shortcut Dimension field.', Comment = '%';
+                    Caption = 'Industry Shortcut Dimension';
                 }
-                field("Payment Type (new)"; Rec."Payment Type (new)")
+                field(paymentTypeNew; Rec."Payment Type (new)")
                 {
-                    ToolTip = 'Specifies the value of the Payment Type (new) field.', Comment = '%';
+                    Caption = 'Payment Type (new)';
                 }
-                field("Prepayment Receieved"; Rec."Prepayment Receieved")
+                field(prepaymentReceieved; Rec."Prepayment Receieved")
                 {
-                    ToolTip = 'Specifies the value of the Prepayment Receieved field.', Comment = '%';
+                    Caption = 'Prepayment Receieved';
                 }
-                field("Art Email"; Rec."Art Email")
+                field(artEmail; Rec."Art Email")
                 {
-                    ToolTip = 'Specifies the value of the Art Email field.', Comment = '%';
+                    Caption = 'Art Email';
                 }
-                field("In-Hands Date"; Rec."In-Hands Date")
+                field(inHandsDate; Rec."In-Hands Date")
                 {
-                    ToolTip = 'Specifies the value of the In-Hands Date field.';
+                    Caption = 'In-Hands Date';
                 }
-                field("Sell-To Contact No. (Custom)"; Rec."Sell-To Contact No. (Custom)")
+                field(sellToContactNoCustom; Rec."Sell-To Contact No. (Custom)")
                 {
-                    ToolTip = 'Specifies the value of the Sell-To Contact No. (Custom) field.', Comment = '%';
+                    Caption = 'Sell-To Contact No. (Custom)';
                 }
-                field("Sell-To Phone No. (Custom)"; Rec."Sell-To Phone No. (Custom)")
+                field(sellToPhoneNoCustom; Rec."Sell-To Phone No. (Custom)")
                 {
-                    ToolTip = 'Specifies the value of the Sell-To Phone No. (Custom) field.', Comment = '%';
+                    Caption = 'Sell-To Phone No. (Custom)';
                 }
-                field("Sell-To Email (Custom)"; Rec."Sell-To Email (Custom)")
+                field(sellToEmailCustom; Rec."Sell-To Email (Custom)")
                 {
-                    ToolTip = 'Specifies the value of the Sell-To Email (Custom) field.', Comment = '%';
+                    Caption = 'Sell-To Email (Custom)';
                 }
-                field("Sell-To Contact Name (Custom)"; Rec."Sell-To Contact Name (Custom)")
+                field(sellToContactNameCustom; Rec."Sell-To Contact Name (Custom)")
                 {
-                    ToolTip = 'Specifies the value of the Sell-To Contact Name (Custom) field.', Comment = '%';
+                    Caption = 'Sell-To Contact Name (Custom)';
                 }
-                field("Created At"; Rec."Created At")
+                field(createdAt; Rec."Created At")
                 {
-                    ToolTip = 'Specifies the value of the Created At field.', Comment = '%';
+                    Caption = 'Created At';
                 }
-                field("Case No."; Rec."Case No.")
+                field(caseNo; Rec."Case No.")
                 {
-                    ToolTip = 'Specifies the value of the Case No. field.', Comment = '%';
+                    Caption = 'Case No.';
                 }
-                field("Payment Terms OnOpenPage"; Rec."Payment Terms OnOpenPage")
+                field(paymentTermsOnOpenPage; Rec."Payment Terms OnOpenPage")
                 {
-                    ToolTip = 'Specifies the value of the Payment Terms OnOpenPage field.', Comment = '%';
+                    Caption = 'Payment Terms OnOpenPage';
                 }
-                field("Quote Status"; Rec."Quote Status")
+                field(quoteStatus; Rec."Quote Status")
                 {
-                    ToolTip = 'Specifies the value of the Quote Status field.', Comment = '%';
+                    Caption = 'Quote Status';
                 }
-                field("Last Followup Date"; Rec."Last Followup Date")
+                field(lastFollowupDate; Rec."Last Followup Date")
                 {
-                    ToolTip = 'Specifies the value of the Last Followup Date field.', Comment = '%';
+                    Caption = 'Last Followup Date';
                 }
-                field("Next Followup Date"; Rec."Next Followup Date")
+                field(nextFollowupDate; Rec."Next Followup Date")
                 {
-                    ToolTip = 'Specifies the value of the Next Followup Date field.', Comment = '%';
+                    Caption = 'Next Followup Date';
                 }
-                field("Lead Time"; Rec."Lead Time")
+                field(leadTime; Rec."Lead Time")
                 {
-                    ToolTip = 'Specifies the value of the Lead Time field.', Comment = '%';
+                    Caption = 'Lead Time';
                 }
-                field("Ship-to Code (Custom)"; Rec."Ship-to Code (Custom)")
+                field(shipToCodeCustom; Rec."Ship-to Code (Custom)")
                 {
-                    ToolTip = 'Specifies the value of the Ship-to Code (Custom) field.', Comment = '%';
+                    Caption = 'Ship-to Code (Custom)';
                 }
-                field("Ship-to Name (Custom)"; Rec."Ship-to Name (Custom)")
+                field(shipToNameCustom; Rec."Ship-to Name (Custom)")
                 {
-                    ToolTip = 'Specifies the value of the Ship-to Name field.';
+                    Caption = 'Ship-to Name (Custom)';
                 }
-                field("Ship-to Name 2 (Custom)"; Rec."Ship-to Name 2 (Custom)")
+                field(shipToName2Custom; Rec."Ship-to Name 2 (Custom)")
                 {
-                    ToolTip = 'Specifies the value of the Ship-to Name 2 (Custom) field.', Comment = '%';
+                    Caption = 'Ship-to Name 2 (Custom)';
                 }
-                field("Ship-to Address (Custom)"; Rec."Ship-to Address (Custom)")
+                field(shipToAddressCustom; Rec."Ship-to Address (Custom)")
                 {
-                    ToolTip = 'Specifies the value of the Ship-to Address field.';
+                    Caption = 'Ship-to Address (Custom)';
                 }
-                field("Ship-to Address 2 (Custom)"; Rec."Ship-to Address 2 (Custom)")
+                field(shipToAddress2Custom; Rec."Ship-to Address 2 (Custom)")
                 {
-                    ToolTip = 'Specifies the value of the Ship-to-Address 2 field.';
+                    Caption = 'Ship-to Address 2 (Custom)';
                 }
-                field("Ship-to City (Custom)"; Rec."Ship-to City (Custom)")
+                field(shipToCityCustom; Rec."Ship-to City (Custom)")
                 {
-                    ToolTip = 'Specifies the value of the Ship-to City field.';
+                    Caption = 'Ship-to City (Custom)';
                 }
-                field("Ship-To County (Custom)"; Rec."Ship-To County (Custom)")
+                field(shipToCountyCustom; Rec."Ship-To County (Custom)")
                 {
-                    ToolTip = 'Specifies the value of the Ship-to County field.';
+                    Caption = 'Ship-To County (Custom)';
                 }
-                field("Ship-to Contact (Custom)"; Rec."Ship-to Contact (Custom)")
+                field(shipToContactCustom; Rec."Ship-to Contact (Custom)")
                 {
-                    ToolTip = 'Specifies the value of the Ship-to Contact (Custom) field.', Comment = '%';
+                    Caption = 'Ship-to Contact (Custom)';
                 }
-                field("Ship-To Post Code (Custom)"; Rec."Ship-To Post Code (Custom)")
+                field(shipToPostCodeCustom; Rec."Ship-To Post Code (Custom)")
                 {
-                    ToolTip = 'Specifies the value of the Ship-to Post Code field.';
+                    Caption = 'Ship-To Post Code (Custom)';
                 }
-                field("Ship-To CountryRegion (Custom)"; Rec."Ship-To CountryRegion (Custom)")
+                field(shipToCountryRegionCustom; Rec."Ship-To CountryRegion (Custom)")
                 {
-                    ToolTip = 'Specifies the value of the Ship-to Country/Region Code field.';
+                    Caption = 'Ship-To CountryRegion (Custom)';
                 }
-                field("SalesPerson Email"; Rec."SalesPerson Email")
+                field(salesPersonEmail; Rec."SalesPerson Email")
                 {
-                    ToolTip = 'Specifies the value of the SalesPerson Email field.', Comment = '%';
+                    Caption = 'SalesPerson Email';
                 }
-                field("Shipping Agent Service Code 2"; Rec."Shipping Agent Service Code 2")
+                field(shippingAgentServiceCode2; Rec."Shipping Agent Service Code 2")
                 {
-                    ToolTip = 'Specifies the value of the Shipping Agent Service Code 2 field.', Comment = '%';
+                    Caption = 'Shipping Agent Service Code 2';
                 }
-                field("Probability Percentage"; Rec."Probability Percentage")
+                field(probabilityPercentage; Rec."Probability Percentage")
                 {
-                    ToolTip = 'Specifies the value of the Probability Percentage field.', Comment = '%';
+                    Caption = 'Probability Percentage';
                 }
-                field("Sell-to-Customer No. Has Value"; Rec."Sell-to-Customer No. Has Value")
+                field(sellToCustomerNoHasValue; Rec."Sell-to-Customer No. Has Value")
                 {
-                    ToolTip = 'Specifies the value of the Sell-to-Customer No. Has Value field.', Comment = '%';
+                    Caption = 'Sell-to-Customer No. Has Value';
                 }
-                field("Location Code (Custom)"; Rec."Location Code (Custom)")
+                field(locationCodeCustom; Rec."Location Code (Custom)")
                 {
-                    ToolTip = 'Specifies the value of the Location Code (Custom) field.', Comment = '%';
+                    Caption = 'Location Code (Custom)';
                 }
-                field("Ship To Data Modified"; Rec."Ship To Data Modified")
+                field(shipToDataModified; Rec."Ship To Data Modified")
                 {
-                    ToolTip = 'Specifies the value of the Ship To Data Modified field.', Comment = '%';
+                    Caption = 'Ship To Data Modified';
                 }
-                field("Needs Assessment"; Rec."Needs Assessment")
+                field(needsAssessment; Rec."Needs Assessment")
                 {
-                    ToolTip = 'Specifies the value of the Needs Assessment field.', Comment = '%';
+                    Caption = 'Needs Assessment';
                 }
-                field("Project No."; Rec."Project No.")
+                field(projectNo; Rec."Project No.")
                 {
-                    ToolTip = 'Specifies the value of the Project No. field.', Comment = '%';
+                    Caption = 'Project No.';
                 }
-                field("Approval Deadline"; Rec."Approval Deadline")
+                field(approvalDeadline; Rec."Approval Deadline")
                 {
-                    ToolTip = 'Specifies the value of the Approval Deadline field.', Comment = '%';
+                    Caption = 'Approval Deadline';
                 }
-                field("Production Scan Time"; Rec."Production Scan Time")
+                field(productionScanTime; Rec."Production Scan Time")
                 {
-                    ToolTip = 'Specifies the value of the Production Scan Time field.', Comment = '%';
+                    Caption = 'Production Scan Time';
                 }
-                field("Modified Location Code"; Rec."Modified Location Code")
+                field(modifiedLocationCode; Rec."Modified Location Code")
                 {
-                    ToolTip = 'Specifies the value of the Modified Location Code field.', Comment = '%';
+                    Caption = 'Modified Location Code';
                 }
-                field("WMDM POS"; Rec."WMDM POS")
+                field(wmdmPOS; Rec."WMDM POS")
                 {
-                    ToolTip = 'Specifies the value of the Warehouse Insight POS field.', Comment = '%';
+                    Caption = 'Warehouse Insight POS';
                 }
-                field("Net Amt. Authorized (LCY) -CL-"; Rec."Net Amt. Authorized (LCY) -CL-")
+                field(netAmtAuthorizedLCYCL; Rec."Net Amt. Authorized (LCY) -CL-")
                 {
-                    ToolTip = 'Specifies a sum of the Signed Transaction Amount field for all approved authorize transactions attached to this sales document. The amount is displayed in your local currency.';
+                    Caption = 'Net Amount Authorized ($)';
                 }
-                field("Net Amt to Auth-Sale (LCY)-CL-"; Rec."Net Amt to Auth-Sale (LCY)-CL-")
+                field(netAmtToAuthSaleLCYCL; Rec."Net Amt to Auth-Sale (LCY)-CL-")
                 {
-                    ToolTip = 'Specifies a sum of the Signed Transaction Amount field for all authorize and reversal transactions attached to this sales document that are currently in the Queue. The amount is displayed in your local currency.';
+                    Caption = 'Net Amt. to Auth.-Sale ($)';
                 }
-                field("Net Amt. Auth.-Sale (LCY) -CL-"; Rec."Net Amt. Auth.-Sale (LCY) -CL-")
+                field(netAmtAuthSaleLCYCL; Rec."Net Amt. Auth.-Sale (LCY) -CL-")
                 {
-                    ToolTip = 'Specifies a sum of the Signed Transaction Amount field for all approved authorize transactions attached to this sales document. The amount is displayed in your local currency.';
+                    Caption = 'Net Amt. Authorized-Sale ($)';
                 }
-                field("Net Amt. Auth.-Hold (LCY) -CL-"; Rec."Net Amt. Auth.-Hold (LCY) -CL-")
+                field(netAmtAuthHoldLCYCL; Rec."Net Amt. Auth.-Hold (LCY) -CL-")
                 {
-                    ToolTip = 'Specifies the value of the Net Amt. Auth. On Hold (LCY) field.', Comment = '%';
+                    Caption = 'Net Amt. Auth. On Hold (LCY)';
                 }
-                field("Net Amt. to Auth. (LCY) -CL-"; Rec."Net Amt. to Auth. (LCY) -CL-")
+                field(netAmtToAuthLCYCL; Rec."Net Amt. to Auth. (LCY) -CL-")
                 {
-                    ToolTip = 'Specifies a sum of the Signed Transaction Amount field for all authorize and reversal transactions attached to this sales document that are currently in the Queue. The amount is displayed in your local currency.';
+                    Caption = 'Net Amount to Authorize ($)';
                 }
-                field("Net Amt. to Stl-Sale (LCY)-CL-"; Rec."Net Amt. to Stl-Sale (LCY)-CL-")
+                field(netAmtToStlSaleLCYCL; Rec."Net Amt. to Stl-Sale (LCY)-CL-")
                 {
-                    ToolTip = 'Specifies a sum of the Signed Transaction Amount field for all charge, settle, capture, refund, and credit transactions attached to this sales document that are currently in the Queue. The amount is displayed in your local currency.';
+                    Caption = 'Net Amt. to Settle-Sale ($)';
                 }
-                field("Net Amt. to Settle (LCY) -CL-"; Rec."Net Amt. to Settle (LCY) -CL-")
+                field(netAmtToSettleLCYCL; Rec."Net Amt. to Settle (LCY) -CL-")
                 {
-                    ToolTip = 'Specifies a sum of the Signed Transaction Amount field for all charge, settle, capture, refund, and credit transactions attached to this sales document that are currently in the Queue. The amount is displayed in your local currency.';
+                    Caption = 'Net Amount to Settle ($)';
                 }
-                field("Net Amount Settled (LCY) -CL-"; Rec."Net Amount Settled (LCY) -CL-")
+                field(netAmountSettledLCYCL; Rec."Net Amount Settled (LCY) -CL-")
                 {
-                    ToolTip = 'Specifies a sum of the Signed Transaction Amount field for all approved charge, settle, capture, refund, and credit transactions attached to this sales document. The amount is displayed in your local currency.';
+                    Caption = 'Net Amount Settled ($)';
                 }
-                field("Net Amt. Set.-Sale (LCY) -CL-"; Rec."Net Amt. Set.-Sale (LCY) -CL-")
+                field(netAmtSetSaleLCYCL; Rec."Net Amt. Set.-Sale (LCY) -CL-")
                 {
-                    ToolTip = 'Specifies a sum of the Signed Transaction Amount field for all approved charge, settle, capture, refund, and credit transactions attached to this sales document. The amount is displayed in your local currency.';
+                    Caption = 'Net Amount Settled-Sale ($)';
                 }
-                field("Amount Paid (LCY) -CL-"; Rec."Amount Paid (LCY) -CL-")
+                field(amountPaidLCYCL; Rec."Amount Paid (LCY) -CL-")
                 {
-                    ToolTip = 'Specifies the value of the Amount Paid (LCY) field.', Comment = '%';
+                    Caption = 'Amount Paid (LCY)';
                 }
-                field("Sell-to Phone No. -CL-"; Rec."Sell-to Phone No. -CL-")
+                field(sellToPhoneNoCL; Rec."Sell-to Phone No. -CL-")
                 {
-                    ToolTip = 'Specifies the value of the Sell-to Phone No. field.', Comment = '%';
+                    Caption = 'Sell-to Phone No.';
                 }
-                field("Bill-to Phone No. -CL-"; Rec."Bill-to Phone No. -CL-")
+                field(billToPhoneNoCL; Rec."Bill-to Phone No. -CL-")
                 {
-                    ToolTip = 'Specifies the value of the Phone No. field.', Comment = '%';
+                    Caption = 'Phone No.';
                 }
-                field("Ship-to Phone No. -CL-"; Rec."Ship-to Phone No. -CL-")
+                field(shipToPhoneNoCL; Rec."Ship-to Phone No. -CL-")
                 {
-                    ToolTip = 'Specifies the value of the Ship-to Phone No. field.';
+                    Caption = 'Ship-to Phone No.';
                 }
-                field("Bill-to Federal ID No. -CL-"; Rec."Bill-to Federal ID No. -CL-")
+                field(billToFederalIDNoCL; Rec."Bill-to Federal ID No. -CL-")
                 {
-                    ToolTip = 'Specifies the value of the Bill-to Federal ID No. field.', Comment = '%';
+                    Caption = 'Bill-to Federal ID No.';
                 }
-                field("Bill-to ID No. -CL-"; Rec."Bill-to ID No. -CL-")
+                field(billToIDNoCL; Rec."Bill-to ID No. -CL-")
                 {
-                    ToolTip = 'Specifies the value of the Bill-to Identification No. field.', Comment = '%';
+                    Caption = 'Bill-to Identification No.';
                 }
-                field("Bill-to ID County -CL-"; Rec."Bill-to ID County -CL-")
+                field(billToIDCountyCL; Rec."Bill-to ID County -CL-")
                 {
-                    ToolTip = 'Specifies the value of the Bill-to Identification State field.', Comment = '%';
+                    Caption = 'Bill-to Identification State';
                 }
-                field("Account Number -CL-"; Rec."Account Number -CL-")
+                field(accountNumberCL; Rec."Account Number -CL-")
                 {
-                    ToolTip = 'Specifies the Account Number related to this sales invoice.';
+                    Caption = 'Account Number';
                 }
-                field("Expiration Month -CL-"; Rec."Expiration Month -CL-")
+                field(expirationMonthCL; Rec."Expiration Month -CL-")
                 {
-                    ToolTip = 'Specifies the Expiration Month related to this sales invoice, if applicable.';
+                    Caption = 'Expiration Month';
                 }
-                field("Expiration Year -CL-"; Rec."Expiration Year -CL-")
+                field(expirationYearCL; Rec."Expiration Year -CL-")
                 {
-                    ToolTip = 'Specifies the Expiration Year related to this sales invoice, if applicable.';
+                    Caption = 'Expiration Year';
                 }
-                field("Routing Number -CL-"; Rec."Routing Number -CL-")
+                field(routingNumberCL; Rec."Routing Number -CL-")
                 {
-                    ToolTip = 'Specifies the Routing Number related to this sales invoice, if applicable.';
+                    Caption = 'Routing Number';
                 }
-                field("Check Type -CL-"; Rec."Check Type -CL-")
+                field(checkTypeCL; Rec."Check Type -CL-")
                 {
-                    ToolTip = 'Specifies the Check Type related to this sales credit memo, if applicable.';
+                    Caption = 'Check Type';
                 }
-                field("Hash -CL-"; Rec."Hash -CL-")
+                field(hashCL; Rec."Hash -CL-")
                 {
-                    ToolTip = 'Specifies the value of the Hash field.', Comment = '%';
+                    Caption = 'Hash';
                 }
-                field("Card Type -CL-"; Rec."Card Type -CL-")
+                field(cardTypeCL; Rec."Card Type -CL-")
                 {
-                    ToolTip = 'Specifies the value of the Card Type field.', Comment = '%';
+                    Caption = 'Card Type';
                 }
-                field("Account Type -CL-"; Rec."Account Type -CL-")
+                field(accountTypeCL; Rec."Account Type -CL-")
                 {
-                    ToolTip = 'Specifies the Account Type related to this sales invoice.';
+                    Caption = 'Account Type';
                 }
-                field("Encryption Salt -CL-"; Rec."Encryption Salt -CL-")
+                field(encryptionSaltCL; Rec."Encryption Salt -CL-")
                 {
-                    ToolTip = 'Specifies the value of the Encryption Salt field.', Comment = '%';
+                    Caption = 'Encryption Salt';
                 }
-                field("Protected Account Number -CL-"; Rec."Protected Account Number -CL-")
+                field(protectedAccountNumberCL; Rec."Protected Account Number -CL-")
                 {
-                    ToolTip = 'Specifies the value of the Protected Account Number field.', Comment = '%';
+                    Caption = 'Protected Account Number';
                 }
-                field("EFT Tender Type -CL-"; Rec."EFT Tender Type -CL-")
+                field(eftTenderTypeCL; Rec."EFT Tender Type -CL-")
                 {
-                    ToolTip = 'Specifies the value of the EFT Tender Type field.', Comment = '%';
+                    Caption = 'EFT Tender Type';
                 }
-                field("EFT Customer Link Type -CL-"; Rec."EFT Customer Link Type -CL-")
+                field(eftCustomerLinkTypeCL; Rec."EFT Customer Link Type -CL-")
                 {
-                    ToolTip = 'Specifies the value of the EFT Customer Link Type field.', Comment = '%';
+                    Caption = 'EFT Customer Link Type';
                 }
-                field("EFT Customer Link No. -CL-"; Rec."EFT Customer Link No. -CL-")
+                field(eftCustomerLinkNoCL; Rec."EFT Customer Link No. -CL-")
                 {
-                    ToolTip = 'Specifies the value of the EFT Customer Link No. field.', Comment = '%';
+                    Caption = 'EFT Customer Link No.';
                 }
-                field("EFT Cust. Link Line No. -CL-"; Rec."EFT Cust. Link Line No. -CL-")
+                field(eftCustLinkLineNoCL; Rec."EFT Cust. Link Line No. -CL-")
                 {
-                    ToolTip = 'Specifies the value of the EFT Customer Link Line No. field.', Comment = '%';
+                    Caption = 'EFT Customer Link Line No.';
                 }
-                field("Account Number Prot. Type -CL-"; Rec."Account Number Prot. Type -CL-")
+                field(accountNumberProtTypeCL; Rec."Account Number Prot. Type -CL-")
                 {
-                    ToolTip = 'Specifies the value of the Account Number Protection Type field.', Comment = '%';
+                    Caption = 'Account Number Protection Type';
                 }
-                field("EFT Order ID -CL-"; Rec."EFT Order ID -CL-")
+                field(eftOrderIDCL; Rec."EFT Order ID -CL-")
                 {
-                    ToolTip = 'Specifies the value of the EFT Order ID field.', Comment = '%';
+                    Caption = 'EFT Order ID';
                 }
-                field("EFT Store No. -CL-"; Rec."EFT Store No. -CL-")
+                field(eftStoreNoCL; Rec."EFT Store No. -CL-")
                 {
-                    ToolTip = 'Specifies the number of the store associated with the transaction.';
+                    Caption = 'EFT Store No.';
                 }
-                field("Electronic Invoice Type -CL-"; Rec."Electronic Invoice Type -CL-")
+                field(electronicInvoiceTypeCL; Rec."Electronic Invoice Type -CL-")
                 {
-                    ToolTip = 'Specifies the Electronic Invoice Type for this sales invoice.  Please note the value should be set to None if the customer''s invoices and credit memos are currently being sent to the Versapay Cloud Platform.';
+                    Caption = 'Electronic Invoice Type';
                 }
-                field("POS Type -CL-"; Rec."POS Type -CL-")
+                field(posTypeCL; Rec."POS Type -CL-")
                 {
-                    ToolTip = 'Specifies the type of the transaction.';
+                    Caption = 'POS Type';
                 }
-                field("EFT Terminal No. -CL-"; Rec."EFT Terminal No. -CL-")
+                field(eftTerminalNoCL; Rec."EFT Terminal No. -CL-")
                 {
-                    ToolTip = 'Specifies the value of the EFT Terminal No. field.', Comment = '%';
+                    Caption = 'EFT Terminal No.';
                 }
-                field("EFT Gateway No. -CL-"; Rec."EFT Gateway No. -CL-")
+                field(eftGatewayNoCL; Rec."EFT Gateway No. -CL-")
                 {
-                    ToolTip = 'Specifies the value of the EFT Gateway No. field.', Comment = '%';
+                    Caption = 'EFT Gateway No.';
                 }
-                field("EFT Gateway Account No."; Rec."EFT Gateway Account No.")
+                field(eftGatewayAccountNo; Rec."EFT Gateway Account No.")
                 {
-                    ToolTip = 'Specifies the value of the EFT Gateway Account No. field.', Comment = '%';
+                    Caption = 'EFT Gateway Account No.';
                 }
-                field("EFT GUID -CL-"; Rec."EFT GUID -CL-")
+                field(eftGUIDCL; Rec."EFT GUID -CL-")
                 {
-                    ToolTip = 'Specifies the value of the EFT GUID field.', Comment = '%';
+                    Caption = 'EFT GUID';
                 }
-                field("Click-to-Pay URL -CL-"; Rec."Click-to-Pay URL -CL-")
+                field(clickToPayURLCL; Rec."Click-to-Pay URL -CL-")
                 {
-                    ToolTip = 'Specifies the value of the Click-to-Pay URL field.', Comment = '%';
+                    Caption = 'Click-to-Pay URL';
                 }
-                field("No. E-mailed -CL-"; Rec."No. E-mailed -CL-")
+                field(noEMailedCL; Rec."No. E-mailed -CL-")
                 {
-                    ToolTip = 'Specifies the number of times the Electronic Payment Request has been emailed.';
+                    Caption = 'No. E-mailed';
                 }
-                field("EFT Gateway Account No. -CL-"; Rec."EFT Gateway Account No. -CL-")
+                field(eftGatewayAccountNoCL; Rec."EFT Gateway Account No. -CL-")
                 {
-                    ToolTip = 'Specifies the value of the EFT Gateway Account No. field.', Comment = '%';
+                    Caption = 'EFT Gateway Account No.';
                 }
-                field("Issuer ID No. -CL-"; Rec."Issuer ID No. -CL-")
+                field(issuerIDNoCL; Rec."Issuer ID No. -CL-")
                 {
-                    ToolTip = 'Specifies the value of the Issuer Identification Number field.', Comment = '%';
+                    Caption = 'Issuer Identification Number';
                 }
-                field("Demand Deposit Acct. Type -CL-"; Rec."Demand Deposit Acct. Type -CL-")
+                field(demandDepositAcctTypeCL; Rec."Demand Deposit Acct. Type -CL-")
                 {
-                    ToolTip = 'Specifies the Demand Deposit Account Type related to this sales credit memo, if applicable.';
+                    Caption = 'Demand Deposit Account Type';
                 }
-                field("Layaway Terms Code -CL-"; Rec."Layaway Terms Code -CL-")
+                field(layawayTermsCodeCL; Rec."Layaway Terms Code -CL-")
                 {
-                    ToolTip = 'Specifies the value of the Layaway Terms Code field.', Comment = '%';
+                    Caption = 'Layaway Terms Code';
                 }
-                field("Layaway -CL-"; Rec."Layaway -CL-")
+                field(layawayCL; Rec."Layaway -CL-")
                 {
-                    ToolTip = 'Specifies the value of the Layaway field.', Comment = '%';
+                    Caption = 'Layaway';
                 }
-                field("Cashier Number -CL-"; Rec."Cashier Number -CL-")
+                field(cashierNumberCL; Rec."Cashier Number -CL-")
                 {
-                    ToolTip = 'Specifies the cashier who started the sale';
+                    Caption = 'Cashier Number';
                 }
-                field("Prevent Acc. Num. Entry -CL-"; Rec."Prevent Acc. Num. Entry -CL-")
+                field(preventAccNumEntryCL; Rec."Prevent Acc. Num. Entry -CL-")
                 {
-                    ToolTip = 'Specifies the value of the Prevent Account Number Entry field.', Comment = '%';
+                    Caption = 'Prevent Account Number Entry';
                 }
-                field("Surcharge to Auth-Sale -CL-"; Rec."Surcharge to Auth-Sale -CL-")
+                field(surchargeToAuthSaleCL; Rec."Surcharge to Auth-Sale -CL-")
                 {
-                    ToolTip = 'Specifies the value of the Surcharge Amount to Authorize - Sale field.', Comment = '%';
+                    Caption = 'Surcharge Amount to Authorize - Sale';
                 }
-                field("Surcharge Auth.-Sale -CL-"; Rec."Surcharge Auth.-Sale -CL-")
+                field(surchargeAuthSaleCL; Rec."Surcharge Auth.-Sale -CL-")
                 {
-                    ToolTip = 'Specifies the value of the Surcharge Amount Authorized - Sale field.', Comment = '%';
+                    Caption = 'Surcharge Amount Authorized - Sale';
                 }
-                field("Surcharge to Stl-Sale -CL-"; Rec."Surcharge to Stl-Sale -CL-")
+                field(surchargeToStlSaleCL; Rec."Surcharge to Stl-Sale -CL-")
                 {
-                    ToolTip = 'Specifies the value of the Surcharge Amount to Settle - Sale field.', Comment = '%';
+                    Caption = 'Surcharge Amount to Settle - Sale';
                 }
-                field("Surcharge Set.-Sale -CL-"; Rec."Surcharge Set.-Sale -CL-")
+                field(surchargeSetSaleCL; Rec."Surcharge Set.-Sale -CL-")
                 {
-                    ToolTip = 'Specifies the value of the Surcharge Amount Settled - Sale field.', Comment = '%';
+                    Caption = 'Surcharge Amount Settled - Sale';
                 }
-                field("Surcharge to Auth. -CL-"; Rec."Surcharge to Auth. -CL-")
+                field(surchargeToAuthCL; Rec."Surcharge to Auth. -CL-")
                 {
-                    ToolTip = 'Specifies the value of the Surcharge Amount to Authorize field.', Comment = '%';
+                    Caption = 'Surcharge Amount to Authorize';
                 }
-                field("Surcharge Authorized -CL-"; Rec."Surcharge Authorized -CL-")
+                field(surchargeAuthorizedCL; Rec."Surcharge Authorized -CL-")
                 {
-                    ToolTip = 'Specifies the value of the Surcharge Amount Authorized field.', Comment = '%';
+                    Caption = 'Surcharge Amount Authorized';
                 }
-                field("Surcharge to Settle -CL-"; Rec."Surcharge to Settle -CL-")
+                field(surchargeToSettleCL; Rec."Surcharge to Settle -CL-")
                 {
-                    ToolTip = 'Specifies the value of the Surcharge Amount to Settle field.', Comment = '%';
+                    Caption = 'Surcharge Amount to Settle';
                 }
-                field("Surcharge Settled -CL-"; Rec."Surcharge Settled -CL-")
+                field(surchargeSettledCL; Rec."Surcharge Settled -CL-")
                 {
-                    ToolTip = 'Specifies the value of the Surcharge Amount Settled field.', Comment = '%';
+                    Caption = 'Surcharge Amount Settled';
                 }
-                // field("EFT Ignore Auto Workflows -CL-"; Rec."EFT Ignore Auto Workflows -CL-")
-                // {
-                //     ToolTip = 'Specifies that the auto workflows defined on EFT Setup should be ignored.';
-                // }
-                field("Do not Sync Versapay ARC -CL-"; Rec."Do not Sync Versapay ARC -CL-")
+                field(eftIgnoreAutoWorkflowsCL; Rec."EFT Ignore Auto Workflows -CL-")
                 {
-                    ToolTip = 'Specifies if the credit memo should NOT be sent to the Versapay Cloud Platform.';
+                    Caption = 'Ignore Auto Workflows';
                 }
-                field("Preview Mode -CL-"; Rec."Preview Mode -CL-")
+                field(doNotSyncVersapayARCCL; Rec."Do not Sync Versapay ARC -CL-")
                 {
-                    ToolTip = 'Specifies the value of the Preview Mode field.', Comment = '%';
+                    Caption = 'Do not Sync with the Versapay Cloud Platform';
                 }
-                // field("Manually Released -CL-"; Rec."Manually Released -CL-")
-                // {
-                //     ToolTip = 'Specifies the value of the Manually Released field.', Comment = '%';
-                // }
-                field("Order Time -CL-"; Rec."Order Time -CL-")
+                field(previewModeCL; Rec."Preview Mode -CL-")
                 {
-                    ToolTip = 'Specifies the value of the Order Time field.', Comment = '%';
+                    Caption = 'Preview Mode';
                 }
-                field(SystemCreatedAt; Rec.SystemCreatedAt)
+                field(manuallyReleasedCL; Rec."Manually Released -CL-")
                 {
-                    ToolTip = 'Specifies the value of the SystemCreatedAt field.', Comment = '%';
+                    Caption = 'Manually Released';
                 }
-                field(SystemCreatedBy; Rec.SystemCreatedBy)
+                field(orderTimeCL; Rec."Order Time -CL-")
                 {
-                    ToolTip = 'Specifies the value of the SystemCreatedBy field.', Comment = '%';
+                    Caption = 'Order Time';
                 }
-                field(SystemId; Rec.SystemId)
+                field(systemCreatedAt; Rec.SystemCreatedAt)
                 {
-                    ToolTip = 'Specifies the value of the SystemId field.', Comment = '%';
+                    Caption = 'SystemCreatedAt';
                 }
-                field(SystemModifiedAt; Rec.SystemModifiedAt)
+                field(systemCreatedBy; Rec.SystemCreatedBy)
                 {
-                    ToolTip = 'Specifies the value of the SystemModifiedAt field.', Comment = '%';
+                    Caption = 'SystemCreatedBy';
                 }
-                field(SystemModifiedBy; Rec.SystemModifiedBy)
+                field(systemId; Rec.SystemId)
                 {
-                    ToolTip = 'Specifies the value of the SystemModifiedBy field.', Comment = '%';
+                    Caption = 'SystemId';
+                }
+                field(systemModifiedAt; Rec.SystemModifiedAt)
+                {
+                    Caption = 'SystemModifiedAt';
+                }
+                field(systemModifiedBy; Rec.SystemModifiedBy)
+                {
+                    Caption = 'SystemModifiedBy';
                 }
             }
         }
