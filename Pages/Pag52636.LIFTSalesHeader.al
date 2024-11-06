@@ -4,7 +4,7 @@ page 52636 "ORB LIFT Sales Header"
     APIPublisher = 'Orbus';
     APIVersion = 'v2.0';
     ApplicationArea = All;
-    Caption = 'liftSalesHeader';
+    Caption = 'LIFT SalesHeader';
     DelayedInsert = true;
     EntityName = 'LIFTSalesHeader';
     EntitySetName = 'LIFTSalesHeader';

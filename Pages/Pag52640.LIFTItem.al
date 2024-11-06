@@ -4,7 +4,7 @@ page 52640 "ORB LIFT Item"
     APIPublisher = 'Orbus';
     APIVersion = 'v2.0';
     ApplicationArea = All;
-    Caption = 'liftItem';
+    Caption = 'LIFT Item';
     DelayedInsert = true;
     EntityName = 'LIFTItem';
     EntitySetName = 'LIFTItem';
