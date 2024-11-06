@@ -269,10 +269,10 @@ page 52636 "ORB LIFT Sales Header"
                 {
                     Caption = 'Combine Shipments';
                 }
-                field(registrationNumber; Rec."Registration Number")
-                {
-                    Caption = 'Registration No.';
-                }
+                // field(registrationNumber; Rec."Registration Number")
+                // {
+                //     Caption = 'Registration No.';
+                // }
                 field(reasonCode; Rec."Reason Code")
                 {
                     Caption = 'Reason Code';
@@ -1361,10 +1361,10 @@ page 52636 "ORB LIFT Sales Header"
                 {
                     Caption = 'Surcharge Amount Settled';
                 }
-                field(eftIgnoreAutoWorkflowsCL; Rec."EFT Ignore Auto Workflows -CL-")
-                {
-                    Caption = 'Ignore Auto Workflows';
-                }
+                // field(eftIgnoreAutoWorkflowsCL; Rec."EFT Ignore Auto Workflows -CL-")
+                // {
+                //     Caption = 'Ignore Auto Workflows';
+                // }
                 field(doNotSyncVersapayARCCL; Rec."Do not Sync Versapay ARC -CL-")
                 {
                     Caption = 'Do not Sync with the Versapay Cloud Platform';
@@ -1373,10 +1373,10 @@ page 52636 "ORB LIFT Sales Header"
                 {
                     Caption = 'Preview Mode';
                 }
-                field(manuallyReleasedCL; Rec."Manually Released -CL-")
-                {
-                    Caption = 'Manually Released';
-                }
+                // field(manuallyReleasedCL; Rec."Manually Released -CL-")
+                // {
+                //     Caption = 'Manually Released';
+                // }
                 field(orderTimeCL; Rec."Order Time -CL-")
                 {
                     Caption = 'Order Time';
