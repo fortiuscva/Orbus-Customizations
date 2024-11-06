@@ -4,7 +4,7 @@ page 52638 "ORB LIFT Sales Line"
     APIPublisher = 'orbus';
     APIVersion = 'v2.0';
     ApplicationArea = All;
-    Caption = 'liftSalesLine';
+    Caption = 'LIFT SalesLine';
     DelayedInsert = true;
     EntityName = 'LIFTSalesLine';
     EntitySetName = 'LIFTSalesLine';

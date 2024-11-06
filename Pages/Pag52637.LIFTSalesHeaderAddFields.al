@@ -4,7 +4,7 @@ page 52637 "LIFT Sales Header Add. Fields"
     APIPublisher = 'Orbus';
     APIVersion = 'v2.0';
     ApplicationArea = All;
-    Caption = 'liftSalesHeaderAddFields';
+    Caption = 'LIFT SalesHeaderAddFields';
     DelayedInsert = true;
     EntityName = 'LISTSalesHeaderAddFields';
     EntitySetName = 'LISTSalesHeaderAddFields';

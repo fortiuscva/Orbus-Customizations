@@ -4,7 +4,7 @@ page 52641 "ORB LIFT Customer"
     APIPublisher = 'Orbus';
     APIVersion = 'v2.0';
     ApplicationArea = All;
-    Caption = 'liftCustomer';
+    Caption = 'LIFT Customer';
     DelayedInsert = true;
     EntityName = 'LIFTCustomer';
     EntitySetName = 'LIFTCustomer';
