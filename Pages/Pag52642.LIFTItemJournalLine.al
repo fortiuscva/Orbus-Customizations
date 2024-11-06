@@ -753,14 +753,14 @@ page 52642 "ORB LIFT Item Journal Line"
                 {
                     Caption = 'LPM Action';
                 }
-                field(iwxProdPackageNo; Rec."IWX Prod. Package No.")
-                {
-                    Caption = 'IWX Prod. Package No.';
-                }
-                field(iwxConsPackageNo; Rec."IWX Cons. Package No.")
-                {
-                    Caption = 'IWX Cons. Package No.';
-                }
+                // field(iwxProdPackageNo; Rec."IWX Prod. Package No.")
+                // {
+                //     Caption = 'IWX Prod. Package No.';
+                // }
+                // field(iwxConsPackageNo; Rec."IWX Cons. Package No.")
+                // {
+                //     Caption = 'IWX Cons. Package No.';
+                // }
                 field(overheadRate; Rec."Overhead Rate")
                 {
                     Caption = 'Overhead Rate';
