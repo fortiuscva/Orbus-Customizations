@@ -188,6 +188,12 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             Caption = 'Freight Line';
             Editable = false;
         }
+        field(52652; "ORB Lift Order"; Boolean)
+        {
+
+            Caption = 'Lift Order';
+
+        }
     }
 
 
