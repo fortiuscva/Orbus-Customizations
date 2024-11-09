@@ -117,8 +117,10 @@ codeunit 52610 "ORB LIFTSales OrderData"
         if GetValueAsText(JsonOrderLineToken, 'TYPE') = 'Item' then
             SalesLine.Type := SalesLine.Type::Item;
         if SalesLine.Type = SalesLine.Type::Item then begin
-            SalesLine.Validate(SalesLine."No.", GetValueAsCode(JsonOrderLineToken, 'VARIANT_CODE'));
-            SalesLine.Validate(Quantity, GetValueAsDecimal(JsonOrderLineToken, 'QUANTITY'));
+            if (GetValueAsCode(JsonOrderLineToken, 'VARIANT_CODE') <> '') then begin
+                SalesLine.Validate(SalesLine."No.", GetValueAsCode(JsonOrderLineToken, 'VARIANT_CODE'));
+                SalesLine.Validate(Quantity, GetValueAsDecimal(JsonOrderLineToken, 'QUANTITY'));
+            end;
         end;
         SalesLine.Modify(true);
     end;
