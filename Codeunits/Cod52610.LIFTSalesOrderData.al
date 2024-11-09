@@ -95,6 +95,7 @@ codeunit 52610 "ORB LIFTSales OrderData"
         SalesHeader.Validate("Sell-to Customer No.", GetValueAsCode(JsonOrderToken, 'SELL_TO_CUSTOMER'));
         SalesHeader.Validate("Bill-to Customer No.", GetValueAsCode(JsonOrderToken, 'BILL_TO_CUSTOMER'));
         SalesHeader.Validate("Document Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderToken, 'DOCUMENT_DATE'))));
+        SalesHeader."ORB Lift Order" := true;
         SalesHeader.Modify(true);
     end;
 
@@ -107,14 +108,18 @@ codeunit 52610 "ORB LIFTSales OrderData"
         SalesLine.init();
         SalesLine."Document Type" := SalesHeader."Document Type";
         SalesLine."Document No." := SalesHeader."No.";
-        SalesLine."Line No." := GetValueAsDecimal(JsonOrderLineToken, 'LINE_NUMBER');
+
+        SalesLine."Line No." := GetLastLineNo(SalesHeader);
+        //SalesLine."Line No." := GetValueAsDecimal(JsonOrderLineToken, 'LINE_NUMBER');
         SalesLine.Insert(true);
-        if GetValueAsText(JsonOrderLineToken, 'TYPE') = 'COMMENT' then
+        if GetValueAsText(JsonOrderLineToken, 'TYPE') = 'Comment' then
             SalesLine.Type := SalesLine.Type::" ";
-        if GetValueAsText(JsonOrderLineToken, 'TYPE') = 'ITEM' then
+        if GetValueAsText(JsonOrderLineToken, 'TYPE') = 'Item' then
             SalesLine.Type := SalesLine.Type::Item;
-        SalesLine.Validate(SalesLine."No.", GetValueAsCode(JsonOrderLineToken, 'VARIANT_CODE'));
-        SalesLine.Validate(Quantity, GetValueAsDecimal(JsonOrderLineToken, 'QUANTITY'));
+        if SalesLine.Type = SalesLine.Type::Item then begin
+            SalesLine.Validate(SalesLine."No.", GetValueAsCode(JsonOrderLineToken, 'VARIANT_CODE'));
+            SalesLine.Validate(Quantity, GetValueAsDecimal(JsonOrderLineToken, 'QUANTITY'));
+        end;
         SalesLine.Modify(true);
     end;
 
@@ -135,6 +140,8 @@ codeunit 52610 "ORB LIFTSales OrderData"
             if NOT JToken.AsValue().IsNull() then
                 exit(JToken.AsValue().AsDecimal());
     end;
+
+
 
     procedure GetValueAsText(JToken: JsonToken; ParamString: Text): Text
     var
@@ -160,6 +167,7 @@ codeunit 52610 "ORB LIFTSales OrderData"
         exit(SelectJsonToken(JObject, ParamString));
     end;
 
+
     local procedure EvaluateUTCDateTime(DataTimeText: Text) EvaluatedDateTime: DateTime;
     var
         TypeHelper: Codeunit "Type Helper";
@@ -170,4 +178,17 @@ codeunit 52610 "ORB LIFTSales OrderData"
             EvaluatedDateTime := ValueTest;
     end;
 
+    local procedure GetLastLineNo(SalesHeader: Record "Sales Header"): Integer
+    var
+        salesline: Record "Sales Line";
+    begin
+        salesline.SetRange("Document Type", SalesHeader."Document Type");
+        salesline.SetRange("Document No.", SalesHeader."No.");
+        if salesline.FindLast() then
+            exit(salesline."Line No." + 10000);
+        exit(10000);
+    end;
+
+    var
+        LineNo: Integer;
 }
