@@ -37,6 +37,11 @@ codeunit 52610 "ORB LIFTSales OrderData"
         JsonObject: JsonObject;
         JsonArray: JsonArray;
         JsonToken: JsonToken;
+        JsonTokenLines: JsonToken;
+        JsonObjectOrder: JsonObject;
+        JsonArrayLines: JsonArray;
+        JsonTokenLine: JsonToken;
+        JsonOrderToken: JsonToken;
         i: Integer;
     begin
         if GetRequest(JsonResponse) then begin
@@ -47,7 +52,14 @@ codeunit 52610 "ORB LIFTSales OrderData"
             JsonArray := JsonToken.AsArray();
             for i := 0 to JsonArray.Count - 1 do begin
                 JsonArray.Get(i, JsonToken);
-                JsonObject := JsonToken.AsObject();
+                JsonObjectOrder := JsonToken.AsObject();
+                JsonObjectOrder.Get('ORDER_NUMBER', JsonOrderToken);
+                Message(Format(JsonOrderToken));
+                JsonObjectOrder.Get('LINES', JsonTokenLines);
+                JsonArrayLines := JsonTokenLines.AsArray();
+                foreach jsontokenLine in JsonArrayLines do begin
+                    Message(Format(JsonTokenLine));
+                end;
             end;
         end;
     end;
