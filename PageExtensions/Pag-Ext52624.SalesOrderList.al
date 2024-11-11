@@ -85,7 +85,7 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
                 var
                     CU: Codeunit "ORB LIFTSales OrderData";
                 begin
-                    cu.ParseData();
+                    cu.ParseData('https://orbus.lifterp.com/ords/lifterp/lift/erp/flush/ondemand/1422/Orders/N?offset=0&p1=O0000003', 'SALESORDERS');
                 end;
             }
 
