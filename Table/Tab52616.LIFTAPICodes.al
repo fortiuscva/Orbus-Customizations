@@ -1,6 +1,6 @@
-table 52616 "ORB API Codes"
+table 52616 "ORB LIFT API Codes"
 {
-    Caption = 'API Codes';
+    Caption = 'LIFT API Codes';
     DataClassification = ToBeClassified;
 
     fields

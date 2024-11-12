@@ -1,9 +1,9 @@
-page 52643 "ORB API Codes"
+page 52643 "ORB LIFT API Codes"
 {
     ApplicationArea = All;
-    Caption = 'ORB API Codes';
+    Caption = 'LIFT API Codes';
     PageType = List;
-    SourceTable = "ORB API Codes";
+    SourceTable = "ORB LIFT API Codes";
     UsageCategory = Lists;
 
     layout
