@@ -1,8 +1,7 @@
-codeunit 52610 "ORB LIFTSales OrderData"
+codeunit 52610 "ORB LIFT Integration"
 {
     procedure ParseData(APIURLPar: Text[1024]; APICodePar: code[20])
     var
-        Salesheader: Record "Sales Header";
         JsonResponse: text;
     begin
         if GetRequest(APIURLPar, APICodePar, JsonResponse) then begin
@@ -177,28 +176,4 @@ codeunit 52610 "ORB LIFTSales OrderData"
             end;
         end;
     end;
-
-    procedure GetSalesOrderAPICode() APICode: Code[20]
-    begin
-        Clear(APICodeRecGbl);
-        if APICodeRecGbl.GET('SALESORDERS') then
-            APICode := APICodeRecGbl.Code;
-    end;
-
-    procedure GetCustomersAPICode() APICode: Code[20]
-    begin
-        Clear(APICodeRecGbl);
-        if APICodeRecGbl.GET('CUSTOMERS') then
-            APICode := APICodeRecGbl.Code;
-    end;
-
-    procedure GetItemsAPICode() APICode: Code[20]
-    begin
-        Clear(APICodeRecGbl);
-        if APICodeRecGbl.GET('ITEMS') then
-            APICode := APICodeRecGbl.Code;
-    end;
-
-    var
-        APICodeRecGbl: Record "ORB API Codes";
 }

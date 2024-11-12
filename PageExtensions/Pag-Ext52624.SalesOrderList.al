@@ -83,9 +83,12 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
                 ApplicationArea = all;
                 trigger OnAction()
                 var
-                    CU: Codeunit "ORB LIFTSales OrderData";
+                    LIFTERPSetupRecLcl: Record "ORB LIFT ERP Setup";
+                    LIFTIntegration: Codeunit "ORB LIFT Integration";
+                    LIFTAPICodes: Codeunit "ORB LIFT API Codes";
                 begin
-                    cu.ParseData('https://orbus.lifterp.com/ords/lifterp/lift/erp/flush/ondemand/1422/Orders/N?offset=0&p1=O0000003', 'SALESORDERS');
+                    LIFTERPSetupRecLcl.Get();
+                    LIFTIntegration.ParseData(LIFTERPSetupRecLcl."Sales Orders API", LIFTAPICodes.GetSalesOrderAPICode());
                 end;
             }
 
