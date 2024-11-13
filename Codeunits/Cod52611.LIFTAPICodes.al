@@ -1,8 +1,10 @@
 codeunit 52611 "ORB LIFT API Codes"
 {
 
-    Subtype = Install;
-    trigger OnInstallAppPerCompany()
+    Permissions = tabledata "ORB LIFT API Codes" = rmid;
+    Subtype = Upgrade;
+
+    trigger OnUpgradePerCompany()
     begin
         CreateAPICodesData();
     end;
