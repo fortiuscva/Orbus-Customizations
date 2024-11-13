@@ -65,6 +65,31 @@ codeunit 52610 "ORB LIFT Integration"
             end;
         end;
         SalesLine.Modify(true);
+
+        InsertIntergationDataLog(Database::"Sales Header", 1, SalesLine."Document No.", SalesLine."Line No.");
+    end;
+
+    procedure InsertIntergationDataLog(SourceType: Integer; SourceSubType: Integer; SourceNo: Code[20]; SourceLineNo: Integer)
+    var
+        LIFTIntegrationDataLogRecLcl: Record "ORB LIFT Integration Data Log";
+        EntryNoVarLcl: Integer;
+    begin
+        LIFTIntegrationDataLogRecLcl.Reset();
+        //LIFTIntegrationDataLogRecLcl.SetCurrentKey("Source Type","Source Subtype","Source No.");
+        if LIFTIntegrationDataLogRecLcl.FindLast() then
+            EntryNoVarLcl := LIFTIntegrationDataLogRecLcl."Entry No." + 1
+        else
+            EntryNoVarLcl := 1;
+
+
+        LIFTIntegrationDataLogRecLcl.Init();
+        LIFTIntegrationDataLogRecLcl."Entry No." := EntryNoVarLcl;
+        LIFTIntegrationDataLogRecLcl."Source Type" := SourceType;
+        LIFTIntegrationDataLogRecLcl."Source Subtype" := SourceSubType;
+        LIFTIntegrationDataLogRecLcl."Source No." := SourceNo;
+        LIFTIntegrationDataLogRecLcl."Source Line No." := SourceLineNo;
+        LIFTIntegrationDataLogRecLcl.Insert();
+
     end;
 
     procedure SelectJsonToken(JObject: JsonObject; Path: Text): Text
