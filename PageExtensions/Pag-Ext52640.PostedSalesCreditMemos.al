@@ -2,7 +2,7 @@ pageextension 52640 "ORB Posted Sales Credit Memos" extends "Posted Sales Credit
 {
     layout
     {
-        addafter(Control1)
+        addafter(Group)
         {
             field("ORB Your Reference"; Rec."Your Reference")
             {
