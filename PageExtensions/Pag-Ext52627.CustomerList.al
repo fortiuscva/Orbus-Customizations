@@ -43,6 +43,23 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
                 ToolTip = 'Regional Sales Executive';
                 Caption = 'Regional Sales Executive';
             }
+            field("ORB Business Development"; Rec."ORB Business Development")
+            {
+                ApplicationArea = All;
+                Editable = false;
+                ToolTip = 'Business Development';
+                Caption = 'Business Development';
+            }
+        }
+        addafter("Sales (LCY)")
+        {
+            field("ORB Total Sales - Fiscal Year"; Rec."ORB Total Sales - Fiscal Year")
+            {
+                ApplicationArea = All;
+                Editable = false;
+                ToolTip = 'Total Sales($) Year to date';
+                Caption = 'Total Sales - Fiscal Year';
+            }
 
         }
         modify("Salesperson Code")
@@ -85,6 +102,14 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
         StreetAddressVarGbl: Text;
         ShiptoZipcodeVarGbl: Text;
 
+    trigger OnOpenPage()
+    var
+        FirstDayOfYearVarLcl: Date;
+    begin
+        FirstDayOfYearVarLcl := CALCDATE('<-CY>', today);
+        Rec.SetRange("ORB Year To Date Filter", FirstDayOfYearVarLcl, Today);
+    end;
+
     trigger OnAfterGetRecord()
     Var
         ShiptoAddressRecLcl: Record "Ship-to Address";
@@ -100,4 +125,6 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
             ShiptoZipcodeVarGbl := '';
         end;
     end;
+
+
 }
