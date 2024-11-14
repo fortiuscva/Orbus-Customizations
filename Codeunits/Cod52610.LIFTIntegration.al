@@ -166,7 +166,7 @@ codeunit 52610 "ORB LIFT Integration"
             'SALESORDERS':
                 SalesOrderDataRead(ResponsePar);
             'CUSTOMERS':
-                SalesOrderDataRead(ResponsePar);
+                CustomerDataRead(ResponsePar);
             'ITEMS':
                 SalesOrderDataRead(ResponsePar);
         End;
@@ -201,4 +201,44 @@ codeunit 52610 "ORB LIFT Integration"
             end;
         end;
     end;
+
+    procedure CustomerDataRead(ResponsePar: text)
+    var
+        CustomerRecLcl: Record Customer;
+        JsonObject: JsonObject;
+        JsonArray: JsonArray;
+        JsonToken: JsonToken;
+        JsonTokenLines: JsonToken;
+        JsonObjectOrder: JsonObject;
+        JsonArrayLines: JsonArray;
+        JsonTokenLine: JsonToken;
+        JsonOrderToken: JsonToken;
+        i: Integer;
+    begin
+        if not JsonObject.ReadFrom(ResponsePar) then
+            Error('Not valid Json');
+        if not JsonObject.Get('rowset', JsonToken) then
+            Error('Not Valid data');
+        JsonArray := JsonToken.AsArray();
+        for i := 0 to JsonArray.Count - 1 do begin
+            JsonArray.Get(i, JsonToken);
+            JsonObjectOrder := JsonToken.AsObject();
+            CreateCustomer(CustomerRecLcl, JsonObjectOrder);
+        end;
+    end;
+
+    local procedure CreateCustomer(var Customer: Record Customer; jsonOrderObject: JsonObject)
+    var
+        JsonOrderToken: JsonToken;
+    begin
+        JsonOrderToken := jsonOrderObject.AsToken();
+        Customer.Init();
+        Customer."No." := GetValueAsCode(JsonOrderToken, 'CustomerNumber');
+        Customer.Name := GetValueAsText(JsonOrderToken, 'CustomerName');
+        Customer."ORB LIFT Customer" := true;
+        Customer.Modify(true);
+
+        InsertIntergationDataLog(Database::Customer, 0, Customer."No.", 0);
+    end;
+
 }

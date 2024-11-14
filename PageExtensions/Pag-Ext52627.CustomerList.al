@@ -51,6 +51,35 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
 
         }
     }
+    actions
+    {
+        addafter("Bank Accounts")
+        {
+            action("ORB Process LIFT Customers")
+            {
+                Image = Order;
+                ApplicationArea = all;
+                Caption = 'Process LIFT Customers';
+                trigger OnAction()
+                var
+                    LIFTERPSetupRecLcl: Record "ORB LIFT ERP Setup";
+                    LIFTIntegrationDataLogRecLcl: Record "ORB LIFT Integration Data Log";
+                    LIFTIntegration: Codeunit "ORB LIFT Integration";
+                    LIFTAPICodes: Codeunit "ORB LIFT API Codes";
+                begin
+                    LIFTERPSetupRecLcl.Get();
+                    LIFTIntegrationDataLogRecLcl.Reset();
+                    LIFTIntegrationDataLogRecLcl.SetCurrentKey("Source Type", "Source Subtype", "Source No.");
+                    LIFTIntegrationDataLogRecLcl.SetRange("Source Type", Database::Customer);
+                    LIFTIntegrationDataLogRecLcl.SetRange("Source Type", 0);
+                    if LIFTIntegrationDataLogRecLcl.FindLast() then
+                        LIFTIntegration.ParseData(LIFTERPSetupRecLcl."Customers API" + '&p1=' + LIFTIntegrationDataLogRecLcl."Source No.", LIFTAPICodes.GetCustomersAPICode())
+                    else
+                        LIFTIntegration.ParseData(LIFTERPSetupRecLcl."Customers API", LIFTAPICodes.GetCustomersAPICode());
+                end;
+            }
+        }
+    }
 
     Var
         StreetAddressVarGbl: Text;
