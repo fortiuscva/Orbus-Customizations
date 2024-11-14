@@ -68,6 +68,7 @@ tableextension 52603 "ORB Customer" extends Customer
             TableRelation = "Salesperson/Purchaser" where(Blocked = const(false));
             DataClassification = CustomerContent;
         }
+
         field(52604; "ORB Business Development"; Code[20])
         {
             Caption = 'Business Development';
@@ -90,6 +91,12 @@ tableextension 52603 "ORB Customer" extends Customer
                                                                         "Global Dimension 2 Code" = field("Global Dimension 2 Filter"),
                                                                         "Posting Date" = field("ORB Year To Date Filter"),
                                                                          "Currency Code" = field("Currency Filter")));
+        }
+
+        field(52610; "ORB LIFT Customer"; boolean)
+        {
+            Caption = 'LIFT Customer';
+            DataClassification = CustomerContent;
         }
         modify("Salesperson Code")
         {
