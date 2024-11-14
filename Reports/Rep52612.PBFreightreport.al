@@ -95,82 +95,82 @@ report 52612 "ORB PB Freightreport"
                         InvoicedFreightChargeGvar := InvoicedFreightChargeGvar + SalesInvoiceLineRecLcl."Amount";
                     until (SalesInvoiceLineRecLcl.next = 0);
                     FreightChargedataTableRecLcl.Invoiced_FRT_Charge := InvoicedFreightChargeGvar;
-                    //LicensePlateDetails
-                    IWXLPHeaderRecLcl.Reset();
-                    if "Sales Invoice Header"."Order No." <> '' then begin
-                        IWXLPHeaderRecLcl.SetRange("Shipped Source No.", "Sales Invoice Header"."Order No.");
-                        LPcountVarLcl := IWXLPHeaderRecLcl.count;
-                        IF IWXLPHeaderRecLcl.FindSet() then begin
-                            repeat
-                                LicenePlateShipmentDtTxGvar := Format(IWXLPHeaderRecLcl."Shipment Date");
-                                DSHIPLabelDataRecLcl.Reset();
-                                DSHIPLabelDataRecLcl.SetRange("License Plate No.", IWXLPHeaderRecLcl."No.");
-                                DSHIPLabelDataRecLcl.SetFilter(Cost, '>%1', 0);
-                                IF DSHIPLabelDataRecLcl.FindFirst() then begin
-                                    FreightCostGvar := DSHIPLabelDataRecLcl.Cost;
-                                    //FreightChargedataTableRecLcl.Handling := DSHIPLabelDataRecLcl."ORB Handling";
-                                end;
-                                LicensePlateNoVarLcl := IWXLPHeaderRecLcl."No.";
-                                LicensePlatepkgNoVarLcl := IWXLPHeaderRecLcl."Package Order ID";
-                                if FreightCostGvar > 0 then bcostFoundVarLcl := true;
-                                if bcostFoundVarLcl then begin
-                                    FreightChargedataTableRecLcl.LP_EasyPostFreightCost := FreightCostGvar;
-                                end;
-                            until (IWXLPHeaderRecLcl.next = 0) or (bcostFoundVarLcl = true);
-                            DSHIPPackageOptionsRecLcl.Reset();
-                            DSHIPPackageOptionsRecLcl.SetRange("License Plate No.", LicensePlateNoVarLcl);
-                            IF DSHIPPackageOptionsRecLcl.FindFirst() then LiceplatePaymentTypeGvar := Format(DSHIPPackageOptionsRecLcl."Payment Type");
-                            FreightChargedataTableRecLcl.LicensepaymentType := LiceplatePaymentTypeGvar;
-                            DSHIPShipmentOptionsRecLcl.Reset();
-                            DSHIPShipmentOptionsRecLcl.SetRange("Order ID", LicensePlatepkgNoVarLcl);
-                            IF DSHIPShipmentOptionsRecLcl.FindFirst() then begin
-                                LicenseplateFreightOption := Format(DSHIPShipmentOptionsRecLcl."Add Freight Line");
-                                IF (LicenseplateFreightOption) = 'Manual' then FreightOptionUserIDGvar := "Sales Invoice Header"."Sales Order Created By";
-                                FreightChargedataTableRecLcl.LicenseplateFreightOption := LicenseplateFreightOption;
-                                FreightChargedataTableRecLcl.Order_CreatedBy := FreightOptionUserIDGvar;
+                end;
+                //LicensePlateDetails
+                IWXLPHeaderRecLcl.Reset();
+                if "Sales Invoice Header"."Order No." <> '' then begin
+                    IWXLPHeaderRecLcl.SetRange("Shipped Source No.", "Sales Invoice Header"."Order No.");
+                    LPcountVarLcl := IWXLPHeaderRecLcl.count;
+                    IF IWXLPHeaderRecLcl.FindSet() then begin
+                        repeat
+                            LicenePlateShipmentDtTxGvar := Format(IWXLPHeaderRecLcl."Shipment Date");
+                            DSHIPLabelDataRecLcl.Reset();
+                            DSHIPLabelDataRecLcl.SetRange("License Plate No.", IWXLPHeaderRecLcl."No.");
+                            DSHIPLabelDataRecLcl.SetFilter(Cost, '>%1', 0);
+                            IF DSHIPLabelDataRecLcl.FindFirst() then begin
+                                FreightCostGvar := DSHIPLabelDataRecLcl.Cost;
+                                //FreightChargedataTableRecLcl.Handling := DSHIPLabelDataRecLcl."ORB Handling";
                             end;
-                            // HandlingChargeVarLcl := (InvoicedFreightChargeGvar - (markupRatioVarLcl * FreightCostGvar)) / markupRatioVarLcl;
-                        end
-                        else begin //order is shipped but no shipped source no,check if LP exists for the source no
-                            if ("Sales Invoice Header"."Package Tracking No." <> '') then begin
-                                IWXLPHeaderRecLcl.Reset();
-                                IWXLPHeaderRecLcl.SetRange("Package Tracking No.", "Sales Invoice Header"."Package Tracking No.");
-                                LPcountVarLcl := IWXLPHeaderRecLcl.count;
-                                IF IWXLPHeaderRecLcl.FindSet() then begin
-                                    repeat
-                                        LicenePlateShipmentDtTxGvar := Format(IWXLPHeaderRecLcl."Shipment Date");
-                                        DSHIPLabelDataRecLcl.Reset();
-                                        DSHIPLabelDataRecLcl.SetRange("License Plate No.", IWXLPHeaderRecLcl."No.");
-                                        DSHIPLabelDataRecLcl.SetFilter(Cost, '>%1', 0);
-                                        IF DSHIPLabelDataRecLcl.FindFirst() then FreightCostGvar := DSHIPLabelDataRecLcl.Cost;
-                                        LicensePlateNoVarLcl := IWXLPHeaderRecLcl."No.";
-                                        LicensePlatepkgNoVarLcl := IWXLPHeaderRecLcl."Package Order ID";
-                                        if FreightCostGvar > 0 then bcostFoundVarLcl := true;
-                                        if bcostFoundVarLcl then begin
-                                            FreightChargedataTableRecLcl.LP_EasyPostFreightCost := FreightCostGvar;
-                                            //FreightChargedataTableRecLcl.Handling := DSHIPLabelDataRecLcl."ORB Handling";
-                                        end;
-                                    until (IWXLPHeaderRecLcl.next = 0) or (bcostFoundVarLcl = true);
-                                    DSHIPPackageOptionsRecLcl.Reset();
-                                    DSHIPPackageOptionsRecLcl.SetRange("License Plate No.", LicensePlateNoVarLcl);
-                                    IF DSHIPPackageOptionsRecLcl.FindFirst() then LiceplatePaymentTypeGvar := Format(DSHIPPackageOptionsRecLcl."Payment Type");
-                                    FreightChargedataTableRecLcl.LicensepaymentType := LiceplatePaymentTypeGvar;
-                                    DSHIPShipmentOptionsRecLcl.Reset();
-                                    DSHIPShipmentOptionsRecLcl.SetRange("Order ID", LicensePlatepkgNoVarLcl);
-                                    IF DSHIPShipmentOptionsRecLcl.FindFirst() then begin
-                                        LicenseplateFreightOption := Format(DSHIPShipmentOptionsRecLcl."Add Freight Line");
-                                        IF (LicenseplateFreightOption) = 'Manual' then FreightOptionUserIDGvar := "Sales Invoice Header"."Sales Order Created By";
-                                        FreightChargedataTableRecLcl.LicenseplateFreightOption := LicenseplateFreightOption;
-                                        FreightChargedataTableRecLcl.Order_CreatedBy := FreightOptionUserIDGvar;
+                            LicensePlateNoVarLcl := IWXLPHeaderRecLcl."No.";
+                            LicensePlatepkgNoVarLcl := IWXLPHeaderRecLcl."Package Order ID";
+                            if FreightCostGvar > 0 then bcostFoundVarLcl := true;
+                            if bcostFoundVarLcl then begin
+                                FreightChargedataTableRecLcl.LP_EasyPostFreightCost := FreightCostGvar;
+                            end;
+                        until (IWXLPHeaderRecLcl.next = 0) or (bcostFoundVarLcl = true);
+                        DSHIPPackageOptionsRecLcl.Reset();
+                        DSHIPPackageOptionsRecLcl.SetRange("License Plate No.", LicensePlateNoVarLcl);
+                        IF DSHIPPackageOptionsRecLcl.FindFirst() then LiceplatePaymentTypeGvar := Format(DSHIPPackageOptionsRecLcl."Payment Type");
+                        FreightChargedataTableRecLcl.LicensepaymentType := LiceplatePaymentTypeGvar;
+                        DSHIPShipmentOptionsRecLcl.Reset();
+                        DSHIPShipmentOptionsRecLcl.SetRange("Order ID", LicensePlatepkgNoVarLcl);
+                        IF DSHIPShipmentOptionsRecLcl.FindFirst() then begin
+                            LicenseplateFreightOption := Format(DSHIPShipmentOptionsRecLcl."Add Freight Line");
+                            IF (LicenseplateFreightOption) = 'Manual' then FreightOptionUserIDGvar := "Sales Invoice Header"."Sales Order Created By";
+                            FreightChargedataTableRecLcl.LicenseplateFreightOption := LicenseplateFreightOption;
+                            FreightChargedataTableRecLcl.Order_CreatedBy := FreightOptionUserIDGvar;
+                        end;
+                        // HandlingChargeVarLcl := (InvoicedFreightChargeGvar - (markupRatioVarLcl * FreightCostGvar)) / markupRatioVarLcl;
+                    end
+                    else begin //order is shipped but no shipped source no,check if LP exists for the source no
+                        if ("Sales Invoice Header"."Package Tracking No." <> '') then begin
+                            IWXLPHeaderRecLcl.Reset();
+                            IWXLPHeaderRecLcl.SetRange("Package Tracking No.", "Sales Invoice Header"."Package Tracking No.");
+                            LPcountVarLcl := IWXLPHeaderRecLcl.count;
+                            IF IWXLPHeaderRecLcl.FindSet() then begin
+                                repeat
+                                    LicenePlateShipmentDtTxGvar := Format(IWXLPHeaderRecLcl."Shipment Date");
+                                    DSHIPLabelDataRecLcl.Reset();
+                                    DSHIPLabelDataRecLcl.SetRange("License Plate No.", IWXLPHeaderRecLcl."No.");
+                                    DSHIPLabelDataRecLcl.SetFilter(Cost, '>%1', 0);
+                                    IF DSHIPLabelDataRecLcl.FindFirst() then FreightCostGvar := DSHIPLabelDataRecLcl.Cost;
+                                    LicensePlateNoVarLcl := IWXLPHeaderRecLcl."No.";
+                                    LicensePlatepkgNoVarLcl := IWXLPHeaderRecLcl."Package Order ID";
+                                    if FreightCostGvar > 0 then bcostFoundVarLcl := true;
+                                    if bcostFoundVarLcl then begin
+                                        FreightChargedataTableRecLcl.LP_EasyPostFreightCost := FreightCostGvar;
+                                        //FreightChargedataTableRecLcl.Handling := DSHIPLabelDataRecLcl."ORB Handling";
                                     end;
-                                end
-                            end;
+                                until (IWXLPHeaderRecLcl.next = 0) or (bcostFoundVarLcl = true);
+                                DSHIPPackageOptionsRecLcl.Reset();
+                                DSHIPPackageOptionsRecLcl.SetRange("License Plate No.", LicensePlateNoVarLcl);
+                                IF DSHIPPackageOptionsRecLcl.FindFirst() then LiceplatePaymentTypeGvar := Format(DSHIPPackageOptionsRecLcl."Payment Type");
+                                FreightChargedataTableRecLcl.LicensepaymentType := LiceplatePaymentTypeGvar;
+                                DSHIPShipmentOptionsRecLcl.Reset();
+                                DSHIPShipmentOptionsRecLcl.SetRange("Order ID", LicensePlatepkgNoVarLcl);
+                                IF DSHIPShipmentOptionsRecLcl.FindFirst() then begin
+                                    LicenseplateFreightOption := Format(DSHIPShipmentOptionsRecLcl."Add Freight Line");
+                                    IF (LicenseplateFreightOption) = 'Manual' then FreightOptionUserIDGvar := "Sales Invoice Header"."Sales Order Created By";
+                                    FreightChargedataTableRecLcl.LicenseplateFreightOption := LicenseplateFreightOption;
+                                    FreightChargedataTableRecLcl.Order_CreatedBy := FreightOptionUserIDGvar;
+                                end;
+                            end
                         end;
-                        FreightChargedataTableRecLcl."No of License Plates" := LPcountVarLcl;
-                        if (LPcountVarLcl > 0) and (not bAllownegativeHandling) then begin
-                            LPHandlingVarLcl := LPcountVarLcl * markupAmoutVarLcl;
-                            FreightChargedataTableRecLcl.Handling := LPHandlingVarLcl;
-                        end;
+                    end;
+                    FreightChargedataTableRecLcl."No of License Plates" := LPcountVarLcl;
+                    if (LPcountVarLcl > 0) and (not bAllownegativeHandling) then begin
+                        LPHandlingVarLcl := LPcountVarLcl * markupAmoutVarLcl;
+                        FreightChargedataTableRecLcl.Handling := LPHandlingVarLcl;
                     end;
                 end;
                 if ("Sales Invoice Header"."Order No." = prevOrderNoGbl) and ((prevEasyCostGbl = FreightCostGvar) or (prevEasyCostGbl = 0)) and ("Sales Invoice Header"."Order No." <> '') then begin
