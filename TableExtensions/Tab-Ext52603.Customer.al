@@ -68,7 +68,7 @@ tableextension 52603 "ORB Customer" extends Customer
             TableRelation = "Salesperson/Purchaser" where(Blocked = const(false));
             DataClassification = CustomerContent;
         }
-        field(52506; "ORB LIFT Customer"; boolean)
+        field(52510; "ORB LIFT Customer"; boolean)
         {
             Caption = 'LIFT Customer';
             DataClassification = CustomerContent;
