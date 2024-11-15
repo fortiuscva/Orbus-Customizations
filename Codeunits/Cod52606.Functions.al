@@ -276,4 +276,34 @@ codeunit 52606 "ORB Functions"
         SingleInstance.SetMarkupPercentage(DSHIPFreightPrice."Markup %");
     end;
 
+    procedure AutoCreatePick(WhseShptHeader: Record "Warehouse Shipment Header")
+    var
+        Rec: Record "Warehouse Shipment Line";
+        WhseShptLine: Record "Warehouse Shipment Line";
+        ReleaseWhseShipment: Codeunit "Whse.-Shipment Release";
+        WhseShipmentCreatePick: Report "Whse.-Shipment - Create Pick";
+        SortActivity: Enum "Whse. Activity Sorting Method";
+    begin
+        Rec.Reset();
+        Rec.SetRange("No.", WhseShptHeader."No.");
+        if Rec.FindSet() then;
+
+        WhseShptLine.Copy(Rec);
+        WhseShptHeader.Get(WhseShptLine."No.");
+        if WhseShptHeader.Status = WhseShptHeader.Status::Open then
+            ReleaseWhseShipment.Release(WhseShptHeader);
+
+        WhseShptHeader.TestField(Status, WhseShptHeader.Status::Released);
+        WhseShptLine.SetFilter(Quantity, '>0');
+        WhseShptLine.SetRange("Completely Picked", false);
+        if WhseShptLine.Find('-') then begin
+            WhseShipmentCreatePick.Initialize('', SortActivity::None, true, false, false);
+            WhseShipmentCreatePick.SetWhseShipmentLine(WhseShptLine, WhseShptHeader);
+            WhseShipmentCreatePick.SetHideValidationDialog(true);
+            WhseShipmentCreatePick.UseRequestPage(false);
+            WhseShipmentCreatePick.RunModal();
+            WhseShipmentCreatePick.GetResultMessage();
+            Clear(WhseShipmentCreatePick);
+        end;
+    end;
 }
