@@ -1,4 +1,4 @@
-pageextension 52643 "ORB Item Journal" extends "Item Journal"
+pageextension 52644 "ORB Item Journal" extends "Item Journal"
 {
     actions
     {
