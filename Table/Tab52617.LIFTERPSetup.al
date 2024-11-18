@@ -21,6 +21,10 @@ table 52617 "ORB LIFT ERP Setup"
         {
             Caption = 'Items API';
         }
+        field(5; "Inventory Journal API"; Text[1024])
+        {
+            Caption = 'Inventory Journal API';
+        }
     }
     keys
     {

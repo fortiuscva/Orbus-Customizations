@@ -20,6 +20,10 @@ codeunit 52611 "ORB LIFT API Codes"
         if LIFTAPICodesRecGbl.Insert() then;
 
         LIFTAPICodesRecGbl.Init();
+        LIFTAPICodesRecGbl.Code := 'INVENTORYJOURNALS';
+        if LIFTAPICodesRecGbl.Insert() then;
+
+        LIFTAPICodesRecGbl.Init();
         LIFTAPICodesRecGbl.Code := 'ITEMS';
         if LIFTAPICodesRecGbl.Insert() then;
     end;
@@ -35,6 +39,13 @@ codeunit 52611 "ORB LIFT API Codes"
     begin
         Clear(LIFTAPICodesRecGbl);
         if LIFTAPICodesRecGbl.GET('CUSTOMERS') then
+            APICode := LIFTAPICodesRecGbl.Code;
+    end;
+
+    procedure GetInventoryJournalAPICode() APICode: Code[20]
+    begin
+        Clear(LIFTAPICodesRecGbl);
+        if LIFTAPICodesRecGbl.GET('INVENTORYJOURNALS') then
             APICode := LIFTAPICodesRecGbl.Code;
     end;
 

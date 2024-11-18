@@ -22,7 +22,6 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
                 ApplicationArea = all;
                 ToolTip = 'Specifies Orbus Business Development';
             }
-
         }
         addlast(General)
         {
@@ -30,6 +29,11 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
             {
                 ApplicationArea = all;
                 ToolTip = 'Specifies Auto Send Email from JQ for the customer';
+            }
+            field("ORB LIFT Customer"; Rec."ORB LIFT Customer")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Specifies Orbus LIFT Customer';
             }
         }
 
