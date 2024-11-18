@@ -44,29 +44,32 @@ codeunit 52610 "ORB LIFT Integration"
     local procedure CreateSalesLines(var SalesHeader: Record "Sales Header"; jsonOrderObject: JsonObject)
     var
         SalesLine: Record "Sales Line";
+        ItemRec: Record Item;
         JsonOrderLineToken: JsonToken;
     begin
         JsonOrderLineToken := jsonOrderObject.AsToken();
-        SalesLine.init();
-        SalesLine."Document Type" := SalesHeader."Document Type";
-        SalesLine."Document No." := SalesHeader."No.";
+        if ItemRec.get(GetValueAsCode(JsonOrderLineToken, 'VARIANT_CODE')) then begin
+            SalesLine.init();
+            SalesLine."Document Type" := SalesHeader."Document Type";
+            SalesLine."Document No." := SalesHeader."No.";
 
-        SalesLine."Line No." := GetLastLineNo(SalesHeader);
-        //SalesLine."Line No." := GetValueAsDecimal(JsonOrderLineToken, 'LINE_NUMBER');
-        SalesLine.Insert(true);
-        if GetValueAsText(JsonOrderLineToken, 'TYPE') = 'Comment' then
-            SalesLine.Type := SalesLine.Type::" ";
-        if GetValueAsText(JsonOrderLineToken, 'TYPE') = 'Item' then
-            SalesLine.Type := SalesLine.Type::Item;
-        if SalesLine.Type = SalesLine.Type::Item then begin
-            if (GetValueAsCode(JsonOrderLineToken, 'VARIANT_CODE') <> '') then begin
-                SalesLine.Validate(SalesLine."No.", GetValueAsCode(JsonOrderLineToken, 'VARIANT_CODE'));
-                SalesLine.Validate(Quantity, GetValueAsDecimal(JsonOrderLineToken, 'QUANTITY'));
+            SalesLine."Line No." := GetLastLineNo(SalesHeader);
+            //SalesLine."Line No." := GetValueAsDecimal(JsonOrderLineToken, 'LINE_NUMBER');
+            SalesLine.Insert(true);
+            if GetValueAsText(JsonOrderLineToken, 'TYPE') = 'Comment' then
+                SalesLine.Type := SalesLine.Type::" ";
+            if GetValueAsText(JsonOrderLineToken, 'TYPE') = 'Item' then
+                SalesLine.Type := SalesLine.Type::Item;
+            if SalesLine.Type = SalesLine.Type::Item then begin
+                if (GetValueAsCode(JsonOrderLineToken, 'VARIANT_CODE') <> '') then begin
+                    SalesLine.Validate(SalesLine."No.", GetValueAsCode(JsonOrderLineToken, 'VARIANT_CODE'));
+                    SalesLine.Validate(Quantity, GetValueAsDecimal(JsonOrderLineToken, 'QUANTITY'));
+                end;
             end;
-        end;
-        SalesLine.Modify(true);
+            SalesLine.Modify(true);
 
-        InsertIntergationDataLog(Database::"Sales Header", 1, SalesLine."Document No.", SalesLine."Line No.");
+            InsertIntergationDataLog(Database::"Sales Header", 1, SalesLine."Document No.", SalesLine."Line No.");
+        end;
     end;
 
     procedure InsertIntergationDataLog(SourceType: Integer; SourceSubType: Integer; SourceNo: Code[20]; SourceLineNo: Integer)
