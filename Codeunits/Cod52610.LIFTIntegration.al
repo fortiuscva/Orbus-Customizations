@@ -31,14 +31,15 @@ codeunit 52610 "ORB LIFT Integration"
         SalesHeader.Init();
         SalesHeader."Document Type" := SalesHeader."Document Type"::Order;
         SalesHeader."No." := GetValueAsCode(JsonOrderToken, 'ORDER_NUMBER');
-        SalesHeader.Insert(true);
-        SalesHeader.Validate("Sell-to Customer No.", GetValueAsCode(JsonOrderToken, 'SELL_TO_CUSTOMER'));
-        SalesHeader.Validate("Bill-to Customer No.", GetValueAsCode(JsonOrderToken, 'BILL_TO_CUSTOMER'));
-        SalesHeader.Validate("Document Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderToken, 'DOCUMENT_DATE'))));
-        SalesHeader.Validate("Posting Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderToken, 'POSTING_DATE'))));
-        SalesHeader."In-Hands Date" := DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderToken, 'IN_HAND_DATE')));
-        SalesHeader."ORB Lift Order" := true;
-        SalesHeader.Modify(true);
+        if SalesHeader.Insert(true) then begin
+            SalesHeader.Validate("Sell-to Customer No.", GetValueAsCode(JsonOrderToken, 'SELL_TO_CUSTOMER'));
+            SalesHeader.Validate("Bill-to Customer No.", GetValueAsCode(JsonOrderToken, 'BILL_TO_CUSTOMER'));
+            SalesHeader.Validate("Document Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderToken, 'DOCUMENT_DATE'))));
+            SalesHeader.Validate("Posting Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderToken, 'POSTING_DATE'))));
+            SalesHeader."In-Hands Date" := DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderToken, 'IN_HAND_DATE')));
+            SalesHeader."ORB Lift Order" := true;
+            SalesHeader.Modify(true);
+        end;
     end;
 
     local procedure CreateSalesLines(var SalesHeader: Record "Sales Header"; jsonOrderObject: JsonObject)
@@ -69,6 +70,7 @@ codeunit 52610 "ORB LIFT Integration"
             SalesLine.Modify(true);
 
             InsertIntergationDataLog(Database::"Sales Header", 1, SalesLine."Document No.", SalesLine."Line No.");
+            Commit();
         end;
     end;
 
