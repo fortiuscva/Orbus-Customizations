@@ -16,15 +16,23 @@ page 52644 "ORB LIFT ERP Setup"
 
                 field("Sales Orders API"; Rec."Sales Orders API")
                 {
+                    ApplicationArea = all;
                     ToolTip = 'Specifies the value of the Sales Orders API field.', Comment = '%';
                 }
                 field("Customers API"; Rec."Customers API")
                 {
+                    ApplicationArea = all;
                     ToolTip = 'Specifies the value of the Customers API field.', Comment = '%';
                 }
                 field("Items API"; Rec."Items API")
                 {
+                    ApplicationArea = all;
                     ToolTip = 'Specifies the value of the Items API field.', Comment = '%';
+                }
+                field("Inventory Journal API"; Rec."Inventory Journal API")
+                {
+                    ApplicationArea = all;
+                    ToolTip = 'Specifies the value of the Inventory Journal API field.', Comment = '%';
                 }
             }
         }
