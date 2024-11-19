@@ -20,7 +20,7 @@ tableextension 52610 "ORB User Setup" extends "User Setup"
         field(52603; "ORB Tax Liable Edit Allowed"; Boolean)
         {
             DataClassification = CustomerContent;
-            Caption = 'Tax Liable on the Customer is Allowed';
+            Caption = 'Tax Liable Edit on the Customer is Allowed';
         }
     }
 
