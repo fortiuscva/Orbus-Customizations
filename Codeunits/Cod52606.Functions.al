@@ -306,4 +306,28 @@ codeunit 52606 "ORB Functions"
             Clear(WhseShipmentCreatePick);
         end;
     end;
+
+    procedure RegisterPick(WarehouseShipmentHeader: Record "Warehouse Shipment Header")
+    var
+        WhseActivLine: Record "Warehouse Activity Line";
+    begin
+        WhseActivLine.SetRange("Whse. Document Type", WhseActivLine."Whse. Document Type"::Shipment);
+        WhseActivLine.SetRange("Whse. Document No.", WarehouseShipmentHeader."No.");
+        if WhseActivLine.FindSet() then
+            repeat
+                RegisterActivityYesNo(WhseActivLine);
+            until WhseActivLine.Next() = 0;
+    end;
+
+    procedure RegisterActivityYesNo(WarehouseActivityLine: Record "Warehouse Activity Line")
+    var
+        WhseActivLine: Record "Warehouse Activity Line";
+        IsHandled: Boolean;
+    begin
+        WhseActivLine.Copy(WarehouseActivityLine);
+        WhseActivLine.FilterGroup(3);
+        WhseActivLine.SetRange(Breakbulk);
+        WhseActivLine.FilterGroup(0);
+        CODEUNIT.Run(CODEUNIT::"Whse.-Act.-Register (Yes/No)", WhseActivLine);
+    end;
 }

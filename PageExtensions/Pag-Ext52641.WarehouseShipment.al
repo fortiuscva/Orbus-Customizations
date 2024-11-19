@@ -15,6 +15,7 @@ pageextension 52641 "ORB Warehouse Shipment" extends "Warehouse Shipment"
                     FunctionsCULcl: Codeunit "ORB Functions";
                 begin
                     FunctionsCULcl.AutoCreatePick(rec);
+                    FunctionsCULcl.RegisterPick(Rec);
                 end;
             }
 
