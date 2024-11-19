@@ -20,6 +20,11 @@ pageextension 52614 "ORB User Setup" extends "User Setup"
                 ApplicationArea = all;
                 ToolTip = 'To restrict user from General Posting Setup Access';
             }
+            field("ORB Tax Liable Edit Allowed"; Rec."ORB Tax Liable Edit Allowed")
+            {
+                ApplicationArea = all;
+                ToolTip = 'To Allow Tax Liable Edit on the Customer';
+            }
         }
     }
 

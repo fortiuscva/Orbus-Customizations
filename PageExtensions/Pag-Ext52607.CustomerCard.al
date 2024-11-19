@@ -11,6 +11,18 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
                 ToolTip = 'Specifies Auto Send Email from JQ for the customer';
             }
         }
+        modify("Tax Liable")
+        {
+            trigger OnBeforeValidate()
+            var
+                UserSetupRecLcl: Record "User Setup";
+            begin
+                if UserSetupRecLcl.get(UserId) then begin
+                    if not UserSetupRecLcl."ORB Tax Liable Edit Allowed" then
+                        Error(AccessNotallowedlbl, UserId);
+                end;
+            end;
+        }
     }
     actions
     {
@@ -46,4 +58,6 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
             }
         }
     }
+    var
+        AccessNotallowedlbl: Label '%1 is not allowed to edit Tax Liable';
 }
