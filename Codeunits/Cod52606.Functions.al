@@ -297,7 +297,7 @@ codeunit 52606 "ORB Functions"
         WhseShptLine.SetFilter(Quantity, '>0');
         WhseShptLine.SetRange("Completely Picked", false);
         if WhseShptLine.Find('-') then begin
-            WhseShipmentCreatePick.Initialize('', SortActivity::None, true, false, false);
+            WhseShipmentCreatePick.Initialize('', SortActivity::None, false, false, false);
             WhseShipmentCreatePick.SetWhseShipmentLine(WhseShptLine, WhseShptHeader);
             WhseShipmentCreatePick.SetHideValidationDialog(true);
             WhseShipmentCreatePick.UseRequestPage(false);
@@ -328,6 +328,52 @@ codeunit 52606 "ORB Functions"
         WhseActivLine.FilterGroup(3);
         WhseActivLine.SetRange(Breakbulk);
         WhseActivLine.FilterGroup(0);
-        CODEUNIT.Run(CODEUNIT::"Whse.-Act.-Register (Yes/No)", WhseActivLine);
+        Codeunit.Run(CODEUNIT::"Whse.-Act.-Register (Yes/No)", WhseActivLine);
     end;
+
+
+    procedure PrintPickHeader(WhseActivHeader: Record "Warehouse Activity Header")
+    var
+        ReportSelectionWhse: Record "Report Selection Warehouse";
+    begin
+        WhseActivHeader.SetRange(Type, WhseActivHeader.Type::Pick);
+        WhseActivHeader.SetRange("No.", WhseActivHeader."No.");
+        ReportSelectionWhse.PrintWhseActivityHeader(WhseActivHeader, ReportSelectionWhse.Usage::Pick, false);
+    end;
+
+    procedure PrintWhseActivityHeader(var WhseActivHeader: Record "Warehouse Activity Header"; ReportUsage: Enum "Report Selection Warehouse Usage"; HideDialog: Boolean)
+    begin
+        PrintDocuments(WhseActivHeader, ReportUsage, not HideDialog);
+    end;
+
+    procedure PrintDocuments(RecVarToPrint: Variant; ReportUsage: Enum "Report Selection Warehouse Usage"; ShowRequestPage: Boolean)
+    var
+        TempReportSelectionWarehouse: Record "Report Selection Warehouse" temporary;
+        IsHandled: Boolean;
+    begin
+        SelectTempReportSelectionsToPrint(TempReportSelectionWarehouse, ReportUsage);
+        if TempReportSelectionWarehouse.FindSet() then
+            repeat
+                Report.RunModal(TempReportSelectionWarehouse."Report ID", ShowRequestPage, false, RecVarToPrint);
+            until TempReportSelectionWarehouse.Next() = 0;
+    end;
+
+    local procedure SelectTempReportSelectionsToPrint(var TempReportSelectionWarehouse: Record "Report Selection Warehouse"; ReportUsage: Enum "Report Selection Warehouse Usage")
+    var
+        ReportSelectionMgt: Codeunit "Report Selection Mgt.";
+        IsHandled: Boolean;
+    begin
+        ReportSelectionWarehouse.SetRange(Usage, ReportUsage);
+        if ReportSelectionWarehouse.IsEmpty() then
+            ReportSelectionMgt.InitReportSelectionWhse(ReportSelectionWarehouse.Usage);
+
+        if ReportSelectionWarehouse.FindSet() then
+            repeat
+                TempReportSelectionWarehouse := ReportSelectionWarehouse;
+                if TempReportSelectionWarehouse.Insert() then;
+            until ReportSelectionWarehouse.Next() = 0;
+    end;
+
+    var
+        ReportSelectionWarehouse: Record "Report Selection Warehouse";
 }

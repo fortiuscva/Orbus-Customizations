@@ -15,8 +15,12 @@ pageextension 52642 "ORB Warehouse Shipment List" extends "Warehouse Shipment Li
                 trigger OnAction()
                 var
                     FunctionsCULcl: Codeunit "ORB Functions";
+                    WarehouseActivityHeader: Record "Warehouse Activity Header";
                 begin
                     FunctionsCULcl.AutoCreatePick(rec);
+                    WarehouseActivityHeader.SetRange(Type, WarehouseActivityHeader.Type::Pick);
+                    WarehouseActivityHeader.SetRange("No.", Rec."No.");
+                    FunctionsCULcl.PrintPickHeader(WarehouseActivityHeader);
                     FunctionsCULcl.RegisterPick(Rec);
                 end;
             }
