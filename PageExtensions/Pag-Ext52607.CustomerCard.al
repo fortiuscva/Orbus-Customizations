@@ -3,6 +3,21 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
     layout
     {
         // Add changes to page layout here
+
+        addafter("Salesperson Code")
+        {
+            field("ORB Regional Sales Executive"; Rec."ORB Regional Sales Executive")
+            {
+                ApplicationArea = all;
+                Tooltip = 'Specifies Orbus Regional Sales Executive';
+            }
+
+            field("ORB Customer Support"; Rec."ORB Customer Support")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Specifies Orbus ustomer Support';
+            }
+        }
         addlast(General)
         {
             field("ORB Auto Send Email"; Rec."ORB Auto Send Email")
@@ -10,6 +25,10 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
                 ApplicationArea = all;
                 ToolTip = 'Specifies Auto Send Email from JQ for the customer';
             }
+        }
+        modify("Salesperson Code")
+        {
+            Caption = 'Key/National Account Manager';
         }
     }
     actions
