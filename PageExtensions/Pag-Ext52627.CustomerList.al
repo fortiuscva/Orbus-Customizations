@@ -20,7 +20,6 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
                 Caption = 'Ship-to State';
 
             }
-
             field("ORB Ship-to Zip"; ShiptoZipcodeVarGbl)
             {
                 ApplicationArea = All;
@@ -28,6 +27,27 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
                 ToolTip = 'Customer Street Address';
                 Caption = 'Ship-to Street Address';
 
+            }
+            field("ORB Customer Support"; Rec."ORB Customer Support")
+            {
+                ApplicationArea = All;
+                Editable = false;
+                ToolTip = 'Customer Support';
+                Caption = 'Customer Support';
+            }
+            field("ORB Regional Sales Executive"; Rec."ORB Regional Sales Executive")
+            {
+                ApplicationArea = All;
+                Editable = false;
+                ToolTip = 'Regional Sales Executive';
+                Caption = 'Regional Sales Executive';
+            }
+            field("ORB Business Development"; Rec."ORB Business Development")
+            {
+                ApplicationArea = All;
+                Editable = false;
+                ToolTip = 'Business Development';
+                Caption = 'Business Development';
             }
         }
         addafter("Sales (LCY)")
