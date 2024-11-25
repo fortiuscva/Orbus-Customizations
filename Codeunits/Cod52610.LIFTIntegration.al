@@ -34,9 +34,25 @@ codeunit 52610 "ORB LIFT Integration"
         if SalesHeader.Insert(true) then begin
             SalesHeader.Validate("Sell-to Customer No.", GetValueAsCode(JsonOrderToken, 'SELL_TO_CUSTOMER'));
             SalesHeader.Validate("Bill-to Customer No.", GetValueAsCode(JsonOrderToken, 'BILL_TO_CUSTOMER'));
-            SalesHeader.Validate("Document Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderToken, 'DOCUMENT_DATE'))));
+            SalesHeader.Validate("Ship-to Code", GetValueAsText(JsonOrderToken, 'SHIP_TO_CODE'));
+            SalesHeader.Validate("Order Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderToken, 'ORDER_DATE'))));
             SalesHeader.Validate("Posting Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderToken, 'POSTING_DATE'))));
+            SalesHeader.Validate("Document Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderToken, 'SHIPMENT_DATE'))));
+            SalesHeader.Validate("Due Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderToken, 'DUE_DATE'))));
+            SalesHeader.Validate("Location Code", GetValueAsCode(JsonOrderToken, 'LOCATION_CODE'));
+            SalesHeader.Validate("Shortcut Dimension 1 Code", GetValueAsCode(JsonOrderToken, ''));
+            SalesHeader.Validate("Shortcut Dimension 2 Code", GetValueAsCode(JsonOrderToken, ''));
+            SalesHeader.Validate("Salesperson Code", GetValueAsCode(JsonOrderToken, 'SALESPERSON_CODE'));
+            SalesHeader.Validate("Document Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderToken, 'DOCUMENT_DATE'))));
+            SalesHeader.Validate("External Document No.", GetValueAsText(JsonOrderToken, 'EXTERNAL_DOCUMENT_NUMBER'));
+            SalesHeader.Validate("Payment Method Code", GetValueAsText(JsonOrderToken, 'PAYMENT_METHOD_CODE'));
+            //SalesHeader.Validate("Order Status", GetValueAsCode(JsonOrderToken, 'ORDER_STATUS'));
+            SalesHeader.Validate("ORB Declared Value", GetValueAsText(JsonOrderToken, 'DECLARED_VALUE'));
+            SalesHeader.Validate("ORB International Contact", GetValueAsText(JsonOrderToken, 'INTERNATIONAL_CONTACT'));
+            SalesHeader.Validate("ORB Magento Order #", GetValueAsText(JsonOrderToken, 'MAGENTO_ORDER_NUMBER'));
+            SalesHeader.Validate(Rush, GetValueAsBoolean(JsonOrderToken, 'RUSH'));
             SalesHeader."In-Hands Date" := DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderToken, 'IN_HAND_DATE')));
+
             SalesHeader."ORB Lift Order" := true;
             SalesHeader.Modify(true);
         end;
@@ -115,7 +131,23 @@ codeunit 52610 "ORB LIFT Integration"
                 exit(JToken.AsValue().AsDecimal());
     end;
 
+    procedure SelectJsonTokenasInteger(JObject: JsonObject; Path: Text): Decimal
+    var
+        JToken: JsonToken;
+    begin
+        if JObject.SelectToken(Path, JToken) then
+            if NOT JToken.AsValue().IsNull() then
+                exit(JToken.AsValue().AsInteger());
+    end;
 
+    procedure SelectJsonTokenasBoolean(JObject: JsonObject; Path: Text): Boolean
+    var
+        JToken: JsonToken;
+    begin
+        if JObject.SelectToken(Path, JToken) then
+            if NOT JToken.AsValue().IsNull() then
+                exit(JToken.AsValue().AsBoolean());
+    end;
 
     procedure GetValueAsText(JToken: JsonToken; ParamString: Text): Text
     var
@@ -141,6 +173,21 @@ codeunit 52610 "ORB LIFT Integration"
         exit(SelectJsonToken(JObject, ParamString));
     end;
 
+    procedure GetValueAsInteger(JToken: JsonToken; ParamString: Text): Integer
+    var
+        JObject: JsonObject;
+    begin
+        JObject := JToken.AsObject();
+        exit(SelectJsonTokenasInteger(JObject, ParamString));
+    end;
+
+    procedure GetValueAsBoolean(JToken: JsonToken; ParamString: Text): Boolean
+    var
+        JObject: JsonObject;
+    begin
+        JObject := JToken.AsObject();
+        exit(SelectJsonTokenasBoolean(JObject, ParamString));
+    end;
 
     local procedure EvaluateUTCDateTime(DataTimeText: Text) EvaluatedDateTime: DateTime;
     var
@@ -294,15 +341,15 @@ codeunit 52610 "ORB LIFT Integration"
         ItemJournalLine."Journal Template Name" := 'ITEM';
         ItemJournalLine."Journal Batch Name" := 'DEFAULT';
         ItemJournalLine."Line No." := EntryNo;
-        ItemJournalLine.Validate("Item No.", GetValueAsText(JsonOrderToken, 'MATERIAL'));
-        ItemJournalLine.Validate(Quantity, 1);
+        ItemJournalLine.Validate("Item No.", GetValueAsText(JsonOrderToken, 'MATERIAL_BARCODE'));
+        ItemJournalLine.Validate("Posting Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderToken, 'DOCUMENT_DATE'))));
+        //ItemJournalLine.Validate("Entry Type", GetValueAsInteger(JsonOrderToken,));
+        ItemJournalLine.Validate("Location Code", GetValueAsCode(JsonOrderToken, 'FROM_LOCATION'));
+
+        ItemJournalLine.Validate(Quantity, GetValueAsDecimal(JsonOrderToken, 'QUANTITY'));
         ItemJournalLine.Validate("Unit Cost", GetValueAsDecimal(JsonOrderToken, 'UNIT_COST'));
         ItemJournalLine.Validate(Amount, GetValueAsDecimal(JsonOrderToken, 'AMOUNT'));
-        if ItemJournalLine.Amount < 0 then
-            ItemJournalLine."Entry Type" := ItemJournalLine."Entry Type"::"Negative Adjmt."
-        else
-            ItemJournalLine."Entry Type" := ItemJournalLine."Entry Type"::"Positive Adjmt.";
-        ItemJournalLine.Validate("Location Code", 'WR');
+        ItemJournalLine.Validate("Unit of Measure Code", GetValueAsCode(JsonOrderToken, 'UNIT_OF_MEASURE'));
 
         ItemJournalLine.Insert(true);
 
