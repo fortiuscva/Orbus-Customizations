@@ -110,6 +110,7 @@ codeunit 52610 "ORB LIFT Integration"
         LIFTIntegrationDataLogRecLcl."Source Subtype" := SourceSubType;
         LIFTIntegrationDataLogRecLcl."Source No." := SourceNo;
         LIFTIntegrationDataLogRecLcl."Source Line No." := SourceLineNo;
+        LIFTIntegrationDataLogRecLcl."Transaction ID" := SourceLineNo;
         LIFTIntegrationDataLogRecLcl.Insert();
 
     end;
@@ -328,6 +329,7 @@ codeunit 52610 "ORB LIFT Integration"
         EntryNo: Integer;
         JsonOrderToken: JsonToken;
         EntryTypeVarLcl: Text;
+        TransactionID: Integer;
     begin
         Clear(EntryNo);
         ItemJournalLine.Reset();
@@ -356,8 +358,9 @@ codeunit 52610 "ORB LIFT Integration"
         ItemJournalLine.Validate("Unit Cost", GetValueAsDecimal(JsonOrderToken, 'UNIT_COST'));
         ItemJournalLine.Validate(Amount, GetValueAsDecimal(JsonOrderToken, 'AMOUNT'));
         ItemJournalLine.Validate("Unit of Measure Code", GetValueAsCode(JsonOrderToken, 'UNIT_OF_MEASURE'));
+        TransactionID := GetValueAsInteger(JsonOrderToken, 'INVENTORY_TRANSACTION_ID');
         ItemJournalLine.Modify(true);
 
-        InsertIntergationDataLog(Database::"Item Journal Line", 0, ItemJournalLine."Item No.", ItemJournalLine."Line No.");
+        InsertIntergationDataLog(Database::"Item Journal Line", 0, ItemJournalLine."Item No.", TransactionID);
     end;
 }

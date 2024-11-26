@@ -27,6 +27,10 @@ table 52618 "ORB LIFT Integration Data Log"
         {
             Caption = 'Source Line No.';
         }
+        field(10; "Transaction ID"; Integer)
+        {
+            Caption = 'Transaction ID';
+        }
     }
     keys
     {
@@ -35,6 +39,10 @@ table 52618 "ORB LIFT Integration Data Log"
             Clustered = true;
         }
         Key(Pk2; "Source Type", "Source Subtype", "Source No.")
+        {
+
+        }
+        Key(Pk3; "Transaction ID")
         {
 
         }
