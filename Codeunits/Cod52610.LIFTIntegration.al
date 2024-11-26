@@ -346,6 +346,7 @@ codeunit 52610 "ORB LIFT Integration"
         ItemJournalLine."Journal Batch Name" := 'DEFAULT';
         ItemJournalLine."Line No." := EntryNo;
         ItemJournalLine.Insert(true);
+        ItemJournalLine.Validate("Document No.", GetValueAsText(JsonOrderToken, 'DOCUMENT_NUMBER'));
         EntryTypeVarLcl := GetValueAsText(JsonOrderToken, 'ENTRY_TYPE');
         IF EntryTypeVarLcl = 'NEGATIVE' then
             ItemJournalLine.Validate("Entry Type", ItemJournalLine."Entry Type"::"Negative Adjmt.")
