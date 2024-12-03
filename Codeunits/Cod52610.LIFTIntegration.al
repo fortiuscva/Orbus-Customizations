@@ -362,12 +362,26 @@ codeunit 52610 "ORB LIFT Integration"
         ItemJournalLine.Validate("Document No.", GetValueAsText(JsonOrderToken, 'DOCUMENT_NUMBER'));
         ItemJournalLine.Validate("Location Code", GetValueAsCode(JsonOrderToken, 'LOCATION_CODE'));
         ItemJournalLine.Validate(Quantity, GetValueAsDecimal(JsonOrderToken, 'QUANTITY'));
-        ItemJournalLine.Validate("Unit Cost", GetValueAsDecimal(JsonOrderToken, 'UNIT_COST'));
-        ItemJournalLine.Validate(Amount, GetValueAsDecimal(JsonOrderToken, 'AMOUNT'));
+        //ItemJournalLine.Validate("Unit Cost", GetValueAsDecimal(JsonOrderToken, 'UNIT_COST'));
+        //ItemJournalLine.Validate(Amount, GetValueAsDecimal(JsonOrderToken, 'AMOUNT'));
+        ItemJournalLine.Validate("Unit Cost", GetUnitCost(ItemJournalLine."Location Code", ItemJournalLine."Item No.", ItemJournalLine."Variant Code"));
         ItemJournalLine.Validate("Unit of Measure Code", GetValueAsCode(JsonOrderToken, 'UNIT_OF_MEASURE'));
         TransactionID := GetValueAsInteger(JsonOrderToken, 'INVENTORY_TRANSACTION_ID');
         ItemJournalLine.Modify(true);
 
         InsertIntergationDataLog(Database::"Item Journal Line", 0, ItemJournalLine."Item No.", TransactionID);
+    end;
+
+    procedure GetUnitCost(LocationCode: Code[10]; ItemNo: Code[20]; VariantCode: Code[10]): Decimal;
+    var
+        Item: Record Item;
+        StockKeepingUnit: Record "Stockkeeping Unit";
+    begin
+        if Item.Get(ItemNo) then begin
+            if StockKeepingUnit.Get(LocationCode, ItemNo, VariantCode) then
+                exit(StockKeepingUnit."Unit Cost");
+            exit(Item."Unit Cost");
+        end;
+        exit(0);
     end;
 }
