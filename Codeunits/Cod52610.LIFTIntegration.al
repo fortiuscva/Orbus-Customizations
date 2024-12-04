@@ -249,6 +249,8 @@ codeunit 52610 "ORB LIFT Integration"
             Error('Not valid Json');
         if not JsonObject.Get('rowset', JsonToken) then
             Error('Not Valid data');
+        if not JsonToken.IsValue or JsonToken.AsValue.IsNull then
+            Error('No Records');
         JsonArray := JsonToken.AsArray();
         for i := 0 to JsonArray.Count - 1 do begin
             JsonArray.Get(i, JsonToken);
@@ -279,6 +281,8 @@ codeunit 52610 "ORB LIFT Integration"
             Error('Not valid Json');
         if not JsonObject.Get('rowset', JsonToken) then
             Error('Not Valid data');
+        if not JsonToken.IsValue or JsonToken.AsValue.IsNull then
+            Error('No Records');
         JsonArray := JsonToken.AsArray();
         for i := 0 to JsonArray.Count - 1 do begin
             JsonArray.Get(i, JsonToken);
@@ -320,6 +324,8 @@ codeunit 52610 "ORB LIFT Integration"
             Error('Not valid Json');
         if not JsonObject.Get('rowset', JsonToken) then
             Error('Not Valid data');
+        if not JsonToken.IsValue or JsonToken.AsValue.IsNull then
+            Error('No Records');
         JsonArray := JsonToken.AsArray();
         for i := 0 to JsonArray.Count - 1 do begin
             JsonArray.Get(i, JsonToken);

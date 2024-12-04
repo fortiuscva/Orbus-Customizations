@@ -50,6 +50,14 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
                 ToolTip = 'Business Development';
                 Caption = 'Business Development';
             }
+            field("ORB Key/National Account Manager"; Rec."Salesperson Code")
+            {
+                ApplicationArea = All;
+                Editable = false;
+                ToolTip = 'Key/National Account Manager refers to SalesPerson';
+                Caption = 'Key/National Account Manager';
+
+            }
         }
         addafter("Sales (LCY)")
         {
@@ -62,11 +70,7 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
             }
 
         }
-        modify("Salesperson Code")
-        {
-            Caption = 'Key/National Account Manager';
 
-        }
     }
     actions
     {
