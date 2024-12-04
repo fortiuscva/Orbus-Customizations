@@ -366,11 +366,12 @@ codeunit 52610 "ORB LIFT Integration"
 
         ItemJournalLine.Validate("Document No.", GetValueAsText(JsonOrderToken, 'DOCUMENT_NUMBER'));
         ItemJournalLine.Validate("Location Code", GetValueAsCode(JsonOrderToken, 'LOCATION_CODE'));
-        ItemJournalLine.Validate(Quantity, GetValueAsDecimal(JsonOrderToken, 'QUANTITY'));
+        ItemJournalLine.Validate(Quantity, Abs(GetValueAsDecimal(JsonOrderToken, 'QUANTITY')));
         //ItemJournalLine.Validate("Unit Cost", GetValueAsDecimal(JsonOrderToken, 'UNIT_COST'));
         //ItemJournalLine.Validate(Amount, GetValueAsDecimal(JsonOrderToken, 'AMOUNT'));
         //ItemJournalLine.Validate("Unit Cost", GetUnitCost(ItemJournalLine."Location Code", ItemJournalLine."Item No.", ItemJournalLine."Variant Code"));
         ItemJournalLine.Validate("Unit of Measure Code", GetValueAsCode(JsonOrderToken, 'UNIT_OF_MEASURE'));
+        ItemJournalLine.Validate("Bin Code", 'WR-LIFT');
         ItemJournalLine."ORB Inventory Transaction ID" := GetValueAsInteger(JsonOrderToken, 'INVENTORY_TRANSACTION_ID');
         ItemJournalLine."ORB Order Line ID" := GetValueAsInteger(JsonOrderToken, 'ORDER_LINE_ID');
         ItemJournalLine.Modify(true);
