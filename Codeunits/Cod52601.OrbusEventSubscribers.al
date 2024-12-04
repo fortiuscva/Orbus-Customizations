@@ -599,8 +599,16 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
     begin
         OrbusSingleInstanceCUGbl.SetWarehouseActivity(FirstActivityNo, LastActivityNo);
     end;
+    
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Jnl.-Post Line", OnBeforeInsertItemLedgEntry, '', false, false)]
+    local procedure "Item Jnl.-Post Line_OnBeforeInsertItemLedgEntry"(var ItemLedgerEntry: Record "Item Ledger Entry"; ItemJournalLine: Record "Item Journal Line"; TransferItem: Boolean; OldItemLedgEntry: Record "Item Ledger Entry"; ItemJournalLineOrigin: Record "Item Journal Line")
+    begin
+        ItemLedgerEntry."ORB Inventory Transaction ID" := ItemJournalLine."ORB Inventory Transaction ID";
+        ItemLedgerEntry."ORB Order Line ID" := ItemJournalLine."ORB Order Line ID";
+    end;
 
-    var
+
+var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
         OrbusFunctionsCUGbl: Codeunit "ORB Functions";
 
