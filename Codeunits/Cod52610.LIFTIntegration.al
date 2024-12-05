@@ -333,7 +333,6 @@ codeunit 52610 "ORB LIFT Integration"
         EntryNo: Integer;
         JsonOrderToken: JsonToken;
         EntryTypeVarLcl: Text;
-        TransactionID: Integer;
     begin
         Clear(EntryNo);
         ItemJournalLine.Reset();
@@ -366,10 +365,11 @@ codeunit 52610 "ORB LIFT Integration"
         //ItemJournalLine.Validate(Amount, GetValueAsDecimal(JsonOrderToken, 'AMOUNT'));
         //ItemJournalLine.Validate("Unit Cost", GetUnitCost(ItemJournalLine."Location Code", ItemJournalLine."Item No.", ItemJournalLine."Variant Code"));
         ItemJournalLine.Validate("Unit of Measure Code", GetValueAsCode(JsonOrderToken, 'UNIT_OF_MEASURE'));
-        TransactionID := GetValueAsInteger(JsonOrderToken, 'INVENTORY_TRANSACTION_ID');
+        ItemJournalLine."ORB Inventory Transaction ID" := GetValueAsInteger(JsonOrderToken, 'INVENTORY_TRANSACTION_ID');
+        ItemJournalLine."ORB Order Line ID" := GetValueAsInteger(JsonOrderToken, 'ORDER_LINE_ID');
         ItemJournalLine.Modify(true);
 
-        InsertIntergationDataLog(Database::"Item Journal Line", 0, ItemJournalLine."Item No.", TransactionID);
+        InsertIntergationDataLog(Database::"Item Journal Line", 0, ItemJournalLine."Item No.", ItemJournalLine."ORB Inventory Transaction ID");
     end;
 
     procedure GetUnitCost(LocationCode: Code[10]; ItemNo: Code[20]; VariantCode: Code[10]): Decimal;
