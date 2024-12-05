@@ -8,10 +8,12 @@ pageextension 52644 "ORB Item Journal" extends "Item Journal"
             {
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the LIFT Inventory Transaction ID field.', Comment = '%';
+                Editable = false;
             }
             field("ORB LIFT Order Line ID"; Rec."ORB LIFT Order Line ID")
             {
                 ApplicationArea = All;
+                Editable = false;
                 ToolTip = 'Specifies the value of the LIFT Order Line ID field.', Comment = '%';
             }
         }
@@ -52,6 +54,7 @@ pageextension 52644 "ORB Item Journal" extends "Item Journal"
                 Promoted = true;
                 PromotedIsBig = true;
                 PromotedCategory = Process;
+                Image = UpdateUnitCost;
                 trigger OnAction()
                 begin
                     if not Confirm(RollupCostConfirmMsgLbl, false) then
@@ -63,5 +66,5 @@ pageextension 52644 "ORB Item Journal" extends "Item Journal"
     }
     var
         LiftFunctions: Codeunit "ORB LIFT Functions";
-        RollupCostConfirmMsgLbl: Label 'Do you want calculate Roll Up cost?';
+        RollupCostConfirmMsgLbl: Label 'Do you want to roll up material cost to finished goods?';
 }

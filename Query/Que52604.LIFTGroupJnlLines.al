@@ -2,12 +2,14 @@ query 52604 "ORB LIFT Group Jnl. Lines"
 {
     Caption = 'Group Lift Journal Lines';
     QueryType = Normal;
+    OrderBy = ascending(Document_No_);
 
     elements
     {
-        dataitem(Item_Journal_Line; "Item Journal Line")
+        dataitem(Item_Journal_Line;
+        "Item Journal Line")
         {
-            DataItemTableFilter = "Journal Template Name" = const('ITEM'), "Journal Batch Name" = const('LIFTERP');
+            DataItemTableFilter = "ORB LIFT Inv. Transaction ID" = filter('<> 0');
             filter(FilterJournal_Template_Name; "Journal Template Name")
             { }
             filter(FilterJournal_Batch_Name; "Journal Batch Name")
