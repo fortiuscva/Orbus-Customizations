@@ -621,10 +621,10 @@ page 52640 "ORB LIFT Item"
                 {
                     Caption = 'Qty. Picked';
                 }
-                field(excludedFromCostAdjustment; Rec."Excluded from Cost Adjustment")
-                {
-                    Caption = 'Excluded from Cost Adjustment';
-                }
+                // field(excludedFromCostAdjustment; Rec."Excluded from Cost Adjustment")
+                // {
+                //     Caption = 'Excluded from Cost Adjustment';
+                // }
                 field(serviceItemGroup; Rec."Service Item Group")
                 {
                     Caption = 'Service Item Group';
@@ -737,10 +737,10 @@ page 52640 "ORB LIFT Item"
                 {
                     Caption = 'Gen. Prod. Posting Group Id';
                 }
-                field(serviceBlocked; Rec."Service Blocked")
-                {
-                    Caption = 'Service Blocked';
-                }
+                // field(serviceBlocked; Rec."Service Blocked")
+                // {
+                //     Caption = 'Service Blocked';
+                // }
                 field(overReceiptCode; Rec."Over-Receipt Code")
                 {
                     Caption = 'Over-Receipt Code';
