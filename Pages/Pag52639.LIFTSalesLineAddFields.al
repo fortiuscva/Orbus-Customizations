@@ -4,7 +4,7 @@ page 52639 "LIFT Sales Line Add. Fields"
     APIPublisher = 'Orbus';
     APIVersion = 'v2.0';
     ApplicationArea = All;
-    Caption = 'liftSalesLineAddFields';
+    Caption = 'LIFT SalesLineAddFields';
     DelayedInsert = true;
     EntityName = 'LIFTSalesLineAddFields';
     EntitySetName = 'LIFTSalesLineAddFields';

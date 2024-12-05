@@ -4,7 +4,7 @@ page 52642 "ORB LIFT Item Journal Line"
     APIPublisher = 'Orbus';
     APIVersion = 'v2.0';
     ApplicationArea = All;
-    Caption = 'liftItemJournalLine';
+    Caption = 'LIFT ItemJournalLine';
     DelayedInsert = true;
     EntityName = 'LIFTItemJournalLine';
     EntitySetName = 'LIFTItemJournalLine';
