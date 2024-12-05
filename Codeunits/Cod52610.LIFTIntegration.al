@@ -327,6 +327,7 @@ codeunit 52610 "ORB LIFT Integration"
     var
         EntryNo: Integer;
         JsonOrderToken: JsonToken;
+        EntryTypeVarLcl: Text;
     begin
         Clear(EntryNo);
         ItemJournalLine.Reset();
@@ -343,8 +344,11 @@ codeunit 52610 "ORB LIFT Integration"
         ItemJournalLine."Journal Batch Name" := 'DEFAULT';
         ItemJournalLine."Line No." := EntryNo;
         ItemJournalLine.Insert(true);
-
-        ItemJournalLine.Validate("Entry Type", GetValueAsInteger(JsonOrderToken, 'ENTRY_TYPE'));
+        EntryTypeVarLcl := GetValueAsText(JsonOrderToken, 'ENTRY_TYPE');
+        IF EntryTypeVarLcl = 'NEGATIVE' then
+            ItemJournalLine.Validate("Entry Type", ItemJournalLine."Entry Type"::"Negative Adjmt.")
+        ELSE
+            ItemJournalLine.Validate("Entry Type", ItemJournalLine."Entry Type"::"Positive Adjmt.");
         ItemJournalLine.Validate("Item No.", GetValueAsText(JsonOrderToken, 'MATERIAL_BARCODE'));
         ItemJournalLine.Validate("Posting Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderToken, 'DOCUMENT_DATE'))));
         ItemJournalLine.Validate("Location Code", GetValueAsCode(JsonOrderToken, 'LOCATION_CODE'));
