@@ -1,10 +1,15 @@
 page 52639 "LIFT Sales Line Add. Fields"
 {
+    APIGroup = 'Orbus';
+    APIPublisher = 'Orbus';
+    APIVersion = 'v2.0';
     ApplicationArea = All;
-    Caption = 'LIFT Sales Line Add. Fields';
-    PageType = List;
+    Caption = 'liftSalesLineAddFields';
+    DelayedInsert = true;
+    EntityName = 'LIFTSalesLineAddFields';
+    EntitySetName = 'LIFTSalesLineAddFields';
+    PageType = API;
     SourceTable = "ORB Sales Line Add. Fields";
-    UsageCategory = None;
 
     layout
     {
@@ -12,45 +17,45 @@ page 52639 "LIFT Sales Line Add. Fields"
         {
             repeater(General)
             {
-                field("Document Type"; Rec."Document Type")
+                field(documentType; Rec."Document Type")
                 {
-                    ToolTip = 'Specifies the value of the Document Type field.', Comment = '%';
+                    Caption = 'Document Type';
                 }
-                field("Document No."; Rec."Document No.")
+                field(documentNo; Rec."Document No.")
                 {
-                    ToolTip = 'Specifies the value of the Document No. field.', Comment = '%';
+                    Caption = 'Document No.';
                 }
-                field("Line No."; Rec."Line No.")
+                field(lineNo; Rec."Line No.")
                 {
-                    ToolTip = 'Specifies the value of the Line No. field.', Comment = '%';
+                    Caption = 'Line No.';
                 }
-                field("Job ID"; Rec."Job ID")
+                field(jobID; Rec."Job ID")
                 {
-                    ToolTip = 'Specifies the value of the Job ID field.', Comment = '%';
+                    Caption = 'Job ID';
                 }
-                field("Job URL"; Rec."Job URL")
+                field(jobURL; Rec."Job URL")
                 {
-                    ToolTip = 'Specifies the value of the Job URL field.', Comment = '%';
+                    Caption = 'Job URL';
                 }
-                field(SystemCreatedAt; Rec.SystemCreatedAt)
+                field(systemCreatedAt; Rec.SystemCreatedAt)
                 {
-                    ToolTip = 'Specifies the value of the SystemCreatedAt field.', Comment = '%';
+                    Caption = 'SystemCreatedAt';
                 }
-                field(SystemCreatedBy; Rec.SystemCreatedBy)
+                field(systemCreatedBy; Rec.SystemCreatedBy)
                 {
-                    ToolTip = 'Specifies the value of the SystemCreatedBy field.', Comment = '%';
+                    Caption = 'SystemCreatedBy';
                 }
-                field(SystemId; Rec.SystemId)
+                field(systemId; Rec.SystemId)
                 {
-                    ToolTip = 'Specifies the value of the SystemId field.', Comment = '%';
+                    Caption = 'SystemId';
                 }
-                field(SystemModifiedAt; Rec.SystemModifiedAt)
+                field(systemModifiedAt; Rec.SystemModifiedAt)
                 {
-                    ToolTip = 'Specifies the value of the SystemModifiedAt field.', Comment = '%';
+                    Caption = 'SystemModifiedAt';
                 }
-                field(SystemModifiedBy; Rec.SystemModifiedBy)
+                field(systemModifiedBy; Rec.SystemModifiedBy)
                 {
-                    ToolTip = 'Specifies the value of the SystemModifiedBy field.', Comment = '%';
+                    Caption = 'SystemModifiedBy';
                 }
             }
         }
