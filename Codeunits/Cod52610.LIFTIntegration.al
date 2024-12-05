@@ -167,6 +167,8 @@ codeunit 52610 "ORB LIFT Integration"
                 SalesOrderDataRead(ResponsePar);
             'CUSTOMERS':
                 CustomerDataRead(ResponsePar);
+            'INVENTORYJOURNALS':
+                InventoryJournalDataRead(ResponsePar);
             'ITEMS':
                 SalesOrderDataRead(ResponsePar);
         End;
@@ -235,10 +237,70 @@ codeunit 52610 "ORB LIFT Integration"
         Customer.Init();
         Customer."No." := GetValueAsCode(JsonOrderToken, 'CustomerNumber');
         Customer.Name := GetValueAsText(JsonOrderToken, 'CustomerName');
-        Customer."ORB LIFT Customer" := true;
-        Customer.Modify(true);
+        Customer."Credit Limit (LCY)" := GetValueAsDecimal(JsonOrderToken, 'CreditLimit');
+        Customer."Phone No." := GetValueAsText(JsonOrderToken, 'PhoneNumber');
 
-        InsertIntergationDataLog(Database::Customer, 0, Customer."No.", 0);
+        Customer."ORB LIFT Customer" := true;
+        if Customer.Insert() then
+            InsertIntergationDataLog(Database::Customer, 0, Customer."No.", 0);
     end;
 
+    procedure InventoryJournalDataRead(ResponsePar: text)
+    var
+        ItemJournalLine: Record "Item Journal Line";
+        JsonObject: JsonObject;
+        JsonArray: JsonArray;
+        JsonToken: JsonToken;
+        JsonTokenLines: JsonToken;
+        JsonObjectOrder: JsonObject;
+        JsonArrayLines: JsonArray;
+        JsonTokenLine: JsonToken;
+        JsonOrderToken: JsonToken;
+        i: Integer;
+    begin
+        if not JsonObject.ReadFrom(ResponsePar) then
+            Error('Not valid Json');
+        if not JsonObject.Get('rowset', JsonToken) then
+            Error('Not Valid data');
+        JsonArray := JsonToken.AsArray();
+        for i := 0 to JsonArray.Count - 1 do begin
+            JsonArray.Get(i, JsonToken);
+            JsonObjectOrder := JsonToken.AsObject();
+            CreateInventoryJournal(ItemJournalLine, JsonObjectOrder);
+        end;
+    end;
+
+    procedure CreateInventoryJournal(var ItemJournalLine: Record "Item Journal Line"; jsonOrderObject: JsonObject)
+    var
+        EntryNo: Integer;
+        JsonOrderToken: JsonToken;
+    begin
+        Clear(EntryNo);
+        ItemJournalLine.Reset();
+        ItemJournalLine.SetRange("Journal Template Name", 'ITEM');
+        ItemJournalLine.SetRange("Journal Batch Name", 'DEFAULT');
+        if ItemJournalLine.FindLast() then
+            EntryNo := ItemJournalLine."Line No." + 10000
+        else
+            EntryNo := 10000;
+
+        JsonOrderToken := jsonOrderObject.AsToken();
+        ItemJournalLine.Init();
+        ItemJournalLine."Journal Template Name" := 'ITEM';
+        ItemJournalLine."Journal Batch Name" := 'DEFAULT';
+        ItemJournalLine."Line No." := EntryNo;
+        ItemJournalLine.Validate("Item No.", GetValueAsText(JsonOrderToken, 'MATERIAL'));
+        ItemJournalLine.Validate(Quantity, 1);
+        ItemJournalLine.Validate("Unit Cost", GetValueAsDecimal(JsonOrderToken, 'UNIT_COST'));
+        ItemJournalLine.Validate(Amount, GetValueAsDecimal(JsonOrderToken, 'AMOUNT'));
+        if ItemJournalLine.Amount < 0 then
+            ItemJournalLine."Entry Type" := ItemJournalLine."Entry Type"::"Negative Adjmt."
+        else
+            ItemJournalLine."Entry Type" := ItemJournalLine."Entry Type"::"Positive Adjmt.";
+        ItemJournalLine.Validate("Location Code", 'WR');
+
+        ItemJournalLine.Insert(true);
+
+        InsertIntergationDataLog(Database::"Item Journal Line", 0, ItemJournalLine."Item No.", ItemJournalLine."Line No.");
+    end;
 }

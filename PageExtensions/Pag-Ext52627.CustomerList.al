@@ -91,7 +91,7 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
                     LIFTIntegrationDataLogRecLcl.Reset();
                     LIFTIntegrationDataLogRecLcl.SetCurrentKey("Source Type", "Source Subtype", "Source No.");
                     LIFTIntegrationDataLogRecLcl.SetRange("Source Type", Database::Customer);
-                    LIFTIntegrationDataLogRecLcl.SetRange("Source Type", 0);
+                    LIFTIntegrationDataLogRecLcl.SetRange("Source subtype", 0);
                     if LIFTIntegrationDataLogRecLcl.FindLast() then
                         LIFTIntegration.ParseData(LIFTERPSetupRecLcl."Customers API" + '&p1=' + LIFTIntegrationDataLogRecLcl."Source No.", LIFTAPICodes.GetCustomersAPICode())
                     else
