@@ -33,6 +33,7 @@ codeunit 52610 "ORB LIFTSales OrderData"
 
     procedure ParseData()
     var
+        Salesheader: Record "Sales Header";
         JsonResponse: text;
         JsonObject: JsonObject;
         JsonArray: JsonArray;
@@ -53,12 +54,12 @@ codeunit 52610 "ORB LIFTSales OrderData"
             for i := 0 to JsonArray.Count - 1 do begin
                 JsonArray.Get(i, JsonToken);
                 JsonObjectOrder := JsonToken.AsObject();
-                JsonObjectOrder.Get('ORDER_NUMBER', JsonOrderToken);
-                Message(Format(JsonOrderToken));
+                //JsonObjectOrder.Get('ORDER_NUMBER', JsonOrderToken);
+                CreateSalesOrder(Salesheader, JsonObjectOrder);
                 JsonObjectOrder.Get('LINES', JsonTokenLines);
                 JsonArrayLines := JsonTokenLines.AsArray();
                 foreach jsontokenLine in JsonArrayLines do begin
-                    Message(Format(JsonTokenLine));
+                    CreateSalesLines(Salesheader, JsonTokenLine.AsObject());
                 end;
             end;
         end;
@@ -82,5 +83,91 @@ codeunit 52610 "ORB LIFTSales OrderData"
         exit(true);
     end;
 
+    local procedure CreateSalesOrder(var SalesHeader: Record "Sales Header"; jsonOrderObject: JsonObject)
+    var
+        JsonOrderToken: JsonToken;
+    begin
+        JsonOrderToken := jsonOrderObject.AsToken();
+        SalesHeader.Init();
+        SalesHeader."Document Type" := SalesHeader."Document Type"::Order;
+        SalesHeader."No." := GetValueAsCode(JsonOrderToken, 'ORDER_NUMBER');
+        SalesHeader.Insert(true);
+        SalesHeader.Validate("Sell-to Customer No.", GetValueAsCode(JsonOrderToken, 'SELL_TO_CUSTOMER'));
+        SalesHeader.Validate("Bill-to Customer No.", GetValueAsCode(JsonOrderToken, 'BILL_TO_CUSTOMER'));
+        SalesHeader.Validate("Document Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderToken, 'DOCUMENT_DATE'))));
+        SalesHeader.Modify(true);
+    end;
+
+    local procedure CreateSalesLines(var SalesHeader: Record "Sales Header"; jsonOrderObject: JsonObject)
+    var
+        SalesLine: Record "Sales Line";
+        JsonOrderLineToken: JsonToken;
+    begin
+        JsonOrderLineToken := jsonOrderObject.AsToken();
+        SalesLine.init();
+        SalesLine."Document Type" := SalesHeader."Document Type";
+        SalesLine."Document No." := SalesHeader."No.";
+        SalesLine."Line No." := GetValueAsDecimal(JsonOrderLineToken, 'LINE_NUMBER');
+        SalesLine.Insert(true);
+        if GetValueAsText(JsonOrderLineToken, 'TYPE') = 'COMMENT' then
+            SalesLine.Type := SalesLine.Type::" ";
+        if GetValueAsText(JsonOrderLineToken, 'TYPE') = 'ITEM' then
+            SalesLine.Type := SalesLine.Type::Item;
+        SalesLine.Validate(SalesLine."No.", GetValueAsCode(JsonOrderLineToken, 'VARIANT_CODE'));
+        SalesLine.Validate(Quantity, GetValueAsDecimal(JsonOrderLineToken, 'QUANTITY'));
+        SalesLine.Modify(true);
+    end;
+
+    procedure SelectJsonToken(JObject: JsonObject; Path: Text): Text
+    var
+        JToken: JsonToken;
+    begin
+        if JObject.SelectToken(Path, JToken) then
+            if NOT JToken.AsValue().IsNull() then
+                exit(JToken.AsValue().AsText());
+    end;
+
+    procedure SelectJsonTokenasDecimal(JObject: JsonObject; Path: Text): Decimal
+    var
+        JToken: JsonToken;
+    begin
+        if JObject.SelectToken(Path, JToken) then
+            if NOT JToken.AsValue().IsNull() then
+                exit(JToken.AsValue().AsDecimal());
+    end;
+
+    procedure GetValueAsText(JToken: JsonToken; ParamString: Text): Text
+    var
+        JObject: JsonObject;
+    begin
+        JObject := JToken.AsObject();
+        exit(SelectJsonToken(JObject, ParamString));
+    end;
+
+    procedure GetValueAsDecimal(JToken: JsonToken; ParamString: Text): Decimal
+    var
+        JObject: JsonObject;
+    begin
+        JObject := JToken.AsObject();
+        exit(SelectJsonTokenasDecimal(JObject, ParamString));
+    end;
+
+    procedure GetValueAsCode(JToken: JsonToken; ParamString: Text): Code[20]
+    var
+        JObject: JsonObject;
+    begin
+        JObject := JToken.AsObject();
+        exit(SelectJsonToken(JObject, ParamString));
+    end;
+
+    local procedure EvaluateUTCDateTime(DataTimeText: Text) EvaluatedDateTime: DateTime;
+    var
+        TypeHelper: Codeunit "Type Helper";
+        ValueTest: Variant;
+    begin
+        ValueTest := EvaluatedDateTime;
+        IF TypeHelper.Evaluate(ValueTest, DataTimeText, '', TypeHelper.GetCultureName()) THEN
+            EvaluatedDateTime := ValueTest;
+    end;
 
 }
