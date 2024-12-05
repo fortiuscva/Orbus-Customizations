@@ -92,11 +92,17 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
                 trigger OnAction()
                 var
                     LIFTERPSetupRecLcl: Record "ORB LIFT ERP Setup";
+                    LIFTIntegrationDataLogRecLcl: Record "ORB LIFT Integration Data Log";
                     LIFTIntegration: Codeunit "ORB LIFT Integration";
                     LIFTAPICodes: Codeunit "ORB LIFT API Codes";
                 begin
                     LIFTERPSetupRecLcl.Get();
-                    LIFTIntegration.ParseData(LIFTERPSetupRecLcl."Sales Orders API", LIFTAPICodes.GetSalesOrderAPICode());
+                    LIFTIntegrationDataLogRecLcl.Reset();
+                    LIFTIntegrationDataLogRecLcl.SetCurrentKey("Source Type", "Source Subtype", "Source No.");
+                    if LIFTIntegrationDataLogRecLcl.FindLast() then
+                        LIFTIntegration.ParseData(LIFTERPSetupRecLcl."Sales Orders API" + 'p1=' + LIFTIntegrationDataLogRecLcl."Source No.", LIFTAPICodes.GetSalesOrderAPICode())
+                    else
+                        LIFTIntegration.ParseData(LIFTERPSetupRecLcl."Sales Orders API", LIFTAPICodes.GetSalesOrderAPICode());
                 end;
             }
 
