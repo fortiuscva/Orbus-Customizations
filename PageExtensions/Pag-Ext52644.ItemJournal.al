@@ -21,11 +21,9 @@ pageextension 52644 "ORB Item Journal" extends "Item Journal"
                 begin
                     LIFTERPSetupRecLcl.Get();
                     LIFTIntegrationDataLogRecLcl.Reset();
-                    LIFTIntegrationDataLogRecLcl.SetCurrentKey("Source Type", "Source Subtype", "Source No.");
-                    LIFTIntegrationDataLogRecLcl.SetRange("Source Type", Database::"Item Journal Line");
-                    LIFTIntegrationDataLogRecLcl.SetRange("Source subtype", 0);
+                    LIFTIntegrationDataLogRecLcl.SetCurrentKey("Transaction ID");
                     if LIFTIntegrationDataLogRecLcl.FindLast() then
-                        LIFTIntegration.ParseData(LIFTERPSetupRecLcl."Inventory Journal API" + '&p1=' + LIFTIntegrationDataLogRecLcl."Source No.", LIFTAPICodes.GetInventoryJournalAPICode())
+                        LIFTIntegration.ParseData(LIFTERPSetupRecLcl."Inventory Journal API" + '&p1=' + format(LIFTIntegrationDataLogRecLcl."Transaction ID"), LIFTAPICodes.GetInventoryJournalAPICode())
                     else
                         LIFTIntegration.ParseData(LIFTERPSetupRecLcl."Inventory Journal API", LIFTAPICodes.GetInventoryJournalAPICode());
                 end;
