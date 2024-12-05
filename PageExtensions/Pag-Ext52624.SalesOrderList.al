@@ -100,7 +100,7 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
                     LIFTIntegrationDataLogRecLcl.Reset();
                     LIFTIntegrationDataLogRecLcl.SetCurrentKey("Source Type", "Source Subtype", "Source No.");
                     if LIFTIntegrationDataLogRecLcl.FindLast() then
-                        LIFTIntegration.ParseData(LIFTERPSetupRecLcl."Sales Orders API" + 'p1=' + LIFTIntegrationDataLogRecLcl."Source No.", LIFTAPICodes.GetSalesOrderAPICode())
+                        LIFTIntegration.ParseData(LIFTERPSetupRecLcl."Sales Orders API" + '&p1=' + LIFTIntegrationDataLogRecLcl."Source No.", LIFTAPICodes.GetSalesOrderAPICode())
                     else
                         LIFTIntegration.ParseData(LIFTERPSetupRecLcl."Sales Orders API", LIFTAPICodes.GetSalesOrderAPICode());
                 end;
