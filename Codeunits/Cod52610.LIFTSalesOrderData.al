@@ -1,6 +1,6 @@
 codeunit 52610 "ORB LIFTSales OrderData"
 {
-    procedure ParseData(APIURLPar: Text[1024]; APICodePar: code[10])
+    procedure ParseData(APIURLPar: Text[1024]; APICodePar: code[20])
     var
         Salesheader: Record "Sales Header";
         JsonResponse: text;
@@ -10,16 +10,12 @@ codeunit 52610 "ORB LIFTSales OrderData"
         end;
     end;
 
-    procedure GetRequest(APIURLPar: text[1024]; APICodePar: code[10]; var ResponseTextPar: Text): Boolean
+    procedure GetRequest(APIURLPar: text[1024]; APICodePar: code[20]; var ResponseTextPar: Text): Boolean
     var
         httpClient: HttpClient;
         httpResponseMessage: HttpResponseMessage;
         httpStatusCode: Integer;
-    //requestUri: Text;
     begin
-
-        //requestUri := 'https://orbus.lifterp.com/ords/lifterp/lift/erp/flush/ondemand/1422/Orders/N?offset=0&p1=O0000003';
-
         httpClient.Get(APIURLPar, httpResponseMessage);
         httpResponseMessage.Content().ReadAs(ResponseTextPar);
         httpStatusCode := httpResponseMessage.HttpStatusCode();
@@ -138,7 +134,7 @@ codeunit 52610 "ORB LIFTSales OrderData"
         exit(10000);
     end;
 
-    procedure ProcessRequest(APICode: Code[10]; ResponsePar: Text)
+    procedure ProcessRequest(APICode: Code[20]; ResponsePar: Text)
     var
 
     begin
