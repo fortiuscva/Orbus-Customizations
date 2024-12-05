@@ -91,6 +91,11 @@ tableextension 52603 "ORB Customer" extends Customer
                                                                         "Posting Date" = field("ORB Year To Date Filter"),
                                                                          "Currency Code" = field("Currency Filter")));
         }
+        field(52610; "ORB LIFT Customer"; boolean)
+        {
+            Caption = 'LIFT Customer';
+            DataClassification = CustomerContent;
+        }
         modify("Salesperson Code")
         {
             Caption = 'Key/National Account Manager';

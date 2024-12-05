@@ -1,4 +1,4 @@
-page 52631 "ORB PRD Sales Return Order API"
+page 52632 "ORB PRD Sales Return Order API"
 {
     APIGroup = 'orbus';
     APIPublisher = 'orbus';
