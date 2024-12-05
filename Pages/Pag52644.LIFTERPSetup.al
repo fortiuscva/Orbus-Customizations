@@ -1,7 +1,7 @@
 page 52644 "ORB LIFT ERP Setup"
 {
     ApplicationArea = All;
-    Caption = 'ORB LIFT ERP Setup';
+    Caption = 'LIFT ERP Setup';
     PageType = CardPart;
     SourceTable = "ORB LIFT ERP Setup";
 
