@@ -6,8 +6,8 @@ page 52637 "LIFT Sales Header Add. Fields"
     ApplicationArea = All;
     Caption = 'LIFT SalesHeaderAddFields';
     DelayedInsert = true;
-    EntityName = 'LISTSalesHeaderAddFields';
-    EntitySetName = 'LISTSalesHeaderAddFields';
+    EntityName = 'LIFTSalesHeaderAddFields';
+    EntitySetName = 'LIFTSalesHeaderAddFields';
     PageType = API;
     SourceTable = "ORB Sales Header Add. Fields";
 
