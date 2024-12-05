@@ -82,6 +82,10 @@ codeunit 52610 "ORB LIFT Integration"
                 if (GetValueAsCode(JsonOrderLineToken, 'VARIANT_CODE') <> '') then begin
                     SalesLine.Validate(SalesLine."No.", GetValueAsCode(JsonOrderLineToken, 'VARIANT_CODE'));
                     SalesLine.Validate(Quantity, GetValueAsDecimal(JsonOrderLineToken, 'QUANTITY'));
+                    SalesLine.Validate("Unit of Measure Code", GetValueAsText(JsonOrderLineToken, 'UNIT_OF_MEASURE_CODE'));
+                    SalesLine.Validate("Unit Price", GetValueAsDecimal(JsonOrderLineToken, 'UNIT_PRICE'));
+                    SalesLine.Validate("Height", GetValueAsDecimal(JsonOrderLineToken, 'HEIGHT'));
+                    SalesLine.Validate("Width", GetValueAsDecimal(JsonOrderLineToken, 'WIDTH'));
                 end;
             end;
             SalesLine.Modify(true);
