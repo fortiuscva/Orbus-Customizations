@@ -1,85 +1,30 @@
 codeunit 52610 "ORB LIFTSales OrderData"
 {
-    procedure GetSalesOrderDetails()
-    var
-        ClientVarLcl: HttpClient;
-        contentVarLcl: HttpContent;
-        HeaderVarLcl: HttpHeaders;
-        RequestVarLcl: HttpRequestMessage;
-        ResponseVarLcl: HttpResponseMessage;
-        JtokenVarLcl: JsonToken;
-        URLVarLcl: Text;
-        RawTextVarLcl: Text;
-        ResponseTextVarLcl: Text;
-    begin
-
-        URLVarLcl := 'https://orbus.lifterp.com/ords/lifterp/lift/erp/flush/ondemand/1422/Orders/N?offset=0&p1=O0000003';
-
-        //contentVarLcl.WriteFrom(RawTextVarLcl);
-        contentVarLcl.GetHeaders(HeaderVarLcl);
-        HeaderVarLcl.Remove('Content-Type');
-        HeaderVarLcl.Add('Content-Type', 'application/json');
-        RequestVarLcl.Method := 'GET';
-        RequestVarLcl.SetRequestUri(URLVarLcl);
-        RequestVarLcl.Content(contentVarLcl);
-        ClientVarLcl.Send(RequestVarLcl, ResponseVarLcl);
-        ResponseVarLcl.Content().ReadAs(ResponseTextVarLcl);
-        JtokenVarLcl.ReadFrom(ResponseTextVarLcl);
-        if ResponseVarLcl.IsSuccessStatusCode then begin
-
-        end else
-            error('%1', ResponseVarLcl.ReasonPhrase);
-    end;
-
-    procedure ParseData()
+    procedure ParseData(APIURLPar: Text[1024]; APICodePar: code[10])
     var
         Salesheader: Record "Sales Header";
         JsonResponse: text;
-        JsonObject: JsonObject;
-        JsonArray: JsonArray;
-        JsonToken: JsonToken;
-        JsonTokenLines: JsonToken;
-        JsonObjectOrder: JsonObject;
-        JsonArrayLines: JsonArray;
-        JsonTokenLine: JsonToken;
-        JsonOrderToken: JsonToken;
-        i: Integer;
     begin
-        if GetRequest(JsonResponse) then begin
-            if not JsonObject.ReadFrom(JsonResponse) then
-                Error('Not valid Json');
-            if not JsonObject.Get('rowset', JsonToken) then
-                Error('Not Valid data');
-            JsonArray := JsonToken.AsArray();
-            for i := 0 to JsonArray.Count - 1 do begin
-                JsonArray.Get(i, JsonToken);
-                JsonObjectOrder := JsonToken.AsObject();
-                //JsonObjectOrder.Get('ORDER_NUMBER', JsonOrderToken);
-                CreateSalesOrder(Salesheader, JsonObjectOrder);
-                JsonObjectOrder.Get('LINES', JsonTokenLines);
-                JsonArrayLines := JsonTokenLines.AsArray();
-                foreach jsontokenLine in JsonArrayLines do begin
-                    CreateSalesLines(Salesheader, JsonTokenLine.AsObject());
-                end;
-            end;
+        if GetRequest(APIURLPar, APICodePar, JsonResponse) then begin
+            ProcessRequest(APICodePar, JsonResponse);
         end;
     end;
 
-    procedure GetRequest(var Data: Text): Boolean
+    procedure GetRequest(APIURLPar: text[1024]; APICodePar: code[10]; var ResponseTextPar: Text): Boolean
     var
         httpClient: HttpClient;
         httpResponseMessage: HttpResponseMessage;
         httpStatusCode: Integer;
-        requestUri: Text;
+    //requestUri: Text;
     begin
 
-        requestUri := 'https://orbus.lifterp.com/ords/lifterp/lift/erp/flush/ondemand/1422/Orders/N?offset=0&p1=O0000003';
+        //requestUri := 'https://orbus.lifterp.com/ords/lifterp/lift/erp/flush/ondemand/1422/Orders/N?offset=0&p1=O0000003';
 
-        httpClient.Get(requestUri, httpResponseMessage);
-        httpResponseMessage.Content().ReadAs(Data);
+        httpClient.Get(APIURLPar, httpResponseMessage);
+        httpResponseMessage.Content().ReadAs(ResponseTextPar);
         httpStatusCode := httpResponseMessage.HttpStatusCode();
         if not httpResponseMessage.IsSuccessStatusCode() then
-            Error('%1 - %2', httpStatusCode, Data);
+            Error('%1 - %2', httpStatusCode, ResponseTextPar);
         exit(true);
     end;
 
@@ -95,6 +40,8 @@ codeunit 52610 "ORB LIFTSales OrderData"
         SalesHeader.Validate("Sell-to Customer No.", GetValueAsCode(JsonOrderToken, 'SELL_TO_CUSTOMER'));
         SalesHeader.Validate("Bill-to Customer No.", GetValueAsCode(JsonOrderToken, 'BILL_TO_CUSTOMER'));
         SalesHeader.Validate("Document Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderToken, 'DOCUMENT_DATE'))));
+        SalesHeader.Validate("Posting Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderToken, 'POSTING_DATE'))));
+        SalesHeader."In-Hands Date" := DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderToken, 'IN_HAND_DATE')));
         SalesHeader."ORB Lift Order" := true;
         SalesHeader.Modify(true);
     end;
@@ -191,6 +138,71 @@ codeunit 52610 "ORB LIFTSales OrderData"
         exit(10000);
     end;
 
+    procedure ProcessRequest(APICode: Code[10]; ResponsePar: Text)
     var
-        LineNo: Integer;
+
+    begin
+        Case APICode of
+            'SALESORDERS':
+                SalesOrderDataRead(ResponsePar);
+            'CUSTOMERS':
+                SalesOrderDataRead(ResponsePar);
+            'ITEMS':
+                SalesOrderDataRead(ResponsePar);
+        End;
+    end;
+
+    procedure SalesOrderDataRead(ResponsePar: text)
+    var
+        Salesheader: Record "Sales Header";
+        JsonObject: JsonObject;
+        JsonArray: JsonArray;
+        JsonToken: JsonToken;
+        JsonTokenLines: JsonToken;
+        JsonObjectOrder: JsonObject;
+        JsonArrayLines: JsonArray;
+        JsonTokenLine: JsonToken;
+        JsonOrderToken: JsonToken;
+        i: Integer;
+    begin
+        if not JsonObject.ReadFrom(ResponsePar) then
+            Error('Not valid Json');
+        if not JsonObject.Get('rowset', JsonToken) then
+            Error('Not Valid data');
+        JsonArray := JsonToken.AsArray();
+        for i := 0 to JsonArray.Count - 1 do begin
+            JsonArray.Get(i, JsonToken);
+            JsonObjectOrder := JsonToken.AsObject();
+            CreateSalesOrder(Salesheader, JsonObjectOrder);
+            JsonObjectOrder.Get('LINES', JsonTokenLines);
+            JsonArrayLines := JsonTokenLines.AsArray();
+            foreach jsontokenLine in JsonArrayLines do begin
+                CreateSalesLines(Salesheader, JsonTokenLine.AsObject());
+            end;
+        end;
+    end;
+
+    procedure GetSalesOrderAPICode() APICode: Code[20]
+    begin
+        Clear(APICodeRecGbl);
+        if APICodeRecGbl.GET('SALESORDERS') then
+            APICode := APICodeRecGbl.Code;
+    end;
+
+    procedure GetCustomersAPICode() APICode: Code[20]
+    begin
+        Clear(APICodeRecGbl);
+        if APICodeRecGbl.GET('CUSTOMERS') then
+            APICode := APICodeRecGbl.Code;
+    end;
+
+    procedure GetItemsAPICode() APICode: Code[20]
+    begin
+        Clear(APICodeRecGbl);
+        if APICodeRecGbl.GET('ITEMS') then
+            APICode := APICodeRecGbl.Code;
+    end;
+
+    var
+        APICodeRecGbl: Record "ORB API Codes";
 }
