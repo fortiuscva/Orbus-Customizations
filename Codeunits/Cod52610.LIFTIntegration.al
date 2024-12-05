@@ -40,8 +40,6 @@ codeunit 52610 "ORB LIFT Integration"
             SalesHeader.Validate("Document Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderToken, 'SHIPMENT_DATE'))));
             SalesHeader.Validate("Due Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderToken, 'DUE_DATE'))));
             SalesHeader.Validate("Location Code", GetValueAsCode(JsonOrderToken, 'LOCATION_CODE'));
-            SalesHeader.Validate("Shortcut Dimension 1 Code", GetValueAsCode(JsonOrderToken, ''));
-            SalesHeader.Validate("Shortcut Dimension 2 Code", GetValueAsCode(JsonOrderToken, ''));
             SalesHeader.Validate("Salesperson Code", GetValueAsCode(JsonOrderToken, 'SALESPERSON_CODE'));
             SalesHeader.Validate("Document Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderToken, 'DOCUMENT_DATE'))));
             SalesHeader.Validate("External Document No.", GetValueAsText(JsonOrderToken, 'EXTERNAL_DOCUMENT_NUMBER'));
@@ -52,7 +50,10 @@ codeunit 52610 "ORB LIFT Integration"
             SalesHeader.Validate("ORB Magento Order #", GetValueAsText(JsonOrderToken, 'MAGENTO_ORDER_NUMBER'));
             SalesHeader.Validate(Rush, GetValueAsBoolean(JsonOrderToken, 'RUSH'));
             SalesHeader."In-Hands Date" := DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderToken, 'IN_HAND_DATE')));
-
+            SalesHeader.Validate("Shipping Agent Code", GetValueAsCode(JsonOrderToken, 'SHIPPING_AGENT_CODE'));
+            SalesHeader.Validate("Shipping Agent Service Code", GetValueAsCode(JsonOrderToken, 'SHIPPING_AGENT_SERVICE_CODE'));
+            SalesHeader.Validate("Shortcut Dimension 1 Code", GetValueAsCode(JsonOrderToken, 'SHORTCUT_DIMENSION_1_CODE'));
+            SalesHeader.Validate("Shortcut Dimension 2 Code", GetValueAsCode(JsonOrderToken, 'SHORTCUT_DIMENSION_2_CODE'));
             SalesHeader."ORB Lift Order" := true;
             SalesHeader.Modify(true);
         end;
@@ -341,17 +342,17 @@ codeunit 52610 "ORB LIFT Integration"
         ItemJournalLine."Journal Template Name" := 'ITEM';
         ItemJournalLine."Journal Batch Name" := 'DEFAULT';
         ItemJournalLine."Line No." := EntryNo;
+        ItemJournalLine.Insert(true);
+
+        ItemJournalLine.Validate("Entry Type", GetValueAsInteger(JsonOrderToken, 'ENTRY_TYPE'));
         ItemJournalLine.Validate("Item No.", GetValueAsText(JsonOrderToken, 'MATERIAL_BARCODE'));
         ItemJournalLine.Validate("Posting Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderToken, 'DOCUMENT_DATE'))));
-        //ItemJournalLine.Validate("Entry Type", GetValueAsInteger(JsonOrderToken,));
-        ItemJournalLine.Validate("Location Code", GetValueAsCode(JsonOrderToken, 'FROM_LOCATION'));
-
+        ItemJournalLine.Validate("Location Code", GetValueAsCode(JsonOrderToken, 'LOCATION_CODE'));
         ItemJournalLine.Validate(Quantity, GetValueAsDecimal(JsonOrderToken, 'QUANTITY'));
         ItemJournalLine.Validate("Unit Cost", GetValueAsDecimal(JsonOrderToken, 'UNIT_COST'));
         ItemJournalLine.Validate(Amount, GetValueAsDecimal(JsonOrderToken, 'AMOUNT'));
         ItemJournalLine.Validate("Unit of Measure Code", GetValueAsCode(JsonOrderToken, 'UNIT_OF_MEASURE'));
-
-        ItemJournalLine.Insert(true);
+        ItemJournalLine.Modify(true);
 
         InsertIntergationDataLog(Database::"Item Journal Line", 0, ItemJournalLine."Item No.", ItemJournalLine."Line No.");
     end;
