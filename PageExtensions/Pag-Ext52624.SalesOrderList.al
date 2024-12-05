@@ -85,6 +85,17 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
                 RunObject = page "ORB Sales Header Add. Fields";
                 RunPageLink = "Document Type" = field("Document Type"), "No." = field("No.");
             }
+            action("ORB LiftOrder")
+            {
+                Image = Order;
+                ApplicationArea = all;
+                trigger OnAction()
+                var
+                    CU: Codeunit "ORB LIFTSales OrderData";
+                begin
+                    cu.ParseData();
+                end;
+            }
 
         }
         modify("Release & Pick")
