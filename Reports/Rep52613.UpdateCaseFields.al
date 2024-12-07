@@ -39,7 +39,7 @@ report 52613 "ORB Update Case Fields"
     trigger OnPostReport()
     begin
         if Counter > 0 then
-            Message('Cases are Modified:%1', Counter);
+            Message('Cases Modified are:%1', Counter);
     end;
 
     var
