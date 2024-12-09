@@ -54,6 +54,15 @@ codeunit 52610 "ORB LIFT Integration"
             SalesHeader.Validate("Shipping Agent Service Code", GetValueAsCode(JsonOrderToken, 'SHIPPING_AGENT_SERVICE_CODE'));
             SalesHeader.Validate("Shortcut Dimension 1 Code", GetValueAsCode(JsonOrderToken, 'SHORTCUT_DIMENSION_1_CODE'));
             SalesHeader.Validate("Shortcut Dimension 2 Code", GetValueAsCode(JsonOrderToken, 'SHORTCUT_DIMENSION_2_CODE'));
+            SalesHeader.Validate("Ship-to Name", GetValueAsText(JsonOrderToken, 'LOCATION_NAME'));
+            SalesHeader.Validate("Ship-to Contact", GetValueAsText(JsonOrderToken, 'ATTENTION_TO'));
+            SalesHeader.Validate("Ship-to Address", GetValueAsText(JsonOrderToken, 'ADDRESS_LINE1'));
+            SalesHeader.Validate("Ship-to Address 2", GetValueAsText(JsonOrderToken, 'ADDRESS_LINE2'));
+            SalesHeader.Validate("Ship-to City", GetValueAsText(JsonOrderToken, 'CITY'));
+            SalesHeader.Validate("Ship-to County", GetValueAsText(JsonOrderToken, 'STATE'));
+            SalesHeader.Validate("Ship-to Post Code", GetValueAsCode(JsonOrderToken, 'ZIP'));
+
+
             SalesHeader."ORB Lift Order" := true;
             SalesHeader.Modify(true);
         end;
@@ -86,6 +95,14 @@ codeunit 52610 "ORB LIFT Integration"
                     SalesLine.Validate("Unit Price", GetValueAsDecimal(JsonOrderLineToken, 'UNIT_PRICE'));
                     SalesLine.Validate("Height", GetValueAsDecimal(JsonOrderLineToken, 'HEIGHT'));
                     SalesLine.Validate("Width", GetValueAsDecimal(JsonOrderLineToken, 'WIDTH'));
+                    SalesLine.Validate("Shortcut Dimension 1 Code", SalesHeader."Shortcut Dimension 1 Code");
+                    SalesLine.Validate("Shortcut Dimension 2 Code", GetValueAsCode(JsonOrderLineToken, 'SHORTCUT_DIMENSION_2_CODE'));
+                    SalesLine.Validate("Requested Delivery Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderLineToken, 'REQUESTED_DELIVERY_DATE'))));
+                    SalesLine.Validate("Planned Delivery Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderLineToken, 'PLANNED_DELIVERY_DATE'))));
+                    SalesLine.Validate("Planned Shipment Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderLineToken, 'PLANNED_SHIP_DATE'))));
+                    SalesLine.Validate("Shipment Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderLineToken, 'SHIPMENT_DATE'))));
+
+
                 end;
             end;
             SalesLine.Modify(true);
