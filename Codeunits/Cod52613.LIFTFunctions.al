@@ -18,7 +18,7 @@ codeunit 52613 "ORB LIFT Functions"
                 ItemJnlLine.SetRange("Journal Template Name", JournalTemplateName);
                 ItemJnlLine.SetRange("Journal Batch Name", JournalBatchName);
                 ItemJnlLine.SetRange("Document No.", GroupLiftJnlLines.Document_No_);
-                ItemJnlLine.SetRange("ORB LIFT Inv. Transaction ID", GroupLiftJnlLines.ORB_LIFT_Inv__Transaction_ID);
+                ItemJnlLine.SetRange("ORB LIFT Order Line ID", GroupLiftJnlLines.ORB_LIFT_Order_Line_ID);
                 ItemJnlLine.SetRange("Entry Type", ItemJnlLine."Entry Type"::"Negative Adjmt.");
                 if ItemJnlLine.FindSet() then
                     repeat
@@ -29,7 +29,7 @@ codeunit 52613 "ORB LIFT Functions"
                 ItemJnlLine.SetRange("Journal Template Name", JournalTemplateName);
                 ItemJnlLine.SetRange("Journal Batch Name", JournalBatchName);
                 ItemJnlLine.SetRange("Document No.", GroupLiftJnlLines.Document_No_);
-                ItemJnlLine.SetRange("ORB LIFT Inv. Transaction ID", GroupLiftJnlLines.ORB_LIFT_Inv__Transaction_ID);
+                ItemJnlLine.SetRange("ORB LIFT Order Line ID", GroupLiftJnlLines.ORB_LIFT_Order_Line_ID);
                 ItemJnlLine.SetRange("Entry Type", ItemJnlLine."Entry Type"::"Positive Adjmt.");
                 if ItemJnlLine.FindFirst() then begin
                     ItemJnlLine.Validate(Amount, MaterialCost);
