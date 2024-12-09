@@ -96,6 +96,18 @@ codeunit 52603 "ORB Orbus Single Instance"
         ClearAll();
     end;
 
+    procedure SetWarehouseActivity(FirstActivityNo: Code[20]; LastActivityNo: Code[20])
+    begin
+        FirstActivityNoGbl := FirstActivityNo;
+        LastActivityNoGbl := LastActivityNo;
+    end;
+
+    procedure GetWarehouseActivity(var FirstActivityNo: Code[20]; var LastActivityNo: Code[20])
+    begin
+        FirstActivityNo := FirstActivityNoGbl;
+        LastActivityNo := LastActivityNoGbl;
+    end;
+
     var
         ShowDialogLookupProfileVarGbl: Boolean;
         ShowDialogSendEmailToCustVarGbl: Boolean;
@@ -107,5 +119,7 @@ codeunit 52603 "ORB Orbus Single Instance"
         ExplodeConfirmVarGbl: Boolean;
         ExplodeBOMExecutionVarGbl: Boolean;
         ShippedNotInvoicedGbl: Boolean;
-
+        MarkupAmountGbl: Decimal;
+        FirstActivityNoGbl: Code[20];
+        LastActivityNoGbl: Code[20];
 }
