@@ -245,7 +245,7 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
                 Rec."Sell-to Contact" := contactRecLcl.Name;
                 Rec."Bill-to Contact No." := contactRecLcl."No.";
                 Rec."Bill-to Contact" := contactRecLcl.Name;
-                Rec."Ship-to Contact" := contactRecLcl.Name;
+                //Rec."Ship-to Contact" := contactRecLcl.Name;
             end;
         end;
         Rec.Modify();
