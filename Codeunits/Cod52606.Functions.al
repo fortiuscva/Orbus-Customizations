@@ -246,7 +246,7 @@ codeunit 52606 "ORB Functions"
     begin
         WhseActivHeader.SetRange(Type, WhseActivHeader.Type::Pick);
         WhseActivHeader.SetRange("No.", WhseActivHeader."No.");
-        ReportSelectionWhse.PrintWhseActivityHeader(WhseActivHeader, ReportSelectionWhse.Usage::Pick, false);
+        PrintWhseActivityHeader(WhseActivHeader, ReportSelectionWhse.Usage::Pick, false);
     end;
 
     procedure PrintWhseActivityHeader(var WhseActivHeader: Record "Warehouse Activity Header"; ReportUsage: Enum "Report Selection Warehouse Usage"; HideDialog: Boolean)
