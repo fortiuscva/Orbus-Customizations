@@ -58,7 +58,7 @@ page 52610 "ORB Magento Sales Hdr. Details"
                 //     ToolTip = 'Specifies the value of the Magento Artwork Job ID field.';
                 // }
 
-                field(ShiptoContact; Rec."ORB Ship-to Contact Name")
+                field(ShiptoContact; Rec."ORB Ship-to Contact Name (API)")
                 {
                     ToolTip = 'Specifies the value of the Ship-to Contact field.';
                 }
