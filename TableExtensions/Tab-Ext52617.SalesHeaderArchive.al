@@ -61,5 +61,9 @@ tableextension 52617 "ORB Sales Header Archive" extends "Sales Header Archive"
             CalcFormula = lookup("DSHIP Package Options"."Payment Account No." where("Document Type" = filter("Sales Order"), "Document No." = field("No.")));
             Editable = false;
         }
+        field(52653; "ORB Ship-to Contact Name (API)"; text[100])
+        {
+            Caption = 'Ship-to Contact Name (API)';
+        }
     }
 }
