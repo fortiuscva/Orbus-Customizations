@@ -95,8 +95,9 @@ codeunit 52610 "ORB LIFT Integration"
                     SalesLine.Validate("Unit Price", GetValueAsDecimal(JsonOrderLineToken, 'UNIT_PRICE'));
                     SalesLine.Validate("Height", GetValueAsDecimal(JsonOrderLineToken, 'HEIGHT'));
                     SalesLine.Validate("Width", GetValueAsDecimal(JsonOrderLineToken, 'WIDTH'));
-                    SalesLine.Validate("Shortcut Dimension 1 Code", SalesHeader."Shortcut Dimension 1 Code");
-                    SalesLine.Validate("Shortcut Dimension 2 Code", GetValueAsCode(JsonOrderLineToken, 'SHORTCUT_DIMENSION_2_CODE'));
+                    //SalesLine.Validate("Shortcut Dimension 1 Code", SalesHeader."Shortcut Dimension 1 Code");
+                    if GetValueAsCode(JsonOrderLineToken, 'SHORTCUT_DIMENSION_2_CODE') <> '' then
+                        SalesLine.Validate("Shortcut Dimension 2 Code", GetValueAsCode(JsonOrderLineToken, 'SHORTCUT_DIMENSION_2_CODE'));
                     SalesLine.Validate("Requested Delivery Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderLineToken, 'REQUESTED_DELIVERY_DATE'))));
                     SalesLine.Validate("Planned Delivery Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderLineToken, 'PLANNED_DELIVERY_DATE'))));
                     SalesLine.Validate("Planned Shipment Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderLineToken, 'PLANNED_SHIP_DATE'))));
