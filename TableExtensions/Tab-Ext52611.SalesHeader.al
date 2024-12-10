@@ -175,9 +175,11 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         }
         field(52652; "ORB Lift Order"; Boolean)
         {
-
             Caption = 'Lift Order';
-
+        }
+        field(52653; "ORB Ship-to Contact Name (API)"; text[100])
+        {
+            Caption = 'Ship-to Contact Name (API)';
         }
     }
 
@@ -232,6 +234,8 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
                 Rec."Ship-to Contact" := contactRecLcl.Name;
             end;
         end;
+        if (Rec."ORB Ship-to Contact Name (API)" <> '') then
+            Rec."Ship-to Contact" := Rec."ORB Ship-to Contact Name (API)";
         Rec.Modify();
     end;
 
