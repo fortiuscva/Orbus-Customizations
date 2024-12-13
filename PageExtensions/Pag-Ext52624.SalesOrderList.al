@@ -103,7 +103,38 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
                         LIFTIntegration.ParseData(LIFTERPSetupRecLcl."Sales Orders API", LIFTAPICodes.GetSalesOrderAPICode());
                 end;
             }
-
+            action("ORB LIFT Get Selective Orders")
+            {
+                Image = Order;
+                ApplicationArea = all;
+                Caption = 'LIFT Get Selective Orders';
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                trigger OnAction()
+                var
+                    LIFTERPSetupRecLcl: Record "ORB LIFT ERP Setup";
+                    LIFTIntegrationDataLogRecLcl: Record "ORB LIFT Integration Data Log";
+                    LIFTIntegration: Codeunit "ORB LIFT Integration";
+                    LIFTAPICodes: Codeunit "ORB LIFT API Codes";
+                    LiftOrderRangeDialog: Dialog;
+                    LiftStartingOrderNo: Code[20];
+                    LiftEndingOrderNo: Code[20];
+                    LiftOrderRangeDialogMsg: Label 'From Order No.: #1\nTo Order No.: #2';
+                begin
+                    LIFTERPSetupRecLcl.Get();
+                    LIFTIntegration.ParseData('https://orbus.lifterp.com/ords/lifterp/lift/erp/flush/ondemand/1422/Orders/N?offset=0&p3=O0000273', LIFTAPICodes.GetSalesOrderAPICode())
+                    /*
+                    LiftOrderRangeDialog.Open(LiftOrderRangeDialogMsg, LiftStartingOrderNo, LiftEndingOrderNo);
+                    LiftOrderRangeDialog.Close();
+                    if (LiftStartingOrderNo <> '') and (LiftEndingOrderNo <> '') then
+                        LIFTIntegration.ParseData(LIFTERPSetupRecLcl."Sales Orders API" + '&p1=' + LiftStartingOrderNo + '&p2=' + LiftEndingOrderNo, LIFTAPICodes.GetSalesOrderAPICode())
+                    else
+                        LIFTIntegration.ParseData(LIFTERPSetupRecLcl."Sales Orders API" + '&p3=' + LiftStartingOrderNo, LIFTAPICodes.GetSalesOrderAPICode())
+                
+                    */
+                end;
+            }
         }
         modify("Release & Pick")
         {

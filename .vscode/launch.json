@@ -56,7 +56,7 @@
             "launchBrowser": true,
             "enableLongRunningSqlStatements": true,
             "enableSqlInformationDebugger": true,
-            "schemaUpdateMode": "Synchronize"
+            "schemaUpdateMode": "ForceSync"
         }
     ]
 }
