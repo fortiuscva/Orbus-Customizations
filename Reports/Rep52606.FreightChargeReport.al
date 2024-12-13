@@ -59,7 +59,7 @@ report 52606 "ORB Freight Charge Report"
             column(LicensePlate_ShipmentDate; LicenePlateShipmentDtTxGvar)
             {
             }
-            column(Your_Reference; "Your Reference")
+            column(Your_Reference; "ORB Your Reference(CS)")
             {
 
             }

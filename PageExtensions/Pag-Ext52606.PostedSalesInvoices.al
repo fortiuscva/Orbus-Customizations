@@ -41,6 +41,16 @@ pageextension 52606 "ORB Posted Sales Invoices" extends "Posted Sales Invoices"
                 ToolTip = 'Specifies the sub-reason for shipment delay';
                 Editable = false;
             }
+            field("ORB Your Reference(CS)"; Rec."ORB Your Reference(CS)")
+            {
+                ApplicationArea = ALL;
+                ToolTip = 'Specifies Your Reference';
+                Editable = false;
+            }
+        }
+        modify("Your Reference")
+        {
+            Caption = 'Versapay ID';
         }
     }
     actions

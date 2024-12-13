@@ -82,7 +82,7 @@ report 52611 "ORB Freight By ShipppingAgent"
             {
             }
 
-            column(Your_Reference; "Your Reference")
+            column(Your_Reference; "ORB Your Reference(CS)")
             {
 
             }

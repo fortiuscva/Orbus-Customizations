@@ -63,6 +63,12 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
                 ToolTip = 'Specifies the sub-reason for shipment delay';
                 Editable = false;
             }
+            field("ORB Your Reference(CS)"; Rec."ORB Your Reference(CS)")
+            {
+                ApplicationArea = ALL;
+                ToolTip = 'Specifies Your Reference';
+                Editable = false;
+            }
         }
     }
     actions
