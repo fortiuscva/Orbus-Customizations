@@ -55,13 +55,13 @@ codeunit 52610 "ORB LIFT Integration"
             SalesHeader.Validate("Shortcut Dimension 1 Code", GetValueAsCode(JsonOrderToken, 'SHORTCUT_DIMENSION_1_CODE'));
             SalesHeader.Validate("Shortcut Dimension 2 Code", GetValueAsCode(JsonOrderToken, 'SHORTCUT_DIMENSION_2_CODE'));
             SalesHeader.Validate("Ship-to Name", GetValueAsText(JsonOrderToken, 'LOCATION_NAME'));
-            SalesHeader.Validate("Ship-to Contact", GetValueAsText(JsonOrderToken, 'ATTENTION_TO'));
             SalesHeader.Validate("Ship-to Address", GetValueAsText(JsonOrderToken, 'ADDRESS_LINE1'));
             SalesHeader.Validate("Ship-to Address 2", GetValueAsText(JsonOrderToken, 'ADDRESS_LINE2'));
             SalesHeader.Validate("Ship-to City", GetValueAsText(JsonOrderToken, 'CITY'));
             SalesHeader.Validate("Ship-to County", GetValueAsText(JsonOrderToken, 'STATE'));
             SalesHeader.Validate("Ship-to Post Code", GetValueAsCode(JsonOrderToken, 'ZIP'));
-
+            SalesHeader.Validate("Shipment Date", DT2Date(EvaluateUTCDateTime(GetValueAsText(JsonOrderToken, 'SHIP_DATE'))));
+            SalesHeader.Validate("Ship-to Contact", GetValueAsText(JsonOrderToken, 'ATTENTION_TO'));
 
             SalesHeader."ORB Lift Order" := true;
             SalesHeader.Modify(true);
@@ -267,9 +267,17 @@ codeunit 52610 "ORB LIFT Integration"
             Error('Not valid Json');
         if not JsonObject.Get('rowset', JsonToken) then
             Error('Not Valid data');
-        // if not JsonToken.IsValue or JsonToken.AsValue.IsNull then
-        //     Error('No Records');
-        JsonArray := JsonToken.AsArray();
+        if JsonToken.IsArray then
+            JsonArray := JsonToken.AsArray
+        else if JsonToken.IsObject then
+            Error('The token is an object, not an array.')
+        else if JsonToken.IsValue then
+            if JsonToken.AsValue.IsNull then
+                Error('No Records')
+            else
+                Error('Unexpected value type in the response.')
+        else
+            Error('Unsupported JSON token type.');
         for i := 0 to JsonArray.Count - 1 do begin
             JsonArray.Get(i, JsonToken);
             JsonObjectOrder := JsonToken.AsObject();
@@ -299,9 +307,17 @@ codeunit 52610 "ORB LIFT Integration"
             Error('Not valid Json');
         if not JsonObject.Get('rowset', JsonToken) then
             Error('Not Valid data');
-        // if not JsonToken.IsValue or JsonToken.AsValue.IsNull then
-        //     Error('No Records');
-        JsonArray := JsonToken.AsArray();
+        if JsonToken.IsArray then
+            JsonArray := JsonToken.AsArray
+        else if JsonToken.IsObject then
+            Error('The token is an object, not an array.')
+        else if JsonToken.IsValue then
+            if JsonToken.AsValue.IsNull then
+                Error('No Records')
+            else
+                Error('Unexpected value type in the response.')
+        else
+            Error('Unsupported JSON token type.');
         for i := 0 to JsonArray.Count - 1 do begin
             JsonArray.Get(i, JsonToken);
             JsonObjectOrder := JsonToken.AsObject();
@@ -342,9 +358,17 @@ codeunit 52610 "ORB LIFT Integration"
             Error('Not valid Json');
         if not JsonObject.Get('rowset', JsonToken) then
             Error('Not Valid data');
-        //if not JsonToken.IsValue or JsonToken.AsValue.IsNull then
-        //Error('No Records');
-        JsonArray := JsonToken.AsArray();
+        if JsonToken.IsArray then
+            JsonArray := JsonToken.AsArray
+        else if JsonToken.IsObject then
+            Error('The token is an object, not an array.')
+        else if JsonToken.IsValue then
+            if JsonToken.AsValue.IsNull then
+                Error('No Records')
+            else
+                Error('Unexpected value type in the response.')
+        else
+            Error('Unsupported JSON token type.');
         for i := 0 to JsonArray.Count - 1 do begin
             JsonArray.Get(i, JsonToken);
             JsonObjectOrder := JsonToken.AsObject();
