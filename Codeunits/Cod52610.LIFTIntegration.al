@@ -267,9 +267,17 @@ codeunit 52610 "ORB LIFT Integration"
             Error('Not valid Json');
         if not JsonObject.Get('rowset', JsonToken) then
             Error('Not Valid data');
-        // if not JsonToken.IsValue or JsonToken.AsValue.IsNull then
-        //     Error('No Records');
-        JsonArray := JsonToken.AsArray();
+        if JsonToken.IsArray then
+            JsonArray := JsonToken.AsArray
+        else if JsonToken.IsObject then
+            Error('The token is an object, not an array.')
+        else if JsonToken.IsValue then
+            if JsonToken.AsValue.IsNull then
+                Error('No Records')
+            else
+                Error('Unexpected value type in the response.')
+        else
+            Error('Unsupported JSON token type.');
         for i := 0 to JsonArray.Count - 1 do begin
             JsonArray.Get(i, JsonToken);
             JsonObjectOrder := JsonToken.AsObject();
@@ -299,9 +307,17 @@ codeunit 52610 "ORB LIFT Integration"
             Error('Not valid Json');
         if not JsonObject.Get('rowset', JsonToken) then
             Error('Not Valid data');
-        // if not JsonToken.IsValue or JsonToken.AsValue.IsNull then
-        //     Error('No Records');
-        JsonArray := JsonToken.AsArray();
+        if JsonToken.IsArray then
+            JsonArray := JsonToken.AsArray
+        else if JsonToken.IsObject then
+            Error('The token is an object, not an array.')
+        else if JsonToken.IsValue then
+            if JsonToken.AsValue.IsNull then
+                Error('No Records')
+            else
+                Error('Unexpected value type in the response.')
+        else
+            Error('Unsupported JSON token type.');
         for i := 0 to JsonArray.Count - 1 do begin
             JsonArray.Get(i, JsonToken);
             JsonObjectOrder := JsonToken.AsObject();
@@ -342,9 +358,17 @@ codeunit 52610 "ORB LIFT Integration"
             Error('Not valid Json');
         if not JsonObject.Get('rowset', JsonToken) then
             Error('Not Valid data');
-        //if not JsonToken.IsValue or JsonToken.AsValue.IsNull then
-        //Error('No Records');
-        JsonArray := JsonToken.AsArray();
+        if JsonToken.IsArray then
+            JsonArray := JsonToken.AsArray
+        else if JsonToken.IsObject then
+            Error('The token is an object, not an array.')
+        else if JsonToken.IsValue then
+            if JsonToken.AsValue.IsNull then
+                Error('No Records')
+            else
+                Error('Unexpected value type in the response.')
+        else
+            Error('Unsupported JSON token type.');
         for i := 0 to JsonArray.Count - 1 do begin
             JsonArray.Get(i, JsonToken);
             JsonObjectOrder := JsonToken.AsObject();
