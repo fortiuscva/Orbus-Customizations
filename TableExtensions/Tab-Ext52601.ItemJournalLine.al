@@ -16,5 +16,15 @@ tableextension 52601 "ORB Item Journal Line" extends "Item Journal Line"
             Caption = 'IWX AutoPost Error DateTime';
             DataClassification = CustomerContent;
         }
+        field(50253; "ORB LIFT Inv. Transaction ID"; Integer)
+        {
+            Caption = 'LIFT Inventory Transaction ID';
+            DataClassification = CustomerContent;
+        }
+        field(50254; "ORB LIFT Order Line ID"; Integer)
+        {
+            Caption = 'LIFT Order Line ID';
+            DataClassification = CustomerContent;
+        }
     }
 }
