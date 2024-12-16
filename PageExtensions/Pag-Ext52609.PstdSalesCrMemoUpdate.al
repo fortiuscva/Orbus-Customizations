@@ -25,7 +25,12 @@ pageextension 52609 "ORB Pstd. Sales Cr.Memo-Update" extends "Pstd. Sales Cr. Me
                 ApplicationArea = all;
                 ToolTip = 'Specifies the External Doc No. on Sales Cr Memo Header';
             }
-            field("ORB Your Reference"; Rec."Your Reference")
+            /* field("ORB Your Reference"; Rec."Your Reference")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Specifies the Your Reference on Sales Cr Memo Header';
+            } */
+            field("ORB Your Reference(CS)"; Rec."ORB Your Reference(CS)")
             {
                 ApplicationArea = all;
                 ToolTip = 'Specifies the Your Reference on Sales Cr Memo Header';

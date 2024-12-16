@@ -82,6 +82,11 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 ApplicationArea = All;
                 ToolTip = 'Specifies the sub-reason code for Shipment Delay';
             }
+            field("ORB Your Reference(CS)"; Rec."ORB Your Reference(CS)")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies your Reference';
+            }
         }
         modify("Payment Terms Code")
         {
@@ -95,6 +100,11 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                         Error(AccessNotallowedlbl, UserId);
                 end;
             end;
+        }
+        modify("Your Reference")
+        {
+            Caption = 'Versapay ID';
+            Editable = false;
         }
         addfirst(factboxes)
         {

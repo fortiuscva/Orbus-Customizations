@@ -95,7 +95,7 @@ table 52615 "ORB FreightChargeDataTable"
             Caption = 'LicensePlate Shipment Date';
             DataClassification = ToBeClassified;
         }
-        field(19; Your_Reference; text[35])
+        field(19; Your_Reference; text[45])
         {
             Caption = 'Your Reference';
             DataClassification = ToBeClassified;

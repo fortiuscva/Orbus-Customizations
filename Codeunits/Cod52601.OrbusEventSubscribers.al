@@ -35,7 +35,9 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
                      (SalesCrMemoHeader."Bill-to Name" <> xSalesCrMemoHeader."Bill-to Name") or
                      (SalesCrMemoHeader."Ship-to Name" <> xSalesCrMemoHeader."Ship-to Name") or
                      (SalesCrMemoHeader."External Document No." <> xSalesCrMemoHeader."External Document No.") or
-                     (SalesCrMemoHeader."Your Reference" <> xSalesCrMemoHeader."Your Reference");
+                       // (SalesCrMemoHeader."Your Reference" <> xSalesCrMemoHeader."Your Reference");
+                       (SalesCrMemoHeader."ORB Your Reference(CS)" <> xSalesCrMemoHeader."ORB Your Reference(CS)");
+
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales Credit Memo Hdr. - Edit", OnBeforeSalesCrMemoHeaderModify, '', false, false)]
@@ -45,7 +47,8 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         SalesCrMemoHeader."Bill-to Name" := FromSalesCrMemoHeader."Bill-to Name";
         SalesCrMemoHeader."Ship-to Name" := FromSalesCrMemoHeader."Ship-to Name";
         SalesCrMemoHeader."External Document No." := FromSalesCrMemoHeader."External Document No.";
-        SalesCrMemoHeader."Your Reference" := FromSalesCrMemoHeader."Your Reference";
+        //SalesCrMemoHeader."Your Reference" := FromSalesCrMemoHeader."Your Reference";
+        SalesCrMemoHeader."ORB Your Reference(CS)" := FromSalesCrMemoHeader."ORB Your Reference(CS)";
     end;
 
     [EventSubscriber(ObjectType::Table, Database::"Document Sending Profile", OnSendCustomerRecordsOnBeforeLookupProfile, '', false, false)]
