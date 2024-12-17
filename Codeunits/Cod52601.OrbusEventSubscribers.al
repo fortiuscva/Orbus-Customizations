@@ -382,6 +382,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
                 labelData."ORB Freight Quote" := SingleInstance.GetFreightQuote();
                 labelData."ORB Markup %" := SingleInstance.GetMarkupPercentage();
                 labelData.Modify();
+                SingleInstance.Reset();
             end;
         end;
     end;
