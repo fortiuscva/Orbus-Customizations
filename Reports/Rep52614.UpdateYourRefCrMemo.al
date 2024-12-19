@@ -1,4 +1,4 @@
-report 52614 "ORB Updt Credit Your Refrence"
+report 52614 "ORB Update Your Ref. Cr. Memo"
 {
     UsageCategory = ReportsAndAnalysis;
     ApplicationArea = All;

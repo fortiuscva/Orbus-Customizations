@@ -1,4 +1,4 @@
-report 52615 "ORB Updt Inv Your Refrence"
+report 52615 "ORB Update Your Ref. Invoces"
 {
     UsageCategory = ReportsAndAnalysis;
     ApplicationArea = All;
