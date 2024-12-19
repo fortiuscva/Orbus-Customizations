@@ -167,7 +167,7 @@ page 52612 "ORB MagentoContacts"
         if Rec."No." = '' then begin
             Rec.Insert(true);
         end;
-
+        Rec.TestField(Rec."E-Mail");
         CheckDuplicateEmailContact();
     end;
 
