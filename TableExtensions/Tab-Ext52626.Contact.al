@@ -15,7 +15,7 @@ tableextension 52626 "ORB Contact" extends Contact
     var
         Contact: Record Contact;
     begin
-        if Rec."E-Mail" <> '' then begin
+        if (Rec.Type = Rec.Type::Person) and (Rec."E-Mail" <> '') then begin
             Contact.Reset();
             Contact.SetFilter("No.", '<>%1', Rec."No.");
             Contact.SetRange(Type, Contact.Type::Person);
