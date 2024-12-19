@@ -52,6 +52,10 @@ tableextension 52616 "ORB Sales Cr.Memo Header" extends "Sales Cr.Memo Header"
         {
             Caption = 'Ship-to Contact Name (API)';
         }
-
+        field(52654; "ORB Your Reference(CS)"; Text[41])
+        {
+            Caption = 'Your Reference(CS)';
+            DataClassification = ToBeClassified;
+        }
     }
 }

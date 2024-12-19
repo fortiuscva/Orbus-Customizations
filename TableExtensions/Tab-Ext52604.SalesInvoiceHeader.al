@@ -103,6 +103,10 @@ tableextension 52604 "ORB Sales Invoice Header" extends "Sales Invoice Header"
         {
             Caption = 'Ship-to Contact Name (API)';
         }
-
+        field(52654; "ORB Your Reference(CS)"; Text[41])
+        {
+            Caption = 'Your Reference(CS)';
+            DataClassification = ToBeClassified;
+        }
     }
 }

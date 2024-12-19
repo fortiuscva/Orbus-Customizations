@@ -181,7 +181,7 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         {
             Caption = 'Ship-to Contact Name (API)';
         }
-        field(52653; "ORB Your Reference(CS)"; Text[41])
+        field(52654; "ORB Your Reference(CS)"; Text[41])
         {
 
             Caption = 'Your Reference(CS)';
