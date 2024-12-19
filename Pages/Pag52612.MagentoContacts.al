@@ -185,8 +185,12 @@ page 52612 "ORB MagentoContacts"
     var
         Contact: Record Contact;
     begin
-        if Rec.Type = Rec.Type::Person then begin
+        if Rec.Type = Rec.Type::Company then
+            exit;
+
+        if (Rec."E-Mail" <> '') then begin
             Contact.Reset();
+            Contact.SetFilter("No.", '<>%1', Rec."No.");
             Contact.SetRange(Type, Contact.Type::Person);
             Contact.SetRange("E-Mail", Rec."E-Mail");
             if Contact.FindFirst() then
