@@ -59,6 +59,16 @@ report 52606 "ORB Freight Charge Report"
             column(LicensePlate_ShipmentDate; LicenePlateShipmentDtTxGvar)
             {
             }
+            column(Your_Reference; "ORB Your Reference(CS)")
+            {
+
+            }
+            column(ORB_Magento_Order__; "ORB Magento Order #")
+            {
+
+            }
+
+
             trigger OnPreDataItem()
             begin
                 SetFilter("No.", 'PS*');

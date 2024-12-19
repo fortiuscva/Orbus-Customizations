@@ -65,7 +65,8 @@ report 52612 "ORB PB Freightreport"
                 FreightChargedataTableRecLcl."Shipping Agent Service" := "Sales Invoice Header"."Shipping Agent Service Code 2";
                 FreightChargedataTableRecLcl.Sales_Order_Payment_Type := format("Sales Invoice Header"."Sales Order Payment Type");
                 FreightChargedataTableRecLcl.Case_No_ := "Sales Invoice Header"."Case No.";
-                FreightChargedataTableRecLcl.Your_Reference := "Sales Invoice Header"."Your Reference";
+                //FreightChargedataTableRecLcl.Your_Reference := "Sales Invoice Header"."Your Reference";
+                FreightChargedataTableRecLcl.Your_Reference := "Sales Invoice Header"."ORB Your Reference(CS)";
                 FreightChargedataTableRecLcl.ORB_Magento_Order := "Sales Invoice Header"."ORB Magento Order #";
                 FreightChargedataTableRecLcl.Package_Tracking_No_ := "Sales Invoice Header"."Package Tracking No.";
                 DynamicShipFreightPriceRecLcl.reset;
