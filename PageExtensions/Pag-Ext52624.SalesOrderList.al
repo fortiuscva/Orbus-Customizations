@@ -71,6 +71,12 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the Sales Order Payment Account No. field.', Comment = '%';
             }
+            field("ORB Your Reference(CS)"; Rec."ORB Your Reference(CS)")
+            {
+                ApplicationArea = ALL;
+                ToolTip = 'Specifies Your Reference';
+                Editable = false;
+            }
         }
     }
     actions

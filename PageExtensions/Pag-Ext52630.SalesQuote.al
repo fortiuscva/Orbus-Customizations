@@ -11,5 +11,20 @@ pageextension 52630 "ORB Sales Quote" extends "Sales Quote"
                 ToolTip = 'Followup by the sales person';
             }
         }
+        addafter("Requested Delivery Date")
+        {
+            field("ORB Your Reference(CS)"; Rec."ORB Your Reference(CS)")
+            {
+                Caption = 'Your Reference(CS)';
+                ApplicationArea = All;
+                ToolTip = 'Specifies your reference';
+            }
+
+        }
+        modify("Your Reference")
+        {
+            Caption = 'Versapay ID';
+            Editable = false;
+        }
     }
 }
