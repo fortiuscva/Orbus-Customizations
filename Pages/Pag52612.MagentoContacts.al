@@ -185,11 +185,13 @@ page 52612 "ORB MagentoContacts"
     var
         Contact: Record Contact;
     begin
-        Contact.Reset();
-        Contact.SetRange(Type, Contact.Type::Person);
-        Contact.SetRange("E-Mail", Rec."E-Mail");
-        if Contact.FindFirst() then
-            Error(DuplicateEmailErr, Contact."No.");
+        if Rec.Type = Rec.Type::Person then begin
+            Contact.Reset();
+            Contact.SetRange(Type, Contact.Type::Person);
+            Contact.SetRange("E-Mail", Rec."E-Mail");
+            if Contact.FindFirst() then
+                Error(DuplicateEmailErr, Contact."No.");
+        end;
     end;
 
     var
