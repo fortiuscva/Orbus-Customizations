@@ -91,7 +91,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         BillToCustomerRecLcl: Record Customer;
     begin
         if SalesHeaderRecLcl.get(addressSource.RecordId) then begin
-            if addressBuffer."Address Type" = addressBuffer."Address Type"::Destination then begin
+            if (addressBuffer."Address Type" = addressBuffer."Address Type"::Destination) or (addressBuffer."Address Type" = addressBuffer."Address Type"::Buffer) then begin
                 //if SalesHeaderRecLcl."Ship-to Contact" <> '' then
                 addressBuffer.Name := SalesHeaderRecLcl."Ship-to Contact";
 
@@ -106,7 +106,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
                 WarehouseShipmentLineRecLcl.SetRange("No.", WarehouseShipmentHeaderRecLcl."No.");
                 if WarehouseShipmentLineRecLcl.FindFirst() then begin
                     if SalesHeaderRecLcl.get(SalesHeaderRecLcl."Document Type"::Order, WarehouseShipmentLineRecLcl."Source No.") then begin
-                        if addressBuffer."Address Type" = addressBuffer."Address Type"::Destination then begin
+                        if (addressBuffer."Address Type" = addressBuffer."Address Type"::Destination) or (addressBuffer."Address Type" = addressBuffer."Address Type"::Buffer) then begin
                             //if SalesHeaderRecLcl."Ship-to Contact" <> '' then
                             addressBuffer.Name := SalesHeaderRecLcl."Ship-to Contact";
 
