@@ -246,8 +246,6 @@ codeunit 52606 "ORB Functions"
         TotalUnitPrice: Decimal;
     begin
         SalesHeader.CalcFields("ORB DS Payment Type");
-        if SalesHeader."ORB DS Payment Type" = SalesHeader."ORB DS Payment Type"::COLLECT then
-            exit;
         SalesSetup.Get();
         SalesSetup.TestField("ORB Default Resource for DSHIP");
         salesline2.SetRange("Document Type", salesline."Document Type"::Order);
@@ -263,6 +261,9 @@ codeunit 52606 "ORB Functions"
                                     salesType::"All Customers",
                                     '',
                                     SalesHeader.Amount);
+        SingleInstance.SetMarkupPercentage(DSHIPFreightPrice."Markup %");
+        if SalesHeader."ORB DS Payment Type" = SalesHeader."ORB DS Payment Type"::COLLECT then
+            exit;
         salesline.init();
         salesline.SuspendStatusCheck(true);
         salesline."Document No." := SalesHeader."No.";
@@ -276,7 +277,6 @@ codeunit 52606 "ORB Functions"
         TotalUnitPrice := (SingleInstance.GetHandlingPrice() + SingleInstance.GetFrieghtPrice()) * (DSHIPFreightPrice."Markup %" / 100 + 1);
         salesline.Validate("Unit Price", TotalUnitPrice);
         salesline.Insert();
-        SingleInstance.SetMarkupPercentage(DSHIPFreightPrice."Markup %");
     end;
 
 }
