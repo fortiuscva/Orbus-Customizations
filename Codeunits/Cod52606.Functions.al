@@ -245,6 +245,8 @@ codeunit 52606 "ORB Functions"
         LineNo: Integer;
         TotalUnitPrice: Decimal;
     begin
+        if SalesHeader."ORB DS Payment Type" = SalesHeader."ORB DS Payment Type"::COLLECT then
+            exit;
         SalesSetup.Get();
         SalesSetup.TestField("ORB Default Resource for DSHIP");
         salesline2.SetRange("Document Type", salesline."Document Type"::Order);
