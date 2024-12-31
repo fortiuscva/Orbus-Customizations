@@ -1,4 +1,4 @@
-tableextension 52612 "ORB Warehouse Entry" extends "Warehouse Entry"
+tableextension 52629 "ORB Warehouse Journal Line" extends "Warehouse Journal Line"
 {
     fields
     {
@@ -12,10 +12,5 @@ tableextension 52612 "ORB Warehouse Entry" extends "Warehouse Entry"
             Caption = 'LIFT Order Line ID';
             DataClassification = ToBeClassified;
         }
-    }
-    keys
-    {
-        key(Key52600; "Source No.", "Source Line No.", "Source Subline No.", "Bin Code", "Reference Document")
-        { }
     }
 }

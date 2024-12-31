@@ -1,8 +1,8 @@
-pageextension 52644 "ORB Item Journal" extends "Item Journal"
+pageextension 52649 "ORB Whse. Item Journal" extends "Whse. Item Journal"
 {
     layout
     {
-        addafter("Document No.")
+        addlast(Control1)
         {
             field("ORB LIFT Inv. Transaction ID"; Rec."ORB LIFT Inv. Transaction ID")
             {
@@ -20,9 +20,9 @@ pageextension 52644 "ORB Item Journal" extends "Item Journal"
     }
     actions
     {
-        addlast("F&unctions")
+        addfirst(Processing)
         {
-            /*action("ORB LIFT Get Inventory Transactions")
+            action("ORB LIFT Get Inventory Transactions")
             {
                 Image = Order;
                 ApplicationArea = all;
@@ -40,26 +40,11 @@ pageextension 52644 "ORB Item Journal" extends "Item Journal"
                     LIFTERPSetupRecLcl.Get();
                     LIFTIntegrationDataLogRecLcl.Reset();
                     LIFTIntegrationDataLogRecLcl.SetCurrentKey("Transaction ID");
-                    LIFTIntegrationDataLogRecLcl.SetRange("Source Type", Database::"Item Journal Line");
+                    LIFTIntegrationDataLogRecLcl.SetRange("Source Type", Database::"Warehouse Journal Line");
                     if LIFTIntegrationDataLogRecLcl.FindLast() then
                         LIFTIntegration.ParseData(LIFTERPSetupRecLcl."Inventory Journal API" + '&p1=' + format(LIFTIntegrationDataLogRecLcl."Transaction ID"), LIFTAPICodes.GetInventoryJournalAPICode())
                     else
                         LIFTIntegration.ParseData(LIFTERPSetupRecLcl."Inventory Journal API", LIFTAPICodes.GetInventoryJournalAPICode());
-                end;
-            }*/
-            action("ORB LIFT Roll Up Cost")
-            {
-                ApplicationArea = All;
-                Caption = 'LIFT Roll Up Cost';
-                Promoted = true;
-                PromotedIsBig = true;
-                PromotedCategory = Process;
-                Image = UpdateUnitCost;
-                trigger OnAction()
-                begin
-                    if not Confirm(RollupCostConfirmMsgLbl, false) then
-                        exit;
-                    LiftFunctions.ItemJournalRollupCost(Rec."Journal Template Name", Rec."Journal Batch Name");
                 end;
             }
         }
@@ -67,4 +52,5 @@ pageextension 52644 "ORB Item Journal" extends "Item Journal"
     var
         LiftFunctions: Codeunit "ORB LIFT Functions";
         RollupCostConfirmMsgLbl: Label 'Do you want to roll up material cost to finished goods?';
+
 }

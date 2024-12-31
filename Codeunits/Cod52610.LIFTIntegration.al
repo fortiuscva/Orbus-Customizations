@@ -343,7 +343,7 @@ codeunit 52610 "ORB LIFT Integration"
 
     procedure InventoryJournalDataRead(ResponsePar: text)
     var
-        ItemJournalLine: Record "Item Journal Line";
+        WarehouseJournalLine: Record "Warehouse Journal Line";
         JsonObject: JsonObject;
         JsonArray: JsonArray;
         JsonToken: JsonToken;
@@ -372,53 +372,56 @@ codeunit 52610 "ORB LIFT Integration"
         for i := 0 to JsonArray.Count - 1 do begin
             JsonArray.Get(i, JsonToken);
             JsonObjectOrder := JsonToken.AsObject();
-            CreateInventoryJournal(ItemJournalLine, JsonObjectOrder);
+            CreateInventoryJournal(WarehouseJournalLine, JsonObjectOrder);
         end;
     end;
 
-    procedure CreateInventoryJournal(var ItemJournalLine: Record "Item Journal Line"; jsonOrderObject: JsonObject)
+    procedure CreateInventoryJournal(var WarehouseJournalLine: Record "Warehouse Journal Line"; jsonOrderObject: JsonObject)
     var
         EntryNo: Integer;
         JsonOrderToken: JsonToken;
         EntryTypeVarLcl: Text;
     begin
         Clear(EntryNo);
-        ItemJournalLine.Reset();
-        ItemJournalLine.SetRange("Journal Template Name", 'ITEM');
-        ItemJournalLine.SetRange("Journal Batch Name", 'LIFTERP');
-        if ItemJournalLine.FindLast() then
-            EntryNo := ItemJournalLine."Line No." + 10000
+        WarehouseJournalLine.Reset();
+        WarehouseJournalLine.SetRange("Journal Template Name", 'ITEM');
+        WarehouseJournalLine.SetRange("Journal Batch Name", 'LIFTERP');
+        if WarehouseJournalLine.FindLast() then
+            EntryNo := WarehouseJournalLine."Line No." + 10000
         else
             EntryNo := 10000;
 
         JsonOrderToken := jsonOrderObject.AsToken();
-        ItemJournalLine.Init();
-        ItemJournalLine."Journal Template Name" := 'ITEM';
-        ItemJournalLine."Journal Batch Name" := 'LIFTERP';
-        ItemJournalLine."Line No." := EntryNo;
-        ItemJournalLine.Insert(true);
+        WarehouseJournalLine.Init();
+        WarehouseJournalLine."Journal Template Name" := 'ITEM';
+        WarehouseJournalLine."Journal Batch Name" := 'LIFTERP';
+        WarehouseJournalLine.Validate("Location Code", GetValueAsCode(JsonOrderToken, 'LOCATION_CODE'));
+        WarehouseJournalLine."Line No." := EntryNo;
+        WarehouseJournalLine.Insert(true);
 
         EntryTypeVarLcl := GetValueAsText(JsonOrderToken, 'ENTRY_TYPE');
-        ItemJournalLine.Validate("Posting Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderToken, 'POSTING_DATE'))));
+        // WarehouseJournalLine.Validate("Posting Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderToken, 'POSTING_DATE'))));
         IF EntryTypeVarLcl = 'NEGATIVE' then
-            ItemJournalLine.Validate("Entry Type", ItemJournalLine."Entry Type"::"Negative Adjmt.")
+            WarehouseJournalLine.Validate("Entry Type", WarehouseJournalLine."Entry Type"::"Negative Adjmt.")
         ELSE
-            ItemJournalLine.Validate("Entry Type", ItemJournalLine."Entry Type"::"Positive Adjmt.");
-        ItemJournalLine.Validate("Item No.", GetValueAsText(JsonOrderToken, 'MATERIAL_BARCODE'));
+            WarehouseJournalLine.Validate("Entry Type", WarehouseJournalLine."Entry Type"::"Positive Adjmt.");
+        //WarehouseJournalLine.Validate("Bin Code", 'WR-LIFT');
+        // WarehouseJournalLine.Validate("Location Code", GetValueAsCode(JsonOrderToken, 'LOCATION_CODE'));
+        WarehouseJournalLine.Validate("Bin Code", 'WR-LIFT');
+        WarehouseJournalLine.Validate("Item No.", GetValueAsText(JsonOrderToken, 'MATERIAL_BARCODE'));
 
-        ItemJournalLine.Validate("Document No.", GetValueAsText(JsonOrderToken, 'DOCUMENT_NUMBER'));
-        ItemJournalLine.Validate("Location Code", GetValueAsCode(JsonOrderToken, 'LOCATION_CODE'));
-        ItemJournalLine.Validate(Quantity, Abs(GetValueAsDecimal(JsonOrderToken, 'QUANTITY')));
-        //ItemJournalLine.Validate("Unit Cost", GetValueAsDecimal(JsonOrderToken, 'UNIT_COST'));
-        //ItemJournalLine.Validate(Amount, GetValueAsDecimal(JsonOrderToken, 'AMOUNT'));
-        //ItemJournalLine.Validate("Unit Cost", GetUnitCost(ItemJournalLine."Location Code", ItemJournalLine."Item No.", ItemJournalLine."Variant Code"));
-        ItemJournalLine.Validate("Unit of Measure Code", GetValueAsCode(JsonOrderToken, 'UNIT_OF_MEASURE'));
-        ItemJournalLine.Validate("Bin Code", 'WR-LIFT');
-        ItemJournalLine."ORB LIFT Inv. Transaction ID" := GetValueAsInteger(JsonOrderToken, 'INVENTORY_TRANSACTION_ID');
-        ItemJournalLine."ORB LIFT Order Line ID" := GetValueAsInteger(JsonOrderToken, 'ORDER_LINE_ID');
-        ItemJournalLine.Modify(true);
+        //WarehouseJournalLine.Validate("Document No.", GetValueAsText(JsonOrderToken, 'DOCUMENT_NUMBER'));
+        WarehouseJournalLine.Validate(Quantity, Abs(GetValueAsDecimal(JsonOrderToken, 'QUANTITY')));
+        //WarehouseJournalLine.Validate("Unit Cost", GetValueAsDecimal(JsonOrderToken, 'UNIT_COST'));
+        //WarehouseJournalLine.Validate(Amount, GetValueAsDecimal(JsonOrderToken, 'AMOUNT'));
+        //WarehouseJournalLine.Validate("Unit Cost", GetUnitCost(WarehouseJournalLine."Location Code", WarehouseJournalLine."Item No.", WarehouseJournalLine."Variant Code"));
+        WarehouseJournalLine.Validate("Unit of Measure Code", GetValueAsCode(JsonOrderToken, 'UNIT_OF_MEASURE'));
 
-        InsertIntergationDataLog(Database::"Item Journal Line", 0, ItemJournalLine."Item No.", ItemJournalLine."ORB LIFT Inv. Transaction ID");
+        WarehouseJournalLine."ORB LIFT Inv. Transaction ID" := GetValueAsInteger(JsonOrderToken, 'INVENTORY_TRANSACTION_ID');
+        WarehouseJournalLine."ORB LIFT Order Line ID" := GetValueAsInteger(JsonOrderToken, 'ORDER_LINE_ID');
+        WarehouseJournalLine.Modify(true);
+
+        InsertIntergationDataLog(Database::"Warehouse Journal Line", 0, WarehouseJournalLine."Item No.", WarehouseJournalLine."ORB LIFT Inv. Transaction ID");
     end;
 
     procedure GetUnitCost(LocationCode: Code[10]; ItemNo: Code[20]; VariantCode: Code[10]): Decimal;
