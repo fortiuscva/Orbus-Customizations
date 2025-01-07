@@ -29,20 +29,22 @@ report 52616 "ORB Calculate Whse. Adj"
                     if Location.FindSet() then
                         repeat
                             AdjmtBin.Get(Location.Code, Location."Adjustment Bin Code");
+
+                            WhseEntry.Reset();
                             WhseEntry.SetRange("Location Code", Location.Code);
                             WhseEntry.SetRange("Item No.", Item."No.");
                             if WhseEntry.FindSet() then begin
                                 repeat
-                                    if NextLineNo = 0 then begin
-                                        ItemJnlLine.LockTable();
-                                        ItemJnlLine.Reset();
-                                        ItemJnlLine.SetRange("Journal Template Name", ItemJnlLine."Journal Template Name");
-                                        ItemJnlLine.SetRange("Journal Batch Name", ItemJnlLine."Journal Batch Name");
-                                        if ItemJnlLine.Find('+') then
-                                            NextLineNo := ItemJnlLine."Line No.";
-                                        SourceCodeSetup.Get();
-                                    end;
-                                    NextLineNo := NextLineNo + 10000;
+                                    ItemJnlLine.LockTable();
+                                    ItemJnlLine.Reset();
+                                    ItemJnlLine.SetRange("Journal Template Name", ItemJnlLine."Journal Template Name");
+                                    ItemJnlLine.SetRange("Journal Batch Name", ItemJnlLine."Journal Batch Name");
+                                    if ItemJnlLine.FindLast() then
+                                        NextLineNo := ItemJnlLine."Line No." + 10000
+                                    else
+                                        NextLineNo := 10000;
+
+                                    SourceCodeSetup.Get();
                                     if WhseEntry."Qty. (Base)" <> 0 then begin
                                         ItemJnlLine.Init();
                                         ItemJnlLine."Line No." := NextLineNo;
@@ -55,114 +57,25 @@ report 52616 "ORB Calculate Whse. Adj"
                                             WhseEntry."Qty. (Base)" := -WhseEntry."Qty. (Base)";
                                         end;
 
-                                        IsHandled := false;
-                                        if not IsHandled then begin
-                                            ItemJnlLine.Validate("Document No.", NextDocNo);
-                                            ItemJnlLine.Validate("Item No.", WhseEntry."Item No.");
-                                            ItemJnlLine.Validate("Variant Code", WhseEntry."Variant Code");
-                                            ItemJnlLine.Validate("Location Code", WhseEntry."Location Code");
-                                            ItemJnlLine.Validate("Source Code", SourceCodeSetup."Item Journal");
-                                            ItemJnlLine.Validate("Unit of Measure Code", WhseEntry."Unit of Measure Code");
-                                        end;
+                                        ItemJnlLine.Validate("Document No.", NextDocNo);
+                                        ItemJnlLine.Validate("Item No.", WhseEntry."Item No.");
+                                        ItemJnlLine.Validate("Variant Code", WhseEntry."Variant Code");
+                                        ItemJnlLine.Validate("Location Code", WhseEntry."Location Code");
+                                        ItemJnlLine.Validate("Source Code", SourceCodeSetup."Item Journal");
+                                        ItemJnlLine.Validate("Unit of Measure Code", WhseEntry."Unit of Measure Code");
                                         ItemJnlLine."Posting No. Series" := ItemJnlBatch."Posting No. Series";
                                         ItemJnlLine.Validate(Quantity, WhseEntry.Quantity);
                                         ItemJnlLine."Quantity (Base)" := WhseEntry."Qty. (Base)";
-                                        //ItemJnlLine."Invoiced Qty. (Base)" := QuantityBase2;
+                                        ItemJnlLine."Invoiced Qty. (Base)" := WhseEntry."Qty. (Base)";
                                         ItemJnlLine."Warehouse Adjustment" := true;
                                         ItemJnlLine."ORB LIFT Inv. Transaction ID" := WhseEntry."ORB LIFT Inv. Transaction ID";
                                         ItemJnlLine."ORB LIFT Order Line ID" := WhseEntry."ORB LIFT Order Line ID";
-                                        if not ItemJnlLine.Insert(true) then
-                                            Error('Line already exists: %1', NextLineNo);
+                                        ItemJnlLine.Insert(true);
                                     end;
                                 until WhseEntry.Next() = 0;
                             end;
                         until Location.Next() = 0;
-
-                    /*TempAdjmtBinContentBuffer.Reset();
-                    ReservationEntry.Reset();
-                    ReservationEntry.SetCurrentKey("Source ID");
-                    ItemJnlLine.Reset();
-                    ItemJnlLine.SetCurrentKey("Item No.");
-                    if TempAdjmtBinContentBuffer.FindSet() then
-                        repeat
-                            ItemJnlLine.Reset();
-                            ItemJnlLine.SetCurrentKey("Item No.");
-                            ItemJnlLine.SetRange("Journal Template Name", ItemJnlLine."Journal Template Name");
-                            ItemJnlLine.SetRange("Journal Batch Name", ItemJnlLine."Journal Batch Name");
-                            ItemJnlLine.SetRange("Item No.", TempAdjmtBinContentBuffer."Item No.");
-                            ItemJnlLine.SetRange("Location Code", TempAdjmtBinContentBuffer."Location Code");
-                            ItemJnlLine.SetRange("Unit of Measure Code", TempAdjmtBinContentBuffer."Unit of Measure Code");
-                            ItemJnlLine.SetRange("Warehouse Adjustment", true);
-                            OnAfterGetRecordItemOnAfterItemJnlLineSetFilters(ItemJnlLine, TempAdjmtBinContentBuffer);
-                            if ItemJnlLine.FindSet() then
-                                repeat
-                                    ReservationEntry.SetRange("Source Type", Database::"Item Journal Line");
-                                    ReservationEntry.SetRange("Source ID", ItemJnlLine."Journal Template Name");
-                                    ReservationEntry.SetRange("Source Batch Name", ItemJnlLine."Journal Batch Name");
-                                    ReservationEntry.SetRange("Source Ref. No.", ItemJnlLine."Line No.");
-                                    WhseItemTrackingSetup.CopyTrackingFromBinContentBuffer(TempAdjmtBinContentBuffer);
-                                    ReservationEntry.SetTrackingFilterFromItemTrackingSetupIfNotBlank(WhseItemTrackingSetup);
-                                    OnAfterGetRecordItemOnAfterReservationEntrySetFilters(TempAdjmtBinContentBuffer, ReservationEntry);
-                                    ReservationEntry.CalcSums("Qty. to Handle (Base)");
-                                    if ReservationEntry."Qty. to Handle (Base)" <> 0 then begin
-                                        TempAdjmtBinContentBuffer."Qty. to Handle (Base)" += ReservationEntry."Qty. to Handle (Base)";
-                                        OnBeforeAdjmtBinQuantityBufferModify(TempAdjmtBinContentBuffer, ReservationEntry);
-                                        TempAdjmtBinContentBuffer.Modify();
-                                        OnAfterGetRecordItemOnAfterAdjmtBinContentBufferModify(TempAdjmtBinContentBuffer, ItemJnlLine, ReservationEntry);
-                                    end;
-                                    OnAfterGetRecordItemOnBeforeNextItemJournalLine(TempAdjmtBinContentBuffer, ItemJnlLine, ReservationEntry);
-                                until ItemJnlLine.Next() = 0;
-                        until TempAdjmtBinContentBuffer.Next() = 0;*/
-
                 end;
-
-                /*trigger OnPostDataItem()
-                var
-                    QtyInUOM: Decimal;
-                begin
-                    TempAdjmtBinContentBuffer.Reset();
-                    if TempAdjmtBinContentBuffer.FindSet() then
-                        repeat
-                            TempAdjmtBinContentBuffer.SetRange("Location Code", TempAdjmtBinContentBuffer."Location Code");
-                            TempAdjmtBinContentBuffer.SetRange("Variant Code", TempAdjmtBinContentBuffer."Variant Code");
-                            TempAdjmtBinContentBuffer.SetRange("Unit of Measure Code", TempAdjmtBinContentBuffer."Unit of Measure Code");
-                            TempAdjmtBinContentBuffer.SetFilter("Qty. to Handle (Base)", '>0');
-                            OnPostDataItemOnAfterAdjmtBinContentBufferSetFilters(TempAdjmtBinContentBuffer);
-
-                            TempAdjmtBinContentBuffer.CalcSums("Qty. to Handle (Base)");
-                            QtyInUOM :=
-                                UOMMgt.CalcQtyFromBase(
-                                    TempAdjmtBinContentBuffer."Item No.", TempAdjmtBinContentBuffer."Variant Code", TempAdjmtBinContentBuffer."Unit of Measure Code", -TempAdjmtBinContentBuffer."Qty. to Handle (Base)",
-                                    UOMMgt.GetQtyPerUnitOfMeasure(Item, TempAdjmtBinContentBuffer."Unit of Measure Code"));
-                            if QtyInUOM <> 0 then
-                                InsertItemJnlLine(TempAdjmtBinContentBuffer, QtyInUOM, -TempAdjmtBinContentBuffer."Qty. to Handle (Base)", TempAdjmtBinContentBuffer."Unit of Measure Code", 1);
-
-                            TempAdjmtBinContentBuffer.SetFilter("Qty. to Handle (Base)", '<0');
-                            TempAdjmtBinContentBuffer.CalcSums("Qty. to Handle (Base)");
-                            QtyInUOM :=
-                                UOMMgt.CalcQtyFromBase(TempAdjmtBinContentBuffer."Item No.", TempAdjmtBinContentBuffer."Variant Code", TempAdjmtBinContentBuffer."Unit of Measure Code", -TempAdjmtBinContentBuffer."Qty. to Handle (Base)",
-                                    UOMMgt.GetQtyPerUnitOfMeasure(Item, TempAdjmtBinContentBuffer."Unit of Measure Code"));
-                            if QtyInUOM <> 0 then
-                                InsertItemJnlLine(TempAdjmtBinContentBuffer, QtyInUOM, -TempAdjmtBinContentBuffer."Qty. to Handle (Base)", TempAdjmtBinContentBuffer."Unit of Measure Code", 0);
-                            // rounding residue
-                            TempAdjmtBinContentBuffer.SetRange("Qty. to Handle (Base)");
-                            TempAdjmtBinContentBuffer.CalcSums("Qty. to Handle (Base)");
-                            QtyInUOM :=
-                                UOMMgt.CalcQtyFromBase(
-                                    TempAdjmtBinContentBuffer."Item No.", TempAdjmtBinContentBuffer."Variant Code", TempAdjmtBinContentBuffer."Unit of Measure Code", -TempAdjmtBinContentBuffer."Qty. to Handle (Base)",
-                                    UOMMgt.GetQtyPerUnitOfMeasure(Item, TempAdjmtBinContentBuffer."Unit of Measure Code"));
-                            if (QtyInUOM = 0) and (TempAdjmtBinContentBuffer."Qty. to Handle (Base)" > 0) then
-                                InsertItemJnlLine(TempAdjmtBinContentBuffer, -TempAdjmtBinContentBuffer."Qty. to Handle (Base)", -TempAdjmtBinContentBuffer."Qty. to Handle (Base)", TempAdjmtBinContentBuffer."Base Unit of Measure", 1);
-
-                            TempAdjmtBinContentBuffer.FindLast();
-                            TempAdjmtBinContentBuffer.SetRange("Location Code");
-                            TempAdjmtBinContentBuffer.SetRange("Variant Code");
-                            TempAdjmtBinContentBuffer.SetRange("Unit of Measure Code");
-                            OnPostDataItemOnAfterAdjmtBinContentBufferClearFilters(TempAdjmtBinContentBuffer);
-                        until TempAdjmtBinContentBuffer.Next() = 0;
-                    TempAdjmtBinContentBuffer.Reset();
-                    TempAdjmtBinContentBuffer.DeleteAll();
-                end;*/
 
                 trigger OnPreDataItem()
                 begin
@@ -176,10 +89,10 @@ report 52616 "ORB Calculate Whse. Adj"
                     if WhseEntry.IsEmpty() then
                         CurrReport.Break();
 
-                    FillProspectReservationEntryBuffer(Item, ItemJnlLine."Journal Template Name", ItemJnlLine."Journal Batch Name");
+                    // FillProspectReservationEntryBuffer(Item, ItemJnlLine."Journal Template Name", ItemJnlLine."Journal Batch Name");
 
-                    TempAdjmtBinContentBuffer.Reset();
-                    TempAdjmtBinContentBuffer.DeleteAll();
+                    // TempAdjmtBinContentBuffer.Reset();
+                    // TempAdjmtBinContentBuffer.DeleteAll();
                 end;
             }
 
