@@ -378,6 +378,7 @@ codeunit 52610 "ORB LIFT Integration"
 
     procedure CreateInventoryJournal(var WarehouseJournalLine: Record "Warehouse Journal Line"; jsonOrderObject: JsonObject)
     var
+        WhseJnlTemplate: Record "Warehouse Journal Template";
         EntryNo: Integer;
         JsonOrderToken: JsonToken;
         EntryTypeVarLcl: Text;
@@ -398,7 +399,15 @@ codeunit 52610 "ORB LIFT Integration"
         WarehouseJournalLine.Validate("Location Code", GetValueAsCode(JsonOrderToken, 'LOCATION_CODE'));
         WarehouseJournalLine."Line No." := EntryNo;
         WarehouseJournalLine.Insert(true);
-
+        WhseJnlTemplate.Get(WarehouseJournalLine."Journal Template Name");
+        WarehouseJournalLine."Source Code" := WhseJnlTemplate."Source Code";
+        if WhseJnlTemplate.Type <> WhseJnlTemplate.Type::Reclassification then begin
+            if WarehouseJournalLine.Quantity >= 0 then
+                WarehouseJournalLine."Entry Type" := WarehouseJournalLine."Entry Type"::"Positive Adjmt."
+            else
+                WarehouseJournalLine."Entry Type" := WarehouseJournalLine."Entry Type"::"Negative Adjmt.";
+            WarehouseJournalLine.SetUpAdjustmentBin();
+        end;
         EntryTypeVarLcl := GetValueAsText(JsonOrderToken, 'ENTRY_TYPE');
         // WarehouseJournalLine.Validate("Posting Date", DT2Date(EvaluateUTCDateTime(GetValueAstext(JsonOrderToken, 'POSTING_DATE'))));
         IF EntryTypeVarLcl = 'NEGATIVE' then
@@ -419,6 +428,8 @@ codeunit 52610 "ORB LIFT Integration"
 
         WarehouseJournalLine."ORB LIFT Inv. Transaction ID" := GetValueAsInteger(JsonOrderToken, 'INVENTORY_TRANSACTION_ID');
         WarehouseJournalLine."ORB LIFT Order Line ID" := GetValueAsInteger(JsonOrderToken, 'ORDER_LINE_ID');
+        WarehouseJournalLine."Source Code" := 'WHITEM';
+        WarehouseJournalLine.SetUpAdjustmentBin();
         WarehouseJournalLine.Modify(true);
 
         InsertIntergationDataLog(Database::"Warehouse Journal Line", 0, WarehouseJournalLine."Item No.", WarehouseJournalLine."ORB LIFT Inv. Transaction ID");
