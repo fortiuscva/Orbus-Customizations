@@ -122,6 +122,7 @@ codeunit 52606 "ORB Functions"
         WarehouseActLine2RecLcl: Record "Warehouse Activity Line";
         BinContentsRecLcl: Record "Bin Content";
         BinQtyFoundVarLcl: Boolean;
+        BinRecLcl: Record Bin;
     begin
         if not Confirm('Are you sure you want to update the "Take" line zone code', false) then
             exit;
@@ -150,9 +151,12 @@ codeunit 52606 "ORB Functions"
                     BinContentsRecLcl.SetRange("Zone Code", WarehouseActLine2RecLcl."Zone Code");
                     if BinContentsRecLcl.FindFirst() then
                         repeat
-                            if BinContentsRecLcl.CalcQtyAvailToTakeUOM() >= WarehouseActLine2RecLcl.Quantity then begin
-                                WarehouseActLine2RecLcl.Validate("Bin Code", BinContentsRecLcl."Bin Code");
-                                BinQtyFoundVarLcl := true;
+                            BinRecLcl.get(BinContentsRecLcl."Bin Code");
+                            if BinRecLcl."Bin Type Code" = 'PICK/PUT' then begin
+                                if BinContentsRecLcl.CalcQtyAvailToTakeUOM() >= WarehouseActLine2RecLcl.Quantity then begin
+                                    WarehouseActLine2RecLcl.Validate("Bin Code", BinContentsRecLcl."Bin Code");
+                                    BinQtyFoundVarLcl := true;
+                                end;
                             end;
                         until (BinContentsRecLcl.Next() = 0) or BinQtyFoundVarLcl;
 
