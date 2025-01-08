@@ -4,6 +4,7 @@ codeunit 52613 "ORB LIFT Functions"
     var
         GroupLiftJnlLines: Query "ORB LIFT Group Jnl. Lines";
         ItemJnlLine: Record "Item Journal Line";
+        ItemLedgerEntry: Record "Item Ledger Entry";
         MaterialCost: Decimal;
     begin
         JournalTemplateName := 'ITEM';

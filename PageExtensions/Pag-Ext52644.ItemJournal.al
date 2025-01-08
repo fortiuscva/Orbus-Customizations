@@ -22,31 +22,6 @@ pageextension 52644 "ORB Item Journal" extends "Item Journal"
     {
         addlast("F&unctions")
         {
-            action("ORB LIFT Get Inventory Transactions")
-            {
-                Image = Order;
-                ApplicationArea = all;
-                Caption = 'LIFT Get Inventory Transactions';
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
-                trigger OnAction()
-                var
-                    LIFTERPSetupRecLcl: Record "ORB LIFT ERP Setup";
-                    LIFTIntegrationDataLogRecLcl: Record "ORB LIFT Integration Data Log";
-                    LIFTIntegration: Codeunit "ORB LIFT Integration";
-                    LIFTAPICodes: Codeunit "ORB LIFT API Codes";
-                begin
-                    LIFTERPSetupRecLcl.Get();
-                    LIFTIntegrationDataLogRecLcl.Reset();
-                    LIFTIntegrationDataLogRecLcl.SetCurrentKey("Transaction ID");
-                    LIFTIntegrationDataLogRecLcl.SetRange("Source Type", Database::"Item Journal Line");
-                    if LIFTIntegrationDataLogRecLcl.FindLast() then
-                        LIFTIntegration.ParseData(LIFTERPSetupRecLcl."Inventory Journal API" + '&p1=' + format(LIFTIntegrationDataLogRecLcl."Transaction ID"), LIFTAPICodes.GetInventoryJournalAPICode())
-                    else
-                        LIFTIntegration.ParseData(LIFTERPSetupRecLcl."Inventory Journal API", LIFTAPICodes.GetInventoryJournalAPICode());
-                end;
-            }
             action("ORB LIFT Roll Up Cost")
             {
                 ApplicationArea = All;
@@ -62,9 +37,25 @@ pageextension 52644 "ORB Item Journal" extends "Item Journal"
                     LiftFunctions.ItemJournalRollupCost(Rec."Journal Template Name", Rec."Journal Batch Name");
                 end;
             }
+            action("ORB Calculate Warehouse Adjustment")
+            {
+                ApplicationArea = Warehouse;
+                Caption = 'ORB Calculate Warehouse Adjustment';
+                Ellipsis = true;
+                Image = CalculateWarehouseAdjustment;
+                ToolTip = 'Calculate adjustments in quantity based on the warehouse adjustment bin for each item in the journal. New lines are added for negative and positive quantities.';
+
+                trigger OnAction()
+                begin
+                    CalcWhseAdjmt.SetItemJnlLine(Rec);
+                    CalcWhseAdjmt.RunModal();
+                    Clear(CalcWhseAdjmt);
+                end;
+            }
         }
     }
     var
         LiftFunctions: Codeunit "ORB LIFT Functions";
         RollupCostConfirmMsgLbl: Label 'Do you want to roll up material cost to finished goods?';
+        CalcWhseAdjmt: Report "ORB Calculate Whse. Adj";
 }
