@@ -33,6 +33,8 @@ report 52616 "ORB Calculate Whse. Adj"
                             WhseEntry.Reset();
                             WhseEntry.SetRange("Location Code", Location.Code);
                             WhseEntry.SetRange("Item No.", Item."No.");
+                            WhseEntry.SetRange("Zone Code", AdjmtBin."Zone Code");
+                            WhseEntry.SetRange("Bin Code", AdjmtBin.Code);
                             if WhseEntry.FindSet() then begin
                                 repeat
                                     ItemJnlLine.LockTable();
