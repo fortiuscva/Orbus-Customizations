@@ -97,7 +97,35 @@ page 52608 "ORB Customer API"
                 {
                     Caption = 'magentoContactNo', Locked = true;
                 }
+                field(thisYearSales; ThisYearSales)
+                {
+                    Caption = 'This Year Sales';
+                }
+                field(previousYearSales; PreviousYearSales)
+                {
+                    Caption = 'Previous Year Sales';
+                }
+                field(ltmSales; LTMSales)
+                {
+                    Caption = 'LTM Sales';
+                }
+                field(lifetimeSalesTotal; LifetimeSales)
+                {
+                    Caption = 'Lifetime Sales Total';
+                }
             }
         }
     }
+    trigger OnAfterGetRecord()
+    var
+        FunctionsCU: Codeunit "ORB Functions";
+    begin
+        FunctionsCU.CalculateSalesTotals(ThisYearSales, PreviousYearSales, LTMSales, LifetimeSales, Rec."No.");
+    end;
+
+    var
+        ThisYearSales: Decimal;
+        PreviousYearSales: Decimal;
+        LTMSales: Decimal;
+        LifetimeSales: Decimal;
 }
