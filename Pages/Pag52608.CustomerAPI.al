@@ -118,52 +118,9 @@ page 52608 "ORB Customer API"
     }
     trigger OnAfterGetRecord()
     var
-        CustLedgEntry: Record "Cust. Ledger Entry";
+        FunctionsCU: Codeunit "ORB Functions";
     begin
-        // Initialize date ranges
-        ThisYearStartDate := DMY2Date(1, 1, Date2DMY(WorkDate(), 3));
-        PrevYearStartDate := DMY2Date(1, 1, Date2DMY(WorkDate(), 3) - 1);
-        PrevYearEndDate := DMY2Date(31, 12, Date2DMY(WorkDate(), 3) - 1);
-        OneYearAgoDate := CalcDate('<-1Y>', WorkDate());
-
-        // Calculate This Year Sales
-        CustLedgEntry.Reset();
-        CustLedgEntry.SetRange("Customer No.", Rec."No.");
-        CustLedgEntry.SetRange("Document Type", CustLedgEntry."Document Type"::Invoice);
-        CustLedgEntry.SetRange("Posting Date", ThisYearStartDate, WorkDate());
-        ThisYearSales := CalculateSalesTotal(CustLedgEntry);
-
-        // Calculate Previous Year Sales
-        CustLedgEntry.Reset();
-        CustLedgEntry.SetRange("Customer No.", Rec."No.");
-        CustLedgEntry.SetRange("Document Type", CustLedgEntry."Document Type"::Invoice);
-        CustLedgEntry.SetRange("Posting Date", PrevYearStartDate, PrevYearEndDate);
-        PreviousYearSales := CalculateSalesTotal(CustLedgEntry);
-
-        // Calculate LTM Sales
-        CustLedgEntry.Reset();
-        CustLedgEntry.SetRange("Customer No.", Rec."No.");
-        CustLedgEntry.SetRange("Document Type", CustLedgEntry."Document Type"::Invoice);
-        CustLedgEntry.SetRange("Posting Date", OneYearAgoDate, WorkDate());
-        LTMSales := CalculateSalesTotal(CustLedgEntry);
-
-        // Calculate Lifetime Sales
-        CustLedgEntry.Reset();
-        CustLedgEntry.SetRange("Customer No.", Rec."No.");
-        CustLedgEntry.SetRange("Document Type", CustLedgEntry."Document Type"::Invoice);
-        LifetimeSales := CalculateSalesTotal(CustLedgEntry);
-    end;
-
-    local procedure CalculateSalesTotal(var CustLedgEntry: Record "Cust. Ledger Entry"): Decimal
-    var
-        Total: Decimal;
-    begin
-        Total := 0;
-        if CustLedgEntry.FindSet() then
-            repeat
-                Total += CustLedgEntry.Amount;
-            until CustLedgEntry.Next() = 0;
-        exit(Total);
+        FunctionsCU.CalculateSalesTotals(ThisYearSales, PreviousYearSales, LTMSales, LifetimeSales, Rec."No.");
     end;
 
     var
@@ -171,8 +128,4 @@ page 52608 "ORB Customer API"
         PreviousYearSales: Decimal;
         LTMSales: Decimal;
         LifetimeSales: Decimal;
-        ThisYearStartDate: Date;
-        PrevYearStartDate: Date;
-        PrevYearEndDate: Date;
-        OneYearAgoDate: Date;
 }

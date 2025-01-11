@@ -35,6 +35,30 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
                 ApplicationArea = all;
                 ToolTip = 'Specifies Orbus LIFT Customer';
             }
+            field("ORB ThisYearSales"; ThisYearSales)
+            {
+                ApplicationArea = all;
+                Editable = false;
+                Caption = 'This Year Sales';
+            }
+            field("ORB PreviousYearSales"; PreviousYearSales)
+            {
+                ApplicationArea = all;
+                Editable = false;
+                Caption = 'Previous Year Sales';
+            }
+            field("ORB LTMSales"; LTMSales)
+            {
+                ApplicationArea = all;
+                Editable = false;
+                Caption = 'LTM Sales';
+            }
+            field("ORB LifetimeSalesTotal"; LifetimeSales)
+            {
+                ApplicationArea = all;
+                Editable = false;
+                Caption = 'Lifetime Sales Total';
+            }
         }
 
         modify("Salesperson Code")
@@ -88,6 +112,17 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
             }
         }
     }
+    trigger OnAfterGetRecord()
+    var
+        FunctionsCU: Codeunit "ORB Functions";
+    begin
+        FunctionsCU.CalculateSalesTotals(ThisYearSales, PreviousYearSales, LTMSales, LifetimeSales, Rec."No.");
+    end;
+
     var
         AccessNotallowedlbl: Label '%1 is not allowed to edit Tax Liable';
+        ThisYearSales: Decimal;
+        PreviousYearSales: Decimal;
+        LTMSales: Decimal;
+        LifetimeSales: Decimal;
 }

@@ -365,6 +365,65 @@ codeunit 52606 "ORB Functions"
             until TempReportSelectionWarehouse.Next() = 0;
     end;
 
+    procedure CalculateSalesTotals(var ThisYearSales: Decimal; var PreviousYearSales: Decimal; var LTMSales: Decimal; var LifetimeSales: Decimal; CustNo: Code[20])
+    var
+        ThisYearStartDate: Date;
+        PrevYearStartDate: Date;
+        PrevYearEndDate: Date;
+        OneYearAgoDate: Date;
+        CustLedgEntry: Record "Cust. Ledger Entry";
+    begin
+
+        // Initialize date ranges
+        ThisYearStartDate := DMY2Date(1, 1, Date2DMY(WorkDate(), 3));
+        PrevYearStartDate := DMY2Date(1, 1, Date2DMY(WorkDate(), 3) - 1);
+        PrevYearEndDate := DMY2Date(31, 12, Date2DMY(WorkDate(), 3) - 1);
+        OneYearAgoDate := CalcDate('<-1Y>', WorkDate());
+
+        // Calculate This Year Sales
+        CustLedgEntry.Reset();
+        CustLedgEntry.SetRange("Customer No.", CustNo);
+        CustLedgEntry.SetRange("Document Type", CustLedgEntry."Document Type"::Invoice);
+        CustLedgEntry.SetRange("Posting Date", ThisYearStartDate, WorkDate());
+        CustLedgEntry.SetAutoCalcFields(Amount);
+        if CustLedgEntry.FindSet() then
+            repeat
+                ThisYearSales += CustLedgEntry.Amount;
+            until CustLedgEntry.Next() = 0;
+
+        // Calculate Previous Year Sales
+        CustLedgEntry.Reset();
+        CustLedgEntry.SetRange("Customer No.", CustNo);
+        CustLedgEntry.SetRange("Document Type", CustLedgEntry."Document Type"::Invoice);
+        CustLedgEntry.SetRange("Posting Date", PrevYearStartDate, PrevYearEndDate);
+        CustLedgEntry.SetAutoCalcFields(Amount);
+        if CustLedgEntry.FindSet() then
+            repeat
+                PreviousYearSales += CustLedgEntry.Amount;
+            until CustLedgEntry.Next() = 0;
+
+        // Calculate LTM Sales
+        CustLedgEntry.Reset();
+        CustLedgEntry.SetRange("Customer No.", CustNo);
+        CustLedgEntry.SetRange("Document Type", CustLedgEntry."Document Type"::Invoice);
+        CustLedgEntry.SetRange("Posting Date", OneYearAgoDate, WorkDate());
+        CustLedgEntry.SetAutoCalcFields(Amount);
+        if CustLedgEntry.FindSet() then
+            repeat
+                LTMSales += CustLedgEntry.Amount;
+            until CustLedgEntry.Next() = 0;
+
+        // Calculate Lifetime Sales
+        CustLedgEntry.Reset();
+        CustLedgEntry.SetRange("Customer No.", CustNo);
+        CustLedgEntry.SetRange("Document Type", CustLedgEntry."Document Type"::Invoice);
+        CustLedgEntry.SetAutoCalcFields(Amount);
+        if CustLedgEntry.FindSet() then
+            repeat
+                LifetimeSales += CustLedgEntry.Amount;
+            until CustLedgEntry.Next() = 0;
+    end;
+
     local procedure SelectTempReportSelectionsToPrint(var TempReportSelectionWarehouse: Record "Report Selection Warehouse"; ReportUsage: Enum "Report Selection Warehouse Usage")
     var
         ReportSelectionMgt: Codeunit "Report Selection Mgt.";
