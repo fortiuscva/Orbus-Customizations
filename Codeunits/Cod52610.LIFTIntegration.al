@@ -399,6 +399,7 @@ codeunit 52610 "ORB LIFT Integration"
         WarehouseJournalLine.Validate("Location Code", GetValueAsCode(JsonOrderToken, 'LOCATION_CODE'));
         WarehouseJournalLine."Line No." := EntryNo;
         WarehouseJournalLine.Insert(true);
+
         WhseJnlTemplate.Get(WarehouseJournalLine."Journal Template Name");
         WarehouseJournalLine."Source Code" := WhseJnlTemplate."Source Code";
         if WhseJnlTemplate.Type <> WhseJnlTemplate.Type::Reclassification then begin
@@ -419,7 +420,7 @@ codeunit 52610 "ORB LIFT Integration"
         WarehouseJournalLine.Validate("Bin Code", 'WR-LIFT');
         WarehouseJournalLine.Validate("Item No.", GetValueAsText(JsonOrderToken, 'MATERIAL_BARCODE'));
 
-        //WarehouseJournalLine.Validate("Document No.", GetValueAsText(JsonOrderToken, 'DOCUMENT_NUMBER'));
+        WarehouseJournalLine.Validate("Whse. Document No.", GetValueAsText(JsonOrderToken, 'DOCUMENT_NUMBER'));
         WarehouseJournalLine.Validate(Quantity, Abs(GetValueAsDecimal(JsonOrderToken, 'QUANTITY')));
         //WarehouseJournalLine.Validate("Unit Cost", GetValueAsDecimal(JsonOrderToken, 'UNIT_COST'));
         //WarehouseJournalLine.Validate(Amount, GetValueAsDecimal(JsonOrderToken, 'AMOUNT'));
