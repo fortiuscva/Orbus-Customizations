@@ -37,10 +37,13 @@ pageextension 52644 "ORB Item Journal" extends "Item Journal"
                     LiftFunctions.ItemJournalRollupCost(Rec."Journal Template Name", Rec."Journal Batch Name");
                 end;
             }
-            action("ORB Calculate Warehouse Adjustment")
+            action("ORB LIFT Calculate Warehouse Adjustment")
             {
                 ApplicationArea = Warehouse;
-                Caption = 'ORB Calculate Warehouse Adjustment';
+                Caption = 'LIFT Calculate Warehouse Adjustment';
+                Promoted = true;
+                PromotedIsBig = true;
+                PromotedCategory = Process;
                 Ellipsis = true;
                 Image = CalculateWarehouseAdjustment;
                 ToolTip = 'Calculate adjustments in quantity based on the warehouse adjustment bin for each item in the journal. New lines are added for negative and positive quantities.';
