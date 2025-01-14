@@ -22,11 +22,11 @@ pageextension 52649 "ORB Whse. Item Journal" extends "Whse. Item Journal"
     {
         addfirst(Processing)
         {
-            action("ORB LIFT Get Inventory Transactions")
+            action("ORB Get LIFT Inventory Transactions")
             {
                 Image = Order;
                 ApplicationArea = all;
-                Caption = 'LIFT Get Inventory Transactions';
+                Caption = 'Get LIFT Inventory Transactions';
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
