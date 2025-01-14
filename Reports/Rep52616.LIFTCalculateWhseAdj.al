@@ -60,6 +60,7 @@ report 52616 "ORB LIFT Calculate Whse. Adj"
                                         SourceCodeSetup.Get();
                                         if WhseEntry."Qty. (Base)" <> 0 then begin
                                             WhseEntry."Qty. (Base)" := WhseEntry."Qty. (Base)" * -1;
+                                            WhseEntry.Quantity := WhseEntry.Quantity * -1;
                                             ItemJnlLine.Init();
                                             ItemJnlLine."Line No." := NextLineNo;
                                             ItemJnlLine.Validate("Posting Date", PostingDate);
@@ -67,8 +68,8 @@ report 52616 "ORB LIFT Calculate Whse. Adj"
                                                 ItemJnlLine.Validate("Entry Type", ItemJnlLine."Entry Type"::"Positive Adjmt.")
                                             else begin
                                                 ItemJnlLine.Validate("Entry Type", ItemJnlLine."Entry Type"::"Negative Adjmt.");
-                                                WhseEntry.Quantity := -WhseEntry.Quantity;
-                                                WhseEntry."Qty. (Base)" := -WhseEntry."Qty. (Base)";
+                                                //WhseEntry.Quantity := -WhseEntry.Quantity;
+                                                //WhseEntry."Qty. (Base)" := -WhseEntry."Qty. (Base)";
                                             end;
 
                                             ItemJnlLine.Validate("Document No.", NextDocNo);
