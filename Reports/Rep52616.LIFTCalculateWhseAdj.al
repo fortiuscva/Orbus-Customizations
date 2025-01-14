@@ -1,4 +1,4 @@
-report 52616 "ORB Calculate Whse. Adj"
+report 52616 "ORB LIFT Calculate Whse. Adj"
 {
     ApplicationArea = All;
     Caption = 'ORBUS Calculate Whse. Adj';
@@ -59,6 +59,7 @@ report 52616 "ORB Calculate Whse. Adj"
 
                                         SourceCodeSetup.Get();
                                         if WhseEntry."Qty. (Base)" <> 0 then begin
+                                            WhseEntry."Qty. (Base)" := WhseEntry."Qty. (Base)" * -1;
                                             ItemJnlLine.Init();
                                             ItemJnlLine."Line No." := NextLineNo;
                                             ItemJnlLine.Validate("Posting Date", PostingDate);
