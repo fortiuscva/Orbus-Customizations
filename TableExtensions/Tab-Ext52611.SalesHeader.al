@@ -186,7 +186,10 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
 
             Caption = 'Your Reference(CS)';
             DataClassification = ToBeClassified;
-
+        }
+        field(52655; "ORB Your Reference (API)"; Text[35])
+        {
+            Caption = 'Your Reference (API)';
         }
     }
 
@@ -243,6 +246,8 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         end;
         if (Rec."ORB Ship-to Contact Name (API)" <> '') then
             Rec."Ship-to Contact" := Rec."ORB Ship-to Contact Name (API)";
+        if Rec."ORB Your Reference (API)" <> '' then
+            Rec.Validate("Your Reference", "ORB Your Reference (API)");
         Rec.Modify();
     end;
 
