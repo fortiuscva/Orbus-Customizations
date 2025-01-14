@@ -421,7 +421,7 @@ codeunit 52610 "ORB LIFT Integration"
         WarehouseJournalLine.Validate("Item No.", GetValueAsText(JsonOrderToken, 'MATERIAL_BARCODE'));
 
         WarehouseJournalLine.Validate("Whse. Document No.", GetValueAsText(JsonOrderToken, 'DOCUMENT_NUMBER'));
-        WarehouseJournalLine.Validate(Quantity, Abs(GetValueAsDecimal(JsonOrderToken, 'QUANTITY')));
+        WarehouseJournalLine.Validate(Quantity, GetValueAsDecimal(JsonOrderToken, 'QUANTITY'));
         //WarehouseJournalLine.Validate("Unit Cost", GetValueAsDecimal(JsonOrderToken, 'UNIT_COST'));
         //WarehouseJournalLine.Validate(Amount, GetValueAsDecimal(JsonOrderToken, 'AMOUNT'));
         //WarehouseJournalLine.Validate("Unit Cost", GetUnitCost(WarehouseJournalLine."Location Code", WarehouseJournalLine."Item No.", WarehouseJournalLine."Variant Code"));
