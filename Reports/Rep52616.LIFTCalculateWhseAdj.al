@@ -1,7 +1,7 @@
 report 52616 "ORB LIFT Calculate Whse. Adj"
 {
     ApplicationArea = All;
-    Caption = 'ORBUS Calculate Whse. Adj';
+    Caption = 'Calculate LIFT Whse. Adj';
     ProcessingOnly = true;
     dataset
     {
@@ -19,7 +19,7 @@ report 52616 "ORB LIFT Calculate Whse. Adj"
                     AdjmtBin: Record Bin;
                     ReservationEntry: Record "Reservation Entry";
                     WhseItemTrackingSetup: Record "Item Tracking Setup";
-                    SNLotNumbersByBin: Query "Lot Numbers by Bin";
+                    SNLotNumbersByBin: Query "ORB LIFT Lot Numbers by Bin";
                     WhseEntry: Record "Warehouse Entry";
                     IsHandled: Boolean;
                 begin
@@ -39,13 +39,13 @@ report 52616 "ORB LIFT Calculate Whse. Adj"
                             SNLotNumbersByBin.SetFilter(Serial_No, Item.GetFilter("Serial No. Filter"));
                             SNLotNumbersByBin.SetFilter(Package_No, Item.GetFilter("Package No. Filter"));
                             SNLotNumbersByBin.Open();
-
                             while SNLotNumbersByBin.Read() do begin
                                 WhseEntry.Reset();
                                 WhseEntry.SetRange("Location Code", SNLotNumbersByBin.Location_Code);
                                 WhseEntry.SetRange("Item No.", Item."No.");
                                 WhseEntry.SetRange("Zone Code", SNLotNumbersByBin.Zone_Code);
                                 WhseEntry.SetRange("Bin Code", AdjmtBin.Code);
+                                WhseEntry.SetFilter("ORB LIFT Order Line ID", '>%1', 0);
                                 if WhseEntry.FindSet() then begin
                                     repeat
                                         ItemJnlLine.LockTable();
