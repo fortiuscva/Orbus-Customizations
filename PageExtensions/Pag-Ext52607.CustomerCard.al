@@ -59,6 +59,30 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
                 Editable = false;
                 Caption = 'Lifetime Sales Total';
             }
+            field("ORB ThisYearSalesCrMemo"; ThisYearSalesCrMemo)
+            {
+                ApplicationArea = all;
+                Editable = false;
+                Caption = 'This Year Sales Cr. Memo';
+            }
+            field("ORB PreviousYearSalesCrMemo"; PreviousYearSalesCrMemo)
+            {
+                ApplicationArea = all;
+                Editable = false;
+                Caption = 'Previous Year Sales Cr. Memo';
+            }
+            field("ORB LTMSalesCrMemo"; LTMSalesCrMemo)
+            {
+                ApplicationArea = all;
+                Editable = false;
+                Caption = 'LTM Sales Cr. Memo';
+            }
+            field("ORB LifetimeSalesTotalCrMemo"; LifetimeSalesCrMemo)
+            {
+                ApplicationArea = all;
+                Editable = false;
+                Caption = 'Lifetime Sales Cr. Memo Total';
+            }
         }
 
         modify("Salesperson Code")
@@ -117,6 +141,8 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
         FunctionsCU: Codeunit "ORB Functions";
     begin
         FunctionsCU.CalculateSalesTotals(ThisYearSales, PreviousYearSales, LTMSales, LifetimeSales, Rec."No.");
+        FunctionsCU.CalculateCreditMemoTotals(ThisYearSalesCrMemo, PreviousYearSalesCrMemo, LTMSalesCrMemo, LifetimeSalesCrMemo, Rec."No.");
+
     end;
 
     var
@@ -125,4 +151,8 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
         PreviousYearSales: Decimal;
         LTMSales: Decimal;
         LifetimeSales: Decimal;
+        ThisYearSalesCrMemo: Decimal;
+        PreviousYearSalesCrMemo: Decimal;
+        LTMSalesCrMemo: Decimal;
+        LifetimeSalesCrMemo: Decimal;
 }
