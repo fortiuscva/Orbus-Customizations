@@ -100,18 +100,22 @@ page 52608 "ORB Customer API"
                 field(thisYearSales; ThisYearSales)
                 {
                     Caption = 'This Year Sales';
+                    Editable = false;
                 }
                 field(previousYearSales; PreviousYearSales)
                 {
                     Caption = 'Previous Year Sales';
+                    Editable = false;
                 }
                 field(ltmSales; LTMSales)
                 {
                     Caption = 'LTM Sales';
+                    Editable = false;
                 }
                 field(lifetimeSalesTotal; LifetimeSales)
                 {
                     Caption = 'Lifetime Sales Total';
+                    Editable = false;
                 }
             }
         }
