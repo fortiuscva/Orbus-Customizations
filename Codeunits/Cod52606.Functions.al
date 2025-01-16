@@ -151,7 +151,7 @@ codeunit 52606 "ORB Functions"
                     BinContentsRecLcl.SetRange("Zone Code", WarehouseActLine2RecLcl."Zone Code");
                     if BinContentsRecLcl.FindFirst() then
                         repeat
-                            BinRecLcl.get(BinContentsRecLcl."Bin Code");
+                            BinRecLcl.get(BinContentsRecLcl."Location Code", BinContentsRecLcl."Bin Code");
                             if BinRecLcl."Bin Type Code" = 'PICK/PUT' then begin
                                 if BinContentsRecLcl.CalcQtyAvailToTakeUOM() >= WarehouseActLine2RecLcl.Quantity then begin
                                     WarehouseActLine2RecLcl.Validate("Bin Code", BinContentsRecLcl."Bin Code");
@@ -399,6 +399,7 @@ codeunit 52606 "ORB Functions"
             if GLEntriesQuery.Read() then
                 ThisYearSales := Abs(GLEntriesQuery.Amount);
         GLEntriesQuery.Close();
+
         // Calculate Previous Year Sales Total
         Clear(GLEntriesQuery);
         GLEntriesQuery.SetRange(PostingDate, PrevYearStartDate, PrevYearEndDate);
@@ -410,6 +411,7 @@ codeunit 52606 "ORB Functions"
             if GLEntriesQuery.Read() then
                 PreviousYearSales := Abs(GLEntriesQuery.Amount);
         GLEntriesQuery.Close();
+
         // Calculate LTM Sales Total
         Clear(GLEntriesQuery);
         GLEntriesQuery.SetRange(PostingDate, OneYearAgoDate, WorkDate());
@@ -421,6 +423,7 @@ codeunit 52606 "ORB Functions"
             if GLEntriesQuery.Read() then
                 LTMSales := Abs(GLEntriesQuery.Amount);
         GLEntriesQuery.Close();
+
         // Calculate Lifetime Sales Total
         Clear(GLEntriesQuery);
         GLEntriesQuery.SetRange(Document_Type, GLEntry."Document Type"::Invoice);
@@ -455,7 +458,6 @@ codeunit 52606 "ORB Functions"
         PrevYearEndDate := DMY2Date(31, 12, Date2DMY(WorkDate(), 3) - 1);
         OneYearAgoDate := CalcDate('<-1Y>', WorkDate());
 
-
         // Calculate This Year Sales Credit Memo
         Clear(GLEntriesQuery);
         GLEntriesQuery.SetRange(PostingDate, ThisYearStartDate, WorkDate());
@@ -467,7 +469,6 @@ codeunit 52606 "ORB Functions"
             if GLEntriesQuery.Read() then
                 ThisYearSalesCrMemo := GLEntriesQuery.Amount;
         GLEntriesQuery.Close();
-
 
         // Calculate Previous Year Sales Credit Memo
         Clear(GLEntriesQuery);
