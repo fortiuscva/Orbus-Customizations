@@ -59,20 +59,13 @@ report 52616 "ORB LIFT Calculate Whse. Adj"
 
                                         SourceCodeSetup.Get();
                                         if WhseEntry."Qty. (Base)" <> 0 then begin
-                                            // WhseEntry."Qty. (Base)" := WhseEntry."Qty. (Base)" * -1;
-                                            // WhseEntry.Quantity := WhseEntry.Quantity * -1;
-                                            WhseEntry."Qty. (Base)" := WhseEntry."Qty. (Base)";
-                                            WhseEntry.Quantity := WhseEntry.Quantity;
                                             ItemJnlLine.Init();
                                             ItemJnlLine."Line No." := NextLineNo;
                                             ItemJnlLine.Validate("Posting Date", PostingDate);
                                             if WhseEntry."Qty. (Base)" > 0 then
                                                 ItemJnlLine.Validate("Entry Type", ItemJnlLine."Entry Type"::"Positive Adjmt.")
-                                            else begin
+                                            else
                                                 ItemJnlLine.Validate("Entry Type", ItemJnlLine."Entry Type"::"Negative Adjmt.");
-                                                //WhseEntry.Quantity := -WhseEntry.Quantity;
-                                                //WhseEntry."Qty. (Base)" := -WhseEntry."Qty. (Base)";
-                                            end;
 
                                             ItemJnlLine.Validate("Document No.", NextDocNo);
                                             ItemJnlLine.Validate("Item No.", WhseEntry."Item No.");
@@ -81,9 +74,9 @@ report 52616 "ORB LIFT Calculate Whse. Adj"
                                             ItemJnlLine.Validate("Source Code", SourceCodeSetup."Item Journal");
                                             ItemJnlLine.Validate("Unit of Measure Code", WhseEntry."Unit of Measure Code");
                                             ItemJnlLine."Posting No. Series" := ItemJnlBatch."Posting No. Series";
-                                            ItemJnlLine.Validate(Quantity, WhseEntry.Quantity);
-                                            ItemJnlLine."Quantity (Base)" := WhseEntry."Qty. (Base)";
-                                            ItemJnlLine."Invoiced Qty. (Base)" := WhseEntry."Qty. (Base)";
+                                            ItemJnlLine.Validate(Quantity, Abs((WhseEntry.Quantity));
+                                            //ItemJnlLine."Quantity (Base)" := WhseEntry."Qty. (Base)";
+                                            //ItemJnlLine."Invoiced Qty. (Base)" := WhseEntry."Qty. (Base)";
                                             ItemJnlLine."Warehouse Adjustment" := true;
                                             ItemJnlLine."ORB LIFT Inv. Transaction ID" := WhseEntry."ORB LIFT Inv. Transaction ID";
                                             ItemJnlLine."ORB LIFT Order Line ID" := WhseEntry."ORB LIFT Order Line ID";
