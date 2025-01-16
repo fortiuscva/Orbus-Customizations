@@ -117,6 +117,26 @@ page 52608 "ORB Customer API"
                     Caption = 'Lifetime Sales Total';
                     Editable = false;
                 }
+                field(thisYearSalesCrMemo; ThisYearSalesCrMemo)
+                {
+                    Caption = 'This Year Sales Cr. Memo';
+                    Editable = false;
+                }
+                field(previousYearSalesCrMemo; PreviousYearSalesCrMemo)
+                {
+                    Caption = 'Previous Year Sales Cr. Memo';
+                    Editable = false;
+                }
+                field(ltmSalesCrMemo; LTMSalesCrMemo)
+                {
+                    Caption = 'LTM Sales Cr. Memo';
+                    Editable = false;
+                }
+                field(lifetimeSalesTotalCrMemo; LifetimeSalesCrMemo)
+                {
+                    Caption = 'Lifetime Sales Cr. Memo Total';
+                    Editable = false;
+                }
             }
         }
     }
@@ -125,6 +145,7 @@ page 52608 "ORB Customer API"
         FunctionsCU: Codeunit "ORB Functions";
     begin
         FunctionsCU.CalculateSalesTotals(ThisYearSales, PreviousYearSales, LTMSales, LifetimeSales, Rec."No.");
+        FunctionsCU.CalculateCreditMemoTotals(ThisYearSalesCrMemo, PreviousYearSalesCrMemo, LTMSalesCrMemo, LifetimeSalesCrMemo, Rec."No.");
     end;
 
     var
@@ -132,4 +153,9 @@ page 52608 "ORB Customer API"
         PreviousYearSales: Decimal;
         LTMSales: Decimal;
         LifetimeSales: Decimal;
+        ThisYearSalesCrMemo: Decimal;
+        PreviousYearSalesCrMemo: Decimal;
+        LTMSalesCrMemo: Decimal;
+        LifetimeSalesCrMemo: Decimal;
 }
+
