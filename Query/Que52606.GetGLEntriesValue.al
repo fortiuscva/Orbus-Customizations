@@ -1,4 +1,4 @@
-query 52605 "ORB Get G/L Entries Value"
+query 52606 "ORB Get G/L Entries Value"
 {
     Caption = 'Get G/L Entries Value';
     QueryType = Normal;
