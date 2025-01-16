@@ -37,19 +37,22 @@ pageextension 52644 "ORB Item Journal" extends "Item Journal"
                     LiftFunctions.ItemJournalRollupCost(Rec."Journal Template Name", Rec."Journal Batch Name");
                 end;
             }
-            action("ORB Calculate Warehouse Adjustment")
+            action("ORB Calculate LIFT Warehouse Adjustments")
             {
                 ApplicationArea = Warehouse;
-                Caption = 'ORB Calculate Warehouse Adjustment';
+                Caption = 'Calculate LIFT Warehouse Adjustments';
+                Promoted = true;
+                PromotedIsBig = true;
+                PromotedCategory = Process;
                 Ellipsis = true;
                 Image = CalculateWarehouseAdjustment;
                 ToolTip = 'Calculate adjustments in quantity based on the warehouse adjustment bin for each item in the journal. New lines are added for negative and positive quantities.';
 
                 trigger OnAction()
                 begin
-                    CalcWhseAdjmt.SetItemJnlLine(Rec);
-                    CalcWhseAdjmt.RunModal();
-                    Clear(CalcWhseAdjmt);
+                    LIFTCalcWhseAdjmt.SetItemJnlLine(Rec);
+                    LIFTCalcWhseAdjmt.RunModal();
+                    Clear(LIFTCalcWhseAdjmt);
                 end;
             }
         }
@@ -57,5 +60,5 @@ pageextension 52644 "ORB Item Journal" extends "Item Journal"
     var
         LiftFunctions: Codeunit "ORB LIFT Functions";
         RollupCostConfirmMsgLbl: Label 'Do you want to roll up material cost to finished goods?';
-        CalcWhseAdjmt: Report "ORB Calculate Whse. Adj";
+        LIFTCalcWhseAdjmt: Report "ORB LIFT Calculate Whse. Adj";
 }

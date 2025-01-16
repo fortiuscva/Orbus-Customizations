@@ -1,7 +1,7 @@
-report 52616 "ORB Calculate Whse. Adj"
+report 52616 "ORB LIFT Calculate Whse. Adj"
 {
     ApplicationArea = All;
-    Caption = 'ORBUS Calculate Whse. Adj';
+    Caption = 'Calculate LIFT Whse. Adj';
     ProcessingOnly = true;
     dataset
     {
@@ -19,7 +19,7 @@ report 52616 "ORB Calculate Whse. Adj"
                     AdjmtBin: Record Bin;
                     ReservationEntry: Record "Reservation Entry";
                     WhseItemTrackingSetup: Record "Item Tracking Setup";
-                    SNLotNumbersByBin: Query "Lot Numbers by Bin";
+                    SNLotNumbersByBin: Query "ORB LIFT Lot Numbers by Bin";
                     WhseEntry: Record "Warehouse Entry";
                     IsHandled: Boolean;
                 begin
@@ -30,49 +30,67 @@ report 52616 "ORB Calculate Whse. Adj"
                         repeat
                             AdjmtBin.Get(Location.Code, Location."Adjustment Bin Code");
 
-                            WhseEntry.Reset();
-                            WhseEntry.SetRange("Location Code", Location.Code);
-                            WhseEntry.SetRange("Item No.", Item."No.");
-                            if WhseEntry.FindSet() then begin
-                                repeat
-                                    ItemJnlLine.LockTable();
-                                    ItemJnlLine.Reset();
-                                    ItemJnlLine.SetRange("Journal Template Name", ItemJnlLine."Journal Template Name");
-                                    ItemJnlLine.SetRange("Journal Batch Name", ItemJnlLine."Journal Batch Name");
-                                    if ItemJnlLine.FindLast() then
-                                        NextLineNo := ItemJnlLine."Line No." + 1
-                                    else
-                                        NextLineNo := 10000;
+                            SNLotNumbersByBin.SetRange(Location_Code, Location.Code);
+                            SNLotNumbersByBin.SetRange(Zone_Code, AdjmtBin."Zone Code");
+                            SNLotNumbersByBin.SetRange(Bin_Code, AdjmtBin.Code);
+                            SNLotNumbersByBin.SetRange(Item_No, Item."No.");
+                            SNLotNumbersByBin.SetFilter(Variant_Code, Item.GetFilter("Variant Filter"));
+                            SNLotNumbersByBin.SetFilter(Lot_No, Item.GetFilter("Lot No. Filter"));
+                            SNLotNumbersByBin.SetFilter(Serial_No, Item.GetFilter("Serial No. Filter"));
+                            SNLotNumbersByBin.SetFilter(Package_No, Item.GetFilter("Package No. Filter"));
+                            SNLotNumbersByBin.Open();
+                            while SNLotNumbersByBin.Read() do begin
+                                WhseEntry.Reset();
+                                WhseEntry.SetRange("Location Code", SNLotNumbersByBin.Location_Code);
+                                WhseEntry.SetRange("Item No.", Item."No.");
+                                WhseEntry.SetRange("Zone Code", SNLotNumbersByBin.Zone_Code);
+                                WhseEntry.SetRange("Bin Code", AdjmtBin.Code);
+                                WhseEntry.SetFilter("ORB LIFT Order Line ID", '>%1', 0);
+                                if WhseEntry.FindSet() then begin
+                                    repeat
+                                        ItemJnlLine.LockTable();
+                                        ItemJnlLine.Reset();
+                                        ItemJnlLine.SetRange("Journal Template Name", ItemJnlLine."Journal Template Name");
+                                        ItemJnlLine.SetRange("Journal Batch Name", ItemJnlLine."Journal Batch Name");
+                                        if ItemJnlLine.FindLast() then
+                                            NextLineNo := ItemJnlLine."Line No." + 10000
+                                        else
+                                            NextLineNo := 10000;
 
-                                    SourceCodeSetup.Get();
-                                    if WhseEntry."Qty. (Base)" <> 0 then begin
-                                        ItemJnlLine.Init();
-                                        ItemJnlLine."Line No." := NextLineNo;
-                                        ItemJnlLine.Validate("Posting Date", PostingDate);
-                                        if WhseEntry."Qty. (Base)" > 0 then
-                                            ItemJnlLine.Validate("Entry Type", ItemJnlLine."Entry Type"::"Positive Adjmt.")
-                                        else begin
-                                            ItemJnlLine.Validate("Entry Type", ItemJnlLine."Entry Type"::"Negative Adjmt.");
-                                            WhseEntry.Quantity := -WhseEntry.Quantity;
-                                            WhseEntry."Qty. (Base)" := -WhseEntry."Qty. (Base)";
+                                        SourceCodeSetup.Get();
+                                        if WhseEntry."Qty. (Base)" <> 0 then begin
+                                            // WhseEntry."Qty. (Base)" := WhseEntry."Qty. (Base)" * -1;
+                                            // WhseEntry.Quantity := WhseEntry.Quantity * -1;
+                                            WhseEntry."Qty. (Base)" := WhseEntry."Qty. (Base)";
+                                            WhseEntry.Quantity := WhseEntry.Quantity;
+                                            ItemJnlLine.Init();
+                                            ItemJnlLine."Line No." := NextLineNo;
+                                            ItemJnlLine.Validate("Posting Date", PostingDate);
+                                            if WhseEntry."Qty. (Base)" > 0 then
+                                                ItemJnlLine.Validate("Entry Type", ItemJnlLine."Entry Type"::"Positive Adjmt.")
+                                            else begin
+                                                ItemJnlLine.Validate("Entry Type", ItemJnlLine."Entry Type"::"Negative Adjmt.");
+                                                //WhseEntry.Quantity := -WhseEntry.Quantity;
+                                                //WhseEntry."Qty. (Base)" := -WhseEntry."Qty. (Base)";
+                                            end;
+
+                                            ItemJnlLine.Validate("Document No.", NextDocNo);
+                                            ItemJnlLine.Validate("Item No.", WhseEntry."Item No.");
+                                            ItemJnlLine.Validate("Variant Code", WhseEntry."Variant Code");
+                                            ItemJnlLine.Validate("Location Code", WhseEntry."Location Code");
+                                            ItemJnlLine.Validate("Source Code", SourceCodeSetup."Item Journal");
+                                            ItemJnlLine.Validate("Unit of Measure Code", WhseEntry."Unit of Measure Code");
+                                            ItemJnlLine."Posting No. Series" := ItemJnlBatch."Posting No. Series";
+                                            ItemJnlLine.Validate(Quantity, WhseEntry.Quantity);
+                                            ItemJnlLine."Quantity (Base)" := WhseEntry."Qty. (Base)";
+                                            ItemJnlLine."Invoiced Qty. (Base)" := WhseEntry."Qty. (Base)";
+                                            ItemJnlLine."Warehouse Adjustment" := true;
+                                            ItemJnlLine."ORB LIFT Inv. Transaction ID" := WhseEntry."ORB LIFT Inv. Transaction ID";
+                                            ItemJnlLine."ORB LIFT Order Line ID" := WhseEntry."ORB LIFT Order Line ID";
+                                            ItemJnlLine.Insert(true);
                                         end;
-
-                                        ItemJnlLine.Validate("Document No.", NextDocNo);
-                                        ItemJnlLine.Validate("Item No.", WhseEntry."Item No.");
-                                        ItemJnlLine.Validate("Variant Code", WhseEntry."Variant Code");
-                                        ItemJnlLine.Validate("Location Code", WhseEntry."Location Code");
-                                        ItemJnlLine.Validate("Source Code", SourceCodeSetup."Item Journal");
-                                        ItemJnlLine.Validate("Unit of Measure Code", WhseEntry."Unit of Measure Code");
-                                        ItemJnlLine."Posting No. Series" := ItemJnlBatch."Posting No. Series";
-                                        ItemJnlLine.Validate(Quantity, WhseEntry.Quantity);
-                                        ItemJnlLine."Quantity (Base)" := WhseEntry."Qty. (Base)";
-                                        ItemJnlLine."Invoiced Qty. (Base)" := WhseEntry."Qty. (Base)";
-                                        ItemJnlLine."Warehouse Adjustment" := true;
-                                        ItemJnlLine."ORB LIFT Inv. Transaction ID" := WhseEntry."ORB LIFT Inv. Transaction ID";
-                                        ItemJnlLine."ORB LIFT Order Line ID" := WhseEntry."ORB LIFT Order Line ID";
-                                        ItemJnlLine.Insert(true);
-                                    end;
-                                until WhseEntry.Next() = 0;
+                                    until WhseEntry.Next() = 0;
+                                end;
                             end;
                         until Location.Next() = 0;
                 end;

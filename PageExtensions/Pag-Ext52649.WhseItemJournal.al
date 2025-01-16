@@ -2,6 +2,28 @@ pageextension 52649 "ORB Whse. Item Journal" extends "Whse. Item Journal"
 {
     layout
     {
+        addfirst(Control1)
+        {
+
+            field("ORB Journal Template Name"; Rec."Journal Template Name")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the name of the journal template, the basis of the journal batch, that the entries were posted from.';
+                Visible = false;
+            }
+            field("ORB Journal Batch Name"; Rec."Journal Batch Name")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the name of the journal batch, a personalized journal layout, that the entries were posted from.';
+                Visible = false;
+            }
+            field("ORB Line No."; Rec."Line No.")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the number of the warehouse journal line.';
+                Visible = false;
+            }
+        }
         addlast(Control1)
         {
             field("ORB LIFT Inv. Transaction ID"; Rec."ORB LIFT Inv. Transaction ID")
@@ -22,11 +44,11 @@ pageextension 52649 "ORB Whse. Item Journal" extends "Whse. Item Journal"
     {
         addfirst(Processing)
         {
-            action("ORB LIFT Get Inventory Transactions")
+            action("ORB Get LIFT Inventory Transactions")
             {
                 Image = Order;
                 ApplicationArea = all;
-                Caption = 'LIFT Get Inventory Transactions';
+                Caption = 'Get LIFT Inventory Transactions';
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
