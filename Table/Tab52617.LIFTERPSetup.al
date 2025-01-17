@@ -25,6 +25,10 @@ table 52617 "ORB LIFT ERP Setup"
         {
             Caption = 'Inventory Journal API';
         }
+        Field(6; "Lift ERP Integration Active"; Boolean)
+        {
+            Caption = 'Lift ERP Integration Active';
+        }
     }
     keys
     {
