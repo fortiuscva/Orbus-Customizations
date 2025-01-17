@@ -91,6 +91,7 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
+                Visible = IsLIFTERPFunctionEnabled;
                 trigger OnAction()
                 var
                     LIFTERPSetupRecLcl: Record "ORB LIFT ERP Setup";
@@ -99,8 +100,6 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
                     LIFTAPICodes: Codeunit "ORB LIFT API Codes";
                 begin
                     LIFTERPSetupRecLcl.Get();
-                    if not LIFTERPSetupRecLcl."Lift ERP Integration Active" then
-                        exit;
                     LIFTIntegrationDataLogRecLcl.Reset();
                     LIFTIntegrationDataLogRecLcl.SetCurrentKey("Source Type", "Source Subtype", "Source No.");
                     LIFTIntegrationDataLogRecLcl.SetRange("Source Type", Database::"Sales Header");
@@ -130,6 +129,16 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
             end;
         }
     }
+
+    trigger OnOpenPage()
+    begin
+        IsLIFTERPFunctionEnabled := true;
+        if LiftFunctions.IsLIFTERPSetupEnabled() or (LiftFunctions.IsGetSalesOrdersAllowed()) then
+            IsLIFTERPFunctionEnabled := false;
+    end;
+
     var
         OrbusFunctions: Codeunit "ORB Functions";
+        LiftFunctions: Codeunit "ORB LIFT Functions";
+        IsLIFTERPFunctionEnabled: Boolean;
 }
