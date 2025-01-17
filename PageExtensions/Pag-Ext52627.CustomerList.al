@@ -89,6 +89,8 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
                     LIFTAPICodes: Codeunit "ORB LIFT API Codes";
                 begin
                     LIFTERPSetupRecLcl.Get();
+                    if not LIFTERPSetupRecLcl."Lift ERP Integration Active" then
+                        exit;
                     LIFTIntegrationDataLogRecLcl.Reset();
                     LIFTIntegrationDataLogRecLcl.SetCurrentKey("Source Type", "Source Subtype", "Source No.");
                     LIFTIntegrationDataLogRecLcl.SetRange("Source Type", Database::Customer);
