@@ -133,7 +133,7 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
     trigger OnOpenPage()
     begin
         IsLIFTERPFunctionEnabled := true;
-        if LiftFunctions.IsLIFTERPSetupEnabled() or (LiftFunctions.IsGetSalesOrdersAllowed()) then
+        if LiftFunctions.IsLIFTERPSetupEnabled() and (LiftFunctions.IsGetSalesOrdersAllowed()) then
             IsLIFTERPFunctionEnabled := false;
     end;
 
