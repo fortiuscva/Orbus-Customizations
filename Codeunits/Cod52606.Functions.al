@@ -399,6 +399,7 @@ codeunit 52606 "ORB Functions"
             if GLEntriesQuery.Read() then
                 ThisYearSales := Abs(GLEntriesQuery.Amount);
         GLEntriesQuery.Close();
+
         // Calculate Previous Year Sales Total
         Clear(GLEntriesQuery);
         GLEntriesQuery.SetRange(PostingDate, PrevYearStartDate, PrevYearEndDate);
@@ -410,6 +411,7 @@ codeunit 52606 "ORB Functions"
             if GLEntriesQuery.Read() then
                 PreviousYearSales := Abs(GLEntriesQuery.Amount);
         GLEntriesQuery.Close();
+
         // Calculate LTM Sales Total
         Clear(GLEntriesQuery);
         GLEntriesQuery.SetRange(PostingDate, OneYearAgoDate, WorkDate());
@@ -421,6 +423,7 @@ codeunit 52606 "ORB Functions"
             if GLEntriesQuery.Read() then
                 LTMSales := Abs(GLEntriesQuery.Amount);
         GLEntriesQuery.Close();
+
         // Calculate Lifetime Sales Total
         Clear(GLEntriesQuery);
         GLEntriesQuery.SetRange(Document_Type, GLEntry."Document Type"::Invoice);
@@ -455,8 +458,7 @@ codeunit 52606 "ORB Functions"
         PrevYearEndDate := DMY2Date(31, 12, Date2DMY(WorkDate(), 3) - 1);
         OneYearAgoDate := CalcDate('<-1Y>', WorkDate());
 
-
-        // Calculate This Year Sales Credit Memo
+        // Calculate This Year Sales Credit Memo Total
         Clear(GLEntriesQuery);
         GLEntriesQuery.SetRange(PostingDate, ThisYearStartDate, WorkDate());
         GLEntriesQuery.SetRange(Document_Type, GLEntry."Document Type"::"Credit Memo");
@@ -468,8 +470,7 @@ codeunit 52606 "ORB Functions"
                 ThisYearSalesCrMemo := GLEntriesQuery.Amount;
         GLEntriesQuery.Close();
 
-
-        // Calculate Previous Year Sales Credit Memo
+        // Calculate Previous Year Sales Credit Memo Total
         Clear(GLEntriesQuery);
         GLEntriesQuery.SetRange(PostingDate, PrevYearStartDate, PrevYearEndDate);
         GLEntriesQuery.SetRange(Document_Type, GLEntry."Document Type"::"Credit Memo");
@@ -481,7 +482,7 @@ codeunit 52606 "ORB Functions"
                 PreviousYearSalesCrMemo := GLEntriesQuery.Amount;
         GLEntriesQuery.Close();
 
-        // Calculate LTM Sales Credit Memo
+        // Calculate LTM Sales Credit Memo Total
         Clear(GLEntriesQuery);
         GLEntriesQuery.SetRange(PostingDate, OneYearAgoDate, WorkDate());
         GLEntriesQuery.SetRange(Document_Type, GLEntry."Document Type"::"Credit Memo");
@@ -493,7 +494,7 @@ codeunit 52606 "ORB Functions"
                 LTMSalesCrMemo := GLEntriesQuery.Amount;
         GLEntriesQuery.Close();
 
-        // Calculate Lifetime Sales Credit Memo            
+        // Calculate Lifetime Sales Credit Memo Total           
         Clear(GLEntriesQuery);
         GLEntriesQuery.SetRange(Document_Type, GLEntry."Document Type"::"Credit Memo");
         GLEntriesQuery.SetRange(SourceType, GLEntry."Source Type"::Customer);
