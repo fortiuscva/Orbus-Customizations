@@ -48,19 +48,19 @@ codeunit 52613 "ORB LIFT Functions"
 
     procedure IsGetCustomersAllowed(): Boolean
     begin
-        if LIFTERPPermissionSet.Get() and LIFTERPPermissionSet."Get Customers" then
+        if LIFTERPPermissionSet.Get(UserId) and LIFTERPPermissionSet."Get Customers" then
             exit(true);
     end;
 
     procedure IsGetSalesOrdersAllowed(): Boolean
     begin
-        if LIFTERPPermissionSet.Get() and LIFTERPPermissionSet."Get Sales Orders" then
+        if LIFTERPPermissionSet.Get(UserId) and LIFTERPPermissionSet."Get Sales Orders" then
             exit(true);
     end;
 
     procedure IsGetWhseJournalAllowed(): Boolean
     begin
-        if LIFTERPPermissionSet.Get() and LIFTERPPermissionSet."Get Whse. Journal" then
+        if LIFTERPPermissionSet.Get(UserId) and LIFTERPPermissionSet."Get Whse. Journal" then
             exit(true);
     end;
 
