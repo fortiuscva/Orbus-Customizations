@@ -530,7 +530,6 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", 'OnAfterReleaseSalesDoc', '', false, false)]
     local procedure Cod414_OnAfterReleaseSalesDoc(var SalesHeader: Record "Sales Header"; PreviewMode: Boolean; var LinesWereModified: Boolean; SkipWhseRequestOperations: Boolean)
-    var
     begin
         IF (SalesHeader."Document Type" = SalesHeader."Document Type"::Order) and (SalesHeader.Status = SalesHeader.Status::Released) and (SalesHeader."ORB Original Promised Ship Dt." = 0D) then begin
             SalesHeader.Validate("ORB Original Promised Ship Dt.", today);
@@ -540,7 +539,14 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", OnBeforeReleaseSalesDoc, '', false, false)]
     local procedure "Release Sales Document_OnBeforeReleaseSalesDoc"(var SalesHeader: Record "Sales Header"; PreviewMode: Boolean; var IsHandled: Boolean; var SkipCheckReleaseRestrictions: Boolean; SkipWhseRequestOperations: Boolean)
+    var
+        txtPaymentTypeLbl: Label 'Payment Type %1 is not allowed!';
+        txtColledwithoutCaseLbl: Label 'Collect Order needs to have a Case No!';
     begin
+        IF (SalesHeader."Sales Order Payment Type" = SalesHeader."Sales Order Payment Type"::Sender) or (SalesHeader."Sales Order Payment Type" = SalesHeader."Sales Order Payment Type"::Receiver) then
+            Error(txtPaymentTypeLbl, Format(SalesHeader."Sales Order Payment Type"));
+        IF (SalesHeader."Sales Order Payment Type" = SalesHeader."Sales Order Payment Type"::Collect) and (SalesHeader."Case No." = '') then
+            Error(txtColledwithoutCaseLbl);
         IF SalesHeader."Document Type" = SalesHeader."Document Type"::Order then
             OrbusFunctionsCUGbl.ValidateOnSalesRelease(SalesHeader);
     end;
