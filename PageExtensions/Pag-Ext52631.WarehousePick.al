@@ -11,16 +11,12 @@ pageextension 52631 "ORB Warehouse Pick" extends "Warehouse Pick"
                 Image = DeleteQtyToHandle;
 
                 trigger OnAction()
+                var
+                    GeneralFunctionsCULcl: Codeunit "ORB Functions";
                 begin
+                    GeneralFunctionsCULcl.UpdateTakeZone(rec);
                 end;
             }
         }
     }
-
-    procedure UpdateTakeZone()
-    begin
-
-
-
-    end;
 }
