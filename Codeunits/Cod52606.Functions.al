@@ -140,6 +140,7 @@ codeunit 52606 "ORB Functions"
                 WarehouseActLine2RecLcl.SetRange("Source No.", WarehouseActLineRecLcl."Source No.");
                 WarehouseActLine2RecLcl.SetRange("Source Line No.", WarehouseActLineRecLcl."Source Line No.");
                 WarehouseActLine2RecLcl.SetRange("Action Type", WarehouseActLine2RecLcl."Action Type"::Take);
+                WarehouseActLine2RecLcl.SetRange("Variant Code", WarehouseActLine2RecLcl."Variant Code");
                 WarehouseActLine2RecLcl.SetFilter("Line No.", '<%1', WarehouseActLineRecLcl."Line No.");
                 if WarehouseActLine2RecLcl.FindLast() then begin
                     WarehouseActLine2RecLcl.Validate("Zone Code", WarehouseActLineRecLcl."Zone Code");
@@ -149,6 +150,7 @@ codeunit 52606 "ORB Functions"
                     BinContentsRecLcl.SetRange("Item No.", WarehouseActLine2RecLcl."Item No.");
                     BinContentsRecLcl.SetRange("Location Code", WarehouseActLine2RecLcl."Location Code");
                     BinContentsRecLcl.SetRange("Zone Code", WarehouseActLine2RecLcl."Zone Code");
+                    BinContentsRecLcl.SetRange("Variant Code", WarehouseActLine2RecLcl."Variant Code");
                     if BinContentsRecLcl.FindFirst() then
                         repeat
                             BinRecLcl.get(BinContentsRecLcl."Location Code", BinContentsRecLcl."Bin Code");
