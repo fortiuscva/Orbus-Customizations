@@ -284,4 +284,20 @@ codeunit 52606 "ORB Functions"
 
     var
         ReportSelectionWarehouse: Record "Report Selection Warehouse";
+
+    procedure UpdateTakeZone(WarehouseActHeaderPar: Record "Warehouse Activity Header")
+    var
+        WarehouseActLineRecLcl: Record "Warehouse Activity Line";
+    begin
+        if not Confirm('Are you sure you want to update the "Take" line zone code', false) then
+            exit;
+
+        WarehouseActLineRecLcl.Reset();
+        WarehouseActLineRecLcl.SetRange("Activity Type", WarehouseActLineRecLcl."Activity Type"::Pick);
+        WarehouseActLineRecLcl.SetRange("No.", WarehouseActHeaderPar."No.");
+        if WarehouseActLineRecLcl.FindSet() then
+            repeat
+
+            until WarehouseActLineRecLcl.Next() = 0;
+    end;
 }
