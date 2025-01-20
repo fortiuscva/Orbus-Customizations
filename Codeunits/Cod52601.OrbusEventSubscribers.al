@@ -91,7 +91,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         BillToCustomerRecLcl: Record Customer;
     begin
         if SalesHeaderRecLcl.get(addressSource.RecordId) then begin
-            if addressBuffer."Address Type" = addressBuffer."Address Type"::Destination then begin
+            if (addressBuffer."Address Type" = addressBuffer."Address Type"::Destination) or (addressBuffer."Address Type" = addressBuffer."Address Type"::Buffer) then begin
                 //if SalesHeaderRecLcl."Ship-to Contact" <> '' then
                 addressBuffer.Name := SalesHeaderRecLcl."Ship-to Contact";
 
@@ -106,7 +106,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
                 WarehouseShipmentLineRecLcl.SetRange("No.", WarehouseShipmentHeaderRecLcl."No.");
                 if WarehouseShipmentLineRecLcl.FindFirst() then begin
                     if SalesHeaderRecLcl.get(SalesHeaderRecLcl."Document Type"::Order, WarehouseShipmentLineRecLcl."Source No.") then begin
-                        if addressBuffer."Address Type" = addressBuffer."Address Type"::Destination then begin
+                        if (addressBuffer."Address Type" = addressBuffer."Address Type"::Destination) or (addressBuffer."Address Type" = addressBuffer."Address Type"::Buffer) then begin
                             //if SalesHeaderRecLcl."Ship-to Contact" <> '' then
                             addressBuffer.Name := SalesHeaderRecLcl."Ship-to Contact";
 
@@ -610,6 +610,21 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         ItemLedgerEntry."ORB LIFT Inv. Transaction ID" := ItemJournalLine."ORB LIFT Inv. Transaction ID";
         ItemLedgerEntry."ORB LIFT Order Line ID" := ItemJournalLine."ORB LIFT Order Line ID";
     end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Whse. Jnl.-Register Line", OnInitWhseEntryCopyFromWhseJnlLine, '', false, false)]
+    local procedure "Whse. Jnl.-Register Line_OnInitWhseEntryCopyFromWhseJnlLine"(var WarehouseEntry: Record "Warehouse Entry"; var WarehouseJournalLine: Record "Warehouse Journal Line"; OnMovement: Boolean; Sign: Integer; Location: Record Location; BinCode: Code[20]; var IsHandled: Boolean)
+    begin
+        WarehouseEntry."ORB LIFT Inv. Transaction ID" := WarehouseJournalLine."ORB LIFT Inv. Transaction ID";
+        WarehouseEntry."ORB LIFT Order Line ID" := WarehouseJournalLine."ORB LIFT Order Line ID";
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Whse. Jnl.-Register Batch", OnCreateItemJnlLineOnBeforeExit, '', false, false)]
+    local procedure "Whse. Jnl.-Register Batch_OnCreateItemJnlLineOnBeforeExit"(WhseJnlLine2: Record "Warehouse Journal Line"; var ItemJnlLine: Record "Item Journal Line"; var QtytoHandleBase: Decimal)
+    begin
+        WhseJnlLine2."ORB LIFT Inv. Transaction ID" := ItemJnlLine."ORB LIFT Inv. Transaction ID";
+        WhseJnlLine2."ORB LIFT Order Line ID" := ItemJnlLine."ORB LIFT Order Line ID";
+    end;
+
 
 
     var

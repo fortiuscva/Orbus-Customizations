@@ -167,7 +167,7 @@ page 52612 "ORB MagentoContacts"
         if Rec."No." = '' then begin
             Rec.Insert(true);
         end;
-
+        Rec.TestField(Rec."E-Mail");
         CheckDuplicateEmailContact();
     end;
 
@@ -185,11 +185,17 @@ page 52612 "ORB MagentoContacts"
     var
         Contact: Record Contact;
     begin
-        Contact.Reset();
-        Contact.SetRange(Type, Contact.Type::Person);
-        Contact.SetRange("E-Mail", Rec."E-Mail");
-        if Contact.FindFirst() then
-            Error(DuplicateEmailErr, Contact."No.");
+        if Rec.Type = Rec.Type::Company then
+            exit;
+
+        if (Rec."E-Mail" <> '') then begin
+            Contact.Reset();
+            Contact.SetFilter("No.", '<>%1', Rec."No.");
+            Contact.SetRange(Type, Contact.Type::Person);
+            Contact.SetRange("E-Mail", Rec."E-Mail");
+            if Contact.FindFirst() then
+                Error(DuplicateEmailErr, Contact."No.");
+        end;
     end;
 
     var

@@ -91,6 +91,7 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
+                Visible = IsLIFTERPFunctionEnabled;
                 trigger OnAction()
                 var
                     LIFTERPSetupRecLcl: Record "ORB LIFT ERP Setup";
@@ -128,6 +129,16 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
             end;
         }
     }
+
+    trigger OnOpenPage()
+    begin
+        clear(IsLIFTERPFunctionEnabled);
+        if LiftFunctions.IsLIFTERPSetupEnabled() and (LiftFunctions.IsGetSalesOrdersAllowed()) then
+            IsLIFTERPFunctionEnabled := true;
+    end;
+
     var
         OrbusFunctions: Codeunit "ORB Functions";
+        LiftFunctions: Codeunit "ORB LIFT Functions";
+        IsLIFTERPFunctionEnabled: Boolean;
 }
