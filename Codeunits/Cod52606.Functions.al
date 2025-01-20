@@ -290,6 +290,7 @@ codeunit 52606 "ORB Functions"
         WarehouseActLineRecLcl: Record "Warehouse Activity Line";
         WarehouseActLine2RecLcl: Record "Warehouse Activity Line";
         BinContentsRecLcl: Record "Bin Content";
+        BinQtyFoundVarLcl: Boolean;
     begin
         if not Confirm('Are you sure you want to update the "Take" line zone code', false) then
             exit;
@@ -311,13 +312,18 @@ codeunit 52606 "ORB Functions"
                 if WarehouseActLine2RecLcl.FindLast() then begin
                     WarehouseActLine2RecLcl.Validate("Zone Code", WarehouseActLineRecLcl."Zone Code");
 
+                    Clear(BinQtyFoundVarLcl);
                     BinContentsRecLcl.Reset();
                     BinContentsRecLcl.SetRange("Item No.", WarehouseActLine2RecLcl."Item No.");
                     BinContentsRecLcl.SetRange("Location Code", WarehouseActLine2RecLcl."Location Code");
                     BinContentsRecLcl.SetRange("Zone Code", WarehouseActLine2RecLcl."Zone Code");
-                    BinContentsRecLcl.SetFilter(Quantity, '>=%1', WarehouseActLine2RecLcl.Quantity);
                     if BinContentsRecLcl.FindFirst() then
-                        WarehouseActLine2RecLcl.Validate("Bin Code", BinContentsRecLcl."Bin Code");
+                        repeat
+                            if BinContentsRecLcl.CalcQtyAvailToTakeUOM() >= WarehouseActLine2RecLcl.Quantity then begin
+                                WarehouseActLine2RecLcl.Validate("Bin Code", BinContentsRecLcl."Bin Code");
+                                BinQtyFoundVarLcl := true;
+                            end;
+                        until (BinContentsRecLcl.Next() = 0) or BinQtyFoundVarLcl;
 
                     WarehouseActLine2RecLcl.Modify();
                 end;
