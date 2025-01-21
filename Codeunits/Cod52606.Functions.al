@@ -353,7 +353,7 @@ codeunit 52606 "ORB Functions"
         GLEntriesQuery.setfilter(G_L_Account_No_, '4* &<>41100 &<>41110');
         if GLEntriesQuery.Open() then
             if GLEntriesQuery.Read() then
-                ThisYearSales := GLEntriesQuery.Amount;
+                ThisYearSales := Abs(GLEntriesQuery.Amount);
         GLEntriesQuery.Close();
         // Calculate Previous Year Sales
         Clear(GLEntriesQuery);
@@ -364,7 +364,7 @@ codeunit 52606 "ORB Functions"
         GLEntriesQuery.setfilter(G_L_Account_No_, '4* &<>41100 &<>41110');
         if GLEntriesQuery.Open() then
             if GLEntriesQuery.Read() then
-                PreviousYearSales := GLEntriesQuery.Amount;
+                PreviousYearSales := Abs(GLEntriesQuery.Amount);
         GLEntriesQuery.Close();
         // Calculate LTM Sales
         Clear(GLEntriesQuery);
@@ -375,7 +375,7 @@ codeunit 52606 "ORB Functions"
         GLEntriesQuery.setfilter(G_L_Account_No_, '4* &<>41100 &<>41110');
         if GLEntriesQuery.Open() then
             if GLEntriesQuery.Read() then
-                LTMSales := GLEntriesQuery.Amount;
+                LTMSales := Abs(GLEntriesQuery.Amount);
         GLEntriesQuery.Close();
         // Calculate Lifetime Sales
         Clear(GLEntriesQuery);
@@ -385,7 +385,7 @@ codeunit 52606 "ORB Functions"
         GLEntriesQuery.setfilter(G_L_Account_No_, '4* &<>41100 &<>41110');
         if GLEntriesQuery.Open() then
             if GLEntriesQuery.Read() then
-                LifetimeSales := GLEntriesQuery.Amount;
+                LifetimeSales := Abs(GLEntriesQuery.Amount);
         GLEntriesQuery.Close();
     end;
 
