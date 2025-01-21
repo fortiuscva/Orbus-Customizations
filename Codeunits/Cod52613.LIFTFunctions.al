@@ -39,4 +39,32 @@ codeunit 52613 "ORB LIFT Functions"
             end;
         end;
     end;
+
+    procedure IsLIFTERPSetupEnabled(): Boolean
+    begin
+        if LIFTERPSetup.Get() and LIFTERPSetup."Lift ERP Integration Active" then
+            exit(true);
+    end;
+
+    procedure IsGetCustomersAllowed(): Boolean
+    begin
+        if LIFTERPPermissionSet.Get() and LIFTERPPermissionSet."Get Customers" then
+            exit(true);
+    end;
+
+    procedure IsGetSalesOrdersAllowed(): Boolean
+    begin
+        if LIFTERPPermissionSet.Get() and LIFTERPPermissionSet."Get Sales Orders" then
+            exit(true);
+    end;
+
+    procedure IsGetWhseJournalAllowed(): Boolean
+    begin
+        if LIFTERPPermissionSet.Get() and LIFTERPPermissionSet."Get Whse. Journal" then
+            exit(true);
+    end;
+
+    var
+        LIFTERPSetup: Record "ORB LIFT ERP Setup";
+        LIFTERPPermissionSet: Record "ORB LIFT ERP Permission Setup";
 }
