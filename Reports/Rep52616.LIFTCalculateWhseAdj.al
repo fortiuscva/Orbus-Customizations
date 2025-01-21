@@ -62,10 +62,10 @@ report 52616 "ORB LIFT Calculate Whse. Adj"
                                             ItemJnlLine.Init();
                                             ItemJnlLine."Line No." := NextLineNo;
                                             ItemJnlLine.Validate("Posting Date", PostingDate);
-                                            if WhseEntry."Qty. (Base)" > 0 then
-                                                ItemJnlLine.Validate("Entry Type", ItemJnlLine."Entry Type"::"Positive Adjmt.")
+                                            if (WhseEntry."Qty. (Base)" > 0) then
+                                                ItemJnlLine.Validate("Entry Type", ItemJnlLine."Entry Type"::"Negative Adjmt.")
                                             else
-                                                ItemJnlLine.Validate("Entry Type", ItemJnlLine."Entry Type"::"Negative Adjmt.");
+                                                ItemJnlLine.Validate("Entry Type", ItemJnlLine."Entry Type"::"Positive Adjmt.");
 
                                             ItemJnlLine.Validate("Document No.", NextDocNo);
                                             ItemJnlLine.Validate("Item No.", WhseEntry."Item No.");
