@@ -321,13 +321,15 @@ codeunit 52606 "ORB Functions"
             until TempReportSelectionWarehouse.Next() = 0;
     end;
 
-    procedure CalculateSalesTotals(var ThisYearSales: Decimal; var PreviousYearSales: Decimal; var LTMSales: Decimal; var LifetimeSales: Decimal; CustNo: Code[20])
+    procedure CalculateSalesTotals(var ThisYearSales: Decimal; var PreviousYearSales: Decimal; var LTMSales: Decimal; var LifetimeSales: Decimal; CustomerNo: Code[20])
     var
         ThisYearStartDate: Date;
         PrevYearStartDate: Date;
         PrevYearEndDate: Date;
         OneYearAgoDate: Date;
         CustLedgEntry: Record "Cust. Ledger Entry";
+        GLEntry: Record "G/L Entry";
+        GLEntriesQuery: Query "ORB Get G/L Entries Value";
     begin
 
         //Reset variable values
@@ -343,47 +345,121 @@ codeunit 52606 "ORB Functions"
         OneYearAgoDate := CalcDate('<-1Y>', WorkDate());
 
         // Calculate This Year Sales
-        CustLedgEntry.Reset();
-        CustLedgEntry.SetRange("Customer No.", CustNo);
-        CustLedgEntry.SetRange("Document Type", CustLedgEntry."Document Type"::Invoice);
-        CustLedgEntry.SetRange("Posting Date", ThisYearStartDate, WorkDate());
-        CustLedgEntry.SetAutoCalcFields(Amount);
-        if CustLedgEntry.FindSet() then
-            repeat
-                ThisYearSales += CustLedgEntry.Amount;
-            until CustLedgEntry.Next() = 0;
+        Clear(GLEntriesQuery);
+        GLEntriesQuery.SetRange(PostingDate, ThisYearStartDate, WorkDate());
+        GLEntriesQuery.SetRange(Document_Type, GLEntry."Document Type"::Invoice);
+        GLEntriesQuery.SetRange(SourceType, GLEntry."Source Type"::Customer);
+        GLEntriesQuery.SetRange(SourceNo, CustomerNo);
+        GLEntriesQuery.setfilter(G_L_Account_No_, '4* &<>41100 &<>41110');
+        if GLEntriesQuery.Open() then
+            if GLEntriesQuery.Read() then
+                ThisYearSales := GLEntriesQuery.Amount;
+        GLEntriesQuery.Close();
+        // Calculate Previous Year Sales
+        Clear(GLEntriesQuery);
+        GLEntriesQuery.SetRange(PostingDate, PrevYearStartDate, PrevYearStartDate);
+        GLEntriesQuery.SetRange(Document_Type, GLEntry."Document Type"::Invoice);
+        GLEntriesQuery.SetRange(SourceType, GLEntry."Source Type"::Customer);
+        GLEntriesQuery.SetRange(SourceNo, CustomerNo);
+        GLEntriesQuery.setfilter(G_L_Account_No_, '4* &<>41100 &<>41110');
+        if GLEntriesQuery.Open() then
+            if GLEntriesQuery.Read() then
+                PreviousYearSales := GLEntriesQuery.Amount;
+        GLEntriesQuery.Close();
+        // Calculate LTM Sales
+        Clear(GLEntriesQuery);
+        GLEntriesQuery.SetRange(PostingDate, OneYearAgoDate, WorkDate());
+        GLEntriesQuery.SetRange(Document_Type, GLEntry."Document Type"::Invoice);
+        GLEntriesQuery.SetRange(SourceType, GLEntry."Source Type"::Customer);
+        GLEntriesQuery.SetRange(SourceNo, CustomerNo);
+        GLEntriesQuery.setfilter(G_L_Account_No_, '4* &<>41100 &<>41110');
+        if GLEntriesQuery.Open() then
+            if GLEntriesQuery.Read() then
+                LTMSales := GLEntriesQuery.Amount;
+        GLEntriesQuery.Close();
+        // Calculate Lifetime Sales
+        Clear(GLEntriesQuery);
+        GLEntriesQuery.SetRange(Document_Type, GLEntry."Document Type"::Invoice);
+        GLEntriesQuery.SetRange(SourceType, GLEntry."Source Type"::Customer);
+        GLEntriesQuery.SetRange(SourceNo, CustomerNo);
+        GLEntriesQuery.setfilter(G_L_Account_No_, '4* &<>41100 &<>41110');
+        if GLEntriesQuery.Open() then
+            if GLEntriesQuery.Read() then
+                LifetimeSales := GLEntriesQuery.Amount;
+        GLEntriesQuery.Close();
+    end;
+
+    procedure CalculateCreditMemoTotals(var ThisYearSalesCrMemo: Decimal; var PreviousYearSalesCrMemo: Decimal; var LTMSalesCrMemo: Decimal; var LifetimeSalesCrMemo: Decimal; CustomerNo: Code[20])
+    var
+        ThisYearStartDate: Date;
+        PrevYearStartDate: Date;
+        PrevYearEndDate: Date;
+        OneYearAgoDate: Date;
+        GLEntry: Record "G/L Entry";
+        GLEntriesQuery: Query "ORB Get G/L Entries Value";
+    begin
+
+        //Reset variable values
+        ThisYearSalesCrMemo := 0;
+        PreviousYearSalesCrMemo := 0;
+        LTMSalesCrMemo := 0;
+        LifetimeSalesCrMemo := 0;
+
+        // Initialize date ranges
+        ThisYearStartDate := DMY2Date(1, 1, Date2DMY(WorkDate(), 3));
+        PrevYearStartDate := DMY2Date(1, 1, Date2DMY(WorkDate(), 3) - 1);
+        PrevYearEndDate := DMY2Date(31, 12, Date2DMY(WorkDate(), 3) - 1);
+        OneYearAgoDate := CalcDate('<-1Y>', WorkDate());
+
+        // Calculate This Year Sales
+
+        Clear(GLEntriesQuery);
+        GLEntriesQuery.SetRange(PostingDate, ThisYearStartDate, WorkDate());
+        GLEntriesQuery.SetRange(Document_Type, GLEntry."Document Type"::"Credit Memo");
+        GLEntriesQuery.SetRange(SourceType, GLEntry."Source Type"::Customer);
+        GLEntriesQuery.SetRange(SourceNo, CustomerNo);
+        GLEntriesQuery.setfilter(G_L_Account_No_, '4* &<>41100 &<>41110');
+        if GLEntriesQuery.Open() then
+            if GLEntriesQuery.Read() then
+                ThisYearSalesCrMemo := GLEntriesQuery.Amount;
+        GLEntriesQuery.Close();
+
 
         // Calculate Previous Year Sales
-        CustLedgEntry.Reset();
-        CustLedgEntry.SetRange("Customer No.", CustNo);
-        CustLedgEntry.SetRange("Document Type", CustLedgEntry."Document Type"::Invoice);
-        CustLedgEntry.SetRange("Posting Date", PrevYearStartDate, PrevYearEndDate);
-        CustLedgEntry.SetAutoCalcFields(Amount);
-        if CustLedgEntry.FindSet() then
-            repeat
-                PreviousYearSales += CustLedgEntry.Amount;
-            until CustLedgEntry.Next() = 0;
-
+        Clear(GLEntriesQuery);
+        GLEntriesQuery.SetRange(PostingDate, PrevYearStartDate, PrevYearStartDate);
+        GLEntriesQuery.SetRange(Document_Type, GLEntry."Document Type"::"Credit Memo");
+        GLEntriesQuery.SetRange(SourceType, GLEntry."Source Type"::Customer);
+        GLEntriesQuery.SetRange(SourceNo, CustomerNo);
+        GLEntriesQuery.setfilter(G_L_Account_No_, '4* &<>41100 &<>41110');
+        if GLEntriesQuery.Open() then
+            if GLEntriesQuery.Read() then
+                PreviousYearSalesCrMemo := GLEntriesQuery.Amount;
+        GLEntriesQuery.Close();
         // Calculate LTM Sales
-        CustLedgEntry.Reset();
-        CustLedgEntry.SetRange("Customer No.", CustNo);
-        CustLedgEntry.SetRange("Document Type", CustLedgEntry."Document Type"::Invoice);
-        CustLedgEntry.SetRange("Posting Date", OneYearAgoDate, WorkDate());
-        CustLedgEntry.SetAutoCalcFields(Amount);
-        if CustLedgEntry.FindSet() then
-            repeat
-                LTMSales += CustLedgEntry.Amount;
-            until CustLedgEntry.Next() = 0;
 
-        // Calculate Lifetime Sales
-        CustLedgEntry.Reset();
-        CustLedgEntry.SetRange("Customer No.", CustNo);
-        CustLedgEntry.SetRange("Document Type", CustLedgEntry."Document Type"::Invoice);
-        CustLedgEntry.SetAutoCalcFields(Amount);
-        if CustLedgEntry.FindSet() then
-            repeat
-                LifetimeSales += CustLedgEntry.Amount;
-            until CustLedgEntry.Next() = 0;
+        Clear(GLEntriesQuery);
+        GLEntriesQuery.SetRange(PostingDate, OneYearAgoDate, WorkDate());
+        GLEntriesQuery.SetRange(Document_Type, GLEntry."Document Type"::"Credit Memo");
+        GLEntriesQuery.SetRange(SourceType, GLEntry."Source Type"::Customer);
+        GLEntriesQuery.SetRange(SourceNo, CustomerNo);
+        GLEntriesQuery.setfilter(G_L_Account_No_, '4* &<>41100 &<>41110');
+        if GLEntriesQuery.Open() then
+            if GLEntriesQuery.Read() then
+                LTMSalesCrMemo := GLEntriesQuery.Amount;
+        GLEntriesQuery.Close();
+
+        // Calculate Lifetime Sales            
+        Clear(GLEntriesQuery);
+        GLEntriesQuery.SetRange(Document_Type, GLEntry."Document Type"::"Credit Memo");
+        GLEntriesQuery.SetRange(SourceType, GLEntry."Source Type"::Customer);
+        GLEntriesQuery.SetRange(SourceNo, CustomerNo);
+        GLEntriesQuery.setfilter(G_L_Account_No_, '4* &<>41100 &<>41110');
+        if GLEntriesQuery.Open() then
+            if GLEntriesQuery.Read() then
+                LifetimeSalesCrMemo := GLEntriesQuery.Amount;
+        GLEntriesQuery.Close();
+
     end;
 
     local procedure SelectTempReportSelectionsToPrint(var TempReportSelectionWarehouse: Record "Report Selection Warehouse"; ReportUsage: Enum "Report Selection Warehouse Usage")
