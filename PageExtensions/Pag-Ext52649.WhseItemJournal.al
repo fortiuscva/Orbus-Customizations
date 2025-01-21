@@ -76,9 +76,10 @@ pageextension 52649 "ORB Whse. Item Journal" extends "Whse. Item Journal"
 
     trigger OnOpenPage()
     begin
-        IsLIFTERPFunctionEnabled := true;
+
+        clear(IsLIFTERPFunctionEnabled);
         if LiftFunctions.IsLIFTERPSetupEnabled() and (LiftFunctions.IsGetWhseJournalAllowed()) then
-            IsLIFTERPFunctionEnabled := false;
+            IsLIFTERPFunctionEnabled := true;
     end;
 
 

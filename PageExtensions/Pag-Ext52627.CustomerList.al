@@ -113,9 +113,9 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
         FirstDayOfYearVarLcl := CALCDATE('<-CY>', today);
         Rec.SetRange("ORB Year To Date Filter", FirstDayOfYearVarLcl, Today);
 
-        IsLIFTERPFunctionEnabled := true;
+        clear(IsLIFTERPFunctionEnabled);
         if LiftFunctions.IsLIFTERPSetupEnabled() and (LiftFunctions.IsGetCustomersAllowed()) then
-            IsLIFTERPFunctionEnabled := false;
+            IsLIFTERPFunctionEnabled := true;
     end;
 
     trigger OnAfterGetRecord()

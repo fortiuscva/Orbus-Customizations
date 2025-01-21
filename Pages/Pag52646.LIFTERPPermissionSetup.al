@@ -4,6 +4,7 @@ page 52646 "ORB LIFT ERP Permission Setup"
     Caption = 'LIFT ERP Permission Setup';
     PageType = List;
     SourceTable = "ORB LIFT ERP Permission Setup";
+    UsageCategory = Administration;
 
     layout
     {
