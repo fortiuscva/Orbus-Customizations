@@ -1,20 +1,9 @@
-pageextension 52623 "ORB Warehouse Entries" extends "Warehouse Entries"
+pageextension 52650 "ORB Item Ledger Entries" extends "Item Ledger Entries"
 {
     layout
     {
-        addafter("Item No.")
+        addlast(Control1)
         {
-            field("ORB Reference No."; Rec."Reference No.")
-            {
-                ApplicationArea = All;
-                ToolTip = 'Specifies the value of the Reference No. field.', Comment = '%';
-            }
-            field("ORB Reference Document"; Rec."Reference Document")
-            {
-                ApplicationArea = All;
-                ToolTip = 'Specifies the value of the Reference Document field.', Comment = '%';
-            }
-
             field("ORB LIFT Inv. Transaction ID"; Rec."ORB LIFT Inv. Transaction ID")
             {
                 ApplicationArea = All;

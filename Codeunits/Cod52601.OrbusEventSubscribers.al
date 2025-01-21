@@ -473,6 +473,21 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         ItemLedgerEntry."ORB LIFT Order Line ID" := ItemJournalLine."ORB LIFT Order Line ID";
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Whse. Jnl.-Register Line", OnInitWhseEntryCopyFromWhseJnlLine, '', false, false)]
+    local procedure "Whse. Jnl.-Register Line_OnInitWhseEntryCopyFromWhseJnlLine"(var WarehouseEntry: Record "Warehouse Entry"; var WarehouseJournalLine: Record "Warehouse Journal Line"; OnMovement: Boolean; Sign: Integer; Location: Record Location; BinCode: Code[20]; var IsHandled: Boolean)
+    begin
+        WarehouseEntry."ORB LIFT Inv. Transaction ID" := WarehouseJournalLine."ORB LIFT Inv. Transaction ID";
+        WarehouseEntry."ORB LIFT Order Line ID" := WarehouseJournalLine."ORB LIFT Order Line ID";
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Whse. Jnl.-Register Batch", OnCreateItemJnlLineOnBeforeExit, '', false, false)]
+    local procedure "Whse. Jnl.-Register Batch_OnCreateItemJnlLineOnBeforeExit"(WhseJnlLine2: Record "Warehouse Journal Line"; var ItemJnlLine: Record "Item Journal Line"; var QtytoHandleBase: Decimal)
+    begin
+        WhseJnlLine2."ORB LIFT Inv. Transaction ID" := ItemJnlLine."ORB LIFT Inv. Transaction ID";
+        WhseJnlLine2."ORB LIFT Order Line ID" := ItemJnlLine."ORB LIFT Order Line ID";
+    end;
+
+
 
     [EventSubscriber(ObjectType::Report, report::"Whse.-Shipment - Create Pick", OnBeforeSortWhseActivHeaders, '', false, false)]
 
