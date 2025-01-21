@@ -63,19 +63,19 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
             {
                 ApplicationArea = all;
                 Editable = false;
-                Caption = 'This Year Sales Cr. Memo';
+                Caption = 'This Year Sales Cr. Memo Total';
             }
             field("ORB PreviousYearSalesCrMemo"; PreviousYearSalesCrMemo)
             {
                 ApplicationArea = all;
                 Editable = false;
-                Caption = 'Previous Year Sales Cr. Memo';
+                Caption = 'Previous Year Sales Cr. Memo Total';
             }
             field("ORB LTMSalesCrMemo"; LTMSalesCrMemo)
             {
                 ApplicationArea = all;
                 Editable = false;
-                Caption = 'LTM Sales Cr. Memo';
+                Caption = 'LTM Sales Cr. Memo Total';
             }
             field("ORB LifetimeSalesTotalCrMemo"; LifetimeSalesCrMemo)
             {
