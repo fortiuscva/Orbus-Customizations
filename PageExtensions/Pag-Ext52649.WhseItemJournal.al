@@ -60,6 +60,8 @@ pageextension 52649 "ORB Whse. Item Journal" extends "Whse. Item Journal"
                     LIFTAPICodes: Codeunit "ORB LIFT API Codes";
                 begin
                     LIFTERPSetupRecLcl.Get();
+                    if not LIFTERPSetupRecLcl."Lift ERP Integration Active" then
+                        exit;
                     LIFTIntegrationDataLogRecLcl.Reset();
                     LIFTIntegrationDataLogRecLcl.SetCurrentKey("Transaction ID");
                     LIFTIntegrationDataLogRecLcl.SetRange("Source Type", Database::"Warehouse Journal Line");

@@ -14,6 +14,12 @@ page 52644 "ORB LIFT ERP Setup"
             {
                 Caption = 'General';
 
+                field("Lift ERP Integration Active"; Rec."Lift ERP Integration Active")
+                {
+                    ApplicationArea = all;
+                    ToolTip = 'Specifies the value of the Lift ERP Integration Active field.', Comment = '%';
+                }
+
                 field("Sales Orders API"; Rec."Sales Orders API")
                 {
                     ApplicationArea = all;
