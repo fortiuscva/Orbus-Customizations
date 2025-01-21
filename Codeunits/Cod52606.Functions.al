@@ -330,6 +330,12 @@ codeunit 52606 "ORB Functions"
         CustLedgEntry: Record "Cust. Ledger Entry";
     begin
 
+        //Reset variable values
+        ThisYearSales := 0;
+        PreviousYearSales := 0;
+        LTMSales := 0;
+        LifetimeSales := 0;
+
         // Initialize date ranges
         ThisYearStartDate := DMY2Date(1, 1, Date2DMY(WorkDate(), 3));
         PrevYearStartDate := DMY2Date(1, 1, Date2DMY(WorkDate(), 3) - 1);
