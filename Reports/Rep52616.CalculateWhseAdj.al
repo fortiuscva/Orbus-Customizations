@@ -40,7 +40,7 @@ report 52616 "ORB Calculate Whse. Adj"
                                     ItemJnlLine.SetRange("Journal Template Name", ItemJnlLine."Journal Template Name");
                                     ItemJnlLine.SetRange("Journal Batch Name", ItemJnlLine."Journal Batch Name");
                                     if ItemJnlLine.FindLast() then
-                                        NextLineNo := ItemJnlLine."Line No." + 10000
+                                        NextLineNo := ItemJnlLine."Line No." + 1
                                     else
                                         NextLineNo := 10000;
 
