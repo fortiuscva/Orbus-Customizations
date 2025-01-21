@@ -50,9 +50,9 @@ pageextension 52644 "ORB Item Journal" extends "Item Journal"
 
                 trigger OnAction()
                 begin
-                    CalcWhseAdjmt.SetItemJnlLine(Rec);
-                    CalcWhseAdjmt.RunModal();
-                    Clear(CalcWhseAdjmt);
+                    LIFTCalcWhseAdjmt.SetItemJnlLine(Rec);
+                    LIFTCalcWhseAdjmt.RunModal();
+                    Clear(LIFTCalcWhseAdjmt);
                 end;
             }
         }
@@ -60,5 +60,5 @@ pageextension 52644 "ORB Item Journal" extends "Item Journal"
     var
         LiftFunctions: Codeunit "ORB LIFT Functions";
         RollupCostConfirmMsgLbl: Label 'Do you want to roll up material cost to finished goods?';
-        CalcWhseAdjmt: Report "ORB Calculate Whse. Adj";
+        LIFTCalcWhseAdjmt: Report "ORB LIFT Calculate Whse. Adj";
 }
