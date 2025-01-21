@@ -80,6 +80,7 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
                 Image = Order;
                 ApplicationArea = all;
                 Caption = 'Process LIFT Customers';
+                Visible = IsLIFTERPFunctionEnabled;
                 trigger OnAction()
                 var
                     LIFTERPSetupRecLcl: Record "ORB LIFT ERP Setup";
@@ -111,6 +112,10 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
     begin
         FirstDayOfYearVarLcl := CALCDATE('<-CY>', today);
         Rec.SetRange("ORB Year To Date Filter", FirstDayOfYearVarLcl, Today);
+
+        clear(IsLIFTERPFunctionEnabled);
+        if LiftFunctions.IsLIFTERPSetupEnabled() and (LiftFunctions.IsGetCustomersAllowed()) then
+            IsLIFTERPFunctionEnabled := true;
     end;
 
     trigger OnAfterGetRecord()
@@ -129,5 +134,8 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
         end;
     end;
 
+    var
+        LiftFunctions: Codeunit "ORB LIFT Functions";
+        IsLIFTERPFunctionEnabled: Boolean;
 
 }

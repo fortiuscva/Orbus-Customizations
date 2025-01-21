@@ -52,6 +52,8 @@ pageextension 52649 "ORB Whse. Item Journal" extends "Whse. Item Journal"
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
+                Visible = IsLIFTERPFunctionEnabled;
+
                 trigger OnAction()
                 var
                     LIFTERPSetupRecLcl: Record "ORB LIFT ERP Setup";
@@ -71,8 +73,19 @@ pageextension 52649 "ORB Whse. Item Journal" extends "Whse. Item Journal"
             }
         }
     }
+
+    trigger OnOpenPage()
+    begin
+
+        clear(IsLIFTERPFunctionEnabled);
+        if LiftFunctions.IsLIFTERPSetupEnabled() and (LiftFunctions.IsGetWhseJournalAllowed()) then
+            IsLIFTERPFunctionEnabled := true;
+    end;
+
+
     var
         LiftFunctions: Codeunit "ORB LIFT Functions";
+        IsLIFTERPFunctionEnabled: Boolean;
         RollupCostConfirmMsgLbl: Label 'Do you want to roll up material cost to finished goods?';
 
 }
