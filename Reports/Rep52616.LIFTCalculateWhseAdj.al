@@ -74,7 +74,7 @@ report 52616 "ORB LIFT Calculate Whse. Adj"
                                             ItemJnlLine.Validate("Source Code", SourceCodeSetup."Item Journal");
                                             ItemJnlLine.Validate("Unit of Measure Code", WhseEntry."Unit of Measure Code");
                                             ItemJnlLine."Posting No. Series" := ItemJnlBatch."Posting No. Series";
-                                            ItemJnlLine.Validate(Quantity, Abs((WhseEntry.Quantity));
+                                            ItemJnlLine.Validate(Quantity, Abs((WhseEntry.Quantity);
                                             //ItemJnlLine."Quantity (Base)" := WhseEntry."Qty. (Base)";
                                             //ItemJnlLine."Invoiced Qty. (Base)" := WhseEntry."Qty. (Base)";
                                             ItemJnlLine."Warehouse Adjustment" := true;
