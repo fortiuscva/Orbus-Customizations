@@ -97,7 +97,82 @@ page 52608 "ORB Customer API"
                 {
                     Caption = 'magentoContactNo', Locked = true;
                 }
+                field(thisYearSales; ThisYearSales)
+                {
+                    Caption = 'This Year Sales';
+                }
+                field(previousYearSales; PreviousYearSales)
+                {
+                    Caption = 'Previous Year Sales';
+                }
+                field(ltmSales; LTMSales)
+                {
+                    Caption = 'LTM Sales';
+                }
+                field(lifetimeSalesTotal; LifetimeSales)
+                {
+                    Caption = 'Lifetime Sales Total';
+                }
             }
         }
     }
+    trigger OnAfterGetRecord()
+    var
+        CustLedgEntry: Record "Cust. Ledger Entry";
+    begin
+        // Initialize date ranges
+        ThisYearStartDate := DMY2Date(1, 1, Date2DMY(WorkDate(), 3));
+        PrevYearStartDate := DMY2Date(1, 1, Date2DMY(WorkDate(), 3) - 1);
+        PrevYearEndDate := DMY2Date(31, 12, Date2DMY(WorkDate(), 3) - 1);
+        OneYearAgoDate := CalcDate('<-1Y>', WorkDate());
+
+        // Calculate This Year Sales
+        CustLedgEntry.Reset();
+        CustLedgEntry.SetRange("Customer No.", Rec."No.");
+        CustLedgEntry.SetRange("Document Type", CustLedgEntry."Document Type"::Invoice);
+        CustLedgEntry.SetRange("Posting Date", ThisYearStartDate, WorkDate());
+        ThisYearSales := CalculateSalesTotal(CustLedgEntry);
+
+        // Calculate Previous Year Sales
+        CustLedgEntry.Reset();
+        CustLedgEntry.SetRange("Customer No.", Rec."No.");
+        CustLedgEntry.SetRange("Document Type", CustLedgEntry."Document Type"::Invoice);
+        CustLedgEntry.SetRange("Posting Date", PrevYearStartDate, PrevYearEndDate);
+        PreviousYearSales := CalculateSalesTotal(CustLedgEntry);
+
+        // Calculate LTM Sales
+        CustLedgEntry.Reset();
+        CustLedgEntry.SetRange("Customer No.", Rec."No.");
+        CustLedgEntry.SetRange("Document Type", CustLedgEntry."Document Type"::Invoice);
+        CustLedgEntry.SetRange("Posting Date", OneYearAgoDate, WorkDate());
+        LTMSales := CalculateSalesTotal(CustLedgEntry);
+
+        // Calculate Lifetime Sales
+        CustLedgEntry.Reset();
+        CustLedgEntry.SetRange("Customer No.", Rec."No.");
+        CustLedgEntry.SetRange("Document Type", CustLedgEntry."Document Type"::Invoice);
+        LifetimeSales := CalculateSalesTotal(CustLedgEntry);
+    end;
+
+    local procedure CalculateSalesTotal(var CustLedgEntry: Record "Cust. Ledger Entry"): Decimal
+    var
+        Total: Decimal;
+    begin
+        Total := 0;
+        if CustLedgEntry.FindSet() then
+            repeat
+                Total += CustLedgEntry.Amount;
+            until CustLedgEntry.Next() = 0;
+        exit(Total);
+    end;
+
+    var
+        ThisYearSales: Decimal;
+        PreviousYearSales: Decimal;
+        LTMSales: Decimal;
+        LifetimeSales: Decimal;
+        ThisYearStartDate: Date;
+        PrevYearStartDate: Date;
+        PrevYearEndDate: Date;
+        OneYearAgoDate: Date;
 }
