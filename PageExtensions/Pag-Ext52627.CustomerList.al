@@ -114,7 +114,7 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
         Rec.SetRange("ORB Year To Date Filter", FirstDayOfYearVarLcl, Today);
 
         IsLIFTERPFunctionEnabled := true;
-        if LiftFunctions.IsLIFTERPSetupEnabled() or (LiftFunctions.IsGetCustomersAllowed()) then
+        if LiftFunctions.IsLIFTERPSetupEnabled() and (LiftFunctions.IsGetCustomersAllowed()) then
             IsLIFTERPFunctionEnabled := false;
     end;
 
