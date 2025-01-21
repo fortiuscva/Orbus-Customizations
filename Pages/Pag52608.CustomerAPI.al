@@ -97,7 +97,65 @@ page 52608 "ORB Customer API"
                 {
                     Caption = 'magentoContactNo', Locked = true;
                 }
+                field(thisYearSales; ThisYearSales)
+                {
+                    Caption = 'This Year Sales Total';
+                    Editable = false;
+                }
+                field(previousYearSales; PreviousYearSales)
+                {
+                    Caption = 'Previous Year Sales Total';
+                    Editable = false;
+                }
+                field(ltmSales; LTMSales)
+                {
+                    Caption = 'LTM Sales Total';
+                    Editable = false;
+                }
+                field(lifetimeSalesTotal; LifetimeSales)
+                {
+                    Caption = 'Lifetime Sales Total';
+                    Editable = false;
+                }
+                field(thisYearSalesCrMemo; ThisYearSalesCrMemo)
+                {
+                    Caption = 'This Year Sales Cr. Memo';
+                    Editable = false;
+                }
+                field(previousYearSalesCrMemo; PreviousYearSalesCrMemo)
+                {
+                    Caption = 'Previous Year Sales Cr. Memo';
+                    Editable = false;
+                }
+                field(ltmSalesCrMemo; LTMSalesCrMemo)
+                {
+                    Caption = 'LTM Sales Cr. Memo';
+                    Editable = false;
+                }
+                field(lifetimeSalesTotalCrMemo; LifetimeSalesCrMemo)
+                {
+                    Caption = 'Lifetime Sales Cr. Memo Total';
+                    Editable = false;
+                }
             }
         }
     }
+    trigger OnAfterGetRecord()
+    var
+        FunctionsCU: Codeunit "ORB Functions";
+    begin
+        FunctionsCU.CalculateSalesTotals(ThisYearSales, PreviousYearSales, LTMSales, LifetimeSales, Rec."No.");
+        FunctionsCU.CalculateCreditMemoTotals(ThisYearSalesCrMemo, PreviousYearSalesCrMemo, LTMSalesCrMemo, LifetimeSalesCrMemo, Rec."No.");
+    end;
+
+    var
+        ThisYearSales: Decimal;
+        PreviousYearSales: Decimal;
+        LTMSales: Decimal;
+        LifetimeSales: Decimal;
+        ThisYearSalesCrMemo: Decimal;
+        PreviousYearSalesCrMemo: Decimal;
+        LTMSalesCrMemo: Decimal;
+        LifetimeSalesCrMemo: Decimal;
 }
+
