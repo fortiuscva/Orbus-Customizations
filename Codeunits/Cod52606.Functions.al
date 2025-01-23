@@ -251,6 +251,7 @@ codeunit 52606 "ORB Functions"
         LineNo: Integer;
         TotalUnitPrice: Decimal;
     begin
+        SalesHeader.CalcFields("ORB DS Payment Type");
         if SalesHeader."ORB DS Payment Type" = SalesHeader."ORB DS Payment Type"::COLLECT then
             exit;
         SalesSetup.Get();
