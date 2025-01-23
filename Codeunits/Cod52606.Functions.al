@@ -525,5 +525,7 @@ codeunit 52606 "ORB Functions"
             until ReportSelectionWarehouse.Next() = 0;
     end;
 
+    var
+        ReportSelectionWarehouse: Record "Report Selection Warehouse";
 
 }
