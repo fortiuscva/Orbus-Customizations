@@ -479,6 +479,28 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
                             salesType::"All Customers",
                             '',
                             0);
+        rateBuffer."ORB Handling" := DShipFreightPrice."Markup Amount";
+        rateBuffer."ORB Freight Quote" := DShipFreightPrice."Maximum Rate";
+        rateBuffer.Modify(false);
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, codeunit::"DSHIP Event Publisher", OnBeforeSelectRate, '', false, false)]
+    internal procedure OnBeforeSelectRate(docType: Enum "DSHIP Document Type"; docNo: Code[50]; var rateBuffer: Record "DSHIP Carrier Rate Buffer" temporary; rateRequestSource: Enum "DSHIP Rate Request Source"; var isHandled: Boolean)
+    var
+        DSHIPPackageRateManagement: Codeunit "DSHIP Package Rate Management";
+        DShipFreightPrice: Record "DSHIP Freight Price";
+        salesType: Option " ",Customer,"Customer Price Group","All Customers",Campaign;
+    begin
+        DSHIPPackageRateManagement.getSpecificSalesTypeRate(
+                    DShipFreightPrice,
+                    rateBuffer."Shipping Agent Code",
+                    rateBuffer,
+                    salesType::"All Customers",
+                    '',
+                    0);
+        rateBuffer."ORB Handling" := DShipFreightPrice."Markup Amount";
+        rateBuffer."ORB Freight Quote" := DShipFreightPrice."Maximum Rate";
+        rateBuffer.Modify(false);
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Jnl.-Post Line", OnBeforeInsertItemLedgEntry, '', false, false)]
