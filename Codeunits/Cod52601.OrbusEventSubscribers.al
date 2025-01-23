@@ -562,7 +562,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         DShipFreightPrice: Record "DSHIP Freight Price";
         salesType: Option " ",Customer,"Customer Price Group","All Customers",Campaign;
     begin
-        if orderBuffer."Shipping Agent Code" <> 'TRUCKING' then
+        if rateBuffer."Carrier Name" <> 'TRUCKING' then
             exit;
         DSHIPPackageRateManagement.getSpecificSalesTypeRate(
                             DShipFreightPrice,
@@ -583,7 +583,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         DShipFreightPrice: Record "DSHIP Freight Price";
         salesType: Option " ",Customer,"Customer Price Group","All Customers",Campaign;
     begin
-        if rateBuffer."Shipping Agent Code" <> 'TRUCKING' then
+        if rateBuffer."Carrier Name" <> 'TRUCKING' then
             exit;
         DSHIPPackageRateManagement.getSpecificSalesTypeRate(
                     DShipFreightPrice,

@@ -64,7 +64,11 @@ pageextension 52636 "ORB DSHIP Order Info. Factbox" extends "DSHIP Order Info. F
         WhseShipmentHeader: Record "Warehouse Shipment Header";
         labelData: Record "DSHIP Label Data";
         lpHeader: Record "IWX LP Header";
+        DshipFrieghtInformation: Record "DSHIP Freight Price";
         SingleInstance: Codeunit "ORB Orbus Single Instance";
+        DSHIPPackageRateManagement: Codeunit "DSHIP Package Rate Management";
+        DShipFreightPrice: Record "DSHIP Freight Price";
+        salesType: Option " ",Customer,"Customer Price Group","All Customers",Campaign;
     begin
         if recRef.Number() = Database::"Warehouse Shipment Header" then
             recRef.SetTable(WhseShipmentHeader);
@@ -81,7 +85,13 @@ pageextension 52636 "ORB DSHIP Order Info. Factbox" extends "DSHIP Order Info. F
                 FreightQuote := labelData."ORB Freight Quote";
                 //labelData.Modify();
             end;
-
+            if Rec."Shipping Agent Code" <> 'TRUCKING' then begin
+                DShipFreightPrice.SetRange("Sales Type", salesType::"All Customers");
+                DShipFreightPrice.SetRange("Shipping Agent Code", Rec."Shipping Agent Code");
+                DShipFreightPrice.SetRange("Shipping Agent Service Code", Rec."Shipping Agent Service Code");
+                if DShipFreightPrice.FindFirst() then
+                    Handling := DShipFreightPrice."Markup Amount";
+            end;
         end;
     end;
 
