@@ -514,35 +514,16 @@ codeunit 52606 "ORB Functions"
         ReportSelectionMgt: Codeunit "Report Selection Mgt.";
         IsHandled: Boolean;
     begin
-        SalesSetup.Get();
-        SalesSetup.TestField("ORB Default Resource for DSHIP");
-        salesline2.SetRange("Document Type", salesline."Document Type"::Order);
-        salesline2.SetRange("Document No.", SalesHeader."No.");
-        if salesline2.FindLast() then
-            LineNo := salesline2."Line No." + 10000
-        else
-            LineNo := 10000;
-        DSHIPPackageRateManagement.getSpecificSalesTypeRate(
-                                    DSHIPFreightPrice,
-                                    SalesHeader."Shipping Agent Code",
-                                    DSHIPCarrierRateBuffer,
-                                    salesType::"All Customers",
-                                    '',
-                                    SalesHeader.Amount);
-        salesline.init();
-        salesline.SuspendStatusCheck(true);
-        salesline."Document No." := SalesHeader."No.";
-        salesline."Document Type" := salesline."Document Type"::Order;
-        salesline."Line No." := LineNo;
-        salesline.Type := salesline.Type::Resource;
-        salesline.Validate("No.", SalesSetup."ORB Default Resource for DSHIP");
-        salesline.Validate(Quantity, 1);
-        salesline.Validate("Unit Cost", SingleInstance.GetFrieghtPrice());
-        //ldRateToReturn * (lrecDShipRatePrice."Markup %" / 100 + 1);
-        TotalUnitPrice := (SingleInstance.GetHandlingPrice() + SingleInstance.GetFrieghtPrice()) * (DSHIPFreightPrice."Markup %" / 100 + 1);
-        salesline.Validate("Unit Price", TotalUnitPrice);
-        salesline.Insert();
-        SingleInstance.SetMarkupPercentage(DSHIPFreightPrice."Markup %");
+        ReportSelectionWarehouse.SetRange(Usage, ReportUsage);
+        if ReportSelectionWarehouse.IsEmpty() then
+            ReportSelectionMgt.InitReportSelectionWhse(ReportSelectionWarehouse.Usage);
+
+        if ReportSelectionWarehouse.FindSet() then
+            repeat
+                TempReportSelectionWarehouse := ReportSelectionWarehouse;
+                if TempReportSelectionWarehouse.Insert() then;
+            until ReportSelectionWarehouse.Next() = 0;
     end;
+
 
 }
