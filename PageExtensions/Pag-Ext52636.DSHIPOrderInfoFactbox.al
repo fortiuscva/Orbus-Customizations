@@ -89,8 +89,10 @@ pageextension 52636 "ORB DSHIP Order Info. Factbox" extends "DSHIP Order Info. F
                 DShipFreightPrice.SetRange("Sales Type", salesType::"All Customers");
                 DShipFreightPrice.SetRange("Shipping Agent Code", Rec."Shipping Agent Code");
                 DShipFreightPrice.SetRange("Shipping Agent Service Code", Rec."Shipping Agent Service Code");
-                if DShipFreightPrice.FindFirst() then
+                if DShipFreightPrice.FindFirst() then begin
                     Handling := DShipFreightPrice."Markup Amount";
+                    Markup := DShipFreightPrice."Markup %";
+                end;
             end;
         end;
     end;
