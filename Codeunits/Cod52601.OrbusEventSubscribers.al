@@ -465,6 +465,21 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         end;
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, codeunit::"DSHIP Event Publisher", OnAfterGetShippingRate, '', false, false)]
+    internal procedure OnAfterGetShippingRate(orderBuffer: Record "DSHIP Package Order Buffer" temporary; var rateBuffer: Record "DSHIP Carrier Rate Buffer" temporary; var messageBuffer: Record "DSHIP Shipment Message Buffer" temporary; var objectId: Text[100])
+    var
+        DSHIPPackageRateManagement: Codeunit "DSHIP Package Rate Management";
+        DShipFreightPrice: Record "DSHIP Freight Price";
+        salesType: Option " ",Customer,"Customer Price Group","All Customers",Campaign;
+    begin
+        DSHIPPackageRateManagement.getSpecificSalesTypeRate(
+                            DShipFreightPrice,
+                            orderBuffer."Shipping Agent Code",
+                            rateBuffer,
+                            salesType::"All Customers",
+                            '',
+                            0);
+    end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Jnl.-Post Line", OnBeforeInsertItemLedgEntry, '', false, false)]
     local procedure "Item Jnl.-Post Line_OnBeforeInsertItemLedgEntry"(var ItemLedgerEntry: Record "Item Ledger Entry"; ItemJournalLine: Record "Item Journal Line"; TransferItem: Boolean; OldItemLedgEntry: Record "Item Ledger Entry"; ItemJournalLineOrigin: Record "Item Journal Line")
