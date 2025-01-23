@@ -361,33 +361,6 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         end;
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"DSHIP Event Publisher", OnAfterProcessMultipleCommands, '', false, false)]
-    internal procedure OnAfterProcessMultipleCommands(docType: Enum "DSHIP Document Type"; docNo: Code[50]; var licensePlateNo: Code[50]; var itemNo: Code[50]; scanValue: Text)
-    var
-        shipmentheader: Record "Warehouse Shipment Header";
-        shipmentLine: Record "Warehouse Shipment Line";
-        SalesHeader: Record "Sales Header";
-        salesline: Record "Sales Line";
-    begin
-        case scanValue of
-            '--unpackall',
-                '--upa':
-                if (docType = docType::"Warehouse Shipment") then begin
-                    shipmentheader.Get(docNo);
-                    shipmentLine.SetRange("No.", shipmentheader."No.");
-                    if shipmentLine.FindFirst() then;
-                    SalesHeader.Get(SalesHeader."Document Type"::Order, shipmentLine."Source No.");
-                    salesline.SetRange("Document Type", SalesHeader."Document Type");
-                    salesline.SetRange("Document No.", SalesHeader."No.");
-                    salesline.SetRange(Type, salesline.Type::Resource);
-                    if not salesline.IsEmpty then begin
-                        salesline.SuspendStatusCheck(true);
-                        salesline.Delete();
-                    end;
-                end;
-        end;
-    end;
-
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"DSHIP Event Publisher", OnBeforeSetShipmentDetails, '', false, false)]
     internal procedure OnBeforeSetShipmentDetails(recRef: RecordRef; shipAgent: Code[50]; shipAgentSvc: Code[50]; trackingNo: Text; deliveryDays: Integer; var isHandled: Boolean)
     var
@@ -624,36 +597,6 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         rateBuffer."ORB Freight Quote" := DShipFreightPrice."Maximum Rate";
         rateBuffer.Modify(false);
         OrbusSingleInstanceCUGbl.SetMarkupAmountPrice(rateBuffer."ORB Handling");
-    end;
-
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Jnl.-Post Line", OnBeforeInsertItemLedgEntry, '', false, false)]
-    local procedure "Item Jnl.-Post Line_OnBeforeInsertItemLedgEntry"(var ItemLedgerEntry: Record "Item Ledger Entry"; ItemJournalLine: Record "Item Journal Line"; TransferItem: Boolean; OldItemLedgEntry: Record "Item Ledger Entry"; ItemJournalLineOrigin: Record "Item Journal Line")
-    begin
-        ItemLedgerEntry."ORB LIFT Inv. Transaction ID" := ItemJournalLine."ORB LIFT Inv. Transaction ID";
-        ItemLedgerEntry."ORB LIFT Order Line ID" := ItemJournalLine."ORB LIFT Order Line ID";
-    end;
-
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Whse. Jnl.-Register Line", OnInitWhseEntryCopyFromWhseJnlLine, '', false, false)]
-    local procedure "Whse. Jnl.-Register Line_OnInitWhseEntryCopyFromWhseJnlLine"(var WarehouseEntry: Record "Warehouse Entry"; var WarehouseJournalLine: Record "Warehouse Journal Line"; OnMovement: Boolean; Sign: Integer; Location: Record Location; BinCode: Code[20]; var IsHandled: Boolean)
-    begin
-        WarehouseEntry."ORB LIFT Inv. Transaction ID" := WarehouseJournalLine."ORB LIFT Inv. Transaction ID";
-        WarehouseEntry."ORB LIFT Order Line ID" := WarehouseJournalLine."ORB LIFT Order Line ID";
-    end;
-
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Whse. Jnl.-Register Batch", OnCreateItemJnlLineOnBeforeExit, '', false, false)]
-    local procedure "Whse. Jnl.-Register Batch_OnCreateItemJnlLineOnBeforeExit"(WhseJnlLine2: Record "Warehouse Journal Line"; var ItemJnlLine: Record "Item Journal Line"; var QtytoHandleBase: Decimal)
-    begin
-        WhseJnlLine2."ORB LIFT Inv. Transaction ID" := ItemJnlLine."ORB LIFT Inv. Transaction ID";
-        WhseJnlLine2."ORB LIFT Order Line ID" := ItemJnlLine."ORB LIFT Order Line ID";
-    end;
-
-
-
-    [EventSubscriber(ObjectType::Report, report::"Whse.-Shipment - Create Pick", OnBeforeSortWhseActivHeaders, '', false, false)]
-
-    local procedure OnBeforeSortWhseActivHeaders(var WhseActivHeader: Record "Warehouse Activity Header"; FirstActivityNo: Code[20]; LastActivityNo: Code[20]; var HideNothingToHandleError: Boolean)
-    begin
-        OrbusSingleInstanceCUGbl.SetWarehouseActivity(FirstActivityNo, LastActivityNo);
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Jnl.-Post Line", OnBeforeInsertItemLedgEntry, '', false, false)]

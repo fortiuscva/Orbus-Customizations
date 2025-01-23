@@ -5,7 +5,6 @@ pageextension 52633 "ORB DSHIP Package Worksheet" extends "DSHIP Package Workshe
         modify(edtScan)
         {
             trigger OnAfterValidate()
-<<<<<<< HEAD
             var
                 SingleInstanceCU: Codeunit "ORB Orbus Single Instance";
                 LastCommandRan: Text;
@@ -34,11 +33,3 @@ pageextension 52633 "ORB DSHIP Package Worksheet" extends "DSHIP Package Workshe
         CurrPage.shipInfoFactBox.Page.SetLicensePlateNo(Rec."License Plate No.");
     end;
 }
-=======
-            begin
-
-            end;
-        }
-    }
-}
->>>>>>> a4d42d9 (ORB-013 | Trucking Cost/Price Enhancement)
