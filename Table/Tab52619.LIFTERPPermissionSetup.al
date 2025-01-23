@@ -35,6 +35,16 @@ table 52619 "ORB LIFT ERP Permission Setup"
             Caption = 'Get Whse. Journal';
             DataClassification = ToBeClassified;
         }
+        field(5; "Roll Up Cost on Item Journals"; Boolean)
+        {
+            Caption = 'Roll Up Cost on Item Journals';
+            DataClassification = ToBeClassified;
+        }
+        field(6; "Calc. LIFT Whse. Adjustment"; Boolean)
+        {
+            Caption = 'Calculate LIFT Warehouse Adjustments';
+            DataClassification = ToBeClassified;
+        }
     }
     keys
     {
