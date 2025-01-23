@@ -322,6 +322,8 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         then begin
             shipmentheader.Get(docNo);
             shipmentLine.SetRange("No.", shipmentheader."No.");
+            if shipmentheader."Shipping Agent Code" <> 'TRUCKING' then
+                exit;
             if shipmentLine.FindFirst() then;
 
             SalesHeader.Get(SalesHeader."Document Type"::Order, shipmentLine."Source No.");
@@ -342,6 +344,8 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
                 '--upa':
                 if (docType = docType::"Warehouse Shipment") then begin
                     shipmentheader.Get(docNo);
+                    if shipmentheader."Shipping Agent Code" <> 'TRUCKING' then
+                        exit;
                     shipmentLine.SetRange("No.", shipmentheader."No.");
                     if shipmentLine.FindFirst() then;
                     SalesHeader.Get(SalesHeader."Document Type"::Order, shipmentLine."Source No.");
@@ -368,6 +372,8 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         if recRef.Number() = Database::"Warehouse Shipment Header" then
             recRef.SetTable(WhseShipmentHeader);
         lpHeader.SetRange("Source No.", WhseShipmentHeader."No.");
+        if WhseShipmentHeader."Shipping Agent Code" <> 'TRUCKING' then
+            exit;
         if lpHeader.FindFirst() then begin
             labelData.SetRange("Label Type", labelData."Label Type"::Shipping);
             labelData.SetRange("Label Format", labelData."Label Format"::PNG);
@@ -556,6 +562,8 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         DShipFreightPrice: Record "DSHIP Freight Price";
         salesType: Option " ",Customer,"Customer Price Group","All Customers",Campaign;
     begin
+        if orderBuffer."Shipping Agent Code" <> 'TRUCKING' then
+            exit;
         DSHIPPackageRateManagement.getSpecificSalesTypeRate(
                             DShipFreightPrice,
                             orderBuffer."Shipping Agent Code",
@@ -575,6 +583,8 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         DShipFreightPrice: Record "DSHIP Freight Price";
         salesType: Option " ",Customer,"Customer Price Group","All Customers",Campaign;
     begin
+        if rateBuffer."Shipping Agent Code" <> 'TRUCKING' then
+            exit;
         DSHIPPackageRateManagement.getSpecificSalesTypeRate(
                     DShipFreightPrice,
                     rateBuffer."Shipping Agent Code",
