@@ -182,7 +182,7 @@ codeunit 52603 "ORB Orbus Single Instance"
         FrieghtCostGbl: Decimal;
         FreightQuoteGbl: Decimal;
         LastCommandRanGbl: Text;
-
+        MarkupPercentageGbl: Decimal;
         ShippedNotInvoicedGbl: Boolean;
         MarkupAmountGbl: Decimal;
         FirstActivityNoGbl: Code[20];
