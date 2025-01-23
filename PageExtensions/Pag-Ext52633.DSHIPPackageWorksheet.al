@@ -8,9 +8,6 @@ pageextension 52633 "ORB DSHIP Package Worksheet" extends "DSHIP Package Workshe
             var
                 SingleInstanceCU: Codeunit "ORB Orbus Single Instance";
                 LastCommandRan: Text;
-            var
-                SingleInstanceCU: Codeunit "ORB Orbus Single Instance";
-                LastCommandRan: Text;
             begin
                 LastCommandRan := SingleInstanceCU.GetLastCommandRan();
                 if (LastCommandRan = '--upa') or (LastCommandRan = '--unpackall') then begin

@@ -131,16 +131,6 @@ codeunit 52603 "ORB Orbus Single Instance"
         exit(LastCommandRanGbl);
     end;
 
-    procedure SetLastCommandRan(LastCommand: Text)
-    begin
-        LastCommandRanGbl := LastCommand;
-    end;
-
-    procedure GetLastCommandRan(): Text
-    begin
-        exit(LastCommandRanGbl);
-    end;
-
     procedure SetMarkupPercentage(MarkupPercentage: Decimal)
     begin
         MarkupPercentageGbl := MarkupPercentage
