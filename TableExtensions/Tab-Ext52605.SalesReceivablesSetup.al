@@ -7,6 +7,12 @@ tableextension 52605 "ORB Sales & Receivables Setup" extends "Sales & Receivable
             Caption = 'Send Email Invoices Start Date';
             DataClassification = CustomerContent;
         }
+        field(52601; "ORB Default Resource for DSHIP"; Code[20])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Default Resource for DSHIP';
+            TableRelation = Resource;
+        }
     }
 
 }

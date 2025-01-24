@@ -81,6 +81,66 @@ codeunit 52603 "ORB Orbus Single Instance"
         exit(ExplodeConfirmVarGbl);
     end;
 
+    procedure SetHandlingPrice(Handling: Decimal)
+    begin
+        HandlingGbl := Handling;
+    end;
+
+    procedure GetHandlingPrice(): Decimal
+    begin
+        exit(HandlingGbl);
+    end;
+
+    procedure SetFrieghtPrice(FrieghtCost: Decimal)
+    begin
+        FrieghtCostGbl := FrieghtCost;
+    end;
+
+    procedure GetFrieghtPrice(): Decimal
+    begin
+        exit(FrieghtCostGbl);
+    end;
+
+    procedure GetMarkupAmountPrice(): Decimal
+    begin
+        exit(MarkupAmountGbl);
+    end;
+
+    procedure SetFreightQuote(FreightQuote: Decimal)
+    begin
+        FreightQuoteGbl := FreightQuote;
+    end;
+
+    procedure SetMarkupAmountPrice(MarkupAmount: Decimal)
+    begin
+        MarkupAmountGbl := MarkupAmount;
+    end;
+
+    procedure GetFreightQuote(): Decimal
+    begin
+        exit(FreightQuoteGbl);
+    end;
+
+    procedure SetLastCommandRan(LastCommand: Text)
+    begin
+        LastCommandRanGbl := LastCommand;
+    end;
+
+    procedure GetLastCommandRan(): Text
+    begin
+        exit(LastCommandRanGbl);
+    end;
+
+    procedure SetMarkupPercentage(MarkupPercentage: Decimal)
+    begin
+        MarkupPercentageGbl := MarkupPercentage
+    end;
+
+    procedure GetMarkupPercentage(): Decimal
+    begin
+        exit(MarkupPercentageGbl);
+    end;
+
     procedure SetShippedNotInvoiced(ShippedNotInvoicedPar: Boolean)
     begin
         ShippedNotInvoicedGbl := ShippedNotInvoicedPar;
@@ -118,6 +178,11 @@ codeunit 52603 "ORB Orbus Single Instance"
         SendEmailVarGbl: Boolean;
         ExplodeConfirmVarGbl: Boolean;
         ExplodeBOMExecutionVarGbl: Boolean;
+        HandlingGbl: Decimal;
+        FrieghtCostGbl: Decimal;
+        FreightQuoteGbl: Decimal;
+        LastCommandRanGbl: Text;
+        MarkupPercentageGbl: Decimal;
         ShippedNotInvoicedGbl: Boolean;
         MarkupAmountGbl: Decimal;
         FirstActivityNoGbl: Code[20];

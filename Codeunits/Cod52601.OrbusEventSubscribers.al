@@ -307,6 +307,97 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             SalesHeaderAdditionalFields.Delete();
     end;
 
+
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"DSHIP Event Publisher", OnBeforeAddRateToOrder, '', false, false)]
+
+    internal procedure OnBeforeAddRateToOrder(docType: Enum "DSHIP Document Type"; docNo: Code[50]; rateRequestSource: Enum "DSHIP Rate Request Source"; var selectedRate: Record "DSHIP Carrier Rate Buffer" temporary; var isHandled: Boolean)
+    var
+        shipmentheader: Record "Warehouse Shipment Header";
+        shipmentLine: Record "Warehouse Shipment Line";
+        SalesHeader: Record "Sales Header";
+        OrbusFunctions: Codeunit "ORB Functions";
+    begin
+        if (docType = docType::"Warehouse Shipment")
+        then begin
+            shipmentheader.Get(docNo);
+            shipmentLine.SetRange("No.", shipmentheader."No.");
+            //if shipmentheader."Shipping Agent Code" <> 'TRUCKING' then
+            //    exit;
+            if shipmentLine.FindFirst() then;
+
+            SalesHeader.Get(SalesHeader."Document Type"::Order, shipmentLine."Source No.");
+            OrbusFunctions.CreateSalesLine(SalesHeader, shipmentLine);
+        end;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"DSHIP Event Publisher", OnAfterProcessMultipleCommands, '', false, false)]
+    internal procedure OnAfterProcessMultipleCommands(docType: Enum "DSHIP Document Type"; docNo: Code[50]; var licensePlateNo: Code[50]; var itemNo: Code[50]; scanValue: Text)
+    var
+        shipmentheader: Record "Warehouse Shipment Header";
+        shipmentLine: Record "Warehouse Shipment Line";
+        SalesHeader: Record "Sales Header";
+        salesline: Record "Sales Line";
+    begin
+        case scanValue of
+            '--unpackall',
+                '--upa':
+                if (docType = docType::"Warehouse Shipment") then begin
+                    shipmentheader.Get(docNo);
+                    //if shipmentheader."Shipping Agent Code" <> 'TRUCKING' then
+                    //    exit;
+                    shipmentLine.SetRange("No.", shipmentheader."No.");
+                    if shipmentLine.FindFirst() then;
+                    SalesHeader.Get(SalesHeader."Document Type"::Order, shipmentLine."Source No.");
+                    salesline.SetRange("Document Type", SalesHeader."Document Type");
+                    salesline.SetRange("Document No.", SalesHeader."No.");
+                    salesline.SetRange(Type, salesline.Type::Resource);
+                    if not salesline.IsEmpty then begin
+                        salesline.FindSet();
+                        salesline.SuspendStatusCheck(true);
+                        salesline.Deleteall();
+                    end;
+                end;
+        end;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"DSHIP Event Publisher", OnBeforeSetShipmentDetails, '', false, false)]
+    internal procedure OnBeforeSetShipmentDetails(recRef: RecordRef; shipAgent: Code[50]; shipAgentSvc: Code[50]; trackingNo: Text; deliveryDays: Integer; var isHandled: Boolean)
+    var
+        WhseShipmentHeader: Record "Warehouse Shipment Header";
+        labelData: Record "DSHIP Label Data";
+        lpHeader: Record "IWX LP Header";
+        SingleInstance: Codeunit "ORB Orbus Single Instance";
+    begin
+        if recRef.Number() = Database::"Warehouse Shipment Header" then
+            recRef.SetTable(WhseShipmentHeader);
+        lpHeader.SetRange("Source No.", WhseShipmentHeader."No.");
+        //if WhseShipmentHeader."Shipping Agent Code" <> 'TRUCKING' then
+        //    exit;
+        if lpHeader.FindFirst() then begin
+            labelData.SetRange("Label Type", labelData."Label Type"::Shipping);
+            labelData.SetRange("Label Format", labelData."Label Format"::PNG);
+            labelData.SetRange("License Plate No.", lpHeader."No.");
+            if labelData.FindFirst() then begin
+                labelData."ORB Handling" := SingleInstance.GetHandlingPrice();
+                if labelData."ORB Handling" = 0 then
+                    labelData."ORB Handling" := SingleInstance.GetMarkupAmountPrice();
+                labelData."ORB Freight Quote" := SingleInstance.GetFreightQuote();
+                labelData."ORB Markup %" := SingleInstance.GetMarkupPercentage();
+                labelData.Modify();
+                SingleInstance.Reset();
+            end;
+        end;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"DSHIP Event Publisher", OnBeforeProcessMultipleCommands, '', false, false)]
+    internal procedure OnBeforeProcessMultipleCommands(docType: Enum "DSHIP Document Type"; docNo: Code[50]; var licensePlateNo: Code[50]; var itemNo: Code[50]; var scanValue: Text; var isHandled: Boolean)
+    var
+        SingleInstanceCU: Codeunit "ORB Orbus Single Instance";
+    begin
+        SingleInstanceCU.SetLastCommandRan(scanValue);
+    end;
+
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"DSHIP Event Publisher", OnAfterBuildPackageOptions, '', false, false)]
     local procedure "DSHIP Event Publisher_OnAfterBuildPackageOptions"(docType: Enum "DSHIP Document Type"; docNo: Code[50]; licensePlate: Code[20]; var packOptions: Record "DSHIP Package Options")
     var
@@ -465,6 +556,48 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         end;
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, codeunit::"DSHIP Event Publisher", OnAfterGetShippingRate, '', false, false)]
+    internal procedure OnAfterGetShippingRate(orderBuffer: Record "DSHIP Package Order Buffer" temporary; var rateBuffer: Record "DSHIP Carrier Rate Buffer" temporary; var messageBuffer: Record "DSHIP Shipment Message Buffer" temporary; var objectId: Text[100])
+    var
+        DSHIPPackageRateManagement: Codeunit "DSHIP Package Rate Management";
+        DShipFreightPrice: Record "DSHIP Freight Price";
+        salesType: Option " ",Customer,"Customer Price Group","All Customers",Campaign;
+    begin
+        //if rateBuffer."Carrier Name" <> 'TRUCKING' then
+        //    exit;
+        DSHIPPackageRateManagement.getSpecificSalesTypeRate(
+                            DShipFreightPrice,
+                            orderBuffer."Shipping Agent Code",
+                            rateBuffer,
+                            salesType::"All Customers",
+                            '',
+                            0);
+        rateBuffer."ORB Handling" := DShipFreightPrice."Markup Amount";
+        rateBuffer."ORB Freight Quote" := DShipFreightPrice."Maximum Rate";
+        rateBuffer.Modify(false);
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, codeunit::"DSHIP Event Publisher", OnBeforeSelectRate, '', false, false)]
+    internal procedure OnBeforeSelectRate(docType: Enum "DSHIP Document Type"; docNo: Code[50]; var rateBuffer: Record "DSHIP Carrier Rate Buffer" temporary; rateRequestSource: Enum "DSHIP Rate Request Source"; var isHandled: Boolean)
+    var
+        DSHIPPackageRateManagement: Codeunit "DSHIP Package Rate Management";
+        DShipFreightPrice: Record "DSHIP Freight Price";
+        salesType: Option " ",Customer,"Customer Price Group","All Customers",Campaign;
+    begin
+        //if rateBuffer."Carrier Name" <> 'TRUCKING' then
+        //    exit;
+        DSHIPPackageRateManagement.getSpecificSalesTypeRate(
+                    DShipFreightPrice,
+                    rateBuffer."Shipping Agent Code",
+                    rateBuffer,
+                    salesType::"All Customers",
+                    '',
+                    0);
+        rateBuffer."ORB Handling" := DShipFreightPrice."Markup Amount";
+        rateBuffer."ORB Freight Quote" := DShipFreightPrice."Maximum Rate";
+        rateBuffer.Modify(false);
+        OrbusSingleInstanceCUGbl.SetMarkupAmountPrice(rateBuffer."ORB Handling");
+    end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Jnl.-Post Line", OnBeforeInsertItemLedgEntry, '', false, false)]
     local procedure "Item Jnl.-Post Line_OnBeforeInsertItemLedgEntry"(var ItemLedgerEntry: Record "Item Ledger Entry"; ItemJournalLine: Record "Item Journal Line"; TransferItem: Boolean; OldItemLedgEntry: Record "Item Ledger Entry"; ItemJournalLineOrigin: Record "Item Journal Line")
