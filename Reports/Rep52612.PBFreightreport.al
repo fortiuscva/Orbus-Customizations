@@ -16,6 +16,11 @@ report 52612 "ORB PB Freightreport"
                 SetFilter("No.", 'PS*');
                 SetCurrentKey("Order No.");
                 FreightChargedataTableRecLcl.DeleteAll();
+                /* if FreightChargedataTableRecLcl.FindLast() then
+                    reccount := FreightChargedataTableRecLcl.RowNo
+                else
+                    reccount := 0;
+                FreightChargedataTableRecLcl.Reset(); */
             end;
 
             trigger OnAfterGetRecord()
@@ -35,6 +40,7 @@ report 52612 "ORB PB Freightreport"
                 bAllownegativeHandling: Boolean;
             begin
                 //check if the Licenseplate payment type matches the selected filter.
+
                 clear(LicensePlateNoVarLcl);
                 clear(LicensePlatepkgNoVarLcl);
                 clear(LicenPlateNoGVar);
@@ -53,6 +59,10 @@ report 52612 "ORB PB Freightreport"
                 DynamicShipFreightPriceRecLcl.reset;
                 InvoicedFreightChargeGvar := 0;
                 FreightChargedataTableRecLcl.init;
+                //check if the Invoice already exists
+                //FreightChargedataTableRecLcl.Reset();
+                //FreightChargedataTableRecLcl.SetRange(FreightChargedataTableRecLcl.Invoice, "Sales Invoice Header"."No.");
+                //If not FreightChargedataTableRecLcl.FindFirst() then begin
                 reccount += 1;
                 FreightChargedataTableRecLcl.RowNo := reccount;
                 FreightChargedataTableRecLcl.Invoice := "Sales Invoice Header"."No.";
@@ -73,7 +83,6 @@ report 52612 "ORB PB Freightreport"
                 DynamicShipFreightPriceRecLcl.SetRange("Shipping Agent Code", "Sales Invoice Header"."Shipping Agent Code");
                 DynamicShipFreightPriceRecLcl.SetRange("Shipping Agent Service Code", "Sales Invoice Header"."Shipping Agent Service Code 2");
                 if DynamicShipFreightPriceRecLcl.findfirst then begin
-                    markupRatioVarLcl := 1 + (DynamicShipFreightPriceRecLcl."Markup %" * 0.01);
                     markupAmoutVarLcl := DynamicShipFreightPriceRecLcl."Markup Amount";
                     FreightChargedataTableRecLcl."Mark up%" := DynamicShipFreightPriceRecLcl."Markup %";
                     FreightChargedataTableRecLcl."Markup Amount" := DynamicShipFreightPriceRecLcl."Markup Amount";
@@ -110,13 +119,15 @@ report 52612 "ORB PB Freightreport"
                             DSHIPLabelDataRecLcl.SetFilter(Cost, '>%1', 0);
                             IF DSHIPLabelDataRecLcl.FindFirst() then begin
                                 FreightCostGvar := DSHIPLabelDataRecLcl.Cost;
-                                //FreightChargedataTableRecLcl.Handling := DSHIPLabelDataRecLcl."ORB Handling";
+
                             end;
                             LicensePlateNoVarLcl := IWXLPHeaderRecLcl."No.";
                             LicensePlatepkgNoVarLcl := IWXLPHeaderRecLcl."Package Order ID";
                             if FreightCostGvar > 0 then bcostFoundVarLcl := true;
                             if bcostFoundVarLcl then begin
                                 FreightChargedataTableRecLcl.LP_EasyPostFreightCost := FreightCostGvar;
+                                if bAllownegativeHandling then
+                                    FreightChargedataTableRecLcl.Handling := DSHIPLabelDataRecLcl."ORB Handling";
                             end;
                         until (IWXLPHeaderRecLcl.next = 0) or (bcostFoundVarLcl = true);
                         DSHIPPackageOptionsRecLcl.Reset();
@@ -131,7 +142,7 @@ report 52612 "ORB PB Freightreport"
                             FreightChargedataTableRecLcl.LicenseplateFreightOption := LicenseplateFreightOption;
                             FreightChargedataTableRecLcl.Order_CreatedBy := FreightOptionUserIDGvar;
                         end;
-                        // HandlingChargeVarLcl := (InvoicedFreightChargeGvar - (markupRatioVarLcl * FreightCostGvar)) / markupRatioVarLcl;
+
                     end
                     else begin //order is shipped but no shipped source no,check if LP exists for the source no
                         if ("Sales Invoice Header"."Package Tracking No." <> '') then begin
@@ -150,7 +161,8 @@ report 52612 "ORB PB Freightreport"
                                     if FreightCostGvar > 0 then bcostFoundVarLcl := true;
                                     if bcostFoundVarLcl then begin
                                         FreightChargedataTableRecLcl.LP_EasyPostFreightCost := FreightCostGvar;
-                                        //FreightChargedataTableRecLcl.Handling := DSHIPLabelDataRecLcl."ORB Handling";
+                                        if bAllownegativeHandling then
+                                            FreightChargedataTableRecLcl.Handling := DSHIPLabelDataRecLcl."ORB Handling";
                                     end;
                                 until (IWXLPHeaderRecLcl.next = 0) or (bcostFoundVarLcl = true);
                                 DSHIPPackageOptionsRecLcl.Reset();
@@ -176,16 +188,22 @@ report 52612 "ORB PB Freightreport"
                 end;
                 if ("Sales Invoice Header"."Order No." = prevOrderNoGbl) and ((prevEasyCostGbl = FreightCostGvar) or (prevEasyCostGbl = 0)) and ("Sales Invoice Header"."Order No." <> '') then begin
                     FreightCostGvar := 0;
+                    FreightChargedataTableRecLcl.Handling := 0;
+                    FreightChargedataTableRecLcl."No of License Plates" := 0;
                     FreightChargedataTableRecLcl.LP_EasyPostFreightCost := FreightCostGvar
                 end;
                 prevOrderNoGbl := "Order No.";
                 prevEasyCostGbl := FreightCostGvar;
                 FreightChargedataTableRecLcl.Createddate := CurrentDateTime;
                 FreightChargedataTableRecLcl.insert;
+                //end;
             end;
-            //end;
         }
     }
+
+
+
+
     trigger OnPostReport()
     var
         myInt: Integer;
@@ -207,4 +225,6 @@ report 52612 "ORB PB Freightreport"
         HandlingChargeVarLcl: Decimal;
         reccount: Integer;
         FreightChargedataTableRecLcl: Record "ORB FreightChargeDataTable";
+        bDeleteOption: Boolean;
 }
+
