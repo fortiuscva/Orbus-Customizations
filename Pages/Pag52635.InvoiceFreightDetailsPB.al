@@ -5,7 +5,7 @@ page 52635 "ORB Invoice Freight Details PB"
     PageType = List;
     UsageCategory = ReportsAndAnalysis;
     SourceTable = "ORB FreightChargeDataTable";
-    Editable = false;
+    //Editable = false;
 
     layout
     {
