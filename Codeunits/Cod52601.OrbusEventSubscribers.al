@@ -563,6 +563,8 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
     begin
         //if rateBuffer."Carrier Name" <> 'TRUCKING' then
         //    exit;
+        if rateBuffer.IsEmpty then
+            exit;
         DSHIPPackageRateManagement.getSpecificSalesTypeRate(
                             DShipFreightPrice,
                             orderBuffer."Shipping Agent Code",
@@ -584,6 +586,8 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
     begin
         //if rateBuffer."Carrier Name" <> 'TRUCKING' then
         //    exit;
+        if rateBuffer.IsEmpty then
+            exit;
         DSHIPPackageRateManagement.getSpecificSalesTypeRate(
                     DShipFreightPrice,
                     rateBuffer."Shipping Agent Code",

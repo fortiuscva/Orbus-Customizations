@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Snapshot",
+   et rate          "name": "Snapshot",
             "request": "snapshotInitialize",
             "type": "al",
             "tenant": "09c433f2-4ad2-49f4-b0e7-8562e0331493",
