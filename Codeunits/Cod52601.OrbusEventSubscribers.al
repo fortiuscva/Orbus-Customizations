@@ -629,7 +629,12 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         WhseJnlLine2."ORB LIFT Order Line ID" := ItemJnlLine."ORB LIFT Order Line ID";
     end;
 
-
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"WMS Management", OnInitWhseJnlLineCopyFromItemJnlLine, '', false, false)]
+    local procedure "WMS Management_OnInitWhseJnlLineCopyFromItemJnlLine"(var WarehouseJournalLine: Record "Warehouse Journal Line"; ItemJournalLine: Record "Item Journal Line")
+    begin
+        WarehouseJournalLine."ORB LIFT Inv. Transaction ID" := ItemJournalLine."ORB LIFT Inv. Transaction ID";
+        WarehouseJournalLine."ORB LIFT Order Line ID" := ItemJournalLine."ORB LIFT Order Line ID";
+    end;
 
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
