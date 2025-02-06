@@ -25,7 +25,7 @@ pageextension 52646 "ORB Sales Return Order" extends "Sales Return Order"
         {
             action("ORB Send Return Order Email")
             {
-                ApplicationArea = Basic, Suite;
+                ApplicationArea = all;
                 Caption = 'Send Return Order Email';
                 Ellipsis = true;
                 Image = Email;
