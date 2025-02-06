@@ -18,4 +18,31 @@ pageextension 52643 "ORB Sales Return Order List" extends "Sales Return Order Li
 
         }
     }
+    actions
+    {
+        addafter("&Print")
+        {
+            action("ORB Send Return Order Email")
+            {
+                ApplicationArea = all;
+                Caption = 'Send Return Order Email';
+                Ellipsis = true;
+                Image = Email;
+                ToolTip = 'Send a Sales Return Order by email. The attachment is sent as a .pdf.';
+
+                trigger OnAction()
+                begin
+                    DocPrint.EmailSalesHeader(Rec);
+                end;
+            }
+        }
+        addafter("&Print_Promoted")
+        {
+            actionref("Send Return Order Email_Promoted"; "ORB Send Return Order Email")
+            {
+            }
+        }
+    }
+    var
+        DocPrint: Codeunit "Document-Print";
 }
