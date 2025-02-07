@@ -45,7 +45,8 @@ report 52616 "ORB LIFT Calculate Whse. Adj"
                                 WhseEntry.SetRange("Item No.", Item."No.");
                                 WhseEntry.SetRange("Zone Code", SNLotNumbersByBin.Zone_Code);
                                 WhseEntry.SetRange("Bin Code", AdjmtBin.Code);
-                                WhseEntry.SetFilter("ORB LIFT Order Line ID", '>%1', 0);
+                                //WhseEntry.SetFilter("ORB LIFT Order Line ID", '>%1', 0);
+                                WhseEntry.SetFilter("ORB LIFT Inv. Transaction ID", '%1', SNLotNumbersByBin.ORB_LIFT_Inv__Transaction_ID);
                                 if WhseEntry.FindSet() then begin
                                     repeat
                                         ItemJnlLine.LockTable();
