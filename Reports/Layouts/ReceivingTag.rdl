@@ -115,7 +115,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>="Total Quantity"</Value>
+                                  <Value>=" Total Quantity "</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -140,6 +140,7 @@
                           </Style>
                         </Textbox>
                         <ColSpan>3</ColSpan>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
