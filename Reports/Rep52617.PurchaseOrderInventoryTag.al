@@ -77,6 +77,7 @@ report 52617 "Purchase Order Inventory Tag"
                             field(WareHouseReceiptNoVarGbl;WareHouseReceiptNoVarGbl)
                             {
                                 Caption = 'WareHouse Receipt No';
+                                ApplicationArea = All;
                                 trigger OnLookup(var Text:Text) myBoolean: Boolean;
                                 var
                                     WareHouseReceiptHeaderRecordVar: Record "Warehouse Receipt Header";
