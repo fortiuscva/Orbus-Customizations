@@ -33,6 +33,7 @@ codeunit 52614 "ORB Create Inventory Pick"
         WhseRequest.SetRange("Source No.", SalesHeader."No.");
         if not WhseRequest.IsEmpty() then begin
             CreateInvtPutawayPickMvmt.InitializeRequest(false, true, false, false, false);
+            CreateInvtPutawayPickMvmt.SuppressMessages(true);
             CreateInvtPutawayPickMvmt.SetTableView(WhseRequest);
             CreateInvtPutawayPickMvmt.UseRequestPage(false);
             CreateInvtPutawayPickMvmt.Run();
