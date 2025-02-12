@@ -636,6 +636,12 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         WarehouseJournalLine."ORB LIFT Order Line ID" := ItemJournalLine."ORB LIFT Order Line ID";
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", OnCodeOnAfterCheckCustomerCreated, '', false, false)]
+    local procedure "Release Sales Document_OnCodeOnAfterCheckCustomerCreated"(var SalesHeader: Record "Sales Header"; PreviewMode: Boolean; var IsHandled: Boolean; var LinesWereModified: Boolean)
+    begin
+        SalesHeader.TestField("Ship-to Contact");
+    end;
+
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
         OrbusFunctionsCUGbl: Codeunit "ORB Functions";
