@@ -211,26 +211,45 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
         }
         addafter("Release & Pick")
         {
-            action("Release & Inventory Pick")
+            action("ORB Release & Inventory Pick")
             {
                 Caption = 'Release & Pick';
                 ApplicationArea = all;
+                Image = CreateWarehousePick;
 
                 trigger OnAction()
                 var
+                    SalesHeaderRecLcl: Record "Sales Header";
                     EFTTransactionRecLcl: Record "EFT Transaction -CL-";
                     PaymentMethodLbl: label 'CREDITCARD';
                     NoValidCreditCardErrorLbl: Label 'No Valid Credit Card Authorization Charged, Please Authorize Valid Credit Card to Release Sales Order.';
                 begin
-                    OrbusFunctions.RestrictZeroTransactionAmountforCreditCardPayment(rec);
-                    Rec.PerformManualRelease();
-                    OrbusFunctions.CreateInvtPutAwayPick(Rec);
+                    CurrPage.SetSelectionFilter(SalesHeaderRecLcl);
+                    SalesHeaderRecLcl.MarkedOnly(true);
+                    IF SalesHeaderRecLcl.FindSet() then
+                        repeat
+                            OrbusFunctions.RestrictZeroTransactionAmountforCreditCardPayment(SalesHeaderRecLcl);
+
+                            if (SalesHeaderRecLcl."Shipping Agent Code" = '') and (SalesHeaderRecLcl."Shipping Agent Service Code" = '') then
+                                Error('Shipping Agent Code and Shipping Agent Service have a value of "blank". Both fields need a value other than "blank"');
+                            if (SalesHeaderRecLcl."Shipping Agent Code" = '') then
+                                Error('Shipping Agent Code cannot have a value of "blank"');
+                            if SalesHeaderRecLcl."Shipping Agent Service Code" = '' then
+                                Error('Shipping Agent Service Code cannot have a value of "blank"');
+                        Until SalesHeaderRecLcl.Next() = 0;
+                    CurrPage.SetSelectionFilter(SalesHeaderRecLcl);
+                    SalesHeaderRecLcl.MarkedOnly(true);
+                    IF SalesHeaderRecLcl.FindSet() then
+                        repeat
+                            if not ORBCreateInventoryPick.Run(SalesHeaderRecLcl) then;
+                        Until SalesHeaderRecLcl.Next() = 0;
+                    CurrPage.Update();
                 end;
             }
         }
         addafter("Release & Pick_Promoted")
         {
-            actionref("Release & Inventory Pick_Promoted"; "Release & Inventory Pick")
+            actionref("Release & Inventory Pick_Promoted"; "ORB Release & Inventory Pick")
             {
             }
         }
@@ -249,4 +268,5 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
 
     var
         OrbusFunctions: Codeunit "ORB Functions";
+        ORBCreateInventoryPick: Codeunit "ORB Create Inventory Pick";
 }
