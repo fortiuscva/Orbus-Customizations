@@ -55,7 +55,6 @@ codeunit 52606 "ORB Functions"
                 if (SalesHeader."Case No." = '') then
                     Error(NoCollectwithoutCaseLbl);
             end;
-
         end;
     end;
 
@@ -554,6 +553,8 @@ codeunit 52606 "ORB Functions"
                 if TempReportSelectionWarehouse.Insert() then;
             until ReportSelectionWarehouse.Next() = 0;
     end;
+
+
 
     var
         ReportSelectionWarehouse: Record "Report Selection Warehouse";
