@@ -186,9 +186,9 @@ page 52610 "ORB Magento Sales Hdr. Details"
                 {
                     Caption = 'orbRequireReview', Locked = true;
                 }
-                field(yourReference; Rec."ORB Your Reference (API)")
+                field(yourReference; Rec."Your Reference")
                 {
-                    Caption = 'yourReference', Locked = true;
+                    Caption = 'VersapayID', Locked = true;
                 }
                 field(paymentMethodCode; Rec."Payment Method Code")
                 {
