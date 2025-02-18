@@ -190,6 +190,10 @@ page 52610 "ORB Magento Sales Hdr. Details"
                 {
                     Caption = 'yourReference', Locked = true;
                 }
+                field(paymentMethodCode; Rec."Payment Method Code")
+                {
+                    Caption = 'paymentMethodCode', Locked = true;
+                }
             }
         }
     }
