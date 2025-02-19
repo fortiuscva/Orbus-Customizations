@@ -43,7 +43,7 @@
                                 <TextRun>
                                   <Value>=Fields!ItemNo.Value</Value>
                                   <Style>
-                                    <FontSize>75pt</FontSize>
+                                    <FontSize>80pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -66,7 +66,6 @@
                           </Style>
                         </Textbox>
                         <ColSpan>3</ColSpan>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -131,7 +130,7 @@
                                   <Value>=Cstr(Fields!Quantity.Value)</Value>
                                   <Style>
                                     <FontFamily />
-                                    <FontSize>70pt</FontSize>
+                                    <FontSize>80pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -762,7 +761,7 @@
           </Style>
         </PageHeader>
         <PageFooter>
-          <Height>0.52016in</Height>
+          <Height>0.5103in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>

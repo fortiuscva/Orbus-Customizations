@@ -96,7 +96,7 @@ report 52617 "Purchase Order Inventory Tag"
                                 if Page.RunModal(Page::"Whse. Receipt Lines",WarehouseReceiptRecLcl) = Action::LookupOK then begin
                                     QuantityVarGbl := WarehouseReceiptRecLcl.Quantity;
                                     ItemNoVarGbl := WarehouseReceiptRecLcl."Item No.";
-                                    PurchaseOrderNumberVarGbl := WarehouseReceiptRecLcl."Source No.";
+                                    //PurchaseOrderNumberVarGbl := WarehouseReceiptRecLcl."Source No.";
                                 end;
                                end;
 
@@ -120,6 +120,11 @@ report 52617 "Purchase Order Inventory Tag"
                                 Caption = 'Quantity';
                                 ApplicationArea = All;
                         }
+                        field(PurchaseOrderNumberVarGbl;PurchaseOrderNumberVarGbl)
+                            {
+                                Caption = 'PO No';
+                                ApplicationArea = All;
+                            }
                         }
                 }
             
