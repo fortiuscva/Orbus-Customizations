@@ -59,8 +59,13 @@ report 52617 "Purchase Order Inventory Tag"
             NoValidEntryErrorLbl:Label 'Please check your Tag entries';
               begin
                 SetRange(Number,1,1);
-                iF (WareHouseReceiptNoVarGbl = '') OR (ItemNoVarGbl ='') or (QuantityVarGbl =0 ) then
-                 Error(NoValidEntryErrorLbl);
+                if not NotonDocumentVarGbl then begin
+                    if (WareHouseReceiptNoVarGbl = '') OR (ItemNoVarGbl ='') or (QuantityVarGbl =0 ) then
+                        Error(NoValidEntryErrorLbl);
+                end else begin
+                    if  (ItemNoVarGbl ='') or (QuantityVarGbl =0 ) then
+                        Error(NoValidEntryErrorLbl);
+                end;
             end;           
     } 
     }       
