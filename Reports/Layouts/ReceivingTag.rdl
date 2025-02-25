@@ -74,7 +74,7 @@
                                 <TextRun>
                                   <Value>=Fields!ItemNo.Value</Value>
                                   <Style>
-                                    <FontSize>65pt</FontSize>
+                                    <FontSize>75pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -140,7 +140,6 @@
                           </Style>
                         </Textbox>
                         <ColSpan>3</ColSpan>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -159,7 +158,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>="Total Quantity: " +CStr( Fields!Quantity.Value)</Value>
+                                  <Value>=CStr( Fields!Quantity.Value)</Value>
                                   <Style>
                                     <FontFamily />
                                     <FontSize>65pt</FontSize>
