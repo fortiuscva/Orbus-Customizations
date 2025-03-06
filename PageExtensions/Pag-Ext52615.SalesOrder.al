@@ -160,7 +160,7 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
         }
         modify("Release & Pick")
         {
-            Visible = false;
+            Visible = true;
             trigger OnBeforeAction()
             var
                 EFTTransactionRecLcl: Record "EFT Transaction -CL-";
@@ -209,6 +209,7 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 OrbusFunctions.RestrictZeroTransactionAmountforCreditCardPayment(rec);
             end;
         }
+        /*
         addafter("Release & Pick")
         {
             action("ORB Release & Inventory Pick")
@@ -253,6 +254,7 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
             {
             }
         }
+        */
         addafter("S&hipments")
         {
             action("ORB Sales Header Additional Fields")
