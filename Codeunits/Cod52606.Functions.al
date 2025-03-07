@@ -59,9 +59,19 @@ codeunit 52606 "ORB Functions"
         end;
     end;
 
+    procedure CheckForSenderReceiverPaymentType(SalesHeader: Record "Sales Header")
+    var
+        NotAllowedSenderReceiverLbl: Label 'Payment Type %1 is not allowed';
+    begin
+        if (SalesHeader."Sales Order Payment Type" = SalesHeader."Sales Order Payment Type"::Sender) or
+        (SalesHeader."Sales Order Payment Type" = SalesHeader."Sales Order Payment Type"::Receiver) then
+            Error(NotAllowedSenderReceiverLbl, Format(SalesHeader."Sales Order Payment Type"));
+    end;
+
     procedure ValidateOnSalesRelease(SalesHeader: Record "Sales Header")
     begin
         CheckForShippingAgentCode(SalesHeader);
+        CheckForSenderReceiverPaymentType(SalesHeader);
         CheckForShippingCollect(SalesHeader);
         RestrictZeroTransactionAmountforCreditCardPayment(SalesHeader);
     end;
