@@ -4,11 +4,12 @@ codeunit 52606 "ORB Functions"
     var
         EFTTransactionRecLcl: Record "EFT Transaction -CL-";
         PaymentMethodLbl: label 'CREDITCARD';
+        CRMAGPaymentMethodLbl: Label 'CC MAG';
         NoValidCreditCardErrorLbl: Label 'No Valid Credit Card Authorization Charged, Please Authorize Valid Credit Card to Release Sales Order.';
     begin
         SalesHeader.CalcFields("Amount Including VAT");
         if SalesHeader."Amount Including VAT" > 0 then
-            if SalesHeader."Payment Method Code" = PaymentMethodLbl then begin
+            if (SalesHeader."Payment Method Code" = PaymentMethodLbl) or (SalesHeader."Payment Method Code" = CRMAGPaymentMethodLbl) then begin
                 EFTTransactionRecLcl.Reset();
                 EFTTransactionRecLcl.SetRange("Document Type", SalesHeader."Document Type");
                 EFTTransactionRecLcl.SetRange("Document No.", SalesHeader."No.");
