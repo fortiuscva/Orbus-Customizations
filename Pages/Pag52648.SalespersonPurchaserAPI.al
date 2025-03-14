@@ -29,25 +29,9 @@ page 52648 "ORB Salesperson Purchaser API"
                 {
                     Caption = 'Commission %';
                 }
-                /*
-                field(image; Rec.Image)
-                {
-                    Caption = 'Image';
-                }
-                */
                 field(privacyBlocked; Rec."Privacy Blocked")
                 {
                     Caption = 'Privacy Blocked';
-                }
-                /*
-                field(coupledToCRM; Rec."Coupled to CRM")
-                {
-                    Caption = 'Coupled to Dataverse';
-                }
-                */
-                field(coupledToDataverse; Rec."Coupled to Dataverse")
-                {
-                    Caption = 'Coupled to Dataverse';
                 }
                 field(globalDimension1Code; Rec."Global Dimension 1 Code")
                 {
