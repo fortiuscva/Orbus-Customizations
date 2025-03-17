@@ -79,11 +79,24 @@ pageextension 52608 "ORB Posted Sales Invoice" extends "Posted Sales Invoice"
                 Editable = false;
 
             }
+            field("ORB Customer Support"; Rec."ORB Customer Support")
+            {
+                Caption = 'Customer Support';
+                ApplicationArea = All;
+                Editable = false;
+            }
+            field("ORB Business Development"; Rec."ORB Business Development")
+            {
+                Caption = 'Business Development';
+                ApplicationArea = All;
+                Editable = false;
+            }
         }
         modify("Your Reference")
         {
             Caption = 'Versapay ID';
         }
+
         addfirst(factboxes)
         {
             part(ORBSalesInvLineAddFieldsFB; "ORB Sal Inv Lin Add. Fields FB")
@@ -94,6 +107,8 @@ pageextension 52608 "ORB Posted Sales Invoice" extends "Posted Sales Invoice"
                               "Line No." = field("Line No.");
             }
         }
+
+
     }
     actions
     {
