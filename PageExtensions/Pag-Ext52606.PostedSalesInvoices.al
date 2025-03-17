@@ -47,11 +47,24 @@ pageextension 52606 "ORB Posted Sales Invoices" extends "Posted Sales Invoices"
                 ToolTip = 'Specifies Your Reference';
                 Editable = false;
             }
+            field("ORB Customer Support"; Rec."ORB Customer Support")
+            {
+                Caption = 'Customer Support';
+                ApplicationArea = All;
+                Editable = false;
+            }
+            field("ORB Business Development"; Rec."ORB Business Development")
+            {
+                Caption = 'Business Development';
+                ApplicationArea = All;
+                Editable = false;
+            }
         }
         modify("Your Reference")
         {
             Caption = 'Versapay ID';
         }
+
     }
     actions
     {

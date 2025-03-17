@@ -124,6 +124,21 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 CurrPage.Update(true);
             end;
         }
+        addafter("Sell-to Customer Name")
+        {
+            field("ORB Customer Support"; Rec."ORB Customer Support")
+            {
+                Caption = 'Customer Support';
+                ApplicationArea = All;
+                Editable = false;
+            }
+            field("ORB Business Development"; Rec."ORB Business Development")
+            {
+                Caption = 'Business Development';
+                ApplicationArea = All;
+                Editable = false;
+            }
+        }
     }
     actions
     {
