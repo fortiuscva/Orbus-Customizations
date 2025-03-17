@@ -186,7 +186,7 @@ page 52610 "ORB Magento Sales Hdr. Details"
                 {
                     Caption = 'orbRequireReview', Locked = true;
                 }
-                field(yourReference; YourRef)
+                field(yourReference; Rec."ORB Your Reference (API)")
                 {
                     Caption = 'VersapayID', Locked = true;
                 }
@@ -215,16 +215,12 @@ page 52610 "ORB Magento Sales Hdr. Details"
     begin
         Rec."Ship-to Name" := Rec."Ship-to Name";
         Rec."Ship-to Address" := Rec."Ship-to Address";
-        rec."Your Reference" := YourRef;
     end;
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
         Rec."Ship-to Name" := Rec."Ship-to Name";
         Rec."Ship-to Address" := Rec."Ship-to Address";
-        rec."Your Reference" := YourRef;
     end;
 
-    var
-        YourRef: Text[35];
 }
