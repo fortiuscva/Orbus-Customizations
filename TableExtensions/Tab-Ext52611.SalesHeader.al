@@ -280,8 +280,8 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             Rec.Validate("Your Reference", "ORB Your Reference (API)");
         CustomerRecLcl.reset;
         if CustomerRecLcl.get(Rec."Sell-to Customer No.") then begin
-            "ORB Customer Support" := Rec."ORB Customer Support";
-            "ORB Business Development" := Rec."ORB Business Development";
+            "ORB Customer Support" := CustomerRecLcl."ORB Customer Support";
+            "ORB Business Development" := CustomerRecLcl."ORB Business Development";
         end;
 
         Rec.Modify();
