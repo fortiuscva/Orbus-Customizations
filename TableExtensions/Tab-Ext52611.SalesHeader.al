@@ -217,9 +217,20 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             DataClassification = CustomerContent;
             Editable = false;
         }
+        modify("Sell-to Customer No.")
+        {
+            trigger OnAfterValidate()
+            var
+                CustomerRecLcl: Record Customer;
+            begin
+                if CustomerRecLcl.get("Sell-to Customer No.") then begin
+                    Rec."ORB Customer Support" := CustomerRecLcl."ORB Customer Support";
+                    Rec."ORB Business Development" := CustomerRecLcl."ORB Business Development";
+                end;
+            end;
+        }
 
     }
-
 
     trigger OnDelete()
     var
@@ -234,7 +245,7 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         contactRecLcl: Record Contact;
         ShippinAgenetCode: Code[10];
         ShippingAgentServiceCode: Code[20];
-        CustomerRecLcl: Record Customer;
+
 
     begin
         if GuiAllowed then
@@ -278,12 +289,6 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             Rec."Ship-to Contact" := Rec."ORB Ship-to Contact Name (API)";
         if Rec."ORB Your Reference (API)" <> '' then
             Rec.Validate("Your Reference", "ORB Your Reference (API)");
-        CustomerRecLcl.reset;
-        if CustomerRecLcl.get(Rec."Sell-to Customer No.") then begin
-            "ORB Customer Support" := CustomerRecLcl."ORB Customer Support";
-            "ORB Business Development" := CustomerRecLcl."ORB Business Development";
-        end;
-
         Rec.Modify();
     end;
 
