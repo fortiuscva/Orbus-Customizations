@@ -1,4 +1,4 @@
-pageextension 53651 "ORB Item Card" extends "Item Card"
+pageextension 52651 "ORB Item Card" extends "Item Card"
 {
     layout
     {
