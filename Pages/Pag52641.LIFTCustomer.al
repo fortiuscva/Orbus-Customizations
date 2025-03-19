@@ -485,10 +485,6 @@ page 52641 "ORB LIFT Customer"
                 {
                     Caption = 'Preferred Bank Account Code';
                 }
-                field(coupledToCRM; Rec."Coupled to CRM")
-                {
-                    Caption = 'Coupled to Dataverse';
-                }
                 field(coupledToDataverse; Rec."Coupled to Dataverse")
                 {
                     Caption = 'Coupled to Dataverse';
