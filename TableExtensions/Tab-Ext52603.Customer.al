@@ -93,6 +93,7 @@ tableextension 52603 "ORB Customer" extends Customer
                                                                          "Currency Code" = field("Currency Filter")));
         }
 
+
         field(52610; "ORB LIFT Customer"; boolean)
         {
             Caption = 'LIFT Customer';
@@ -102,7 +103,27 @@ tableextension 52603 "ORB Customer" extends Customer
         {
             Caption = 'Key/National Account Manager';
         }
+        field(526011; "ORB Previous Year Date Filter"; Date)
+        {
+            Caption = 'Year To Date Filter';
+            FieldClass = FlowFilter;
+        }
+        field(52612; "ORB Previous Year Sales"; Decimal)
+        {
+            AutoFormatType = 1;
+            Caption = 'Total Sales - Fiscal Year';
+            FieldClass = FlowField;
+            Editable = false;
+            CalcFormula = sum("Cust. Ledger Entry"."Sales (LCY)" where("Customer No." = field("No."),
+                                                                        "Global Dimension 1 Code" = field("Global Dimension 1 Filter"),
+                                                                        "Global Dimension 2 Code" = field("Global Dimension 2 Filter"),
+                                                                        "Posting Date" = field("ORB Previous Year Date Filter"),
+                                                                         "Currency Code" = field("Currency Filter")));
+        }
+
+
     }
+
 
     var
         ProcessInterruptedLbl: Label 'Process has been interrupted to respect the warning.';
