@@ -25,6 +25,16 @@ pageextension 52614 "ORB User Setup" extends "User Setup"
                 ApplicationArea = all;
                 ToolTip = 'To Allow Tax Liable Edit on the Customer';
             }
+            field("ORB Cust.Support Edit Allowed"; Rec."ORB Cust.Support Edit Allowed")
+            {
+                ApplicationArea = all;
+                ToolTip = 'To Allow Customer Support Edit on the Customer Card';
+            }
+            field("ORB Buss. Devlop Edit Allowed"; Rec."ORB Buss. Devlop Edit Allowed")
+            {
+                ApplicationArea = all;
+                ToolTip = 'To Allow Business Development Edit on the Customer Card';
+            }
         }
     }
 
