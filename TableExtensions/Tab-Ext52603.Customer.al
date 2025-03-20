@@ -90,7 +90,8 @@ tableextension 52603 "ORB Customer" extends Customer
                                                                         "Global Dimension 1 Code" = field("Global Dimension 1 Filter"),
                                                                         "Global Dimension 2 Code" = field("Global Dimension 2 Filter"),
                                                                         "Posting Date" = field("ORB Year To Date Filter"),
-                                                                         "Currency Code" = field("Currency Filter")));
+                                                                         "Currency Code" = field("Currency Filter"),
+                                                                         "Document Type" = Filter('Invoice|Credit Memo')));
         }
 
 
@@ -118,7 +119,8 @@ tableextension 52603 "ORB Customer" extends Customer
                                                                         "Global Dimension 1 Code" = field("Global Dimension 1 Filter"),
                                                                         "Global Dimension 2 Code" = field("Global Dimension 2 Filter"),
                                                                         "Posting Date" = field("ORB Previous Year Date Filter"),
-                                                                         "Currency Code" = field("Currency Filter")));
+                                                                         "Currency Code" = field("Currency Filter"),
+                                                                         "Document Type" = Filter('Invoice|Credit Memo')));
         }
 
 
