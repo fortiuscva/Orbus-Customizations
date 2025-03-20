@@ -68,6 +68,13 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
                 ToolTip = 'Total Sales($) Year to date';
                 Caption = 'Total Sales - Fiscal Year';
             }
+            field("ORB Previous Year Sales"; Rec."ORB Previous Year Sales")
+            {
+                ApplicationArea = All;
+                Editable = false;
+                ToolTip = 'Previous Year Sales($)';
+                Caption = 'Prevuous Year - Sales'
+            }
 
         }
 
@@ -110,10 +117,15 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
     trigger OnOpenPage()
     var
         FirstDayOfYearVarLcl: Date;
+        PreYearStartDateLcl: Date;
+        PreYearEndDateLcl: Date;
+
     begin
         FirstDayOfYearVarLcl := CALCDATE('<-CY>', today);
+        PreYearStartDateLcl := DMY2Date(1, 1, Date2DMY(today(), 3));
+        PreYearEndDateLcl := DMY2Date(12, 31, Date2DMY(today(), 3));
         Rec.SetRange("ORB Year To Date Filter", FirstDayOfYearVarLcl, Today);
-
+        REc.SetRange("ORB Previous Year Date Filter", PreYearStartDateLcl, PreYearEndDateLcl);
         clear(IsLIFTERPFunctionEnabled);
         if LiftFunctions.IsLIFTERPSetupEnabled() and (LiftFunctions.IsGetCustomersAllowed()) then
             IsLIFTERPFunctionEnabled := true;
