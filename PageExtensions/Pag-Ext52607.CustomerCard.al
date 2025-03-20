@@ -16,11 +16,23 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
             {
                 ApplicationArea = all;
                 ToolTip = 'Specifies Orbus Customer Support';
+                trigger OnValidate()
+                begin
+                    if UserSetupRecGbl.get(UserId) then
+                        if not UserSetupRecGbl."ORB Cust.Support Edit Allowed" then
+                            Error(EditNotAllowedlbl, UserId);
+                end;
             }
             field("ORB Business Development"; Rec."ORB Business Development")
             {
                 ApplicationArea = all;
                 ToolTip = 'Specifies Orbus Business Development';
+                trigger OnValidate()
+                begin
+                    if UserSetupRecGbl.get(UserId) then
+                        if not (UserSetupRecGbl."ORB Buss. Devlop Edit Allowed") then
+                            Error(EditNotAllowedlbl, UserId);
+                end;
             }
         }
         addlast(General)
@@ -147,6 +159,7 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
 
     var
         AccessNotallowedlbl: Label '%1 is not allowed to edit Tax Liable';
+        EditNotAllowedlbl: Label '%1 cannot edit this field';
         ThisYearSales: Decimal;
         PreviousYearSales: Decimal;
         LTMSales: Decimal;
@@ -155,4 +168,5 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
         PreviousYearSalesCrMemo: Decimal;
         LTMSalesCrMemo: Decimal;
         LifetimeSalesCrMemo: Decimal;
+        UserSetupRecGbl: Record "User Setup";
 }
