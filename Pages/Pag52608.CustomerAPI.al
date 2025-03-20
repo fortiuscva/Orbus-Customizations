@@ -157,7 +157,10 @@ page 52608 "ORB Customer API"
                 {
                     Caption = 'Business Development';
                 }
-
+                field(rowID; Rec.SystemId)
+                {
+                    Caption = 'Row ID';
+                }
             }
         }
     }
