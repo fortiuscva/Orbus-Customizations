@@ -73,10 +73,12 @@ page 52608 "ORB Customer API"
                 {
                     Caption = 'Tax Registration No.';
                 }
+                /*
                 field(taxIDNo; Rec."Tax ID No. -CL-")
                 {
                     Caption = 'Tax ID No.';
                 }
+                */
                 field(customerPriceGroup; Rec."Customer Price Group")
                 {
                     Caption = 'Customer Price Group';
