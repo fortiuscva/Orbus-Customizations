@@ -20,11 +20,13 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
                 ApplicationArea = all;
                 ToolTip = 'Specifies the user who resolved the escalated reason';
             }
+            /*
             field("ORB Total Payment Amount"; Rec."ORB Total Payment Amount")
             {
                 ApplicationArea = all;
                 ToolTip = 'Specifies the Total Payment Amount Field value';
             }
+            */
             field("ORB Freight Line"; Rec."ORB Freight Line")
             {
                 ApplicationArea = all;
@@ -159,7 +161,7 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
                 trigger OnAction()
                 var
                     SalesHeaderRecLcl: Record "Sales Header";
-                    EFTTransactionRecLcl: Record "EFT Transaction -CL-";
+                    //EFTTransactionRecLcl: Record "EFT Transaction -CL-";
                     PaymentMethodLbl: label 'CREDITCARD';
                     NoValidCreditCardErrorLbl: Label 'No Valid Credit Card Authorization Charged, Please Authorize Valid Credit Card to Release Sales Order.';
                 begin
