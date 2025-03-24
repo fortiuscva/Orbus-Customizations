@@ -126,7 +126,7 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
         {
             trigger OnBeforeAction()
             var
-                EFTTransactionRecLcl: Record "EFT Transaction -CL-";
+                //EFTTransactionRecLcl: Record "EFT Transaction -CL-";
                 PaymentMethodLbl: label 'CREDITCARD';
                 NoValidCreditCardErrorLbl: Label 'No Valid Credit Card Authorization Charged, Please Authorize Valid Credit Card to Release Sales Order.';
             begin
@@ -157,7 +157,7 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
         {
             trigger OnBeforeAction()
             var
-                EFTTransactionRecLcl: Record "EFT Transaction -CL-";
+                //EFTTransactionRecLcl: Record "EFT Transaction -CL-";
                 PaymentMethodLbl: label 'CREDITCARD';
                 NoValidCreditCardErrorLbl: Label 'No Valid Credit Card Authorization Charged, Please Authorize Valid Credit Card to Release Sales Order.';
             begin
