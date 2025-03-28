@@ -109,7 +109,6 @@ page 52648 "ORB Salesperson Purchaser API"
                 {
                     Caption = 'Blocked';
                 }
-                /*
                 field(loginExpirationDateCL; Rec."Login Expiration Date -CL-")
                 {
                     Caption = 'Login Expiration Date';
@@ -134,7 +133,6 @@ page 52648 "ORB Salesperson Purchaser API"
                 {
                     Caption = 'Password Salt';
                 }
-                */
             }
         }
     }

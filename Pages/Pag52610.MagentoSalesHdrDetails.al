@@ -96,12 +96,10 @@ page 52610 "ORB Magento Sales Hdr. Details"
                     ToolTip = 'Specifies the value of the Magento CC 4 Digits field.';
                 }
                 */
-                /*
                 field(ShiptoPhoneNo; Rec."Ship-to Phone No. -CL-")
                 {
                     ToolTip = 'Specifies the value of the Ship-to Phone No. field.';
                 }
-                */
                 field(ExternalDocumentNo; Rec."External Document No.")
                 {
                     ToolTip = 'Specifies the value of the External Document No. field.';
