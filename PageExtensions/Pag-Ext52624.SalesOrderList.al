@@ -20,13 +20,11 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
                 ApplicationArea = all;
                 ToolTip = 'Specifies the user who resolved the escalated reason';
             }
-            /*
             field("ORB Total Payment Amount"; Rec."ORB Total Payment Amount")
             {
                 ApplicationArea = all;
                 ToolTip = 'Specifies the Total Payment Amount Field value';
             }
-            */
             field("ORB Freight Line"; Rec."ORB Freight Line")
             {
                 ApplicationArea = all;
