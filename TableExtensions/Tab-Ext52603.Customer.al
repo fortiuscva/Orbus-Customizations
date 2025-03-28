@@ -104,7 +104,7 @@ tableextension 52603 "ORB Customer" extends Customer
         {
             Caption = 'Key/National Account Manager';
         }
-        field(526011; "ORB Previous Year Date Filter"; Date)
+        field(52611; "ORB Previous Year Date Filter"; Date)
         {
             Caption = 'Year To Date Filter';
             FieldClass = FlowFilter;
