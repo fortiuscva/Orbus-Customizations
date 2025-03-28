@@ -850,7 +850,6 @@ page 52641 "ORB LIFT Customer"
                 {
                     Caption = 'International';
                 }
-                /*
                 field(taxIDNoCL; Rec."Tax ID No. -CL-")
                 {
                     Caption = 'Tax ID No.';
@@ -927,7 +926,6 @@ page 52641 "ORB LIFT Customer"
                 {
                     Caption = 'Suppress E-Mail Notifications';
                 }
-                */
                 field(systemCreatedAt; Rec.SystemCreatedAt)
                 {
                     Caption = 'SystemCreatedAt';

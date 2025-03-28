@@ -139,12 +139,11 @@ page 52636 "ORB LIFT Sales Header"
                 {
                     Caption = 'Location Code (Custom)';
                 }
-                /*
                 field(shipToPhoneNoCL; Rec."Ship-to Phone No. -CL-")
                 {
                     Caption = 'Ship-to Phone No.';
                 }
-                */
+
             }
         }
     }

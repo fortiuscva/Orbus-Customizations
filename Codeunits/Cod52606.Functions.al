@@ -2,12 +2,11 @@ codeunit 52606 "ORB Functions"
 {
     procedure RestrictZeroTransactionAmountforCreditCardPayment(SalesHeader: Record "Sales Header")
     var
-        //EFTTransactionRecLcl: Record "EFT Transaction -CL-";
+        EFTTransactionRecLcl: Record "EFT Transaction -CL-";
         PaymentMethodLbl: label 'CREDITCARD';
         CRMAGPaymentMethodLbl: Label 'CC MAG';
         NoValidCreditCardErrorLbl: Label 'No Valid Credit Card Authorization Charged, Please Authorize Valid Credit Card to Release Sales Order.';
     begin
-        /*
         SalesHeader.CalcFields("Amount Including VAT");
         if SalesHeader."Amount Including VAT" > 0 then
             if (SalesHeader."Payment Method Code" = PaymentMethodLbl) or (SalesHeader."Payment Method Code" = CRMAGPaymentMethodLbl) then begin
@@ -28,7 +27,6 @@ codeunit 52606 "ORB Functions"
                 if EFTTransactionRecLcl."Transaction Amount" <= 0 then
                     Error(NoValidCreditCardErrorLbl);
             end;
-        */
     end;
 
     procedure CheckForShippingAgentCode(SalesHeader: Record "Sales Header")
