@@ -161,6 +161,10 @@ page 52608 "ORB Customer API"
                 {
                     Caption = 'Row ID';
                 }
+                field(customerDiscGroup; Rec."Customer Disc. Group")
+                {
+                    caption = 'Customer Disc. Group';
+                }
             }
         }
     }
