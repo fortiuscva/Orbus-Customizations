@@ -34,18 +34,46 @@ codeunit 52606 "ORB Functions"
         if SalesHeader."Document Type" = SalesHeader."Document Type"::Order then begin
             if (SalesHeader."Shipping Agent Code" = '') and (SalesHeader."Shipping Agent Service Code" = '') then
                 Error('Shipping Agent Code and Shipping Agent Service have a value of "blank". Both fields need a value other than "blank"');
-
             if (SalesHeader."Shipping Agent Code" = '') then
                 Error('Shipping Agent Code cannot have a value of "blank"');
-
             if SalesHeader."Shipping Agent Service Code" = '' then
                 Error('Shipping Agent Service Code cannot have a value of "blank"');
         end;
     end;
 
+    procedure CheckForShippingCollect(SalesHeader: Record "Sales Header")
+    var
+        NoCollectwithoutCaseLbl: Label 'Collect Orders need to have a Case No';
+        NoCollectOrderFedexLbl: Label 'Collect Orders cannot Ship FEDEX';
+        ShippingAgentCodeVarLcl: Text;
+    begin
+        clear(ShippingAgentCodeVarLcl);
+        ShippingAgentCodeVarLcl := SalesHeader."Shipping Agent Code";
+        if SalesHeader."Document Type" = SalesHeader."Document Type"::Order then begin
+            if (SalesHeader."Sales Order Payment Type" = SalesHeader."Sales Order Payment Type"::Collect) then begin
+                if (ShippingAgentCodeVarLcl.Contains('FED')) then
+                    Error(NoCollectOrderFedexLbl);
+                if (SalesHeader."Case No." = '') then
+                    Error(NoCollectwithoutCaseLbl);
+            end;
+
+        end;
+    end;
+
+    procedure CheckForSenderReceiverPaymentType(SalesHeader: Record "Sales Header")
+    var
+        NotAllowedSenderReceiverLbl: Label 'Payment Type %1 is not allowed';
+    begin
+        if (SalesHeader."Sales Order Payment Type" = SalesHeader."Sales Order Payment Type"::Sender) or
+        (SalesHeader."Sales Order Payment Type" = SalesHeader."Sales Order Payment Type"::Receiver) then
+            Error(NotAllowedSenderReceiverLbl, Format(SalesHeader."Sales Order Payment Type"));
+    end;
+
     procedure ValidateOnSalesRelease(SalesHeader: Record "Sales Header")
     begin
         CheckForShippingAgentCode(SalesHeader);
+        CheckForSenderReceiverPaymentType(SalesHeader);
+        CheckForShippingCollect(SalesHeader);
         RestrictZeroTransactionAmountforCreditCardPayment(SalesHeader);
     end;
 
