@@ -95,6 +95,12 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
                 Editable = false;
                 Caption = 'Lifetime Sales Cr. Memo Total';
             }
+            field("ORB Is Core Team"; IsCoreTeam)
+            {
+                ApplicationArea = all;
+                Editable = false;
+                Caption = 'Is Core Team';
+            }
         }
 
         modify("Salesperson Code")
@@ -152,9 +158,11 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
     var
         FunctionsCU: Codeunit "ORB Functions";
     begin
+        IsCoreTeam := false;
         FunctionsCU.CalculateSalesTotals(ThisYearSales, PreviousYearSales, LTMSales, LifetimeSales, Rec."No.");
+        if (LifetimeSales > 0) and (LifetimeSales < 10000) then
+            IsCoreTeam := True;
         FunctionsCU.CalculateCreditMemoTotals(ThisYearSalesCrMemo, PreviousYearSalesCrMemo, LTMSalesCrMemo, LifetimeSalesCrMemo, Rec."No.");
-
     end;
 
     var
@@ -169,4 +177,5 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
         LTMSalesCrMemo: Decimal;
         LifetimeSalesCrMemo: Decimal;
         UserSetupRecGbl: Record "User Setup";
+        IsCoreTeam: Boolean;
 }
