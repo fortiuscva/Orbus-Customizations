@@ -45,10 +45,13 @@ codeunit 52606 "ORB Functions"
     var
         NoCollectwithoutCaseLbl: Label 'Collect Orders need to have a Case No';
         NoCollectOrderFedexLbl: Label 'Collect Orders cannot Ship FEDEX';
+        ShippingAgentCodeVarLcl: Text;
     begin
+        clear(ShippingAgentCodeVarLcl);
+        ShippingAgentCodeVarLcl := SalesHeader."Shipping Agent Code";
         if SalesHeader."Document Type" = SalesHeader."Document Type"::Order then begin
             if (SalesHeader."Sales Order Payment Type" = SalesHeader."Sales Order Payment Type"::Collect) then begin
-                if (SalesHeader."Shipping Agent Code" = 'FEDEX') or (SalesHeader."Shipping Agent Code" = 'FED MULTI') then
+                if (ShippingAgentCodeVarLcl.Contains('FED')) then
                     Error(NoCollectOrderFedexLbl);
                 if (SalesHeader."Case No." = '') then
                     Error(NoCollectwithoutCaseLbl);
