@@ -2,7 +2,7 @@ tableextension 52631 "ORB Item" extends Item
 {
     fields
     {
-        field(52600; "ORB Master Qty Count"; Integer)
+        field(52600; "ORB Master Qty. Count"; Integer)
         {
             Caption = 'Master Quantity Count';
             DataClassification = ToBeClassified;
