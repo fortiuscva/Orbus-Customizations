@@ -6,13 +6,13 @@ pageextension 52651 "ORB Item Card" extends "Item Card"
         {
             field("ORB Master Qty Count"; Rec."ORB Master Qty Count")
             {
-                Caption = 'Master Quantity/Carton';
+                Caption = 'Master Carton QTY';
                 ApplicationArea = All;
                 Tooltip = 'Quantity in the Master Carton';
             }
             field("ORB Bagging Quantity"; Rec."ORB Bagging Quantity")
             {
-                Caption = 'Bagging Quantity/per bag';
+                Caption = 'Bag QTY';
                 ApplicationArea = All;
                 ToolTip = 'Quantity packed in a bag';
             }
