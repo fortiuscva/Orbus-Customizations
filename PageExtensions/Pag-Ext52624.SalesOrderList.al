@@ -77,6 +77,12 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
                 ToolTip = 'Specifies Your Reference';
                 Editable = false;
             }
+            field("ORB Project No."; Rec."Project No.")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the Project No.';
+                Editable = false;
+            }
         }
     }
     actions
