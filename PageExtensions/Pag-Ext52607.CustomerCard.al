@@ -47,53 +47,41 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
                 ApplicationArea = all;
                 ToolTip = 'Specifies Orbus LIFT Customer';
             }
-            field("ORB ThisYearSales"; ThisYearSales)
+            field("ORB ThisYearSales"; Rec."ORB This Year Sales")
             {
                 ApplicationArea = all;
-                Editable = false;
-                Caption = 'This Year Sales Total';
             }
-            field("ORB PreviousYearSales"; PreviousYearSales)
+            field("ORB PreviousYearSales"; Rec."ORB Prev Year Sales")
             {
                 ApplicationArea = all;
-                Editable = false;
-                Caption = 'Previous Year Sales Total';
             }
-            field("ORB LTMSales"; LTMSales)
+            field("ORB LTMSales"; Rec."ORB LTM Sales")
             {
                 ApplicationArea = all;
-                Editable = false;
-                Caption = 'LTM Sales Total';
             }
-            field("ORB LifetimeSalesTotal"; LifetimeSales)
+            field("ORB LifetimeSalesTotal"; Rec."ORB Lifetime Sales Total")
             {
                 ApplicationArea = all;
-                Editable = false;
-                Caption = 'Lifetime Sales Total';
             }
-            field("ORB ThisYearSalesCrMemo"; ThisYearSalesCrMemo)
+            field("ORB ThisYearSalesCrMemo"; Rec."ORB ThisYearSalesCrMemo")
             {
                 ApplicationArea = all;
-                Editable = false;
-                Caption = 'This Year Sales Cr. Memo Total';
             }
-            field("ORB PreviousYearSalesCrMemo"; PreviousYearSalesCrMemo)
+            field("ORB PreviousYearSalesCrMemo"; Rec."ORB PreviousYearSalesCrMemo")
             {
                 ApplicationArea = all;
-                Editable = false;
-                Caption = 'Previous Year Sales Cr. Memo Total';
             }
-            field("ORB LTMSalesCrMemo"; LTMSalesCrMemo)
+            field("ORB LTMSalesCrMemo"; Rec."ORB LTMSalesCrMemo")
             {
                 ApplicationArea = all;
-                Editable = false;
-                Caption = 'LTM Sales Cr. Memo Total';
             }
-            field("ORB LifetimeSalesTotalCrMemo"; LifetimeSalesCrMemo)
+            field("ORB LifetimeSalesTotalCrMemo"; Rec."ORB LifetimeSalesTotalCrMemo")
             {
                 ApplicationArea = all;
-                Editable = false;
-                Caption = 'Lifetime Sales Cr. Memo Total';
+            }
+            field("ORB Is Core Team"; Rec."ORB Is Core Team")
+            {
+                ApplicationArea = all;
             }
             field("ORB Is Core Team"; IsCoreTeam)
             {
@@ -154,28 +142,19 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
             }
         }
     }
+    /*
     trigger OnAfterGetRecord()
     var
         FunctionsCU: Codeunit "ORB Functions";
     begin
-        IsCoreTeam := false;
-        FunctionsCU.CalculateSalesTotals(ThisYearSales, PreviousYearSales, LTMSales, LifetimeSales, Rec."No.");
-        if (LifetimeSales > 0) and (LifetimeSales < 10000) then
-            IsCoreTeam := True;
+        FunctionsCU.CalculateSalesTotals(ThisYearSales, PreviousYearSales, LTMSales, Rec."ORB Lifetime Sales Total", Rec."No.");
         FunctionsCU.CalculateCreditMemoTotals(ThisYearSalesCrMemo, PreviousYearSalesCrMemo, LTMSalesCrMemo, LifetimeSalesCrMemo, Rec."No.");
     end;
+    */
 
     var
         AccessNotallowedlbl: Label '%1 is not allowed to edit Tax Liable';
         EditNotAllowedlbl: Label '%1 cannot edit this field';
-        ThisYearSales: Decimal;
-        PreviousYearSales: Decimal;
-        LTMSales: Decimal;
-        LifetimeSales: Decimal;
-        ThisYearSalesCrMemo: Decimal;
-        PreviousYearSalesCrMemo: Decimal;
-        LTMSalesCrMemo: Decimal;
-        LifetimeSalesCrMemo: Decimal;
         UserSetupRecGbl: Record "User Setup";
         IsCoreTeam: Boolean;
 }
