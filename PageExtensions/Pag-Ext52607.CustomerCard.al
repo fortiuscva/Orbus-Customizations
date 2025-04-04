@@ -83,12 +83,6 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
             {
                 ApplicationArea = all;
             }
-            field("ORB Is Core Team"; IsCoreTeam)
-            {
-                ApplicationArea = all;
-                Editable = false;
-                Caption = 'Is Core Team';
-            }
         }
 
         modify("Salesperson Code")

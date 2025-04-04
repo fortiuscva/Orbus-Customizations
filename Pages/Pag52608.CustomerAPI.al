@@ -165,6 +165,10 @@ page 52608 "ORB Customer API"
                 {
                     caption = 'Customer Disc. Group';
                 }
+                field(isCoreTeam; Rec."ORB Is Core Team")
+                {
+                    caption = 'Is Core Team';
+                }
             }
         }
     }
