@@ -283,7 +283,7 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 RunPageLink = "Document Type" = field("Document Type"), "No." = field("No.");
             }
         }
-        addafter(Documents)
+        addfirst(processing)
         {
             action("ORB Update Versapay ID")
             {
@@ -297,7 +297,7 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                     IsAuthorized: Boolean;
                 begin
                     if UserSetupRec.Get(UserId) then
-                        if UserSetupRec."ORB Edit Versapay ID" then begin
+                        if UserSetupRec."ORB Versapay ID Edit Allowed" then begin
                             SalesOrderUpdate.LookupMode := true;
                             SalesOrderUpdate.SetRec(Rec);
                             SalesOrderUpdate.RunModal();
@@ -307,9 +307,12 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
 
             }
         }
+
     }
 
     var
         OrbusFunctions: Codeunit "ORB Functions";
         ORBCreateInventoryPick: Codeunit "ORB Create Inventory Pick";
+
+
 }

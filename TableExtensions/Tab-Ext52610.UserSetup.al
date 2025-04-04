@@ -32,10 +32,10 @@ tableextension 52610 "ORB User Setup" extends "User Setup"
             DataClassification = CustomerContent;
             Caption = 'Business Development Edit Allowed';
         }
-        field(52606; "ORB Edit Versapay ID"; Boolean)
+        field(52606; "ORB Versapay ID Edit Allowed"; Boolean)
         {
             DataClassification = CustomerContent;
-            Caption = 'Edit Versapay ID';
+            Caption = 'Versapay ID Edit Allowed';
         }
 
     }
