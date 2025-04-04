@@ -9,11 +9,11 @@ tableextension 52632 "ORB WarehouseReceiptLine" extends "Warehouse Receipt Line"
         }
     }
 
-    trigger OnInsert()
+    trigger OnAfterInsert()
     var
         ItemRecLcl: Record Item;
     begin
-        if ItemRecLcl.get("No.") then
+        if ItemRecLcl.get(Rec."Item No.") then
             "ORB Unit Cost" := ItemRecLcl."Unit Cost";
     end;
 }
