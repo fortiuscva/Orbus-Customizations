@@ -150,5 +150,4 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
         AccessNotallowedlbl: Label '%1 is not allowed to edit Tax Liable';
         EditNotAllowedlbl: Label '%1 cannot edit this field';
         UserSetupRecGbl: Record "User Setup";
-        IsCoreTeam: Boolean;
 }
