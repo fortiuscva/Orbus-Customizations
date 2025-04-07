@@ -141,6 +141,30 @@ page 52608 "ORB Customer API"
                 {
                     Caption = 'Association';
                 }
+                field(salespersonCode; Rec."Salesperson Code")
+                {
+                    Caption = 'Salesperson Code';
+                }
+                field(regionalSalesExecutive; Rec."ORB Regional Sales Executive")
+                {
+                    Caption = 'Regional Sales Executive';
+                }
+                field(customerSupport; Rec."ORB Customer Support")
+                {
+                    Caption = 'Customer Support';
+                }
+                field(businessDevelopment; Rec."ORB Business Development")
+                {
+                    Caption = 'Business Development';
+                }
+                field(rowID; Rec.SystemId)
+                {
+                    Caption = 'Row ID';
+                }
+                field(customerDiscGroup; Rec."Customer Disc. Group")
+                {
+                    caption = 'Customer Disc. Group';
+                }
             }
         }
     }
