@@ -5,7 +5,7 @@ codeunit 52615 "Calculate SalesTotals JobQueue"
         Customer: Record Customer;
         FunctionsCU: Codeunit "ORB Functions";
     begin
-        if Customer.FindFirst() then begin
+        if Customer.FindSet() then begin
             repeat
                 FunctionsCU.CalculateSalesTotals(Customer."ORB This Year Sales", Customer."ORB Previous Year Sales", Customer."ORB LTM Sales", Customer."ORB Lifetime Sales Total", Customer."No.");
                 FunctionsCU.CalculateCreditMemoTotals(Customer."ORB ThisYearSalesCrMemo", Customer."ORB PreviousYearSalesCrMemo", Customer."ORB LTMSalesCrMemo", Customer."ORB LifetimeSalesTotalCrMemo", Customer."No.");
