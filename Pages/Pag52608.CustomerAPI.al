@@ -137,6 +137,10 @@ page 52608 "ORB Customer API"
                     Caption = 'Lifetime Sales Cr. Memo Total';
                     Editable = false;
                 }
+                field(association; Rec.ORBAPPAssociationsName)
+                {
+                    Caption = 'Association';
+                }
             }
         }
     }
