@@ -25,7 +25,13 @@ pageextension 52614 "ORB User Setup" extends "User Setup"
                 ApplicationArea = all;
                 ToolTip = 'To Allow Tax Liable Edit on the Customer';
             }
-            field("ORB Cust.Support Edit Allowed"; Rec."ORB Cust.Support Edit Allowed")
+           
+            field("ORB Versapay ID Edit Allowed"; Rec."ORB Versapay ID Edit Allowed")
+            {
+                ApplicationArea = all;
+                ToolTip = 'To Allow User Edit Versapay ID';
+            }
+             field("ORB Cust.Support Edit Allowed"; Rec."ORB Cust.Support Edit Allowed")
             {
                 Caption = 'Edit Customer Support';
                 ApplicationArea = all;
