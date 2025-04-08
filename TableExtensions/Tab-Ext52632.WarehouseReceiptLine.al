@@ -7,13 +7,15 @@ tableextension 52632 "ORB WarehouseReceiptLine" extends "Warehouse Receipt Line"
             Caption = 'Unit Cost';
             DataClassification = ToBeClassified;
         }
+        modify("Item No.")
+        {
+            trigger OnAfterValidate()
+            var
+                ItemRecLcl: Record Item;
+            begin
+                if ItemRecLcl.get(Rec."Item No.") then
+                    "ORB Unit Cost" := ItemRecLcl."Unit Cost";
+            end;
+        }
     }
-
-    trigger OnAfterInsert()
-    var
-        ItemRecLcl: Record Item;
-    begin
-        if ItemRecLcl.get(Rec."Item No.") then
-            "ORB Unit Cost" := ItemRecLcl."Unit Cost";
-    end;
 }
