@@ -32,6 +32,11 @@ tableextension 52610 "ORB User Setup" extends "User Setup"
             DataClassification = CustomerContent;
             Caption = 'Business Development Edit Allowed';
         }
+        field(52606; "ORB Regional Sales Executive"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Regional Sales Executive';
+        }
 
     }
 

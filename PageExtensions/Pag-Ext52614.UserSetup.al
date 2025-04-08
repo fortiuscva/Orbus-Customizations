@@ -27,14 +27,23 @@ pageextension 52614 "ORB User Setup" extends "User Setup"
             }
             field("ORB Cust.Support Edit Allowed"; Rec."ORB Cust.Support Edit Allowed")
             {
+                Caption = 'Edit Customer Support';
                 ApplicationArea = all;
                 ToolTip = 'To Allow Customer Support Edit on the Customer Card';
             }
             field("ORB Buss. Devlop Edit Allowed"; Rec."ORB Buss. Devlop Edit Allowed")
             {
+                Caption = 'Edit Business Development';
                 ApplicationArea = all;
                 ToolTip = 'To Allow Business Development Edit on the Customer Card';
             }
+            field("ORB Regional Sales Executive"; Rec."ORB Regional Sales Executive")
+            {
+                Caption = 'Edit Regional Sales Executive';
+                ApplicationArea = all;
+                ToolTip = 'To Allow Regional Sales Executive Edit on the Customer Card';
+            }
+
         }
     }
 
