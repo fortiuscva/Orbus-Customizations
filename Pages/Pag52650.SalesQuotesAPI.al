@@ -666,14 +666,14 @@ page 52650 "ORB Sales Quotes API"
                 {
                     Caption = 'No. of Archived Versions';
                 }
-                field(orbBusinessDevelopment; Rec."ORB Business Development")
-                {
-                    Caption = 'Business Development';
-                }
-                field(orbCustomerSupport; Rec."ORB Customer Support")
-                {
-                    Caption = 'Customer Support';
-                }
+                // field(orbBusinessDevelopment; Rec."ORB Business Development")
+                // {
+                //     Caption = 'Business Development';
+                // }
+                // field(orbCustomerSupport; Rec."ORB Customer Support")
+                // {
+                //     Caption = 'Customer Support';
+                // }
                 field(orbDSPaymentAccountNo; Rec."ORB DS Payment Account No.")
                 {
                     Caption = 'DS Payment Account No.';
