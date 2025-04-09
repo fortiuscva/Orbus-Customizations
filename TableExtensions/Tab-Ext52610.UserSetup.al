@@ -22,6 +22,12 @@ tableextension 52610 "ORB User Setup" extends "User Setup"
             DataClassification = CustomerContent;
             Caption = 'Tax Liable Edit on the Customer is Allowed';
         }
+        field(52606; "ORB Versapay ID Edit Allowed"; Boolean)
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Versapay ID Edit Allowed';
+        }
+
     }
 
 }

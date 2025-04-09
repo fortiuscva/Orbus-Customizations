@@ -214,8 +214,34 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 RunPageLink = "Document Type" = field("Document Type"), "No." = field("No.");
             }
         }
+        addfirst(processing)
+        {
+            action("ORB Update Versapay ID")
+            {
+                Caption = 'Update Versapay ID';
+                Image = Edit;
+                ApplicationArea = all;
+                trigger OnAction()
+                var
+                    SalesOrderUpdate: Page "ORB Sales Order - Update";
+                    UserSetupRec: Record "User Setup";
+                    IsAuthorized: Boolean;
+                begin
+                    if UserSetupRec.Get(UserId) then
+                        if UserSetupRec."ORB Versapay ID Edit Allowed" then begin
+                            SalesOrderUpdate.LookupMode := true;
+                            SalesOrderUpdate.SetRec(Rec);
+                            SalesOrderUpdate.RunModal();
+                        end else
+                            Error('You do not have permission to edit the Versapay ID.');
+                end;
+
+            }
+        }
+
     }
 
     var
         OrbusFunctions: Codeunit "ORB Functions";
+        ORBCreateInventoryPick: Codeunit "ORB Create Inventory Pick";
 }
