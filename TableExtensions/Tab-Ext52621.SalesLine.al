@@ -81,7 +81,13 @@ tableextension 52621 "ORB Sales Line" extends "Sales Line"
             FieldClass = FlowField;
             calcformula = Lookup("Sales Header"."Order Status" where("Document Type" = const(Order), "No." = field("Document No.")));
         }
-
+        field(52120; "ORB Quote Status"; Enum QuoteStatus)
+        {
+            Caption = 'Quote Status';
+            Editable = false;
+            FieldClass = FlowField;
+            CalcFormula = Lookup("Sales Header"."Quote Status" where("Document Type" = const(Quote), "No." = field("Document No.")));
+        }
         modify(Quantity)
         {
             trigger OnAfterValidate()
