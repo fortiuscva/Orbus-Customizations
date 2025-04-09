@@ -243,5 +243,4 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
 
     var
         OrbusFunctions: Codeunit "ORB Functions";
-        ORBCreateInventoryPick: Codeunit "ORB Create Inventory Pick";
 }
