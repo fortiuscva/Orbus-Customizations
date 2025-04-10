@@ -139,6 +139,10 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 Editable = false;
             }
         }
+        modify("Campaign No.")
+        {
+            Editable = false;
+        }
     }
     actions
     {
