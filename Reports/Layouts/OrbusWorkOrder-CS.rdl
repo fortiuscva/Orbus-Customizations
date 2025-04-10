@@ -2029,7 +2029,13 @@
                               <Height>0.50299cm</Height>
                               <Width>4.00549cm</Width>
                               <ZIndex>20</ZIndex>
+                              <Visibility>
+                                <Hidden>true</Hidden>
+                              </Visibility>
                               <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
                                 <VerticalAlign>Top</VerticalAlign>
                               </Style>
                             </Textbox>
@@ -2056,7 +2062,13 @@
                               <Height>0.49717cm</Height>
                               <Width>4.3823cm</Width>
                               <ZIndex>21</ZIndex>
+                              <Visibility>
+                                <Hidden>true</Hidden>
+                              </Visibility>
                               <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
                                 <VerticalAlign>Top</VerticalAlign>
                               </Style>
                             </Textbox>
