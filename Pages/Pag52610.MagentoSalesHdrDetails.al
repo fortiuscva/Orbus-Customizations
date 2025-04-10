@@ -194,6 +194,10 @@ page 52610 "ORB Magento Sales Hdr. Details"
                 {
                     Caption = 'paymentMethodCode', Locked = true;
                 }
+                field(campaignNo; Rec."Campaign No.")
+                {
+                    Caption = 'campaignNo';
+                }
             }
         }
     }
