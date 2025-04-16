@@ -10,6 +10,12 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
             {
                 ApplicationArea = all;
                 Tooltip = 'Specifies Orbus Regional Sales Executive';
+                trigger OnValidate()
+                begin
+                    if UserSetupRecGbl.get(UserId) then
+                        if not (UserSetupRecGbl."ORB Regional Sales Executive") then
+                            Error(EditNotAllowedlbl, UserId);
+                end;
             }
 
             field("ORB Customer Support"; Rec."ORB Customer Support")
@@ -77,6 +83,12 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
         modify("Salesperson Code")
         {
             Caption = 'Key/National Account Manager';
+            trigger OnBeforeValidate()
+            begin
+                if UserSetupRecGbl.get(UserId) then
+                    if not (UserSetupRecGbl."ORB Key Account Manager") then
+                        Error(EditNotAllowedlbl, UserId);
+            end;
         }
         modify("Tax Liable")
         {
