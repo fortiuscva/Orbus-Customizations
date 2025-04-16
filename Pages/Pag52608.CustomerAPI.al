@@ -102,7 +102,7 @@ page 52608 "ORB Customer API"
                     Caption = 'This Year Sales Total';
                     Editable = false;
                 }
-                field(previousYearSales; Rec."ORB Previous Year Sales")
+                field(previousYearSales; Rec."ORB Prev Year Sales")
                 {
                     Caption = 'Previous Year Sales Total';
                     Editable = false;
