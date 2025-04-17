@@ -108,5 +108,22 @@ tableextension 52604 "ORB Sales Invoice Header" extends "Sales Invoice Header"
             Caption = 'Your Reference(CS)';
             DataClassification = ToBeClassified;
         }
+        field(52656; "ORB Customer Support"; Code[20])
+        {
+            Caption = 'Customer Support';
+            DataClassification = CustomerContent;
+            Editable = false;
+
+        }
+        field(52657; "ORB Business Development"; Code[20])
+        {
+            Caption = 'Business Development';
+            DataClassification = CustomerContent;
+            Editable = false;
+        }
+
+
+
+
     }
 }

@@ -191,6 +191,31 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         {
             Caption = 'Your Reference (API)';
         }
+        field(52656; "ORB Customer Support"; Code[20])
+        {
+            Caption = 'Customer Support';
+            DataClassification = CustomerContent;
+            Editable = false;
+        }
+        field(52657; "ORB Business Development"; Code[20])
+        {
+            Caption = 'Business Development';
+            DataClassification = CustomerContent;
+            Editable = false;
+        }
+        modify("Sell-to Customer No.")
+        {
+            trigger OnAfterValidate()
+            var
+                CustomerRecLcl: Record Customer;
+            begin
+                if CustomerRecLcl.get("Sell-to Customer No.") then begin
+                    Rec."ORB Customer Support" := CustomerRecLcl."ORB Customer Support";
+                    Rec."ORB Business Development" := CustomerRecLcl."ORB Business Development";
+                end;
+            end;
+        }
+
     }
 
     trigger OnDelete()
@@ -206,6 +231,7 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         contactRecLcl: Record Contact;
         ShippinAgenetCode: Code[10];
         ShippingAgentServiceCode: Code[20];
+
 
     begin
         if GuiAllowed then
