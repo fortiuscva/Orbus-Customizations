@@ -32,7 +32,7 @@ report 52617 "Purchase Order Inventory Tag"
             {
                 
             }
-            column(ItemVariant;ItemVariantVarGbl)
+            column(ItemVariant; ItemVariantVarGbl)
             {
                 
             }
@@ -151,6 +151,8 @@ report 52617 "Purchase Order Inventory Tag"
                                 ApplicationArea = All;
                             }
                         }
+
+                        
                 }
             }
     }
