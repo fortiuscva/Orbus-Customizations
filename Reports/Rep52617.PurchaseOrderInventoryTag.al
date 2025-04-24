@@ -32,6 +32,11 @@ report 52617 "Purchase Order Inventory Tag"
             {
                 
             }
+            column(ItemVariant;ItemVariantVarGbl)
+            {
+                
+            }
+           
             column(PurchaseOrderNumber; PurchaseOrderNumberVarGbl)
             {
                 
@@ -124,6 +129,12 @@ report 52617 "Purchase Order Inventory Tag"
                                     end; 
                                 end;
                          }
+                         field(ItemVariantVarGbl;ItemVariantVarGbl)
+                         {
+                            Caption = 'Item Variant';
+                            ApplicationArea = All;
+                            ToolTip = 'Item Variant';
+                         }
                         field(QuantityVarGbl;QuantityVarGbl)
                         {
                                 Caption = 'Quantity';
@@ -153,18 +164,19 @@ report 52617 "Purchase Order Inventory Tag"
         ConfirmOkVarLcl : Boolean;
         LocalReportReportLcl : Report "Purchase Order Inventory Tag";
      begin
-        ConfirmOkVarLcl := Confirm('Continue Printing Tag',true);
-        if ConfirmOkVarLcl then begin
+       // ConfirmOkVarLcl := Confirm('Continue Printing Tag',true);
+       // if ConfirmOkVarLcl then begin
             clear(LocalReportReportLcl);
             LocalReportReportLcl.Run;
-            end                
-        end;        
+           // end                
+       end;        
     var
         EncodedTextVarGbl:Text;   
         UserIDVarGbl: Code[100];
         WareHouseReceiptNoVarGbl:Code[20];
         QuantityVarGbl: Decimal;
         ItemNoVarGbl: Code[20];
+        ItemVariantVarGbl: Code[20];
         PurchaseOrderNumberVarGbl: Code[200];
         NotonDocumentVarGbl:Boolean;     
     }
