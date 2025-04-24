@@ -11,6 +11,37 @@
       <rd:DataSourceID>6bdeaf00-979d-473e-b0d0-2f827b246582</rd:DataSourceID>
     </DataSource>
   </DataSources>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+      <Fields>
+        <Field Name="BarcodeString">
+          <DataField>BarcodeString</DataField>
+        </Field>
+        <Field Name="PrintedBy">
+          <DataField>PrintedBy</DataField>
+        </Field>
+        <Field Name="Quantity">
+          <DataField>Quantity</DataField>
+        </Field>
+        <Field Name="QuantityFormat">
+          <DataField>QuantityFormat</DataField>
+        </Field>
+        <Field Name="ItemNo">
+          <DataField>ItemNo</DataField>
+        </Field>
+        <Field Name="ItemVariant">
+          <DataField>ItemVariant</DataField>
+        </Field>
+        <Field Name="PurchaseOrderNumber">
+          <DataField>PurchaseOrderNumber</DataField>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
   <ReportSections>
     <ReportSection>
       <Body>
@@ -66,7 +97,6 @@
                           </Style>
                         </Textbox>
                         <ColSpan>3</ColSpan>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -234,7 +264,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>1.76587in</Height>
+                  <Height>1.6in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -282,17 +312,17 @@
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="SourceNo">
+                        <Textbox Name="ItemVariant">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!ItemNo.Value</Value>
+                                  <Value>=Fields!ItemVariant.Value</Value>
                                   <Style>
                                     <FontStyle>Normal</FontStyle>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>12pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -302,7 +332,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>SourceNo</rd:DefaultName>
+                          <rd:DefaultName>ItemVariant</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -327,6 +357,7 @@
                           </Style>
                         </Textbox>
                         <ColSpan>3</ColSpan>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -495,7 +526,7 @@
             <DataSetName>DataSet_Result</DataSetName>
             <Top>0.14235in</Top>
             <Left>0.13416in</Left>
-            <Height>5.62757in</Height>
+            <Height>5.4617in</Height>
             <Width>10.92934in</Width>
             <Style>
               <Border>
@@ -810,6 +841,12 @@
       </Page>
     </ReportSection>
   </ReportSections>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfRows>2</NumberOfRows>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
   <Code>Public Function BlankZero(ByVal Value As Decimal)
     if Value = 0 then
         Return ""
@@ -878,32 +915,4 @@ AMJTL6jrBXamMOeqpdy89B9tK/OBKcy0TfD+pm1lYuhKbXsklnrePxGRICGVprm22/4kNwGQ/JgEVJux
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>0eeb6585-38ae-40f1-885b-8d50088d51b4</rd:ReportID>
-  <DataSets>
-    <DataSet Name="DataSet_Result">
-      <Fields>
-        <Field Name="BarcodeString">
-          <DataField>BarcodeString</DataField>
-        </Field>
-        <Field Name="PrintedBy">
-          <DataField>PrintedBy</DataField>
-        </Field>
-        <Field Name="Quantity">
-          <DataField>Quantity</DataField>
-        </Field>
-        <Field Name="QuantityFormat">
-          <DataField>QuantityFormat</DataField>
-        </Field>
-        <Field Name="ItemNo">
-          <DataField>ItemNo</DataField>
-        </Field>
-        <Field Name="PurchaseOrderNumber">
-          <DataField>PurchaseOrderNumber</DataField>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DataSource</DataSourceName>
-        <CommandText />
-      </Query>
-    </DataSet>
-  </DataSets>
 </Report>
