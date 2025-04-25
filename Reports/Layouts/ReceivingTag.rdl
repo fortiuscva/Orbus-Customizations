@@ -264,7 +264,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>1.6in</Height>
+                  <Height>1.5in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -293,7 +293,7 @@
                             <Border>
                               <Style>None</Style>
                             </Border>
-                            <VerticalAlign>Middle</VerticalAlign>
+                            <VerticalAlign>Top</VerticalAlign>
                             <PaddingLeft>3pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -308,7 +308,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.21609in</Height>
+                  <Height>0.32026in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -322,7 +322,7 @@
                                   <Value>=Fields!ItemVariant.Value</Value>
                                   <Style>
                                     <FontStyle>Normal</FontStyle>
-                                    <FontSize>12pt</FontSize>
+                                    <FontSize>19pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -353,11 +353,9 @@
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
                         <ColSpan>3</ColSpan>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -526,7 +524,7 @@
             <DataSetName>DataSet_Result</DataSetName>
             <Top>0.14235in</Top>
             <Left>0.13416in</Left>
-            <Height>5.4617in</Height>
+            <Height>5.46587in</Height>
             <Width>10.92934in</Width>
             <Style>
               <Border>
