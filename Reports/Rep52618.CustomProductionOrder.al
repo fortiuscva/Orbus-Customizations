@@ -32,7 +32,7 @@ report 52618 "ORB Custom Production Order"
     //  </REVISION>
     // </IW>
     DefaultLayout = RDLC;
-    RDLCLayout = '../Reports/Layouts/CustomProdOrderOrbus_desc.rdl';
+    RDLCLayout = './Reports/Layouts/CustomProdOrderOrbus_desc.rdl';
     UsageCategory = ReportsAndAnalysis;
     ApplicationArea = All;
     Caption = 'Custom Production Order';
