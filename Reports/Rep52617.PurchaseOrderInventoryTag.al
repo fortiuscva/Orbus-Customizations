@@ -176,7 +176,7 @@ report 52617 "Purchase Order Inventory Tag"
         WareHouseReceiptNoVarGbl:Code[20];
         QuantityVarGbl: Decimal;
         ItemNoVarGbl: Code[20];
-        ItemVariantVarGbl: Code[20];
+        ItemVariantVarGbl: Code[10];
         PurchaseOrderNumberVarGbl: Code[200];
         NotonDocumentVarGbl:Boolean;     
     }
