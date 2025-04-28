@@ -4,11 +4,11 @@ pageextension 52652 "ORB Case List WSG" extends "Case List WSG"
     {
         addlast(General)
         {
-            field("ORB Status"; Rec.Status)
+            field("ORB Shipment Date"; Rec."Shipment Date")
             {
-                Caption = 'Case Status';
+                Caption = 'Shipment Date';
                 ApplicationArea = All;
-                ToolTip = 'Case Status';
+                ToolTip = 'Shipment Date';
             }
         }
     }
