@@ -1,18 +1,15 @@
-pageextension 52654 "ORB Released Production Orders" extends "Released Production Orders"
+pageextension 52655 "ORB Released Production Order" extends "Released Production Order"
 {
-
     actions
     {
-
         modify(ProdOrderReport)
         {
-
             Visible = false;
 
         }
-        addafter("Production Order Statistics")
+        addafter("O&rder")
         {
-            action("ORB ProdOrderReportnew")
+            action("ORB ProdOrderReport")
             {
                 ApplicationArea = All;
                 Caption = 'Custom Production Order';
@@ -214,8 +211,7 @@ pageextension 52654 "ORB Released Production Orders" extends "Released Productio
                     ProductionOrderHeader.SetRange("No.", Rec."No.");
                     Report.RunModal(Report::"ORB Custom Production Order", true, true, ProductionOrderHeader);
                 end;
-            }
+           }
         }
-
     }
 }
