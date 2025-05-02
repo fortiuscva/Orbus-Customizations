@@ -49,6 +49,11 @@ tableextension 52610 "ORB User Setup" extends "User Setup"
             DataClassification = ToBeClassified;
             Caption = 'Key Account Edit Allowed';
         }
+        field(52609; "ORB Sales Return Del Allowed"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Sales Return Delete Allowed';
+        }
 
     }
 
