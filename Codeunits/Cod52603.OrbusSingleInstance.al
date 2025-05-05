@@ -168,6 +168,45 @@ codeunit 52603 "ORB Orbus Single Instance"
         LastActivityNo := LastActivityNoGbl;
     end;
 
+    procedure SetRunFromOrderConfirmation(SetRunFromOrderConfirmationPar: Boolean)
+    begin
+        SetRunFromOrderConfirmationGbl := SetRunFromOrderConfirmationPar;
+    end;
+
+    procedure GetRunFromOrderConfirmation(): Boolean
+    begin
+        exit(SetRunFromOrderConfirmationGbl);
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnAfterCopyToTempLines, '', false, false)]
+    local procedure "Sales-Post_OnAfterCopyToTempLines"(var TempSalesLine: Record "Sales Line" temporary; SalesHeader: Record "Sales Header")
+    var
+        SalesCommentLine: Record "Sales Comment Line";
+        HighestLineNo: Integer;
+    begin
+        if GetRunFromOrderConfirmation then begin
+            if TempSalesLine.FindSet() then
+                repeat
+                    HighestLineNo := TempSalesLine."Line No.";
+
+                    SalesCommentLine.Reset();
+                    SalesCommentLine.SetRange("Document Type", TempSalesLine."Document Type");
+                    SalesCommentLine.SetRange("No.", TempSalesLine."Document No.");
+                    SalesCommentLine.SetRange("Document Line No.", TempSalesLine."Line No.");
+                    if SalesCommentLine.FindSet() then
+                        repeat
+                            TempSalesLine.Init();
+                            TempSalesLine."Document No." := SalesCommentLine."No.";
+                            TempSalesLine."Line No." := HighestLineNo + 1;
+                            HighestLineNo := TempSalesLine."Line No.";
+                            TempSalesLine.Description := SalesCommentLine.Comment;
+                            TempSalesLine.Insert();
+                        until SalesCommentLine.Next() = 0;
+                until TempSalesLine.Next() = 0;
+        end;
+
+    end;
+
     var
         ShowDialogLookupProfileVarGbl: Boolean;
         ShowDialogSendEmailToCustVarGbl: Boolean;
@@ -187,4 +226,5 @@ codeunit 52603 "ORB Orbus Single Instance"
         MarkupAmountGbl: Decimal;
         FirstActivityNoGbl: Code[20];
         LastActivityNoGbl: Code[20];
+        SetRunFromOrderConfirmationGbl: Boolean;
 }
