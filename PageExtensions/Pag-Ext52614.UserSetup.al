@@ -54,7 +54,12 @@ pageextension 52614 "ORB User Setup" extends "User Setup"
                 ApplicationArea = all;
                 ToolTip = 'To Allow Key/National Account Manager Edit on the Customer Card';
             }
-
+            field("ORB Sales Return Del Allowed"; Rec."ORB Sales Return Del Allowed")
+            {
+                Caption = 'Allow Sales Return Deletion';
+                ApplicationArea = all;
+                ToolTip = 'To Allow Sales Return Deletion';
+            }
         }
     }
 

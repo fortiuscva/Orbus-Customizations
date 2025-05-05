@@ -336,6 +336,15 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
     begin
         if SalesHeaderAdditionalFields.Get(Rec."Document Type", Rec."No.") then
             SalesHeaderAdditionalFields.Delete(true);
+        if GuiAllowed then
+            if (Rec."Document Type" = Rec."Document Type"::"Return Order") then
+                if UserSetupRecGbl.get(UserId) then
+                    if not UserSetupRecGbl."ORB Sales Return Del Allowed" then
+                        Error(DeletionErrorMsgLbl,UserId);
+
+
+
+        
     end;
 
     trigger OnAfterInsert()
@@ -391,4 +400,6 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
 
     var
         LocationNotFoundlbl: Label 'Location is missing for this order: %1';
+        UserSetupRecGbl: Record "User Setup";
+        DeletionErrorMsgLbl: Label '%1 not allowed to delete';
 }
