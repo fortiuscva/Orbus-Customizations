@@ -215,6 +215,118 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
                 end;
             end;
         }
+        modify("Ship-to Code")
+        {
+            trigger OnAfterValidate()
+            var
+                ORBFunctions: codeunit "ORB Functions";
+            begin
+                if CurrFieldNo = FieldNo("Ship-to Code") then
+                    if (Rec."Ship-to Code" <> '') and (Rec."Ship-to Code" <> xRec."Ship-to Code") then
+                        ORBFunctions.AutomaticShipToAddressValidation(Rec);
+            end;
+        }
+        modify("Ship-to Name")
+        {
+            trigger OnAfterValidate()
+            var
+                ORBFunctions: codeunit "ORB Functions";
+            begin
+                if CurrFieldNo = FieldNo("Ship-to Name") then
+                    if (Rec."Ship-to Name" <> '') and (Rec."Ship-to Name" <> xRec."Ship-to Name") then
+                        ORBFunctions.AutomaticShipToAddressValidation(Rec);
+            end;
+        }
+        modify("Ship-to Address")
+        {
+            trigger OnAfterValidate()
+            var
+                ORBFunctions: codeunit "ORB Functions";
+            begin
+                if CurrFieldNo = FieldNo("Ship-to Address") then
+                    if (Rec."Ship-to Address" <> '') and (Rec."Ship-to Address" <> xRec."Ship-to Address") then
+                        ORBFunctions.AutomaticShipToAddressValidation(Rec);
+            end;
+        }
+        modify("Ship-to Address 2")
+        {
+            trigger OnAfterValidate()
+            var
+                ORBFunctions: codeunit "ORB Functions";
+            begin
+                if CurrFieldNo = FieldNo("Ship-to Address 2") then
+                    if (Rec."Ship-to Address 2" <> '') and (Rec."Ship-to Address 2" <> xRec."Ship-to Address 2") then
+                        ORBFunctions.AutomaticShipToAddressValidation(Rec);
+            end;
+        }
+        modify("Ship-to City")
+        {
+            trigger OnAfterValidate()
+            var
+                ORBFunctions: codeunit "ORB Functions";
+            begin
+                if CurrFieldNo = FieldNo("Ship-to City") then
+                    if (Rec."Ship-to City" <> '') and (Rec."Ship-to City" <> xRec."Ship-to City") then
+                        ORBFunctions.AutomaticShipToAddressValidation(Rec);
+            end;
+        }
+        modify("Ship-to County")
+        {
+            trigger OnAfterValidate()
+            var
+                ORBFunctions: codeunit "ORB Functions";
+            begin
+                if CurrFieldNo = FieldNo("Ship-to County") then
+                    if (Rec."Ship-to County" <> '') and (Rec."Ship-to County" <> xRec."Ship-to County") then
+                        ORBFunctions.AutomaticShipToAddressValidation(Rec);
+            end;
+        }
+        modify("Ship-to Post Code")
+        {
+            trigger OnAfterValidate()
+            var
+                ORBFunctions: codeunit "ORB Functions";
+            begin
+                if CurrFieldNo = FieldNo("Ship-to Post Code") then
+                    if (Rec."Ship-to Post Code" <> '') and (Rec."Ship-to Post Code" <> xRec."Ship-to Post Code") then
+                        ORBFunctions.AutomaticShipToAddressValidation(Rec);
+            end;
+        }
+        modify("Ship-to Country/Region Code")
+        {
+            trigger OnAfterValidate()
+            var
+                ORBFunctions: codeunit "ORB Functions";
+            begin
+                if CurrFieldNo = FieldNo("Ship-to Country/Region Code") then
+                    if (Rec."Ship-to Country/Region Code" <> '') and (Rec."Ship-to Country/Region Code" <> xRec."Ship-to Country/Region Code") then
+                        ORBFunctions.AutomaticShipToAddressValidation(Rec);
+            end;
+        }
+        modify("Ship-to Phone No.")
+        {
+            trigger OnAfterValidate()
+            var
+                ORBFunctions: codeunit "ORB Functions";
+            begin
+                if CurrFieldNo = FieldNo("Ship-to Phone No.") then
+                    if (Rec."Ship-to Phone No." <> '') and (Rec."Ship-to Phone No." <> xRec."Ship-to Phone No.") then
+                        ORBFunctions.AutomaticShipToAddressValidation(Rec);
+            end;
+        }
+
+        modify("Ship-to Contact")
+        {
+            trigger OnAfterValidate()
+            var
+                ORBFunctions: codeunit "ORB Functions";
+            begin
+                if CurrFieldNo = FieldNo("Ship-to Contact") then
+                    if (Rec."Ship-to Contact" <> '') and (Rec."Ship-to Contact" <> xRec."Ship-to Contact") then
+                        ORBFunctions.AutomaticShipToAddressValidation(Rec);
+            end;
+        }
+
 
     }
 
