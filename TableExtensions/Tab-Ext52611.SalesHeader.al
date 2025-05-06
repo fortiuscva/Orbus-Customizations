@@ -223,11 +223,10 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             var
                 CustomerRecLcl: Record Customer;
             begin
-                if GuiAllowed() then
-                    if CustomerRecLcl.get("Sell-to Customer No.") then begin
-                        Rec."ORB Customer Support" := CustomerRecLcl."ORB Customer Support";
-                        Rec."ORB Business Development" := CustomerRecLcl."ORB Business Development";
-                    end;
+                if CustomerRecLcl.get("Sell-to Customer No.") then begin
+                    Rec."ORB Customer Support" := CustomerRecLcl."ORB Customer Support";
+                    Rec."ORB Business Development" := CustomerRecLcl."ORB Business Development";
+                end;
             end;
         }
         modify("Ship-to Code")
