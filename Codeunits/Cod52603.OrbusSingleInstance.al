@@ -168,6 +168,17 @@ codeunit 52603 "ORB Orbus Single Instance"
         LastActivityNo := LastActivityNoGbl;
     end;
 
+    procedure SetRunFromOrderConfirmation(RunFromOrderConfirmationPar: Boolean)
+    begin
+        RunFromOrderConfirmationGbl := RunFromOrderConfirmationPar;
+    end;
+
+    procedure GetRunFromOrderConfirmation(): Boolean
+    begin
+        exit(RunFromOrderConfirmationGbl);
+    end;
+
+
     var
         ShowDialogLookupProfileVarGbl: Boolean;
         ShowDialogSendEmailToCustVarGbl: Boolean;
@@ -187,4 +198,5 @@ codeunit 52603 "ORB Orbus Single Instance"
         MarkupAmountGbl: Decimal;
         FirstActivityNoGbl: Code[20];
         LastActivityNoGbl: Code[20];
+        RunFromOrderConfirmationGbl: Boolean;
 }
