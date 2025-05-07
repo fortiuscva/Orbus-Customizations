@@ -642,6 +642,35 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         SalesHeader.TestField("Ship-to Contact");
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnAfterCopyToTempLines, '', false, false)]
+    local procedure "Sales-Post_OnAfterCopyToTempLines"(var TempSalesLine: Record "Sales Line" temporary; SalesHeader: Record "Sales Header")
+    var
+        SalesCommentLine: Record "Sales Comment Line";
+        HighestLineNo: Integer;
+        SingleInstanceCU: Codeunit "ORB Orbus Single Instance";
+    begin
+        if SingleInstanceCU.GetRunFromOrderConfirmation then begin
+            if TempSalesLine.FindSet() then
+                repeat
+                    HighestLineNo := TempSalesLine."Line No.";
+
+                    SalesCommentLine.Reset();
+                    SalesCommentLine.SetRange("Document Type", TempSalesLine."Document Type");
+                    SalesCommentLine.SetRange("No.", TempSalesLine."Document No.");
+                    SalesCommentLine.SetRange("Document Line No.", TempSalesLine."Line No.");
+                    if SalesCommentLine.FindSet() then
+                        repeat
+                            TempSalesLine.Init();
+                            TempSalesLine."Document No." := SalesCommentLine."No.";
+                            TempSalesLine."Line No." := HighestLineNo + 1;
+                            HighestLineNo := TempSalesLine."Line No.";
+                            TempSalesLine.Description := SalesCommentLine.Comment;
+                            TempSalesLine.Insert();
+                        until SalesCommentLine.Next() = 0;
+                until TempSalesLine.Next() = 0;
+        end;
+    end;
+
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
         OrbusFunctionsCUGbl: Codeunit "ORB Functions";
