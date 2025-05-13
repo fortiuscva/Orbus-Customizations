@@ -119,9 +119,12 @@ tableextension 52604 "ORB Sales Invoice Header" extends "Sales Invoice Header"
             DataClassification = CustomerContent;
             Editable = false;
         }
-
-
-
-
+        field(52658; "ORB Order Status"; Enum OrderStatus)
+        {
+            Caption = 'Order Status';
+            Editable = false;
+            FieldClass = FlowField;
+            calcformula = Lookup("Sales Header"."Order Status" where("No." = field("No.")));
+        }
     }
 }

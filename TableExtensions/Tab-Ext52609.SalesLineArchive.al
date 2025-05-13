@@ -35,5 +35,12 @@ tableextension 52609 "ORB Sales Line Archive" extends "Sales Line Archive"
             FieldClass = FlowField;
             CalcFormula = lookup("Sales Header Archive"."Ship-to County" where("Document Type" = field("Document Type"), "No." = field("Document No."), "Version No." = field("Version No.")));
         }
+        field(52119; "ProductLine Dim"; Code[20])
+        {
+            Caption = 'ProductLine Dim';
+            Editable = false;
+            FieldClass = FlowField;
+            CalcFormula = lookup("Dimension Set Entry"."Dimension Value Code" where("Dimension Set ID" = field("Dimension Set ID"), "Dimension Code" = const('PRDLN')));
+        }
     }
 }
