@@ -121,8 +121,29 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
         {
             trigger OnAfterValidate()
             begin
+                Message('Please Do not forgot to Send Order Confirmation Email');
                 CurrPage.Update(true);
             end;
+        }
+        addafter("Order Status")
+        {
+            field("ORB Send Order Confirmation Email"; SendOrderConfirmationEmailLbl)
+            {
+                ApplicationArea = Basic, Suite;
+                Editable = false;
+                ShowCaption = false;
+                Style = StrongAccent;
+                StyleExpr = true;
+                ToolTip = 'Click this to Send Order Confirmation Email';
+
+                trigger OnDrillDown()
+                begin
+                    if Rec."Location Code" = '' then
+                        Error(LocationNotFoundlbl, Rec."No.");
+
+                    OrbusFunctions.SendOrderConfirmationEmailItem(Rec, false);
+                end;
+            }
         }
         addafter("Sell-to Customer Name")
         {
@@ -317,6 +338,6 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
     var
         OrbusFunctions: Codeunit "ORB Functions";
         ORBCreateInventoryPick: Codeunit "ORB Create Inventory Pick";
-
-
+        SendOrderConfirmationEmailLbl: Label 'Send Order Confirmation Email';
+        LocationNotFoundlbl: Label 'Location is missing for this order: %1';
 }
