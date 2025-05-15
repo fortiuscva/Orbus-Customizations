@@ -1,15 +1,15 @@
 codeunit 52616 "ORB Sales Order Status"
 {
     [ServiceEnabled]
-    procedure GetSalesOrderStatus(SalesOrderNo: Code[20]): Text
+    procedure GetSalesOrderStatus(salesOrderNo: Code[20]): Text
     var
         SalesHeader: Record "Sales Header";
         PostedSalesInvoice: Record "Sales Invoice Header";
     begin
         SalesHeader.SetRange("Document Type", SalesHeader."Document Type"::Order);
-        SalesHeader.SetRange("No.", SalesOrderNo);
+        SalesHeader.SetRange("No.", salesOrderNo);
         if SalesHeader.FindFirst() then begin
-            PostedSalesInvoice.SetRange("Order No.", SalesOrderNo);
+            PostedSalesInvoice.SetRange("Order No.", salesOrderNo);
             if PostedSalesInvoice.FindFirst() then
                 exit('Invoiced');
             if SalesHeader."Shipped" and not SalesHeader."Shipped Not Invoiced" then
@@ -21,6 +21,6 @@ codeunit 52616 "ORB Sales Order Status"
             else
                 exit('OrderReceived');
         end else
-            Error('Sales Order %1 not found.', SalesOrderNo);
+            Error('Sales Order %1 not found.', salesOrderNo);
     end;
 }
