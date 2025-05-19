@@ -671,159 +671,48 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         end;
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Inventory Put-away", OnAfterInsertWhseActivLine, '', false, false)]
-    local procedure WhsePick_OnAfterInsertWhseActivLine(var WarehouseActivityLine: Record "Warehouse Activity Line"; SNRequired: Boolean; LNRequired: Boolean)
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Inventory Pick/Movement", OnBeforeFindFromBinContent, '', false, false)]
+    local procedure "Create Inventory Pick/Movement_OnBeforeFindFromBinContent"(var FromBinContent: Record "Bin Content"; var WarehouseActivityLine: Record "Warehouse Activity Line"; FromBinCode: Code[20]; BinCode: Code[20]; IsInvtMovement: Boolean; IsBlankInvtMovement: Boolean; DefaultBin: Boolean; WhseItemTrackingSetup: Record "Item Tracking Setup" temporary; var WarehouseActivityHeader: Record "Warehouse Activity Header"; var WarehouseRequest: Record "Warehouse Request")
     var
         UserPickZone: Record "ORB User Pick Zone";
+        Zone: Record Zone;
     begin
-        if not GetUserPickZone(WarehouseActivityLine."Location Code", UserPickZone) then
-            Error('No zone assigned to the current user for Location %1.', WarehouseActivityLine."Location Code");
+        if not OrbusSetup.Get() or not OrbusSetup."Enable User Pick Zone" then
+            exit;
 
-        if (WarehouseActivityLine."Activity Type" = WarehouseActivityLine."Activity Type"::Pick) and
-           (WarehouseActivityLine."Source Type" = Database::"Production Order") then
+        if WarehouseActivityLine."Source Type" = DATABASE::"Production Order" then
             exit;
 
         case WarehouseActivityLine."Activity Type" of
             WarehouseActivityLine."Activity Type"::"Invt. Pick":
-                CreateInventoryPick(WarehouseActivityLine, UserPickZone);
+                ;
             WarehouseActivityLine."Activity Type"::Pick:
-                CreateWarehousePick(WarehouseActivityLine, UserPickZone);
-        end;
-    end;
-
-    procedure CreateInventoryPick(var WarehouseActivityLine: Record "Warehouse Activity Line"; UserPickZone: Record "ORB User Pick Zone")
-    var
-        BinContent: Record "Bin Content";
-        RemainingQty, AvailableQty : Decimal;
-        NewLine: Record "Warehouse Activity Line";
-    begin
-        ValidateUserZone(UserPickZone);
-        WarehouseActivityLine.Validate("Zone Code", UserPickZone."Zone Code");
-        RemainingQty := WarehouseActivityLine.Quantity;
-
-        SetupBinContentFilter(BinContent, WarehouseActivityLine, UserPickZone);
-
-        if BinContent.FindSet() then begin
-            repeat
-                AvailableQty := Min(BinContent.Quantity, RemainingQty);
-
-                if RemainingQty = WarehouseActivityLine.Quantity then begin
-                    WarehouseActivityLine.Validate("Bin Code", BinContent."Bin Code");
-                    WarehouseActivityLine.Validate(Quantity, AvailableQty);
-                    WarehouseActivityLine.Modify();
-                end else begin
-                    NewLine := WarehouseActivityLine;
-                    NewLine."Line No." := GetNextLineNo(WarehouseActivityLine);
-                    NewLine.Quantity := AvailableQty;
-                    NewLine.Validate("Bin Code", BinContent."Bin Code");
-                    NewLine.Insert();
-                end;
-
-                RemainingQty -= AvailableQty;
-            until (BinContent.Next() = 0) or (RemainingQty <= 0);
+                if WarehouseActivityLine."Action Type" <> WarehouseActivityLine."Action Type"::Take then
+                    exit;
+            else
+                exit;
         end;
 
-        if RemainingQty > 0 then
-            Error('Not enough inventory available in your assigned zone (%1) to fulfill pick.', UserPickZone."Zone Code");
-    end;
-
-    procedure CreateWarehousePick(var WarehouseActivityLine: Record "Warehouse Activity Line"; UserPickZone: Record "ORB User Pick Zone")
-    var
-        BinContent: Record "Bin Content";
-        RemainingQty, AvailableQty : Decimal;
-        Line: Record "Warehouse Activity Line";
-        NewLine: Record "Warehouse Activity Line";
-    begin
-        ValidateUserZone(UserPickZone);
-
-        Line.SetRange("No.", WarehouseActivityLine."No.");
-        Line.SetRange("Location Code", WarehouseActivityLine."Location Code");
-        Line.SetRange("Activity Type", Line."Activity Type"::Pick);
-
-        if Line.FindSet() then
-            repeat
-                Line.Validate("Zone Code", UserPickZone."Zone Code");
-                RemainingQty := Line.Quantity;
-
-                SetupBinContentFilter(BinContent, Line, UserPickZone);
-
-                if BinContent.FindSet() then begin
-                    repeat
-                        AvailableQty := Min(BinContent.Quantity, RemainingQty);
-
-                        if RemainingQty = Line.Quantity then begin
-                            Line.Validate("Bin Code", BinContent."Bin Code");
-                            Line.Validate(Quantity, AvailableQty);
-                            Line.Modify();
-                        end else begin
-                            NewLine := Line;
-                            NewLine."Line No." := GetNextLineNo(Line);
-                            NewLine.Quantity := AvailableQty;
-                            NewLine.Validate("Bin Code", BinContent."Bin Code");
-                            NewLine.Insert();
-                        end;
-
-                        RemainingQty -= AvailableQty;
-                    until (BinContent.Next() = 0) or (RemainingQty <= 0);
-                end;
-
-                if RemainingQty > 0 then
-                    Error('Not enough inventory in your assigned zone (%1) to fulfill the pick for item %2.', UserPickZone."Zone Code", Line."Item No.");
-            until Line.Next() = 0;
-    end;
-
-    local procedure GetUserPickZone(LocationCode: Code[10]; var UserPickZone: Record "ORB User Pick Zone"): Boolean
-    begin
         UserPickZone.SetRange("User ID", UserId);
-        UserPickZone.SetRange("Location Code", LocationCode);
-        exit(UserPickZone.FindFirst());
-    end;
+        UserPickZone.SetRange("Location Code", WarehouseActivityLine."Location Code");
+        if not UserPickZone.FindFirst() then
+            exit;
 
-    local procedure SetupBinContentFilter(var BinContent: Record "Bin Content"; WarehouseActivityLine: Record "Warehouse Activity Line"; UserPickZone: Record "ORB User Pick Zone")
-    begin
-        BinContent.Reset();
-        BinContent.SetRange("Location Code", WarehouseActivityLine."Location Code");
-        BinContent.SetRange("Zone Code", UserPickZone."Zone Code");
-        BinContent.SetRange("Item No.", WarehouseActivityLine."Item No.");
-        BinContent.SetRange("Variant Code", WarehouseActivityLine."Variant Code");
-        BinContent.SetFilter("Quantity", '>%1', 0);
-        BinContent.SetCurrentKey("Bin Ranking", "Bin Code");
-        BinContent.Ascending(true);
-    end;
+        Zone.SetRange(Code, UserPickZone."Zone Code");
+        Zone.SetRange("Location Code", FromBinContent."Location Code");
+        if not Zone.FindFirst() then
+            Error('Zone "%1" assigned to user "%2" does not exist in the Warehouse Zone table.', UserPickZone."Zone Code", UserId);
 
-    local procedure ValidateUserZone(UserPickZone: Record "ORB User Pick Zone")
-    var
-        Zone: Record Zone;
-    begin
-        if not Zone.Get(UserPickZone."Location Code", UserPickZone."Zone Code") then
-            Error('Assigned zone %1 for user is not a valid Warehouse Zone.', UserPickZone."Zone Code");
-    end;
+        if FromBinContent.GetFilter("Bin Code") <> '' then
+            FromBinContent.SetRange("Bin Code");
 
-    local procedure Min(a: Decimal; b: Decimal): Decimal
-    begin
-        if a < b then
-            exit(a);
-        exit(b);
-    end;
-
-    local procedure GetNextLineNo(WhseActivLine: Record "Warehouse Activity Line"): Integer
-    var
-        WhseActivLine2: Record "Warehouse Activity Line";
-        MaxLineNo: Integer;
-    begin
-        WhseActivLine2.SetRange("Location Code", WhseActivLine."Location Code");
-        WhseActivLine2.SetRange("No.", WhseActivLine."No.");
-        if WhseActivLine2.FindLast() then
-            MaxLineNo := WhseActivLine2."Line No."
-        else
-            MaxLineNo := 0;
-
-        exit(MaxLineNo + 10000);
+        FromBinContent.SetRange("Zone Code", UserPickZone."Zone Code");
     end;
 
 
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
         OrbusFunctionsCUGbl: Codeunit "ORB Functions";
+        OrbusSetup: Record "ORB Orbus Setup";
 
 }
