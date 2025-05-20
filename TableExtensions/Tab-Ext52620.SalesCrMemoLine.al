@@ -6,7 +6,6 @@ tableextension 52620 "ORB Sales Cr.Memo Line" extends "Sales Cr.Memo Line"
         //52601 Occupied in Sales Line Archive table
         //52119 Occupied in Sales Line table
         //52121 Occupied in Sales Line table
-
         field(52605; "ORB Magento Artwork Job ID"; Text[20])
         {
             Caption = 'Magento Artwork Job ID';
