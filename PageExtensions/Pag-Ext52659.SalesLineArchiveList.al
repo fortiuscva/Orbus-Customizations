@@ -4,7 +4,7 @@ pageextension 52659 "ORB Sales Line Archive List" extends "Sales Line Archive Li
     {
         addafter("Amount Including VAT")
         {
-            field("ORB ProductLine Dim"; Rec."ProductLine Dim")
+            field("ORB ProductLine Dim"; Rec."ORB ProductLine Dim")
             {
                 ApplicationArea = All;
             }
