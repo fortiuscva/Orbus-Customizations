@@ -1,4 +1,4 @@
-page 53412 "ORB Orbus Setup"
+page 52656 "ORB Orbus Setup"
 {
     ApplicationArea = All;
     Caption = 'ORB Orbus Setup';
