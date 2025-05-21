@@ -71,6 +71,21 @@ pageextension 52649 "ORB Whse. Item Journal" extends "Whse. Item Journal"
                         LIFTIntegration.ParseData(LIFTERPSetupRecLcl."Inventory Journal API", LIFTAPICodes.GetInventoryJournalAPICode());
                 end;
             }
+            action("ORB Import Bin Content")
+            {
+                ApplicationArea = All;
+                Caption = 'Import Bin Content';
+                Ellipsis = true;
+                Image = Import;
+                Promoted = true;
+                PromotedCategory = Process;
+
+                trigger OnAction()
+                begin
+                    ReadExcelSheet();
+                    ImportBinContentLines();
+                end;
+            }
         }
     }
 
@@ -87,5 +102,90 @@ pageextension 52649 "ORB Whse. Item Journal" extends "Whse. Item Journal"
         LiftFunctions: Codeunit "ORB LIFT Functions";
         IsLIFTERPFunctionEnabled: Boolean;
         RollupCostConfirmMsgLbl: Label 'Do you want to roll up material cost to finished goods?';
+        TempExcelBufferRecGbl: Record "Excel Buffer" temporary;
+        FileNameVarLcl: Text[100];
+        SheetNameVarLcl: Text[100];
+        UploadExcelMsg: Label 'Please Choose the Excel file.';
+        NoFileFoundMsg: Label 'No Excel file found!';
+        ExcelImportSucess: Label 'Excel is successfully imported.';
+
+    local procedure ReadExcelSheet()
+    var
+        FileMgtCULcl: Codeunit "File Management";
+        IStreamVarLcl: InStream;
+        FromFileVarLcl: Text[100];
+    begin
+        UploadIntoStream(UploadExcelMsg, '', '', FromFileVarLcl, IStreamVarLcl);
+        if FromFileVarLcl <> '' then begin
+            FileNameVarLcl := FileMgtCULcl.GetFileName(FromFileVarLcl);
+            SheetNameVarLcl := TempExcelBufferRecGbl.SelectSheetsNameStream(IStreamVarLcl);
+        end else
+            Error(NoFileFoundMsg);
+        TempExcelBufferRecGbl.Reset();
+        TempExcelBufferRecGbl.DeleteAll();
+        TempExcelBufferRecGbl.OpenBookStream(IStreamVarLcl, SheetNameVarLcl);
+        TempExcelBufferRecGbl.ReadSheet();
+    end;
+
+    local procedure ImportBinContentLines()
+    var
+        WarehouseJournalLineRecLcl: Record "Warehouse Journal Line";
+        RowNoVarLcl: Integer;
+        ColNoVarLcl: Integer;
+        LineNoVarLcl: Integer;
+        MaxRowNoVarLcl: Integer;
+        QtyVarLcl: Decimal;
+        QtyPerUOMVarLcl: Decimal;
+        QtyBaseVarLcl: Decimal;
+        countImported: Integer;
+    begin
+
+        RowNoVarLcl := 0;
+        ColNoVarLcl := 0;
+        MaxRowNoVarLcl := 0;
+        LineNoVarLcl := 0;
+
+        TempExcelBufferRecGbl.Reset();
+        if TempExcelBufferRecGbl.FindLast() then begin
+            MaxRowNoVarLcl := TempExcelBufferRecGbl."Row No.";
+        end;
+        for RowNoVarLcl := 2 to MaxRowNoVarLcl do begin
+            WarehouseJournalLineRecLcl.Reset();
+            // WarehouseJournalLineRecLcl.SetRange("Journal Template Name", Rec."Journal Template Name");
+            // WarehouseJournalLineRecLcl.SetRange("Journal Batch Name", Rec."Journal Batch Name");
+            WarehouseJournalLineRecLcl.SetRange("Location Code", GetValueAtCell(RowNoVarLcl, 10));
+            WarehouseJournalLineRecLcl.SetRange("Item No.", GetValueAtCell(RowNoVarLcl, 4));
+            WarehouseJournalLineRecLcl.SetRange("Bin Code", GetValueAtCell(RowNoVarLcl, 3));
+            WarehouseJournalLineRecLcl.SetRange("Variant Code", GetValueAtCell(RowNoVarLcl, 9));
+            if WarehouseJournalLineRecLcl.FindFirst() then begin
+                // WarehouseJournalLineRecLcl.Validate("Item No.", GetValueAtCell(RowNoVarLcl, 4));
+                // WarehouseJournalLineRecLcl.Validate("Bin Code", GetValueAtCell(RowNoVarLcl, 3));
+                WarehouseJournalLineRecLcl.Validate("Unit of Measure Code", GetValueAtCell(RowNoVarLcl, 5));
+                // WarehouseJournalLineRecLcl.Validate("Variant Code", GetValueAtCell(RowNoVarLcl, 9));
+                WarehouseJournalLineRecLcl.Validate("Zone Code", GetValueAtCell(RowNoVarLcl, 11));
+                Evaluate(QtyVarLcl, GetValueAtCell(RowNoVarLcl, 12));
+                WarehouseJournalLineRecLcl.Validate(Quantity, QtyVarLcl);
+                Evaluate(QtyPerUOMVarLcl, GetValueAtCell(RowNoVarLcl, 13));
+                WarehouseJournalLineRecLcl.Validate("Qty. per Unit of Measure", QtyPerUOMVarLcl);
+                WarehouseJournalLineRecLcl.Validate("From Bin Type Code", GetValueAtCell(RowNoVarLcl, 17));
+                Evaluate(QtyBaseVarLcl, GetValueAtCell(RowNoVarLcl, 19));
+                WarehouseJournalLineRecLcl.Validate("Qty. (Base)", QtyBaseVarLcl);
+                WarehouseJournalLineRecLcl.Validate(Description, GetValueAtCell(RowNoVarLcl, 28));
+                WarehouseJournalLineRecLcl.Modify();
+                countImported += 1;
+            end;
+        end;
+        Message(ExcelImportSucess + ' %1 lines updated.', countImported);
+    end;
+
+    local procedure GetValueAtCell(RowNoVarLcl: Integer; ColNoVarLcl: Integer): Text
+    begin
+
+        TempExcelBufferRecGbl.Reset();
+        If TempExcelBufferRecGbl.Get(RowNoVarLcl, ColNoVarLcl) then
+            exit(TempExcelBufferRecGbl."Cell Value as Text")
+        else
+            exit('');
+    end;
 
 }
