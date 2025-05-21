@@ -248,6 +248,11 @@ table 53400 "ORB LIFT Sales Order Buffer"
         {
             Caption = 'Created At';
         }
+        field(55119; "ORB LIFT Status"; enum "ORB LIFT Status")
+        {
+            Caption = 'LIFT Status';
+            DataClassification = CustomerContent;
+        }
     }
     keys
     {
