@@ -106,7 +106,10 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
     procedure ValidateSalesLineFields(var SalesLine: Record "Sales Line"; var LIFTSalesLineBuffer: Record "ORB LIFT Sales Line Buffer")
     begin
         SalesLine.Validate("Sell-to Customer No.", LIFTSalesLineBuffer."Sell-to Customer No.");
-        SalesLine.Validate(Type, LIFTSalesLineBuffer.Type);
+        if LIFTSalesLineBuffer.Type = LIFTSalesLineBuffer.Type::Comment then
+            SalesLine.Validate(Type, SalesLine.Type::" ")
+        else
+            SalesLine.Validate(Type, LIFTSalesLineBuffer.Type);
         SalesLine.Validate("No.", LIFTSalesLineBuffer."No.");
         SalesLine.Validate("Location Code", LIFTSalesLineBuffer."Location Code");
         SalesLine.Validate("Shipment Date", LIFTSalesLineBuffer."Shipment Date");
