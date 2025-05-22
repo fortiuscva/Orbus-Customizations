@@ -190,7 +190,7 @@ table 53400 "ORB LIFT Sales Order Buffer"
         {
             Caption = 'Shipping Agent Service Code';
             DataClassification = CustomerContent;
-            TableRelation = "Shipping Agent Services";
+            TableRelation = "Shipping Agent Services".Code where("Shipping Agent Code" = field("Shipping Agent Code"));
         }
         field(50102; "Order Status"; enum OrderStatus)
         {
