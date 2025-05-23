@@ -75,12 +75,21 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
     end;
 
     procedure PropagateOnSalesLineInsert(var LIFTSalesLineBuffer: Record "ORB LIFT Sales Line Buffer")
+    var
+        LineNoLcl: Integer;
     begin
-        if not SalesLine.Get(LIFTSalesLineBuffer."Document Type", LIFTSalesLineBuffer."Document No.", LIFTSalesLineBuffer."Line No.") then begin
+        SalesLine.SetRange("Document Type", LIFTSalesLineBuffer."Document Type"::Order);
+        SalesLine.SetRange("Document No.", LIFTSalesLineBuffer."Document No.");
+        if SalesLine.FindLast() then
+            LineNoLcl := LineNoLcl + 10000
+        else
+            LineNoLcl := 10000;
+
+        if not SalesLine.(LIFTSalesLineBuffer."Document Type", LIFTSalesLineBuffer."Document No.", LineNoLcl) then begin
             SalesLine.Init();
             SalesLine.Validate("Document Type", LIFTSalesLineBuffer."Document Type");
             SalesLine.Validate("Document No.", LIFTSalesLineBuffer."Document No.");
-            SalesLine.Validate("Line No.", LIFTSalesLineBuffer."Line No.");
+            SalesLine.Validate("Line No.", LineNoLcl);
             SalesLine.Insert();
         end;
 
