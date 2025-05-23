@@ -128,12 +128,21 @@ page 53412 "ORB LIFT SL Buffer API"
     var
         LIFTSalesLineBuffer: Record "ORB LIFT Sales Line Buffer";
     begin
+
+        // LIFTSalesLineBuffer.SetRange("Document Type", LIFTSalesLineBuffer."Document Type"::Order);
+        // LIFTSalesLineBuffer.SetRange("Document No.", Rec."Document No.");
+        // if LIFTSalesLineBuffer.FindLast() then
+        //     Rec."Line No." := LIFTSalesLineBuffer."Line No." + 10000
+        // else
+        //     Rec."Line No." := 10000;
+        
         LIFTSalesLineBuffer.SetRange("Document Type", LIFTSalesLineBuffer."Document Type"::Order);
         LIFTSalesLineBuffer.SetRange("Document No.", Rec."Document No.");
         if LIFTSalesLineBuffer.FindLast() then
             Rec."Line No." := LIFTSalesLineBuffer."Line No." + 10000
         else
             Rec."Line No." := 10000;
+
 
         LIFTSalesOrderMgmt.PropagateOnSalesLineInsert(Rec);
     end;
