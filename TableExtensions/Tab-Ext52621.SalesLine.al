@@ -100,6 +100,20 @@ tableextension 52621 "ORB Sales Line" extends "Sales Line"
                 //end;
             end;
         }
+        field(52121; "ORB Custom"; Boolean)
+        {
+            Caption = 'Custom';
+            Editable = false;
+            FieldClass = FlowField;
+            calcformula = Lookup("Sales Header".Custom where("Document Type" = const(Order), "No." = field("Document No.")));
+        }
+        field(52122; "ORB ProductLine Dim"; Code[20])
+        {
+            Caption = 'ProductLine Dim';
+            Editable = false;
+            FieldClass = FlowField;
+            CalcFormula = lookup("Dimension Set Entry"."Dimension Value Code" where("Dimension Set ID" = field("Dimension Set ID"), "Dimension Code" = const('PRDLN')));
+        }
     }
 
     trigger OnAfterModify()

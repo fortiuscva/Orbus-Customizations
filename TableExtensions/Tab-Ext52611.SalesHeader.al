@@ -2,25 +2,25 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
 {
     fields
     {
-        modify("Order Status")
-        {
-            trigger OnAfterValidate()
-            var
-                salesHeader: Record "Sales Header";
-                ORBFunctions: codeunit "ORB Functions";
-            begin
-                if Rec."Location Code" = '' then
-                    Error(LocationNotFoundlbl, Rec."No.");
+        // modify("Order Status")
+        // {
+        //     trigger OnAfterValidate()
+        //     var
+        //         salesHeader: Record "Sales Header";
+        //         ORBFunctions: codeunit "ORB Functions";
+        //     begin
+        //         if Rec."Location Code" = '' then
+        //             Error(LocationNotFoundlbl, Rec."No.");
 
-                if Xrec."Order Status" = Xrec."Order Status"::Draft then begin
-                    ORBFunctions.SendOrderConfirmationEmailItem(Rec, false);
+        //         if Xrec."Order Status" = Xrec."Order Status"::Draft then begin
+        //             ORBFunctions.SendOrderConfirmationEmailItem(Rec, false);
 
-                    //salesHeader.get(Rec."Document Type"::Order, Rec."No.");
-                    //salesHeader."Order Status" := Rec."Order Status";
-                    //Rec := salesHeader;
-                end;
-            end;
-        }
+        //             salesHeader.get(Rec."Document Type"::Order, Rec."No.");
+        //             salesHeader."Order Status" := Rec."Order Status";
+        //             Rec := salesHeader;
+        //         end;
+        //     end;
+        // }
 
         modify(Status)
         {

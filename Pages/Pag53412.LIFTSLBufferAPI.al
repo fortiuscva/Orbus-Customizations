@@ -125,21 +125,25 @@ page 53412 "ORB LIFT SL Buffer API"
         }
     }
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
+    var
+        LIFTSalesLineBuffer: Record "ORB LIFT Sales Line Buffer";
     begin
+
         // LIFTSalesLineBuffer.SetRange("Document Type", LIFTSalesLineBuffer."Document Type"::Order);
         // LIFTSalesLineBuffer.SetRange("Document No.", Rec."Document No.");
         // if LIFTSalesLineBuffer.FindLast() then
         //     Rec."Line No." := LIFTSalesLineBuffer."Line No." + 10000
         // else
         //     Rec."Line No." := 10000;
+        
+        LIFTSalesLineBuffer.SetRange("Document Type", LIFTSalesLineBuffer."Document Type"::Order);
+        LIFTSalesLineBuffer.SetRange("Document No.", Rec."Document No.");
+        if LIFTSalesLineBuffer.FindLast() then
+            Rec."Line No." := LIFTSalesLineBuffer."Line No." + 10000
+        else
+            Rec."Line No." := 10000;
 
-        if not SalesLine.Get(Rec."Document Type", Rec."Document No.", Rec."Line No.") then begin
-            SalesLine.Init();
-            SalesLine.Validate("Document Type", Rec."Document Type");
-            SalesLine.Validate("Document No.", Rec."Document No.");
-            SalesLine.Validate("Line No.", Rec."Line No.");
-            SalesLine.Insert();
-        end;
+
         LIFTSalesOrderMgmt.PropagateOnSalesLineInsert(Rec);
     end;
 
@@ -150,8 +154,6 @@ page 53412 "ORB LIFT SL Buffer API"
         else
             LIFTSalesOrderMgmt.PropagateOnSalesLineModify(Rec);
     end;
-
     var
         LIFTSalesOrderMgmt: Codeunit "ORB LIFT Sales Order Mgmt";
-        SalesLine: Record "Sales Line";
 }
