@@ -85,7 +85,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         else
             LineNoLcl := 10000;
 
-        if not SalesLine.(LIFTSalesLineBuffer."Document Type", LIFTSalesLineBuffer."Document No.", LineNoLcl) then begin
+        if not SalesLine.Get(LIFTSalesLineBuffer."Document Type", LIFTSalesLineBuffer."Document No.", LineNoLcl) then begin
             SalesLine.Init();
             SalesLine.Validate("Document Type", LIFTSalesLineBuffer."Document Type");
             SalesLine.Validate("Document No.", LIFTSalesLineBuffer."Document No.");

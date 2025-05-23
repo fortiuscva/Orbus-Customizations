@@ -32,7 +32,7 @@ table 53401 "ORB LIFT Sales Line Buffer"
         field(6; "No."; Code[20])
         {
             Caption = 'No.';
-            TableRelation = Item;
+            TableRelation = if (Type = const(Comment)) "Standard Text" else if (Type = Const(Item)) Item;
         }
         field(7; "Location Code"; Code[10])
         {
