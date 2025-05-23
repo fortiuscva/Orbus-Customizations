@@ -76,6 +76,21 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
 
     procedure PropagateOnSalesLineInsert(var LIFTSalesLineBuffer: Record "ORB LIFT Sales Line Buffer")
     begin
+        SalesLine.SetRange("Document Type", LIFTSalesLineBuffer."Document Type"::Order);
+        SalesLine.SetRange("Document No.", LIFTSalesLineBuffer."Document No.");
+        if SalesLine.FindLast() then
+            LineNo := SalesLine."Line No." + 10000
+        else
+            LineNo := 10000;
+
+        if not SalesLine.Get(LIFTSalesLineBuffer."Document Type", LIFTSalesLineBuffer."Document No.", LineNo) then begin
+            SalesLine.Init();
+            SalesLine.Validate("Document Type", LIFTSalesLineBuffer."Document Type");
+            SalesLine.Validate("Document No.", LIFTSalesLineBuffer."Document No.");
+            SalesLine.Validate("Line No.", LineNo);
+            SalesLine.Insert();
+        end;
+
         UpdateSalesLine(LIFTSalesLineBuffer);
     end;
 
@@ -137,4 +152,5 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         SalesHeader: Record "Sales Header";
         SalesLine: Record "Sales Line";
         ArchiveManagement: Codeunit ArchiveManagement;
+        LineNo: Integer;
 }

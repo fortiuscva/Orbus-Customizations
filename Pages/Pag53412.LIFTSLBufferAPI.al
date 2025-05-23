@@ -126,12 +126,12 @@ page 53412 "ORB LIFT SL Buffer API"
     }
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        SalesLine.SetRange("Document Type", Rec."Document Type"::Order);
-        SalesLine.SetRange("Document No.", Rec."Document No.");
-        if SalesLine.FindLast() then
-            Rec."Line No." := SalesLine."Line No." + 10000
-        else
-            Rec."Line No." := 10000;
+        // LIFTSalesLineBuffer.SetRange("Document Type", LIFTSalesLineBuffer."Document Type"::Order);
+        // LIFTSalesLineBuffer.SetRange("Document No.", Rec."Document No.");
+        // if LIFTSalesLineBuffer.FindLast() then
+        //     Rec."Line No." := LIFTSalesLineBuffer."Line No." + 10000
+        // else
+        //     Rec."Line No." := 10000;
 
         if not SalesLine.Get(Rec."Document Type", Rec."Document No.", Rec."Line No.") then begin
             SalesLine.Init();
