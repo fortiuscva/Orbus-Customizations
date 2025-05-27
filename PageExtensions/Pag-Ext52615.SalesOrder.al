@@ -121,7 +121,8 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
         {
             trigger OnAfterValidate()
             begin
-                Message('Please Do not forgot to Send Order Confirmation Email');
+                if Xrec."Order Status" = Xrec."Order Status"::Draft then
+                    Message('Please Do not forgot to Send Order Confirmation Email');
                 CurrPage.Update(true);
             end;
         }
