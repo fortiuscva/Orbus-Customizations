@@ -2,22 +2,37 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
 {
     fields
     {
-        modify("Order Status")
+        // modify("Order Status")
+        // {
+        //     trigger OnAfterValidate()
+        //     var
+        //         salesHeader: Record "Sales Header";
+        //         ORBFunctions: codeunit "ORB Functions";
+        //     begin
+        //         if Rec."Location Code" = '' then
+        //             Error(LocationNotFoundlbl, Rec."No.");
+
+        //         if Xrec."Order Status" = Xrec."Order Status"::Draft then begin
+        //             ORBFunctions.SendOrderConfirmationEmailItem(Rec, false);
+
+        //             salesHeader.get(Rec."Document Type"::Order, Rec."No.");
+        //             salesHeader."Order Status" := Rec."Order Status";
+        //             Rec := salesHeader;
+        //         end;
+        //     end;
+        // }
+
+        modify(Status)
         {
             trigger OnAfterValidate()
             var
-                salesHeader: Record "Sales Header";
-                ORBFunctions: codeunit "ORB Functions";
+                myInt: Integer;
             begin
-                if Rec."Location Code" = '' then
-                    Error(LocationNotFoundlbl, Rec."No.");
-
-                if Xrec."Order Status" = Xrec."Order Status"::Draft then begin
-                    ORBFunctions.SendOrderConfirmationEmailItem(Rec, false);
-
-                    salesHeader.get(Rec."Document Type"::Order, Rec."No.");
-                    salesHeader."Order Status" := Rec."Order Status";
-                    Rec := salesHeader;
+                if (Rec.Status = Rec.Status::Released) and (Rec."Document Type" = rec."Document Type"::Order) then begin
+                    if Rec."ORB Original Promised Ship Dt." = 0D then begin
+                        Rec."ORB Original Promised Ship Dt." := Today();
+                        Rec.Modify()
+                    end;
                 end;
             end;
         }
@@ -228,11 +243,11 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             if (Rec."Document Type" = Rec."Document Type"::"Return Order") then
                 if UserSetupRecGbl.get(UserId) then
                     if not UserSetupRecGbl."ORB Sales Return Del Allowed" then
-                        Error(DeletionErrorMsgLbl,UserId);
+                        Error(DeletionErrorMsgLbl, UserId);
 
 
 
-        
+
     end;
 
     trigger OnAfterInsert()
