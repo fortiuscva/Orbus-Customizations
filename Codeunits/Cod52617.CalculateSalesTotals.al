@@ -1,14 +1,15 @@
 codeunit 52617 "ORB Calculate Sales Totals"
 {
-    [TryFunction]
-    procedure CalculateSalesTotalsForEveryCustomer(var Customer: Record Customer)
+    TableNo = Customer;
+
+    trigger OnRun()
     var
         FunctionsCU: Codeunit "ORB Functions";
     begin
-        FunctionsCU.CalculateSalesTotals(Customer."ORB This Year Sales", Customer."ORB Prev Year Sales", Customer."ORB LTM Sales", Customer."ORB Lifetime Sales Total", Customer."No.");
-        FunctionsCU.CalculateCreditMemoTotals(Customer."ORB ThisYearSalesCrMemo", Customer."ORB PreviousYearSalesCrMemo", Customer."ORB LTMSalesCrMemo", Customer."ORB LifetimeSalesTotalCrMemo", Customer."No.");
-        if (Customer."ORB Lifetime Sales Total" > 0) and (Customer."ORB Lifetime Sales Total" < 10000) then
-            Customer."ORB Is Core Team" := True;
-        Customer.Modify();
+        FunctionsCU.CalculateSalesTotals(Rec."ORB This Year Sales", Rec."ORB Prev Year Sales", Rec."ORB LTM Sales", Rec."ORB Lifetime Sales Total", Rec."No.");
+        FunctionsCU.CalculateCreditMemoTotals(Rec."ORB ThisYearSalesCrMemo", Rec."ORB PreviousYearSalesCrMemo", Rec."ORB LTMSalesCrMemo", Rec."ORB LifetimeSalesTotalCrMemo", Rec."No.");
+        if (Rec."ORB Lifetime Sales Total" > 0) and (Rec."ORB Lifetime Sales Total" < 10000) then
+            Rec."ORB Is Core Team" := True;
+        Rec.Modify();
     end;
 }
