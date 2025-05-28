@@ -130,7 +130,7 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
         {
             field("ORB Send Order Confirmation Email"; SendOrderConfirmationEmailLbl)
             {
-                ApplicationArea = Basic, Suite;
+                ApplicationArea = All;
                 Editable = false;
                 ShowCaption = false;
                 Style = StrongAccent;
