@@ -22,20 +22,20 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         //     end;
         // }
 
-        modify(Status)
-        {
-            trigger OnAfterValidate()
-            var
-                myInt: Integer;
-            begin
-                if (Rec.Status = Rec.Status::Released) and (Rec."Document Type" = rec."Document Type"::Order) then begin
-                    if Rec."ORB Original Promised Ship Dt." = 0D then begin
-                        Rec."ORB Original Promised Ship Dt." := Today();
-                        Rec.Modify()
-                    end;
-                end;
-            end;
-        }
+        // modify(Status)
+        // {
+        //     trigger OnAfterValidate()
+        //     var
+        //         myInt: Integer;
+        //     begin
+        //         if (Rec.Status = Rec.Status::Released) and (Rec."Document Type" = rec."Document Type"::Order) then begin
+        //             if Rec."ORB Original Promised Ship Dt." = 0D then begin
+        //                 Rec."ORB Original Promised Ship Dt." := Today();
+        //                 Rec.Modify()
+        //             end;
+        //         end;
+        //     end;
+        // }
 
         field(52610; "ORB Tax ID"; Code[20])
         {
