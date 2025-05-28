@@ -72,7 +72,7 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
                 ApplicationArea = All;
                 Editable = false;
                 ToolTip = 'Previous Year Sales($)';
-                Caption = 'Prevuous Year - Sales'
+                Caption = 'Prevuous Year - Sales';
             }
 
         }
@@ -121,8 +121,8 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
 
     begin
         FirstDayOfYearVarLcl := CALCDATE('<-CY>', today);
-        PreYearStartDateLcl := DMY2Date(1, 1, Date2DMY(today(), 3));
-        PreYearEndDateLcl := DMY2Date(12, 31, Date2DMY(today(), 3));
+        PreYearStartDateLcl := DMY2Date(1, 1, Date2DMY(today(), 3) - 1);
+        PreYearEndDateLcl := DMY2Date(31, 12, Date2DMY(today(), 3) - 1);
         Rec.SetRange("ORB Year To Date Filter", FirstDayOfYearVarLcl, Today);
         REc.SetRange("ORB Previous Year Date Filter", PreYearStartDateLcl, PreYearEndDateLcl);
         clear(IsLIFTERPFunctionEnabled);
