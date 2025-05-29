@@ -114,6 +114,12 @@ tableextension 52621 "ORB Sales Line" extends "Sales Line"
             FieldClass = FlowField;
             CalcFormula = lookup("Dimension Set Entry"."Dimension Value Code" where("Dimension Set ID" = field("Dimension Set ID"), "Dimension Code" = const('PRDLN')));
         }
+        field(53400; "ORB LIFT Line ID"; Decimal)
+        {
+            Caption = 'LIFT Line ID';
+            DecimalPlaces = 0 : 2;
+            DataClassification = CustomerContent;
+        }
     }
 
     trigger OnAfterModify()

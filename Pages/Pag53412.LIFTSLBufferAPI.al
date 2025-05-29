@@ -125,8 +125,6 @@ page 53412 "ORB LIFT SL Buffer API"
         }
     }
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
-    var
-        LIFTSalesLineBuffer: Record "ORB LIFT Sales Line Buffer";
     begin
         LIFTSalesOrderMgmt.PropagateOnSalesLineInsert(Rec);
     end;
