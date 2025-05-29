@@ -709,7 +709,6 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         FromBinContent.SetRange("Zone Code", UserPickZone."Zone Code");
     end;
 
-
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
         OrbusFunctionsCUGbl: Codeunit "ORB Functions";
