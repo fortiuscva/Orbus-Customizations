@@ -122,8 +122,12 @@ tableextension 52603 "ORB Customer" extends Customer
                                                                          "Currency Code" = field("Currency Filter"),
                                                                          "Document Type" = Filter('Invoice|Credit Memo')));
         }
-
-
+        field(52613; "ORB Customer Approval Status"; Option)
+        {
+            Caption = 'Approval Status';
+            DataClassification = CustomerContent;
+            OptionMembers = PENDING,APPROVED;
+        }
     }
 
 

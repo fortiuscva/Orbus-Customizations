@@ -95,6 +95,10 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
                 Editable = false;
                 Caption = 'Lifetime Sales Cr. Memo Total';
             }
+            field("ORB Approval Status"; Rec."ORB Customer Approval Status")
+            {
+                ApplicationArea = all;
+            }
         }
 
         modify("Salesperson Code")

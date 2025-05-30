@@ -126,6 +126,26 @@ page 52641 "ORB LIFT Customer"
                 {
                     Caption = 'VAT Bus. Posting Group';
                 }
+                field(industry; Rec."Shortcut Dimension 6 Code")
+                {
+                    Caption = 'Industry Dimension';
+                }
+                field(locationCode; Rec."Location Code")
+                {
+                    Caption = 'Location Code';
+                }
+                field(salespersonCode; Rec."Salesperson Code")
+                {
+                    Caption = 'Salesperson Code';
+                }
+                field(currencyCode; Rec."Currency Code")
+                {
+                    Caption = 'Currency Code';
+                }
+                field(customerApprovalStatus; Rec."ORB Customer Approval Status")
+                {
+                    Caption = 'Customer Approval Status';
+                }
             }
         }
     }
