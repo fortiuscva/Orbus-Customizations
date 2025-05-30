@@ -73,7 +73,7 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
                 ApplicationArea = All;
                 Editable = false;
                 ToolTip = 'Previous Year Sales($)';
-                Caption = 'Prevuous Year - Sales';
+                Caption = 'Previous Year - Sales';
             }
 
         }
