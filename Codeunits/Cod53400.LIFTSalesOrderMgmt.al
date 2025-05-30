@@ -78,15 +78,31 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
     var
         SalesLineRecLcl: Record "Sales Line";
         LineNo: Integer;
+        LineNoTracker: Record "ORB LIFT Last SL No Tracker";
     begin
-        Clear(LineNo);
-        SalesLineRecLcl.Reset();
-        SalesLineRecLcl.SetRange("Document Type", LIFTSalesLineBuffer."Document Type");
-        SalesLineRecLcl.SetRange("Document No.", LIFTSalesLineBuffer."Document No.");
-        if SalesLineRecLcl.FindLast() then
-            LineNo := SalesLineRecLcl."Line No." + 10000
-        else
-            LineNo := 10000;
+        LineNoTracker.LockTable();
+
+        if LineNoTracker.Get(LIFTSalesLineBuffer."Document Type", LIFTSalesLineBuffer."Document No.") then begin
+            LineNo := LineNoTracker."Last Line No.";
+        end else begin
+            SalesLine.Reset();
+            SalesLine.SetRange("Document Type", LIFTSalesLineBuffer."Document Type");
+            SalesLine.SetRange("Document No.", LIFTSalesLineBuffer."Document No.");
+            if SalesLine.FindLast() then
+                LineNo := SalesLine."Line No."
+            else
+                LineNo := 0;
+
+            LineNoTracker.Init();
+            LineNoTracker."Document Type" := LIFTSalesLineBuffer."Document Type";
+            LineNoTracker."Document No." := LIFTSalesLineBuffer."Document No.";
+            LineNoTracker."Last Line No." := LineNo;
+            LineNoTracker.Insert();
+        end;
+
+        LineNo += 10000;
+        LineNoTracker."Last Line No." := LineNo;
+        LineNoTracker.Modify();
 
         SalesLine.Reset();
         SalesLine.SetRange("Document Type", LIFTSalesLineBuffer."Document Type");
@@ -97,7 +113,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             SalesLine.Validate("Document Type", LIFTSalesLineBuffer."Document Type");
             SalesLine.Validate("Document No.", LIFTSalesLineBuffer."Document No.");
             SalesLine.Validate("Line No.", LineNo);
-            SalesLine.Insert();
+            SalesLine.Insert(true);
         end;
 
         UpdateSalesLine(LIFTSalesLineBuffer);
