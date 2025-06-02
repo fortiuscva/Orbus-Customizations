@@ -1,7 +1,12 @@
-query 53400 "ORB LIFT Item Inventory"
+query 53400 "ORB LIFT Items by Location"
 {
-    Caption = 'Item Inventory by Location';
-    QueryType = Normal;
+    Caption = 'LIFT Items by Location';
+    QueryType = API;
+    APIGroup = 'Orbus';
+    APIPublisher = 'Orbus';
+    APIVersion = 'v2.0';
+    EntityName = 'LIFTItemsByLocation';
+    EntitySetName = 'LIFTItemsByLocation';
 
     elements
     {
