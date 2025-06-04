@@ -2,11 +2,11 @@ query 53400 "ORB LIFT Items by Location"
 {
     Caption = 'LIFT Items by Location';
     QueryType = API;
-    APIGroup = 'orbus';
-    APIPublisher = 'orbus';
+    APIGroup = 'Orbus';
+    APIPublisher = 'Orbus';
     APIVersion = 'v2.0';
-    EntityName = 'itemsByLocation';
-    EntitySetName = 'itemsByLocation';
+    EntityName = 'LIFTItemsByLocation';
+    EntitySetName = 'LIFTItemsByLocation';
 
     elements
     {
