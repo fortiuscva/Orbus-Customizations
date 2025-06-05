@@ -1,6 +1,12 @@
 codeunit 52615 "Calculate SalesTotals JobQueue"
 {
     Trigger OnRun()
+    begin
+        CalculateSalesTotals();
+    end;
+
+    [TryFunction]
+    local procedure CalculateSalesTotals()
     var
         Customer: Record Customer;
         FunctionsCU: Codeunit "ORB Functions";
