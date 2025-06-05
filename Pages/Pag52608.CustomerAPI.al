@@ -169,6 +169,10 @@ page 52608 "ORB Customer API"
                 {
                     caption = 'Is Core Team';
                 }
+                field(lastVisitDate; Rec."Last Visit Date")
+                {
+                    Caption = 'Last Visit Date';
+                }
             }
         }
     }
