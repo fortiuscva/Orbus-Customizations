@@ -676,12 +676,11 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         FromBinContent.SetRange("Zone Code", UserPickZone."Zone Code");
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Pick", 'OnBeforeSetBinCodeFilter', '', false, false)]
-    local procedure CreatePick_OnBeforeSetBinCodeFilter(var BinCodeFilterText: Text[250]; LocationCode: Code[10]; ItemNo: Code[20]; VariantCode: Code[10]; ToBinCode: Code[20]; var IsHandled: Boolean; SourceType: Integer; SourceSubType: Option; SourceNo: Code[20]; SourceLineNo: Integer; SourceSubLineNo: Integer)
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Pick", OnFindBWPickBinOnBeforeFromBinContentFindSet, '', false, false)]
+    local procedure "Create Pick_OnFindBWPickBinOnBeforeFromBinContentFindSet"(var FromBinContent: Record "Bin Content"; SourceType: Integer; var TotalQtyPickedBase: Decimal; var TotalQtyToPickBase: Decimal; var IsHandled: Boolean; SourceSubType: Option; SourceNo: Code[20]; SourceLineNo: Integer; SourceSubLineNo: Integer; LocationCode: Code[10]; ItemNo: Code[20]; VariantCode: Code[10]; ToBinCode: Code[20])
     var
         UserPickZone: Record "ORB User Pick Zone";
         Zone: Record Zone;
-        OrbusSetup: Record "ORB Orbus Setup";
     begin
         if not OrbusSetup.Get() or not OrbusSetup."Enable User Pick Zone" then
             exit;
@@ -692,12 +691,14 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             exit;
 
         Zone.SetRange(Code, UserPickZone."Zone Code");
-        Zone.SetRange("Location Code", LocationCode);
+        Zone.SetRange("Location Code", FromBinContent."Location Code");
         if not Zone.FindFirst() then
             Error('Zone "%1" assigned to user "%2" does not exist in the Warehouse Zone table.', UserPickZone."Zone Code", UserId);
 
-        BinCodeFilterText := Format(Zone."Code");
-        IsHandled := true;
+        if FromBinContent.GetFilter("Bin Code") <> '' then
+            FromBinContent.SetRange("Bin Code");
+
+        FromBinContent.SetRange("Zone Code", UserPickZone."Zone Code");
     end;
 
 
