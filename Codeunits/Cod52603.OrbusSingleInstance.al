@@ -171,10 +171,12 @@ codeunit 52603 "ORB Orbus Single Instance"
     procedure SetRunFromOrderConfirmation(RunFromOrderConfirmationPar: Boolean)
     begin
         RunFromOrderConfirmationGbl := RunFromOrderConfirmationPar;
+        RunFromOrderConfirmationGbl := RunFromOrderConfirmationPar;
     end;
 
     procedure GetRunFromOrderConfirmation(): Boolean
     begin
+        exit(RunFromOrderConfirmationGbl);
         exit(RunFromOrderConfirmationGbl);
     end;
 
