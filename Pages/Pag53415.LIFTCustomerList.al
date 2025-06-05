@@ -168,13 +168,17 @@ page 53415 "ORB LIFT Customer List"
                 {
                     ToolTip = 'Specifies the value of the International field.', Comment = '%';
                 }
-                field("Channel Code"; Rec."Channel Code")
+                field(Channel; Rec.Channel)
                 {
-                    ToolTip = 'Specifies the value of the Channel Code field.', Comment = '%';
+                    ToolTip = 'Specifies the value of the Channel field.', Comment = '%';
                 }
-                field("Industry Code"; Rec."Industry Code")
+                field(Industry; Rec.Industry)
                 {
-                    ToolTip = 'Specifies the value of the Industry Code field.', Comment = '%';
+                    ToolTip = 'Specifies the value of the Industry field.', Comment = '%';
+                }
+                field(CustomerType; Rec.CustomerType)
+                {
+                    ToolTip = 'Specifies the value of the CustomerType field.', Comment = '%';
                 }
             }
         }

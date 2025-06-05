@@ -173,13 +173,17 @@ page 53416 "ORB LIFT Customer API"
                 {
                     Caption = 'International';
                 }
-                field(channelCode; Rec."Channel Code")
+                field(channel; Rec.Channel)
                 {
-                    Caption = 'Channel Code';
+                    Caption = 'Channel';
                 }
-                field(industryCode; Rec."Industry Code")
+                field(industry; Rec.Industry)
                 {
-                    Caption = 'Industry Code';
+                    Caption = 'Industry';
+                }
+                field(customerType; Rec.CustomerType)
+                {
+                    Caption = 'CustomerType';
                 }
             }
         }

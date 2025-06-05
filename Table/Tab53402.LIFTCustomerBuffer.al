@@ -230,17 +230,21 @@ table 53402 "ORB LIFT Customer Buffer"
             Caption = 'International';
             DataClassification = CustomerContent;
         }
-        field(60310; "Channel Code"; Code[20])
+        field(60310; Channel; Code[20])
         {
-            Caption = 'Channel Code';
+            Caption = 'Channel';
             DataClassification = CustomerContent;
         }
-        field(60311; "Industry Code"; Code[20])
+        field(60311; Industry; Code[20])
         {
-            Caption = 'Industry Code';
+            Caption = 'Industry';
             DataClassification = CustomerContent;
         }
-
+        field(60312; CustomerType; Text[50])
+        {
+            Caption = 'CustomerType';
+            DataClassification = CustomerContent;
+        }
     }
     keys
     {
