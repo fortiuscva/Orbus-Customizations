@@ -16,6 +16,12 @@ tableextension 52618 "ORB Sales Shipment Line" extends "Sales Shipment Line"
             FieldClass = FlowField;
             CalcFormula = lookup("Sales Shipment Header"."Ship-to County" where("No." = field("Document No.")));
         }
-
+        field(52119; "ORB ProductLine Dim"; Code[20])
+        {
+            Caption = 'ProductLine Dim';
+            Editable = false;
+            FieldClass = FlowField;
+            CalcFormula = lookup("Dimension Set Entry"."Dimension Value Code" where("Dimension Set ID" = field("Dimension Set ID"), "Dimension Code" = const('PRDLN')));
+        }
     }
 }

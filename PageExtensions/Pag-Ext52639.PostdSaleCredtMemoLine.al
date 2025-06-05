@@ -10,6 +10,10 @@ pageextension 52639 "ORB Postd Sale Credt Memo Line" extends "Posted Sales Credi
                 ToolTip = 'Posting Date';
 
             }
+            field("ORB ProductLine Dim"; Rec."ProductLine Dim")
+            {
+                ApplicationArea = All;
+            }
         }
     }
 }
