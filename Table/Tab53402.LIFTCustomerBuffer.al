@@ -125,9 +125,9 @@ table 53402 "ORB LIFT Customer Buffer"
             Caption = 'E-Mail';
             DataClassification = CustomerContent;
         }
-        field(109; "Tax Liable"; Boolean)
+        field(109; "ORB LIFT TaxExempt"; Text[10])
         {
-            Caption = 'Tax Liable';
+            Caption = 'Tax Exempt';
             DataClassification = CustomerContent;
         }
         field(8001; "Currency Id"; Guid)
@@ -145,9 +145,9 @@ table 53402 "ORB LIFT Customer Buffer"
             Caption = 'Contact ID';
             DataClassification = CustomerContent;
         }
-        field(50124; Needs_Approval; Enum "ORBAPP Cust Needs Approval")
+        field(50124; "ORB LIFT TermsStatus"; Text[10])
         {
-            Caption = 'Needs_Approval';
+            Caption = 'TermsStatus';
             DataClassification = CustomerContent;
         }
         field(50127; "Magento ID"; Code[20])
@@ -182,12 +182,6 @@ table 53402 "ORB LIFT Customer Buffer"
         field(52610; "ORB LIFT Customer"; Boolean)
         {
             Caption = 'ORB LIFT Customer';
-            DataClassification = CustomerContent;
-        }
-        field(52622; "ORB Customer Approval Status"; Option)
-        {
-            Caption = 'Approval Status';
-            OptionMembers = PENDING,APPROVED;
             DataClassification = CustomerContent;
         }
         field(54100; "First Invoice Date"; Date)
