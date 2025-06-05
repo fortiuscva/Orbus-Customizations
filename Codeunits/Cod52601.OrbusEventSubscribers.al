@@ -676,6 +676,30 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         FromBinContent.SetRange("Zone Code", UserPickZone."Zone Code");
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Pick", 'OnBeforeSetBinCodeFilter', '', false, false)]
+    local procedure CreatePick_OnBeforeSetBinCodeFilter(var BinCodeFilterText: Text[250]; LocationCode: Code[10]; ItemNo: Code[20]; VariantCode: Code[10]; ToBinCode: Code[20]; var IsHandled: Boolean; SourceType: Integer; SourceSubType: Option; SourceNo: Code[20]; SourceLineNo: Integer; SourceSubLineNo: Integer)
+    var
+        UserPickZone: Record "ORB User Pick Zone";
+        Zone: Record Zone;
+        OrbusSetup: Record "ORB Orbus Setup";
+    begin
+        if not OrbusSetup.Get() or not OrbusSetup."Enable User Pick Zone" then
+            exit;
+
+        UserPickZone.SetRange("User ID", UserId);
+        UserPickZone.SetRange("Location Code", LocationCode);
+        if not UserPickZone.FindFirst() then
+            exit;
+
+        Zone.SetRange(Code, UserPickZone."Zone Code");
+        Zone.SetRange("Location Code", LocationCode);
+        if not Zone.FindFirst() then
+            Error('Zone "%1" assigned to user "%2" does not exist in the Warehouse Zone table.', UserPickZone."Zone Code", UserId);
+
+        BinCodeFilterText := Format(Zone."Code");
+        IsHandled := true;
+    end;
+
 
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
