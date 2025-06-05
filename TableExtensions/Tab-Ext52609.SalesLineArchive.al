@@ -2,6 +2,8 @@ tableextension 52609 "ORB Sales Line Archive" extends "Sales Line Archive"
 {
     fields
     {
+        //52119 Occupied in Sales Line table
+        //52121 Occupied in Sales Line table
         field(52600; "ORB Date Archived"; Date)
         {
             Caption = 'Date Archived';
@@ -35,7 +37,7 @@ tableextension 52609 "ORB Sales Line Archive" extends "Sales Line Archive"
             FieldClass = FlowField;
             CalcFormula = lookup("Sales Header Archive"."Ship-to County" where("Document Type" = field("Document Type"), "No." = field("Document No."), "Version No." = field("Version No.")));
         }
-        field(52119; "ProductLine Dim"; Code[20])
+        field(52122; "ORB ProductLine Dim"; Code[20])
         {
             Caption = 'ProductLine Dim';
             Editable = false;

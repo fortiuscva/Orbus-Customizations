@@ -16,26 +16,26 @@ tableextension 52619 "ORB Sales Invoice Line" extends "Sales Invoice Line"
             FieldClass = FlowField;
             CalcFormula = lookup("Sales Invoice Header"."Ship-to County" where("No." = field("Document No.")));
         }
-        field(52119; "ORB ProductLine Dim"; Code[20])
+        field(52119; "ORB Order Status"; Enum OrderStatus)
         {
-            Caption = 'ProductLine Dim';
+            Caption = 'Order Status';
             Editable = false;
             FieldClass = FlowField;
-            CalcFormula = lookup("Dimension Set Entry"."Dimension Value Code" where("Dimension Set ID" = field("Dimension Set ID"), "Dimension Code" = const('PRDLN')));
+            calcformula = Lookup("Sales Invoice Header"."ORB Order Status" where("No." = field("Document No.")));
         }
-        field(52120; "ORB Custom"; Boolean)
+        field(52121; "ORB Custom"; Boolean)
         {
             Caption = 'Custom';
             Editable = false;
             FieldClass = FlowField;
             calcformula = Lookup("Sales Invoice Header".Custom where("No." = field("Document No.")));
         }
-        field(52121; "ORB Order Status"; Enum OrderStatus)
+        field(52122; "ORB ProductLine Dim"; Code[20])
         {
-            Caption = 'Order Status';
+            Caption = 'ProductLine Dim';
             Editable = false;
             FieldClass = FlowField;
-            calcformula = Lookup("Sales Invoice Header"."ORB Order Status" where("No." = field("Document No.")));
+            CalcFormula = lookup("Dimension Set Entry"."Dimension Value Code" where("Dimension Set ID" = field("Dimension Set ID"), "Dimension Code" = const('PRDLN')));
         }
 
     }

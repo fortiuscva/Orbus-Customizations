@@ -4,6 +4,8 @@ tableextension 52620 "ORB Sales Cr.Memo Line" extends "Sales Cr.Memo Line"
     {
         //52600 Occupied in Sales Line Archive table
         //52601 Occupied in Sales Line Archive table
+        //52119 Occupied in Sales Line table
+        //52121 Occupied in Sales Line table
 
         field(52605; "ORB Magento Artwork Job ID"; Text[20])
         {
@@ -17,7 +19,7 @@ tableextension 52620 "ORB Sales Cr.Memo Line" extends "Sales Cr.Memo Line"
             FieldClass = FlowField;
             CalcFormula = lookup("Sales Cr.Memo Header"."Ship-to County" where("No." = field("Document No.")));
         }
-        field(52119; "ProductLine Dim"; Code[20])
+        field(52122; "ORB ProductLine Dim"; Code[20])
         {
             Caption = 'ProductLine Dim';
             Editable = false;
