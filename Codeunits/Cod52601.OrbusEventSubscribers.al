@@ -638,10 +638,79 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         OrbusSingleInstanceCUGbl.SetWarehouseActivity(FirstActivityNo, LastActivityNo);
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Inventory Pick/Movement", OnBeforeFindFromBinContent, '', false, false)]
+    local procedure "Create Inventory Pick/Movement_OnBeforeFindFromBinContent"(var FromBinContent: Record "Bin Content"; var WarehouseActivityLine: Record "Warehouse Activity Line"; FromBinCode: Code[20]; BinCode: Code[20]; IsInvtMovement: Boolean; IsBlankInvtMovement: Boolean; DefaultBin: Boolean; WhseItemTrackingSetup: Record "Item Tracking Setup" temporary; var WarehouseActivityHeader: Record "Warehouse Activity Header"; var WarehouseRequest: Record "Warehouse Request")
+    var
+        UserPickZone: Record "ORB User Pick Zone";
+        Zone: Record Zone;
+    begin
+        if not OrbusSetup.Get() or not OrbusSetup."Enable User Pick Zone" then
+            exit;
+
+        if WarehouseActivityLine."Source Type" = DATABASE::"Production Order" then
+            exit;
+
+        case WarehouseActivityLine."Activity Type" of
+            WarehouseActivityLine."Activity Type"::"Invt. Pick":
+                ;
+            WarehouseActivityLine."Activity Type"::Pick:
+                if WarehouseActivityLine."Action Type" <> WarehouseActivityLine."Action Type"::Take then
+                    exit;
+            else
+                exit;
+        end;
+
+        UserPickZone.SetRange("User ID", UserId);
+        UserPickZone.SetRange("Location Code", WarehouseActivityLine."Location Code");
+        if not UserPickZone.FindLast() then
+            exit;
+
+        Zone.SetRange(Code, UserPickZone."Zone Code");
+        Zone.SetRange("Location Code", FromBinContent."Location Code");
+        if not Zone.FindFirst() then
+            Error('Zone "%1" assigned to user "%2" does not exist in the Warehouse Zone table.', UserPickZone."Zone Code", UserId);
+
+        if FromBinContent.GetFilter("Bin Code") <> '' then
+            FromBinContent.SetRange("Bin Code");
+
+        FromBinContent.SetRange("Zone Code", UserPickZone."Zone Code");
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Pick", OnBeforeGetBinContent, '', false, false)]
+    local procedure "Create Pick_OnBeforeGetBinContent"(var TempBinContent: Record "Bin Content" temporary; ItemNo: Code[20]; VariantCode: Code[10]; UnitofMeasureCode: Code[10]; LocationCode: Code[10]; ToBinCode: Code[20]; CrossDock: Boolean; IsMovementWorksheet: Boolean; WhseItemTrkgExists: Boolean; BreakbulkBins: Boolean; SmallerUOMBins: Boolean; WhseItemTrackingSetup: Record "Item Tracking Setup" temporary; TotalQtytoPick: Decimal; TotalQtytoPickBase: Decimal; var Result: Boolean; var IsHandled: Boolean)
+    begin
+        OrbusSingleInstanceCUGbl.SetWarehousePickLocationCode(LocationCode);
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Bin Content", OnAfterBinContentExists, '', false, false)]
+    local procedure "Bin Content_OnAfterBinContentExists"(var BinContent: Record "Bin Content")
+    var
+        UserPickZone: Record "ORB User Pick Zone";
+        Zone: Record Zone;
+    begin
+        if not OrbusSetup.Get() or not OrbusSetup."Enable User Pick Zone" then
+            exit;
+
+        UserPickZone.SetRange("User ID", UserId);
+        UserPickZone.SetRange("Location Code", OrbusSingleInstanceCUGbl.GetWarehousePickLocationCode);
+        if not UserPickZone.FindLast() then
+            exit;
+
+        Zone.SetRange(Code, UserPickZone."Zone Code");
+        Zone.SetRange("Location Code", OrbusSingleInstanceCUGbl.GetWarehousePickLocationCode);
+        if not Zone.FindFirst() then
+            Error('Zone "%1" assigned to user "%2" does not exist in the Warehouse Zone table.', UserPickZone."Zone Code", UserId);
+
+        BinContent.SetRange("Zone Code", UserPickZone."Zone Code");
+
+        OrbusSingleInstanceCUGbl.SetWarehousePickLocationCode('');
+    end;
+
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
         SOPla: page "Sales Order Planning";
 
         OrbusFunctionsCUGbl: Codeunit "ORB Functions";
+        OrbusSetup: Record "ORB Orbus Setup";
 
 }
