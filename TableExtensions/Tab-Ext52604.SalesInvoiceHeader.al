@@ -121,9 +121,5 @@ tableextension 52604 "ORB Sales Invoice Header" extends "Sales Invoice Header"
             DataClassification = CustomerContent;
             Editable = false;
         }
-
-
-
-
     }
 }
