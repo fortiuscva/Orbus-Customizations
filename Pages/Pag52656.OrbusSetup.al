@@ -1,7 +1,7 @@
 page 52656 "ORB Orbus Setup"
 {
     ApplicationArea = All;
-    Caption = 'ORB Orbus Setup';
+    Caption = 'Orbus Setup';
     PageType = Card;
     SourceTable = "ORB Orbus Setup";
     UsageCategory = Administration;

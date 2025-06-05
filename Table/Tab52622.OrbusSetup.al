@@ -1,7 +1,7 @@
 table 52622 "ORB Orbus Setup"
 {
     Caption = 'Orbus Setup';
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
 
     fields
     {
