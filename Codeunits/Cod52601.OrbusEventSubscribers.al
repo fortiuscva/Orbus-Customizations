@@ -701,9 +701,6 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         if not Zone.FindFirst() then
             Error('Zone "%1" assigned to user "%2" does not exist in the Warehouse Zone table.', UserPickZone."Zone Code", UserId);
 
-        if BinContent.GetFilter("Bin Code") <> '' then
-            BinContent.SetRange("Bin Code");
-
         BinContent.SetRange("Zone Code", UserPickZone."Zone Code");
 
         OrbusSingleInstanceCUGbl.SetWarehousePickLocationCode('');
