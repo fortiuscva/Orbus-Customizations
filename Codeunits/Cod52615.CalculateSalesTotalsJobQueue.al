@@ -7,7 +7,7 @@ codeunit 52615 "Calculate SalesTotals JobQueue"
     begin
         if Customer.FindSet() then begin
             repeat
-                CalculateSalesTotals.CalculateSalesTotalsForEveryCustomer(Customer);
+                if not CalculateSalesTotals.Run(Customer) then;
             until Customer.Next() = 0;
         end;
     end;
