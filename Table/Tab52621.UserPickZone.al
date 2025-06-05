@@ -19,7 +19,7 @@ table 52621 "ORB User Pick Zone"
         field(3; "Zone Code"; Code[10])
         {
             DataClassification = CustomerContent;
-            TableRelation = Zone;
+            TableRelation = Zone.Code where("Location Code" = field("Location Code"));
         }
     }
 
