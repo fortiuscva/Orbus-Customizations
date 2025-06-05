@@ -676,56 +676,6 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         FromBinContent.SetRange("Zone Code", UserPickZone."Zone Code");
     end;
 
-    // [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Pick", OnFindBWPickBinOnBeforeFromBinContentFindSet, '', false, false)]
-    // local procedure "Create Pick_OnFindBWPickBinOnBeforeFromBinContentFindSet"(var FromBinContent: Record "Bin Content"; SourceType: Integer; var TotalQtyPickedBase: Decimal; var TotalQtyToPickBase: Decimal; var IsHandled: Boolean; SourceSubType: Option; SourceNo: Code[20]; SourceLineNo: Integer; SourceSubLineNo: Integer; LocationCode: Code[10]; ItemNo: Code[20]; VariantCode: Code[10]; ToBinCode: Code[20])
-    // var
-    //     UserPickZone: Record "ORB User Pick Zone";
-    //     Zone: Record Zone;
-    // begin
-    //     if not OrbusSetup.Get() or not OrbusSetup."Enable User Pick Zone" then
-    //         exit;
-
-    //     UserPickZone.SetRange("User ID", UserId);
-    //     UserPickZone.SetRange("Location Code", LocationCode);
-    //     if not UserPickZone.FindFirst() then
-    //         exit;
-
-    //     Zone.SetRange(Code, UserPickZone."Zone Code");
-    //     Zone.SetRange("Location Code", FromBinContent."Location Code");
-    //     if not Zone.FindFirst() then
-    //         Error('Zone "%1" assigned to user "%2" does not exist in the Warehouse Zone table.', UserPickZone."Zone Code", UserId);
-
-    //     if FromBinContent.GetFilter("Bin Code") <> '' then
-    //         FromBinContent.SetRange("Bin Code");
-
-    //     FromBinContent.SetRange("Zone Code", UserPickZone."Zone Code");
-    // end;
-
-    [EventSubscriber(ObjectType::Table, Database::"Bin Content", OnAfterBinContentExists, '', false, false)]
-    local procedure "Bin Content_OnAfterBinContentExists"(var BinContent: Record "Bin Content")
-    var
-        UserPickZone: Record "ORB User Pick Zone";
-        Zone: Record Zone;
-    begin
-        if not OrbusSetup.Get() or not OrbusSetup."Enable User Pick Zone" then
-            exit;
-
-        UserPickZone.SetRange("User ID", UserId);
-        UserPickZone.SetRange("Location Code", BinContent."Location Code");
-        if not UserPickZone.FindFirst() then
-            exit;
-
-        Zone.SetRange(Code, UserPickZone."Zone Code");
-        Zone.SetRange("Location Code", BinContent."Location Code");
-        if not Zone.FindFirst() then
-            Error('Zone "%1" assigned to user "%2" does not exist in the Warehouse Zone table.', UserPickZone."Zone Code", UserId);
-
-        if BinContent.GetFilter("Bin Code") <> '' then
-            BinContent.SetRange("Bin Code");
-
-        BinContent.SetRange("Zone Code", UserPickZone."Zone Code");
-    end;
-
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
         SOPla: page "Sales Order Planning";
