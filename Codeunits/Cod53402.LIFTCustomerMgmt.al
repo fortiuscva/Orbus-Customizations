@@ -12,9 +12,8 @@ codeunit 53402 "ORB LIFT Customer Mgmt"
 
     procedure PropagateOnCustomerModify(var LIFTCustomer: Record "ORB LIFT Customer Buffer")
     begin
-        if Customer.Get(LIFTCustomer."No.") then begin
+        if Customer.Get(LIFTCustomer."No.") then
             UpdateCustomer(LIFTCustomer);
-        end;
     end;
 
     procedure UpdateCustomer(var LIFTCustomer: Record "ORB LIFT Customer Buffer")
