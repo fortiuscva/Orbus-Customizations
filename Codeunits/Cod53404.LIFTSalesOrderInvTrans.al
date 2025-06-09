@@ -25,7 +25,7 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
         BatchName: Code[20];
         i: Integer;
     begin
-        BatchName := 'SO' + DelChr(SalesOrderNo, '=', '-');
+        BatchName := DelChr(SalesOrderNo, '=', '-');
         CreateWhseBatch(BatchName);
 
         if not JsonObject.ReadFrom(JsonText) then
