@@ -89,6 +89,10 @@ page 53416 "ORB LIFT Customer API"
                 {
                     Caption = 'Last Date Modified';
                 }
+                field(genBusPostingGroup; Rec."Gen. Bus. Posting Group")
+                {
+                    Caption = 'Gen. Bus. Posting Group';
+                }
                 field(postCode; Rec."Post Code")
                 {
                     Caption = 'Post Code';

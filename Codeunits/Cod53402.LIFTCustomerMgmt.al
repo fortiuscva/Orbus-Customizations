@@ -7,22 +7,22 @@ codeunit 53402 "ORB LIFT Customer Mgmt"
             Customer.Validate("No.", LIFTCustomer."No.");
             Customer.Insert();
         end;
-        UpdateCustomer(LIFTCustomer);
+        UpdateCustomer(LIFTCustomer, true);
     end;
 
     procedure PropagateOnCustomerModify(var LIFTCustomer: Record "ORB LIFT Customer Buffer")
     begin
         if Customer.Get(LIFTCustomer."No.") then
-            UpdateCustomer(LIFTCustomer);
+            UpdateCustomer(LIFTCustomer, false);
     end;
 
-    procedure UpdateCustomer(var LIFTCustomer: Record "ORB LIFT Customer Buffer")
+    procedure UpdateCustomer(var LIFTCustomer: Record "ORB LIFT Customer Buffer"; CreateCustomer: Boolean)
     begin
-        ValidateCustomerFields(Customer, LIFTCustomer);
+        ValidateCustomerFields(Customer, LIFTCustomer, CreateCustomer);
         Customer.Modify();
     end;
 
-    procedure ValidateCustomerFields(var Customer: Record Customer; var LIFTCustomer: Record "ORB LIFT Customer Buffer")
+    procedure ValidateCustomerFields(var Customer: Record Customer; var LIFTCustomer: Record "ORB LIFT Customer Buffer"; CreateCustomer: Boolean)
     begin
         Customer.Validate(Name, LIFTCustomer.Name);
         Customer.Validate(Address, LIFTCustomer.Address);
@@ -31,7 +31,8 @@ codeunit 53402 "ORB LIFT Customer Mgmt"
         Customer.Validate("Phone No.", LIFTCustomer."Phone No.");
         Customer.Validate("Ship-to Code", LIFTCustomer."Ship-to Code");
         Customer.Validate("Credit Limit (LCY)", LIFTCustomer."Credit Limit (LCY)");
-        Customer.Validate("Customer Posting Group", LIFTCustomer."Customer Posting Group");
+        if CreateCustomer then
+            Customer.Validate("Customer Posting Group", LIFTCustomer."Customer Posting Group");
         Customer.Validate("Currency Code", LIFTCustomer."Currency Code");
         Customer.Validate("Customer Price Group", LIFTCustomer."Customer Price Group");
         Customer.Validate("Payment Terms Code", LIFTCustomer."Payment Terms Code");
@@ -40,6 +41,8 @@ codeunit 53402 "ORB LIFT Customer Mgmt"
         Customer.Validate(Blocked, LIFTCustomer.Blocked);
         Customer.Validate("Payment Method Code", LIFTCustomer."Payment Method Code");
         Customer.Validate("Last Date Modified", LIFTCustomer."Last Date Modified");
+        if CreateCustomer then
+            Customer.Validate("Gen. Bus. Posting Group", LIFTCustomer."Gen. Bus. Posting Group");
         Customer.Validate("Post Code", LIFTCustomer."Post Code");
         Customer.Validate(County, LIFTCustomer.County);
         Customer.Validate("E-Mail", LIFTCustomer."E-Mail");
@@ -67,7 +70,8 @@ codeunit 53402 "ORB LIFT Customer Mgmt"
         Customer.Validate("Needs Magento ID", LIFTCustomer."Needs Magento ID");
         Customer.Validate("Last Visit Date", LIFTCustomer."Last Visit Date");
         Customer.Validate(International, LIFTCustomer.International);
-        Customer.Validate("Shortcut Dimension 5 Code", LIFTCustomer.Channel);
+        if CreateCustomer then
+            Customer.Validate("Shortcut Dimension 5 Code", LIFTCustomer.Channel);
         Customer.Validate("Shortcut Dimension 6 Code", LIFTCustomer.Industry);
     end;
 
