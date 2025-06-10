@@ -35,7 +35,10 @@ codeunit 53402 "ORB LIFT Customer Mgmt"
             Customer.Validate("Customer Posting Group", LIFTCustomer."Customer Posting Group");
         Customer.Validate("Currency Code", LIFTCustomer."Currency Code");
         Customer.Validate("Customer Price Group", LIFTCustomer."Customer Price Group");
-        Customer.Validate("Payment Terms Code", LIFTCustomer."Payment Terms Code");
+        if LIFTCustomer."Payment Method Code" = 'CREDITCARD' then
+            Customer.Validate("Payment Terms Code", 'CC')
+        else
+            Customer.Validate("Payment Terms Code", LIFTCustomer."Payment Terms Code");
         Customer.Validate("Salesperson Code", LIFTCustomer."Salesperson Code");
         Customer.Validate("Country/Region Code", LIFTCustomer."Country/Region Code");
         Customer.Validate(Blocked, LIFTCustomer.Blocked);

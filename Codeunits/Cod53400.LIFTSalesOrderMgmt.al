@@ -57,7 +57,6 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         SalesHeader.Validate("Payment Method Code", LIFTSalesOrderBuffer."Payment Method Code");
         SalesHeader.Validate("Shipping Agent Code", LIFTSalesOrderBuffer."Shipping Agent Code");
         SalesHeader.SetWorkDescription(LIFTSalesOrderBuffer."Work Description");
-        SalesHeader.GetWorkDescription();
         SalesHeader.Validate("Sell-to Contact No.", LIFTSalesOrderBuffer."Sell-to Contact No.");
         SalesHeader.Validate("Shipping Advice", LIFTSalesOrderBuffer."Shipping Advice");
         SalesHeader.Validate("Shipping Agent Service Code", LIFTSalesOrderBuffer."Shipping Agent Service Code");
@@ -69,7 +68,12 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         SalesHeader.Validate("ORB International Contact", LIFTSalesOrderBuffer."ORB International Contact");
         SalesHeader.Validate("ORB Magento Order #", LIFTSalesOrderBuffer."ORB Magento Order #");
         SalesHeader.Validate("ORB Magento CC 4 Digits", LIFTSalesOrderBuffer."ORB Magento CC 4 Digits");
-        SalesHeader.Validate("Sales Order Payment Type", LIFTSalesOrderBuffer."Sales Order Payment Type");
+        if LIFTSalesOrderBuffer."Sales Order Payment Type" = LIFTSalesOrderBuffer."Sales Order Payment Type"::"3rd Party" then
+            SalesHeader.Validate("Sales Order Payment Type", SalesHeader."Sales Order Payment Type"::"Third Party")
+        else if LIFTSalesOrderBuffer."Sales Order Payment Type" = LIFTSalesOrderBuffer."Sales Order Payment Type"::Free then
+            SalesHeader.Validate("Sales Order Payment Type", SalesHeader."Sales Order Payment Type"::Collect)
+        else
+            SalesHeader.Validate("Sales Order Payment Type", LIFTSalesOrderBuffer."Sales Order Payment Type");
         SalesHeader.Validate("SO Payment Account No.", LIFTSalesOrderBuffer."SO Payment Account No.");
         SalesHeader.Validate("In-Hands Date", LIFTSalesOrderBuffer."In-Hands Date");
         SalesHeader.Validate("Created At", LIFTSalesOrderBuffer."Created At");
