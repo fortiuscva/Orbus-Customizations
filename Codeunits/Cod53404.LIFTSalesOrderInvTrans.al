@@ -109,7 +109,7 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
         Line."Journal Batch Name" := BatchName;
         Line."Line No." := EntryNo;
         Line.Validate("Location Code", GetValueAsCode(JObject, 'LOCATION_CODE'));
-        Line.Validate("Registering Date", DT2Date(EvaluateUTCDateTime(GetValueAsText(JObject, 'POSTING_DATE'))));
+        Line.Validate("Registering Date", GetValueAsDate(JObject, 'POSTING_DATE'));
         Line.Validate("Bin Code", 'WR-LIFT');
         Line.Validate("Item No.", GetValueAsText(JObject, 'MATERIAL_BARCODE'));
         Line.Validate("Whse. Document No.", GetValueAsText(JObject, 'DOCUMENT_NUMBER'));
@@ -213,6 +213,14 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
     local procedure GetValueAsCode(JObject: JsonObject; Path: Text): Code[20]
     begin
         exit(CopyStr(GetValueAsText(JObject, Path), 1, 20));
+    end;
+
+    local procedure GetValueAsDate(JObject: JsonObject; Path: Text): Date
+    var
+        JToken: JsonToken;
+    begin
+        if JObject.SelectToken(Path, JToken) and not JToken.AsValue().IsNull() then
+            exit(JToken.AsValue().AsDate());
     end;
 
     local procedure EvaluateUTCDateTime(DateTimeText: Text): DateTime
