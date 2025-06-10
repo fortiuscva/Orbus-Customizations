@@ -171,7 +171,7 @@ table 53400 "ORB LIFT Sales Order Buffer"
             DataClassification = CustomerContent;
             TableRelation = "Shipping Agent";
         }
-        field(200; "Work Description"; Blob)
+        field(200; "Work Description"; Text[2048])
         {
             Caption = 'Work Description';
         }
