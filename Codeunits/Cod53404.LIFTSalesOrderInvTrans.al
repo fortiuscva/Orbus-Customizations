@@ -1,6 +1,7 @@
 codeunit 53404 "LIFT Sales Order Inv. Trans"
 {
 
+
     procedure RunForSalesOrder(SalesOrderNo: Code[20])
     var
         LIFTERPSetup: Record "ORB LIFT ERP Setup";
@@ -8,39 +9,40 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
         APICode: Code[20];
         JsonResponse: Text;
     begin
-        LIFTERPSetup.Get();
+        if not TryGetLIFTERPSetup(LIFTERPSetup) and GuiAllowed() then
+            Error('LIFT ERP Setup not found.');
+
         APIURL := LIFTERPSetup."Inventory Journal API" + '&p2=' + SalesOrderNo;
         APICode := 'INVENTORYJOURNALS';
+
         if GetRequest(APIURL, APICode, JsonResponse) then
             ProcessRequest(SalesOrderNo, APICode, JsonResponse);
     end;
 
     local procedure ProcessRequest(SalesOrderNo: Code[20]; APICode: Code[20]; JsonText: Text)
     var
-        JsonObject: JsonObject;
         JsonArray: JsonArray;
-        JsonToken: JsonToken;
         JsonEntry: JsonToken;
         WhseJnlLine: Record "Warehouse Journal Line";
         BatchName: Code[20];
         i: Integer;
     begin
+        if not TryParseJsonArray(JsonText, JsonArray) and GuiAllowed() then
+            Error('Invalid or unexpected JSON structure. No data to process.');
+
+        if (JsonArray.Count() = 0) and GuiAllowed() then
+            Error('No inventory transactions returned from the API.');
+
         BatchName := DelChr(SalesOrderNo, '=', '-');
         CreateWhseBatch(BatchName);
 
-        if not JsonObject.ReadFrom(JsonText) then
-            Error('Invalid JSON Response');
-        if not JsonObject.Get('rowset', JsonToken) then
-            Error('Missing "rowset" in response');
-
-        JsonArray := JsonToken.AsArray();
         for i := 0 to JsonArray.Count() - 1 do begin
             JsonArray.Get(i, JsonEntry);
-            CreateJournalLine(WhseJnlLine, JsonEntry.AsObject(), BatchName);
+            if not TryCreateJournalLine(WhseJnlLine, JsonEntry.AsObject(), BatchName) and GuiAllowed() then
+                Message('Failed to create journal line at index %1', i + 1);
         end;
 
         PostWarehouseJournal(BatchName);
-
         DeleteWhseBatch(BatchName);
     end;
 
@@ -49,7 +51,9 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
         JnlBatch: Record "Warehouse Journal Batch";
         Template: Record "Warehouse Journal Template";
     begin
-        Template.Get('ITEM');
+        if not TryGetTemplate(Template, 'ITEM') and GuiAllowed() then
+            Error('Warehouse Journal Template "ITEM" not found.');
+
         if not JnlBatch.Get('ITEM', BatchName) then begin
             JnlBatch.Init();
             JnlBatch."Journal Template Name" := 'ITEM';
@@ -70,11 +74,17 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
     local procedure PostWarehouseJournal(BatchName: Code[20])
     var
         WhseJnlLine: Record "Warehouse Journal Line";
-        WhseRegister: Codeunit "Whse. Jnl.-Register";
     begin
         WhseJnlLine.SetRange("Journal Template Name", 'ITEM');
         WhseJnlLine.SetRange("Journal Batch Name", BatchName);
-        CODEUNIT.Run(CODEUNIT::"Whse. Jnl.-Register", WhseJnlLine);
+        if not Codeunit.Run(Codeunit::"Whse. Jnl.-Register", WhseJnlLine) and GuiAllowed() then
+            Error('Warehouse journal posting failed.');
+    end;
+
+    [TryFunction]
+    local procedure TryCreateJournalLine(var Line: Record "Warehouse Journal Line"; JObject: JsonObject; BatchName: Code[20])
+    begin
+        CreateJournalLine(Line, JObject, BatchName);
     end;
 
     local procedure CreateJournalLine(var Line: Record "Warehouse Journal Line"; JObject: JsonObject; BatchName: Code[20])
@@ -91,7 +101,8 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
         else
             EntryNo := 10000;
 
-        Template.Get('ITEM');
+        if not TryGetTemplate(Template, 'ITEM') and GuiAllowed() then
+            Error('Template "ITEM" not found.');
 
         Line.Init();
         Line."Journal Template Name" := 'ITEM';
@@ -147,6 +158,29 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
         if not Response.IsSuccessStatusCode() then
             Error('%1 - %2', Response.HttpStatusCode(), ResponseText);
         exit(true);
+    end;
+
+    [TryFunction]
+    local procedure TryGetLIFTERPSetup(var Setup: Record "ORB LIFT ERP Setup")
+    begin
+        Setup.Get();
+    end;
+
+    [TryFunction]
+    local procedure TryGetTemplate(var Template: Record "Warehouse Journal Template"; TemplateName: Code[10])
+    begin
+        Template.Get(TemplateName);
+    end;
+
+    [TryFunction]
+    local procedure TryParseJsonArray(JsonText: Text; var JsonArray: JsonArray)
+    var
+        JsonObject: JsonObject;
+        JsonToken: JsonToken;
+    begin
+        JsonObject.ReadFrom(JsonText);
+        JsonObject.Get('rowset', JsonToken);
+        JsonArray := JsonToken.AsArray(); // Throws if invalid
     end;
 
     local procedure GetValueAsText(JObject: JsonObject; Path: Text): Text
