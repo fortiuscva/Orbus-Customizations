@@ -1,7 +1,18 @@
 codeunit 53404 "LIFT Sales Order Inv. Trans"
 {
 
+    trigger OnRun()
+    var
+        SalesHeaderRecLcl: Record "Sales Header";
+    begin
+        SalesHeaderRecLcl.Reset();
+        if SalesHeaderRecLcl.FindSet() then
+            repeat
+                if not RunForSalesOrder(SalesHeaderRecLcl."No.") then;
+            until SalesHeaderRecLcl.Next() = 0;
+    end;
 
+    [TryFunction]
     procedure RunForSalesOrder(SalesOrderNo: Code[20])
     var
         LIFTERPSetup: Record "ORB LIFT ERP Setup";
@@ -9,6 +20,8 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
         APICode: Code[20];
         JsonResponse: Text;
     begin
+        ClearLastError();
+
         if not TryGetLIFTERPSetup(LIFTERPSetup) and GuiAllowed() then
             Error('LIFT ERP Setup not found.');
 
