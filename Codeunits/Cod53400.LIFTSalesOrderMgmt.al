@@ -84,6 +84,8 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
     var
         LineNo: Integer;
     begin
+        if LIFTSalesLineBuffer."No." = '' then
+            exit;
         SalesLine.SetRange("Document Type", LIFTSalesLineBuffer."Document Type"::Order);
         SalesLine.SetRange("Document No.", LIFTSalesLineBuffer."Document No.");
         if SalesLine.FindLast() then
@@ -121,10 +123,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
     procedure ValidateSalesLineFields(var SalesLine: Record "Sales Line"; var LIFTSalesLineBuffer: Record "ORB LIFT Sales Line Buffer")
     begin
         SalesLine.Validate("Sell-to Customer No.", LIFTSalesLineBuffer."Sell-to Customer No.");
-        if LIFTSalesLineBuffer.Type = LIFTSalesLineBuffer.Type::Comment then
-            SalesLine.Validate(Type, SalesLine.Type::" ")
-        else
-            SalesLine.Validate(Type, LIFTSalesLineBuffer.Type);
+        SalesLine.Validate(Type, SalesLine.Type::Item);
         SalesLine.Validate("No.", LIFTSalesLineBuffer."No.");
         SalesLine.Validate("Location Code", LIFTSalesLineBuffer."Location Code");
         SalesLine.Validate("Shipment Date", LIFTSalesLineBuffer."Shipment Date");
