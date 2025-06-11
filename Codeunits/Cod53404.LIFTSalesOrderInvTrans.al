@@ -1,7 +1,18 @@
 codeunit 53404 "LIFT Sales Order Inv. Trans"
 {
 
+    trigger OnRun()
+    var
+        SalesHeaderRecLcl: Record "Sales Header";
+    begin
+        SalesHeaderRecLcl.Reset();
+        if SalesHeaderRecLcl.FindSet() then
+            repeat
+                if not RunForSalesOrder(SalesHeaderRecLcl."No.") then;
+            until SalesHeaderRecLcl.Next() = 0;
+    end;
 
+    [TryFunction]
     procedure RunForSalesOrder(SalesOrderNo: Code[20])
     var
         LIFTERPSetup: Record "ORB LIFT ERP Setup";
@@ -9,6 +20,8 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
         APICode: Code[20];
         JsonResponse: Text;
     begin
+        ClearLastError();
+
         if not TryGetLIFTERPSetup(LIFTERPSetup) and GuiAllowed() then
             Error('LIFT ERP Setup not found.');
 
@@ -26,6 +39,7 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
         WhseJnlLine: Record "Warehouse Journal Line";
         BatchName: Code[20];
         i: Integer;
+        HasErrors: Boolean;
     begin
         if not TryParseJsonArray(JsonText, JsonArray) and GuiAllowed() then
             Error('Invalid or unexpected JSON structure. No data to process.');
@@ -36,13 +50,23 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
         BatchName := DelChr(SalesOrderNo, '=', '-');
         CreateWhseBatch(BatchName);
 
+        HasErrors := false;
+
         for i := 0 to JsonArray.Count() - 1 do begin
             JsonArray.Get(i, JsonEntry);
-            if not TryCreateJournalLine(WhseJnlLine, JsonEntry.AsObject(), BatchName) and GuiAllowed() then
-                Message('Failed to create journal line at index %1', i + 1);
+            if not TryCreateJournalLine(WhseJnlLine, JsonEntry.AsObject(), BatchName) then begin
+                HasErrors := true;
+                if GuiAllowed() then
+                    Message(GetLastErrorText);
+            end;
         end;
 
-        PostWarehouseJournal(BatchName);
+        if not HasErrors then
+            PostWarehouseJournal(BatchName)
+        else
+            if GuiAllowed() then
+                Message('Errors occurred during journal line creation. Posting skipped.');
+
         DeleteWhseBatch(BatchName);
     end;
 
@@ -78,7 +102,7 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
         WhseJnlLine.SetRange("Journal Template Name", 'ITEM');
         WhseJnlLine.SetRange("Journal Batch Name", BatchName);
         if not Codeunit.Run(Codeunit::"Whse. Jnl.-Register", WhseJnlLine) and GuiAllowed() then
-            Error('Warehouse journal posting failed.');
+            Error(GetLastErrorText);
     end;
 
     [TryFunction]
@@ -102,14 +126,14 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
             EntryNo := 10000;
 
         if not TryGetTemplate(Template, 'ITEM') and GuiAllowed() then
-            Error('Template "ITEM" not found.');
+            Error(GetLastErrorText);
 
         Line.Init();
         Line."Journal Template Name" := 'ITEM';
         Line."Journal Batch Name" := BatchName;
         Line."Line No." := EntryNo;
         Line.Validate("Location Code", GetValueAsCode(JObject, 'LOCATION_CODE'));
-        Line.Validate("Registering Date", DT2Date(EvaluateUTCDateTime(GetValueAsText(JObject, 'POSTING_DATE'))));
+        Line.Validate("Registering Date", GetValueAsDate(JObject, 'POSTING_DATE'));
         Line.Validate("Bin Code", 'WR-LIFT');
         Line.Validate("Item No.", GetValueAsText(JObject, 'MATERIAL_BARCODE'));
         Line.Validate("Whse. Document No.", GetValueAsText(JObject, 'DOCUMENT_NUMBER'));
@@ -213,6 +237,19 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
     local procedure GetValueAsCode(JObject: JsonObject; Path: Text): Code[20]
     begin
         exit(CopyStr(GetValueAsText(JObject, Path), 1, 20));
+    end;
+
+    local procedure GetValueAsDate(JObject: JsonObject; Path: Text): Date
+    var
+        JToken: JsonToken;
+        DateText: Text;
+        ResultDate: Date;
+    begin
+        if JObject.SelectToken(Path, JToken) and not JToken.AsValue().IsNull() then begin
+            DateText := JToken.AsValue().AsText();
+            if Evaluate(ResultDate, DateText) then
+                exit(ResultDate);
+        end;
     end;
 
     local procedure EvaluateUTCDateTime(DateTimeText: Text): DateTime
