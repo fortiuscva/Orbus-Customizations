@@ -61,7 +61,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         //SalesHeader.Validate("Shipping Advice", LIFTSalesOrderBuffer."Shipping Advice");
         SalesHeader.Validate("Shipping Agent Service Code", LIFTSalesOrderBuffer."Shipping Agent Service Code");
         if CreateSO then
-            SalesHeader.Validate("Order Status", LIFTSalesOrderBuffer."Order Status"::"AC In Production");
+            SalesHeader.Validate("Order Status", LIFTSalesOrderBuffer."Order Status");
         SalesHeader.Validate("Location Override", LIFTSalesOrderBuffer."Location Override");
         SalesHeader.Validate("Created_By", LIFTSalesOrderBuffer."Created_By");
         SalesHeader.Validate("Rush", LIFTSalesOrderBuffer."Rush");
