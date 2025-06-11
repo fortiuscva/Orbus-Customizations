@@ -72,10 +72,9 @@ table 53402 "ORB LIFT Customer Buffer"
             DataClassification = CustomerContent;
             TableRelation = "Customer Price Group";
         }
-        field(27; "Payment Terms Code"; Code[10])
+        field(27; "Payment Terms Code"; Code[20])
         {
             Caption = 'Payment Terms Code';
-            TableRelation = "Payment Terms";
             DataClassification = CustomerContent;
         }
         field(29; "Salesperson Code"; Code[20])
