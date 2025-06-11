@@ -9,24 +9,24 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             SalesHeader.Insert();
         end;
 
-        UpdateSalesHeader(LIFTSalesOrderBuffer);
+        UpdateSalesHeader(LIFTSalesOrderBuffer, true);
     end;
 
     procedure PropagateOnSalesHeaderModify(var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer")
     begin
         if SalesHeader.Get(LIFTSalesOrderBuffer."Document Type", LIFTSalesOrderBuffer."No.") then begin
             ArchiveManagement.ArchiveSalesDocument(SalesHeader);
-            UpdateSalesHeader(LIFTSalesOrderBuffer);
+            UpdateSalesHeader(LIFTSalesOrderBuffer, false);
         end;
     end;
 
-    local procedure UpdateSalesHeader(var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer")
+    local procedure UpdateSalesHeader(var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer"; CreateSO: Boolean)
     begin
-        ValidateSalesHeaderFields(SalesHeader, LIFTSalesOrderBuffer);
+        ValidateSalesHeaderFields(SalesHeader, LIFTSalesOrderBuffer, CreateSO);
         SalesHeader.Modify();
     end;
 
-    procedure ValidateSalesHeaderFields(var SalesHeader: Record "Sales Header"; var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer")
+    procedure ValidateSalesHeaderFields(var SalesHeader: Record "Sales Header"; var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer"; CreateSO: Boolean)
     begin
         SalesHeader.Validate("Sell-to Customer No.", LIFTSalesOrderBuffer."Sell-to Customer No.");
         SalesHeader.Validate("Bill-to Customer No.", LIFTSalesOrderBuffer."Bill-to Customer No.");
@@ -58,9 +58,10 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         SalesHeader.Validate("Shipping Agent Code", LIFTSalesOrderBuffer."Shipping Agent Code");
         SalesHeader.SetWorkDescription(LIFTSalesOrderBuffer."Work Description");
         SalesHeader.Validate("Sell-to Contact No.", LIFTSalesOrderBuffer."Sell-to Contact No.");
-        SalesHeader.Validate("Shipping Advice", LIFTSalesOrderBuffer."Shipping Advice");
+        //SalesHeader.Validate("Shipping Advice", LIFTSalesOrderBuffer."Shipping Advice");
         SalesHeader.Validate("Shipping Agent Service Code", LIFTSalesOrderBuffer."Shipping Agent Service Code");
-        SalesHeader.Validate("Order Status", LIFTSalesOrderBuffer."Order Status");
+        if CreateSO then
+            SalesHeader.Validate("Order Status", LIFTSalesOrderBuffer."Order Status");
         SalesHeader.Validate("Location Override", LIFTSalesOrderBuffer."Location Override");
         SalesHeader.Validate("Created_By", LIFTSalesOrderBuffer."Created_By");
         SalesHeader.Validate("Rush", LIFTSalesOrderBuffer."Rush");
