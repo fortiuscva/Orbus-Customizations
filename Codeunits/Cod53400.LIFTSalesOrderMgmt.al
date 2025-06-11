@@ -82,10 +82,12 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
 
     procedure PropagateOnSalesLineInsert(var LIFTSalesLineBuffer: Record "ORB LIFT Sales Line Buffer")
     var
+        SalesLineRecLcl: Record "Sales Line";
         LineNo: Integer;
     begin
         if LIFTSalesLineBuffer."No." = '' then
             exit;
+        SalesLine.Reset();
         SalesLine.SetRange("Document Type", LIFTSalesLineBuffer."Document Type"::Order);
         SalesLine.SetRange("Document No.", LIFTSalesLineBuffer."Document No.");
         if SalesLine.FindLast() then
@@ -93,12 +95,16 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         else
             LineNo := 10000;
 
-        if not SalesLine.Get(LIFTSalesLineBuffer."Document Type", LIFTSalesLineBuffer."Document No.", LineNo) then begin
+        SalesLine.Reset();
+        SalesLine.SetRange("Document Type", LIFTSalesLineBuffer."Document Type");
+        SalesLine.SetRange("Document No.", LIFTSalesLineBuffer."Document No.");
+        SalesLine.SetRange("ORB LIFT Line ID", LIFTSalesLineBuffer."LIFT Line ID");
+        if not SalesLine.FindLast() then begin
             SalesLine.Init();
             SalesLine.Validate("Document Type", LIFTSalesLineBuffer."Document Type");
             SalesLine.Validate("Document No.", LIFTSalesLineBuffer."Document No.");
             SalesLine.Validate("Line No.", LineNo);
-            SalesLine.Insert();
+            SalesLine.Insert(true);
         end;
 
         UpdateSalesLine(LIFTSalesLineBuffer);
@@ -106,7 +112,11 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
 
     procedure PropagateOnSalesLineModify(var LIFTSalesLineBuffer: Record "ORB LIFT Sales Line Buffer")
     begin
-        if SalesLine.Get(LIFTSalesLineBuffer."Document Type", LIFTSalesLineBuffer."Document No.", LIFTSalesLineBuffer."Line No.") then begin
+        SalesLine.Reset();
+        SalesLine.SetRange("Document Type", LIFTSalesLineBuffer."Document Type");
+        SalesLine.SetRange("Document No.", LIFTSalesLineBuffer."Document No.");
+        SalesLine.SetRange("ORB LIFT Line ID", LIFTSalesLineBuffer."LIFT Line ID");
+        if SalesLine.FindLast() then begin
             if SalesHeader.Get(LIFTSalesLineBuffer."Document Type", LIFTSalesLineBuffer."Document No.") then begin
                 ArchiveManagement.ArchiveSalesDocument(SalesHeader);
                 UpdateSalesLine(LIFTSalesLineBuffer);
@@ -143,11 +153,16 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         SalesLine.Validate(Height, LIFTSalesLineBuffer.Height);
         SalesLine.Validate("Hardware Price", LIFTSalesLineBuffer."Hardware Price");
         SalesLine.Validate("Graphics Price", LIFTSalesLineBuffer."Graphics Price");
+        SalesLine."ORB LIFT Line ID" := LIFTSalesLineBuffer."LIFT Line ID";
     end;
 
     procedure PropagateOnSalesLineDelete(LIFTSalesLineBuffer: Record "ORB LIFT Sales Line Buffer")
     begin
-        if SalesLine.Get(LIFTSalesLineBuffer."Document Type", LIFTSalesLineBuffer."Document No.", LIFTSalesLineBuffer."Line No.") then begin
+        SalesLine.Reset();
+        SalesLine.SetRange("Document Type", LIFTSalesLineBuffer."Document Type");
+        SalesLine.SetRange("Document No.", LIFTSalesLineBuffer."Document No.");
+        SalesLine.SetRange("ORB LIFT Line ID", LIFTSalesLineBuffer."LIFT Line ID");
+        if SalesLine.FindLast() then begin
             if SalesHeader.Get(LIFTSalesLineBuffer."Document Type", LIFTSalesLineBuffer."Document No.") then begin
                 ArchiveManagement.ArchiveSalesDocument(SalesHeader);
                 SalesLine.Delete();

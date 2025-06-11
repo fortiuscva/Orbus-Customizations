@@ -1,6 +1,7 @@
 table 52621 "ORB User Pick Zone"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
+    Caption = 'User Pick Zone';
 
     fields
     {

@@ -178,6 +178,15 @@ codeunit 52603 "ORB Orbus Single Instance"
         exit(RunFromOrderConfirmationGbl);
     end;
 
+    procedure SetWarehousePickLocationCode(pLocationCode: Code[20])
+    begin
+        LocationCode := pLocationCode;
+    end;
+
+    procedure GetWarehousePickLocationCode(): Code[20]
+    begin
+        exit(LocationCode);
+    end;
 
     var
         ShowDialogLookupProfileVarGbl: Boolean;
@@ -199,4 +208,5 @@ codeunit 52603 "ORB Orbus Single Instance"
         FirstActivityNoGbl: Code[20];
         LastActivityNoGbl: Code[20];
         RunFromOrderConfirmationGbl: Boolean;
+        LocationCode: Code[20];
 }
