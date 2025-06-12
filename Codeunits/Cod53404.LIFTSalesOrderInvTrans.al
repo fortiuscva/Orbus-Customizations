@@ -137,9 +137,8 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
         Line.Validate("Bin Code", 'WR-LIFT');
         Line.Validate("Item No.", GetValueAsText(JObject, 'MATERIAL_BARCODE'));
         Line.Validate("Whse. Document No.", GetValueAsText(JObject, 'DOCUMENT_NUMBER'));
-        Line.Validate(Quantity, GetValueAsDecimal(JObject, 'QUANTITY'));
         Line.Validate("Unit of Measure Code", GetValueAsCode(JObject, 'UNIT_OF_MEASURE'));
-
+        Line.Validate(Quantity, GetValueAsDecimal(JObject, 'QUANTITY'));
         EntryTypeText := GetValueAsText(JObject, 'ENTRY_TYPE');
         if EntryTypeText = 'NEGATIVE' then
             Line.Validate("Entry Type", Line."Entry Type"::"Negative Adjmt.")
