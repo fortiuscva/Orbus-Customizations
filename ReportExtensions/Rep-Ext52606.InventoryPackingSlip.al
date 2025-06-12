@@ -1,5 +1,6 @@
 reportextension 52606 "ORB Inventory Packing Slip" extends "Picking List"
 {
+    RDLCLayout = './Reports/Layouts/OrbusPickingList_Mod.rdl';
     dataset
     {
         add("Warehouse Activity Header")
