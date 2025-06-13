@@ -19,9 +19,30 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
         APIURL: Text[1024];
         APICode: Code[20];
         JsonResponse: Text;
+        LIFTERPSetupRecLcl: Record "ORB LIFT ERP Setup";
+        LIFTIntegrationDataLogRecLcl: Record "ORB LIFT Integration Data Log";
+        LIFTIntegration: Codeunit "ORB LIFT Integration";
+        LIFTAPICodes: Codeunit "ORB LIFT API Codes";
+        WhseJnlLineRecLcl: Record "Warehouse Journal Line";
     begin
         ClearLastError();
+        LIFTERPSetupRecLcl.Get();
+        LIFTIntegrationDataLogRecLcl.Reset();
+        LIFTIntegrationDataLogRecLcl.SetCurrentKey("Transaction ID");
+        LIFTIntegrationDataLogRecLcl.SetRange("Source Type", Database::"Warehouse Journal Line");
+        if LIFTIntegrationDataLogRecLcl.FindLast() then
+            LIFTIntegration.ParseData(LIFTERPSetupRecLcl."Inventory Journal API" + '&p1=' + format(LIFTIntegrationDataLogRecLcl."Transaction ID"), LIFTAPICodes.GetInventoryJournalAPICode())
+        else
+            LIFTIntegration.ParseData(LIFTERPSetupRecLcl."Inventory Journal API", LIFTAPICodes.GetInventoryJournalAPICode());
 
+        Commit();
+        WhseJnlLineRecLcl.Reset();
+        WhseJnlLineRecLcl.SetRange("Journal Template Name", 'ITEM');
+        WhseJnlLineRecLcl.SetRange("Journal Batch Name", 'WR');
+        WhseJnlLineRecLcl.SetRange("Location Code", 'WR');
+        WhseJnlLineRecLcl.SetRange("Whse. Document No.", SalesOrderNo);
+        CODEUNIT.Run(CODEUNIT::"Whse. Jnl.-Register", WhseJnlLineRecLcl);
+        /*
         if not TryGetLIFTERPSetup(LIFTERPSetup) and GuiAllowed() then
             Error('LIFT ERP Setup not found.');
 
@@ -30,6 +51,7 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
 
         if GetRequest(APIURL, APICode, JsonResponse) then
             ProcessRequest(SalesOrderNo, APICode, JsonResponse);
+        */
     end;
 
     local procedure ProcessRequest(SalesOrderNo: Code[20]; APICode: Code[20]; JsonText: Text)
