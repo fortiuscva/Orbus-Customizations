@@ -134,29 +134,40 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
     end;
 
     procedure ValidateSalesLineFields(var SalesLine: Record "Sales Line"; var LIFTSalesLineBuffer: Record "ORB LIFT Sales Line Buffer")
+    var
+        ItemRecLcl: Record Item;
     begin
         SalesLine.Validate("Sell-to Customer No.", LIFTSalesLineBuffer."Sell-to Customer No.");
-        SalesLine.Validate(Type, SalesLine.Type::Item);
-        SalesLine.Validate("No.", LIFTSalesLineBuffer."No.");
-        //SalesLine.Validate("Location Code", LIFTSalesLineBuffer."Location Code");
-        SalesLine.Validate("Shipment Date", LIFTSalesLineBuffer."Shipment Date");
-        SalesLine.Validate(Quantity, LIFTSalesLineBuffer.Quantity);
-        SalesLine.Validate("Unit Price", LIFTSalesLineBuffer."Unit Price");
-        SalesLine.Validate("Line Discount %", LIFTSalesLineBuffer."Line Discount %");
-        SalesLine.Validate("Line Discount Amount", LIFTSalesLineBuffer."Line Discount Amount");
-        SalesLine.Validate("Shortcut Dimension 1 Code", LIFTSalesLineBuffer."Shortcut Dimension 1 Code");
-        SalesLine.Validate("Shortcut Dimension 2 Code", LIFTSalesLineBuffer."Shortcut Dimension 2 Code");
-        SalesLine.Validate("Variant Code", LIFTSalesLineBuffer."Variant Code");
-        SalesLine.Validate("Unit of Measure Code", LIFTSalesLineBuffer."Unit of Measure Code");
-        SalesLine.Validate("Requested Delivery Date", LIFTSalesLineBuffer."Requested Delivery Date");
-        SalesLine.Validate("Promised Delivery Date", LIFTSalesLineBuffer."Promised Delivery Date");
-        SalesLine.Validate("Planned Delivery Date", LIFTSalesLineBuffer."Planned Delivery Date");
-        SalesLine.Validate("Planned Shipment Date", LIFTSalesLineBuffer."Planned Shipment Date");
-        SalesLine.Validate(Width, LIFTSalesLineBuffer.Width);
-        SalesLine.Validate(Height, LIFTSalesLineBuffer.Height);
-        SalesLine.Validate("Hardware Price", LIFTSalesLineBuffer."Hardware Price");
-        SalesLine.Validate("Graphics Price", LIFTSalesLineBuffer."Graphics Price");
-        SalesLine."ORB LIFT Line ID" := LIFTSalesLineBuffer."LIFT Line ID";
+        //SalesLine.Validate(Type, SalesLine.Type::Item);
+        IF LIFTSalesLineBuffer.Type = LIFTSalesLineBuffer.Type::Comment then begin
+            SalesLine.Validate(Type, SalesLine.Type::" ");
+            if ItemRecLcl.get(LIFTSalesLineBuffer."No.") then begin
+                SalesLine.Description := ItemRecLcl.Description;
+                SalesLine."Description 2" := ItemRecLcl."Description 2";
+            end;
+        end else begin
+            SalesLine.Validate(Type, SalesLine.Type::Item);
+            SalesLine.Validate("No.", LIFTSalesLineBuffer."No.");
+            //SalesLine.Validate("Location Code", LIFTSalesLineBuffer."Location Code");
+            SalesLine.Validate("Shipment Date", LIFTSalesLineBuffer."Shipment Date");
+            SalesLine.Validate(Quantity, LIFTSalesLineBuffer.Quantity);
+            SalesLine.Validate("Unit Price", LIFTSalesLineBuffer."Unit Price");
+            SalesLine.Validate("Line Discount %", LIFTSalesLineBuffer."Line Discount %");
+            SalesLine.Validate("Line Discount Amount", LIFTSalesLineBuffer."Line Discount Amount");
+            SalesLine.Validate("Shortcut Dimension 1 Code", LIFTSalesLineBuffer."Shortcut Dimension 1 Code");
+            SalesLine.Validate("Shortcut Dimension 2 Code", LIFTSalesLineBuffer."Shortcut Dimension 2 Code");
+            SalesLine.Validate("Variant Code", LIFTSalesLineBuffer."Variant Code");
+            SalesLine.Validate("Unit of Measure Code", LIFTSalesLineBuffer."Unit of Measure Code");
+            SalesLine.Validate("Requested Delivery Date", LIFTSalesLineBuffer."Requested Delivery Date");
+            SalesLine.Validate("Promised Delivery Date", LIFTSalesLineBuffer."Promised Delivery Date");
+            SalesLine.Validate("Planned Delivery Date", LIFTSalesLineBuffer."Planned Delivery Date");
+            SalesLine.Validate("Planned Shipment Date", LIFTSalesLineBuffer."Planned Shipment Date");
+            SalesLine.Validate(Width, LIFTSalesLineBuffer.Width);
+            SalesLine.Validate(Height, LIFTSalesLineBuffer.Height);
+            SalesLine.Validate("Hardware Price", LIFTSalesLineBuffer."Hardware Price");
+            SalesLine.Validate("Graphics Price", LIFTSalesLineBuffer."Graphics Price");
+            SalesLine."ORB LIFT Line ID" := LIFTSalesLineBuffer."LIFT Line ID";
+        end
     end;
 
     procedure PropagateOnSalesLineDelete(LIFTSalesLineBuffer: Record "ORB LIFT Sales Line Buffer")
