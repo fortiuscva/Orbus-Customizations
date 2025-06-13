@@ -23,12 +23,13 @@ reportextension 52606 "ORB Inventory Packing Slip" extends "Picking List"
                 SalesHeaderRecLcl.reset;
                 Clear(CustomerSupportVarGbl);
                 Clear(MustHaveDateVarGbl);
-                if SalesHeaderRecLcl.Get("Warehouse Activity Header"."Source No.") then
-                    if SalesHeaderRecLcl."Document Type" = SalesHeaderRecLcl."Document Type"::Order then begin
-                        CustomerSupportVarGbl := SalesHeaderRecLcl."ORB Customer Support";
-                        MustHaveDateVarGbl := SalesHeaderRecLcl."In-Hands Date";
-                    end;
-
+                SalesHeaderRecLcl.reset;
+                SalesHeaderRecLcl.SetFilter("No.", "Warehouse Activity Header"."Source No.");
+                SalesHeaderRecLcl.SetRange("Document Type", SalesHeaderRecLcl."Document Type"::Order);
+                If SalesHeaderRecLcl.FindFirst() then begin
+                    CustomerSupportVarGbl := SalesHeaderRecLcl."ORB Customer Support";
+                    MustHaveDateVarGbl := SalesHeaderRecLcl."In-Hands Date";
+                end;
             end;
 
         }
