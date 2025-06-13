@@ -355,7 +355,7 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 var
                     LIFTCalcWhseAdjmt: Report "ORB LIFT Calculate Whse. Adj";
                     ItemJnlRecLcl: Record "Item Journal Line";
-                    ItemNoLcl: Code[20];
+                    ItemNoLcl: Code[1024];
                     SalesLineRecLcl: Record "Sales Line";
                     ItemRecLcl: Record Item;
                     ItemRecTempLcl: Record Item temporary;
