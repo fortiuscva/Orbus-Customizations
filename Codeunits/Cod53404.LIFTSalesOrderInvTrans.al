@@ -4,11 +4,20 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
     trigger OnRun()
     var
         SalesHeaderRecLcl: Record "Sales Header";
+        WhseJnlLineRecLcl: Record "Warehouse Journal Line";
     begin
         SalesHeaderRecLcl.Reset();
         if SalesHeaderRecLcl.FindSet() then
             repeat
                 if not RunForSalesOrder(SalesHeaderRecLcl."No.") then;
+
+                WhseJnlLineRecLcl.Reset();
+                WhseJnlLineRecLcl.SetRange("Journal Template Name", 'ITEM');
+                WhseJnlLineRecLcl.SetRange("Journal Batch Name", 'LIFTERP');
+                WhseJnlLineRecLcl.SetRange("Location Code", 'WR');
+                WhseJnlLineRecLcl.SetRange("Whse. Document No.", SalesHeaderRecLcl."No.");
+                if WhseJnlLineRecLcl.Count > 0 then
+                    CODEUNIT.Run(CODEUNIT::"Whse. Jnl.-Register", WhseJnlLineRecLcl);
             until SalesHeaderRecLcl.Next() = 0;
     end;
 
@@ -23,7 +32,6 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
         LIFTIntegrationDataLogRecLcl: Record "ORB LIFT Integration Data Log";
         LIFTIntegration: Codeunit "ORB LIFT Integration";
         LIFTAPICodes: Codeunit "ORB LIFT API Codes";
-        WhseJnlLineRecLcl: Record "Warehouse Journal Line";
     begin
         ClearLastError();
         LIFTERPSetupRecLcl.Get();
@@ -36,12 +44,6 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
             LIFTIntegration.ParseData(LIFTERPSetupRecLcl."Inventory Journal API", LIFTAPICodes.GetInventoryJournalAPICode());
 
         Commit();
-        WhseJnlLineRecLcl.Reset();
-        WhseJnlLineRecLcl.SetRange("Journal Template Name", 'ITEM');
-        WhseJnlLineRecLcl.SetRange("Journal Batch Name", 'WR');
-        WhseJnlLineRecLcl.SetRange("Location Code", 'WR');
-        WhseJnlLineRecLcl.SetRange("Whse. Document No.", SalesOrderNo);
-        CODEUNIT.Run(CODEUNIT::"Whse. Jnl.-Register", WhseJnlLineRecLcl);
         /*
         if not TryGetLIFTERPSetup(LIFTERPSetup) and GuiAllowed() then
             Error('LIFT ERP Setup not found.');
