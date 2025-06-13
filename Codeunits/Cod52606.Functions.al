@@ -63,8 +63,8 @@ codeunit 52606 "ORB Functions"
     var
         NotAllowedSenderReceiverLbl: Label 'Payment Type %1 is not allowed';
     begin
-        if (SalesHeader."Sales Order Payment Type" = SalesHeader."Sales Order Payment Type"::Sender) or
-        (SalesHeader."Sales Order Payment Type" = SalesHeader."Sales Order Payment Type"::Receiver) then
+        if (SalesHeader."Sales Order Payment Type" = SalesHeader."Sales Order Payment Type"::Sender) then
+            //or if (SalesHeader."Sales Order Payment Type" = SalesHeader."Sales Order Payment Type"::Receiver) then
             Error(NotAllowedSenderReceiverLbl, Format(SalesHeader."Sales Order Payment Type"));
     end;
 
