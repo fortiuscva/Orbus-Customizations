@@ -345,6 +345,72 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                     LIFTSalesOrderInvTrans.RunForSalesOrder(rec."No.");
                 end;
             }
+            action("ORB Run LIFT Warehouse Adjustments")
+            {
+                ApplicationArea = All;
+                Caption = 'Run LIFT Warehouse Adjustments';
+                Image = CalculateWarehouseAdjustment;
+
+                trigger OnAction()
+                var
+                    LIFTCalcWhseAdjmt: Report "ORB LIFT Calculate Whse. Adj";
+                    ItemJnlRecLcl: Record "Item Journal Line";
+                    ItemNoLcl: Code[20];
+                    SalesLineRecLcl: Record "Sales Line";
+                    ItemRecLcl: Record Item;
+                    ItemRecTempLcl: Record Item temporary;
+                    WarehouseEntryRecLcl: Record "Warehouse Entry";
+                begin
+                    WarehouseEntryRecLcl.Reset();
+                    WarehouseEntryRecLcl.SetRange("Whse. Document No.", Rec."No.");
+                    if WarehouseEntryRecLcl.FindSet() then
+                        repeat
+                            ItemRecTempLcl.Reset();
+                            ItemRecTempLcl.SetRange("No.", WarehouseEntryRecLcl."Item No.");
+                            if not ItemRecTempLcl.FindFirst() then begin
+                                ItemRecTempLcl.Init();
+                                ItemRecTempLcl."No." := WarehouseEntryRecLcl."Item No.";
+                                ItemRecTempLcl.Insert()
+                            end;
+                        until WarehouseEntryRecLcl.Next() = 0;
+
+
+                    ItemNoLcl := '';
+                    ItemRecTempLcl.Reset();
+                    repeat
+                        if ItemNoLcl <> '' then
+                            ItemNoLcl += '|' + ItemRecTempLcl."No."
+                        else
+                            ItemNoLcl := ItemRecTempLcl."No.";
+                    until ItemRecTempLcl.Next() = 0;
+
+                    ItemRecLcl.Reset;
+                    ItemRecLcl.SetFilter("No.", ItemNoLcl);
+                    ItemRecLcl.SetFilter("Location Filter", Rec."Location Code");
+                    If ItemRecLcl.FindSet() then begin
+                        ItemJnlRecLcl.Init();
+                        ItemJnlRecLcl."Journal Template Name" := 'ITEM';
+                        ItemJnlRecLcl."Journal Batch Name" := 'LIFTERP';
+
+                        LIFTCalcWhseAdjmt.SetItemJnlLine(ItemJnlRecLcl);
+                        LIFTCalcWhseAdjmt.SetHideValidationDialog(true);
+                        LIFTCalcWhseAdjmt.InitializeRequest(Today, Rec."No.");
+                        LIFTCalcWhseAdjmt.SetTableView(ItemRecLcl);
+                        LIFTCalcWhseAdjmt.UseRequestPage(false);
+                        LIFTCalcWhseAdjmt.RunModal();
+                        Clear(LIFTCalcWhseAdjmt);
+                    end;
+
+                    ItemJnlRecLcl.Reset();
+                    ItemJnlRecLcl.SetRange("Journal Template Name", 'ITEM');
+                    ItemJnlRecLcl.SetRange("Journal Batch Name", 'LIFTERP');
+                    ItemJnlRecLcl.SetRange("Document No.", Rec."No.");
+                    if ItemJnlRecLcl.FindSet() then
+                        CODEUNIT.Run(CODEUNIT::"Item Jnl.-Post", ItemJnlRecLcl)
+                    else
+                        Message('There is nothing to post');
+                end;
+            }
         }
 
     }
