@@ -37,6 +37,10 @@ page 53411 "ORB LIFT SO Buffer API"
                 {
                     Caption = 'Bill-to Name';
                 }
+                field(yourReference; Rec."Your Reference")
+                {
+                    Caption = 'Versapay ID';
+                }
                 field(shipToCode; Rec."Ship-to Code")
                 {
                     Caption = 'Ship-to Code';
