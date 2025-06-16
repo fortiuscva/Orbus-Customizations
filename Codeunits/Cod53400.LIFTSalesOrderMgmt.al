@@ -40,7 +40,8 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         SalesHeader.Validate("Order Date", LIFTSalesOrderBuffer."Order Date");
         SalesHeader.Validate("Posting Date", LIFTSalesOrderBuffer."Posting Date");
         SalesHeader.Validate("Shipment Date", LIFTSalesOrderBuffer."Shipment Date");
-        //SalesHeader.Validate("Payment Terms Code", LIFTSalesOrderBuffer."Payment Terms Code");
+        if LIFTSalesOrderBuffer."Your Reference" <> '' then
+            SalesHeader.Validate("Payment Terms Code", 'CC');
         SalesHeader.Validate("Due Date", LIFTSalesOrderBuffer."Due Date");
         SalesHeader.Validate("Shipment Method Code", LIFTSalesOrderBuffer."Shipment Method Code");
         SalesHeader.Validate("Location Code", LIFTSalesOrderBuffer."Location Code");
@@ -54,7 +55,8 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         SalesHeader.Validate("Ship-to Country/Region Code", LIFTSalesOrderBuffer."Ship-to Country/Region Code");
         SalesHeader.Validate("Document Date", LIFTSalesOrderBuffer."Document Date");
         SalesHeader.Validate("External Document No.", LIFTSalesOrderBuffer."External Document No.");
-        //SalesHeader.Validate("Payment Method Code", LIFTSalesOrderBuffer."Payment Method Code");
+        if LIFTSalesOrderBuffer."Your Reference" <> '' then
+            SalesHeader.Validate("Payment Method Code", LIFTSalesOrderBuffer."Payment Method Code");
         SalesHeader.Validate("Shipping Agent Code", LIFTSalesOrderBuffer."Shipping Agent Code");
         SalesHeader.SetWorkDescription(LIFTSalesOrderBuffer."Work Description");
 
