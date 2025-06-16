@@ -45,13 +45,15 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
         if SalesOrderNo <> '' then
             SalesHeader.SetRange("No.", SalesOrderNo);
         if SalesHeader.FindSet() then begin
-            ORBSingleInstance.SetSuppressWhseConfirm(true);
             repeat
+                ClearLastError();
+                ORBSingleInstance.SetSuppressWhseConfirm(true);
                 if not Codeunit.Run(Codeunit::"ORB LIFT Post Inventory Jnl", SalesHeader) then
                     if GuiAllowed then
-                        Error('Failed to run codeunit for Sales Order: %1', SalesHeader."No.");
+                        Error(GetLastErrorText);
+                ORBSingleInstance.SetSuppressWhseConfirm(false);
             until SalesHeader.Next() = 0;
-            ORBSingleInstance.SetSuppressWhseConfirm(false);
+
         end;
 
 
