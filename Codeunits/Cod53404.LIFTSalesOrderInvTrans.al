@@ -33,7 +33,29 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
         LIFTIntegration: Codeunit "ORB LIFT Integration";
         LIFTAPICodes: Codeunit "ORB LIFT API Codes";
         WhseJnlLineRecLcl: Record "Warehouse Journal Line";
+        SalesHeader: Record "Sales Header";
+        ORBSingleInstance: Codeunit "ORB Orbus Single Instance";
     begin
+        ClearLastError();
+        if not Codeunit.Run(Codeunit::"ORB LIFT Parse Inventory Data") then;
+
+        Commit();
+
+        SalesHeader.Reset();
+        if SalesOrderNo <> '' then
+            SalesHeader.SetRange("No.", SalesOrderNo);
+        if SalesHeader.FindSet() then begin
+            ORBSingleInstance.SetSuppressWhseConfirm(true);
+            repeat
+                if not Codeunit.Run(Codeunit::"ORB LIFT Post Inventory Jnl", SalesHeader) then
+                    if GuiAllowed then
+                        Error('Failed to run codeunit for Sales Order: %1', SalesHeader."No.");
+            until SalesHeader.Next() = 0;
+            ORBSingleInstance.SetSuppressWhseConfirm(false);
+        end;
+
+
+        /*
         ClearLastError();
         LIFTERPSetupRecLcl.Get();
         LIFTIntegrationDataLogRecLcl.Reset();
