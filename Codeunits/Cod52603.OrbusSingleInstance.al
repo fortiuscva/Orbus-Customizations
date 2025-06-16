@@ -188,6 +188,17 @@ codeunit 52603 "ORB Orbus Single Instance"
         exit(LocationCode);
     end;
 
+    procedure SetSuppressWhseConfirm(Value: Boolean)
+    begin
+        SuppressWhseRegisterConfirm := Value;
+    end;
+
+    procedure GetSuppressWhseConfirm(): Boolean
+    begin
+        exit(SuppressWhseRegisterConfirm);
+    end;
+
+
     var
         ShowDialogLookupProfileVarGbl: Boolean;
         ShowDialogSendEmailToCustVarGbl: Boolean;
@@ -209,4 +220,5 @@ codeunit 52603 "ORB Orbus Single Instance"
         LastActivityNoGbl: Code[20];
         RunFromOrderConfirmationGbl: Boolean;
         LocationCode: Code[20];
+        SuppressWhseRegisterConfirm: Boolean;
 }
