@@ -740,12 +740,19 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Whse. Jnl.-Register", 'OnBeforeConfirmRegisterLines', '', false, false)]
-    local procedure SuppressConfirmOnlyForLIFT(WhseJnlLine: Record "Warehouse Journal Line"; var Result: Boolean; var IsHandled: Boolean)
+    local procedure "Whse. Jnl.-Register_OnBeforeConfirmRegisterLines"(WhseJnlLine: Record "Warehouse Journal Line"; var Result: Boolean; var IsHandled: Boolean)
     begin
         if OrbusSingleInstanceCUGbl.GetSuppressWhseConfirm() then begin
             Result := true;
             IsHandled := true;
         end;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Jnl.-Post", OnBeforeCode, '', false, false)]
+    local procedure "Item Jnl.-Post_OnBeforeCode"(var ItemJournalLine: Record "Item Journal Line"; var HideDialog: Boolean; var SuppressCommit: Boolean; var IsHandled: Boolean)
+    begin
+        if OrbusSingleInstanceCUGbl.GetSuppressItemJnlConfirm() then
+            HideDialog := true;
     end;
 
 
