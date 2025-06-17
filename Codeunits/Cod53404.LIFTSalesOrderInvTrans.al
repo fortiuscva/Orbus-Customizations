@@ -37,7 +37,7 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
         ORBSingleInstance: Codeunit "ORB Orbus Single Instance";
     begin
         ClearLastError();
-        if not Codeunit.Run(Codeunit::"ORB LIFT Parse Inventory Data") then;
+        if not Codeunit.Run(Codeunit::"ORB LIFT Read Inv.Transactions") then;
 
         Commit();
 

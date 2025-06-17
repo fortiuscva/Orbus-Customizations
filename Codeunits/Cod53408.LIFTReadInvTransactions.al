@@ -1,4 +1,4 @@
-codeunit 53408 "ORB LIFT Parse Inventory Data"
+codeunit 53408 "ORB LIFT Read Inv.Transactions"
 {
     trigger OnRun()
     var
