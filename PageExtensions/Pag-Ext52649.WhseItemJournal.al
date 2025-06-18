@@ -52,7 +52,7 @@ pageextension 52649 "ORB Whse. Item Journal" extends "Whse. Item Journal"
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
-                Visible = IsLIFTERPFunctionEnabled;
+                Visible = false;
 
                 trigger OnAction()
                 var
@@ -61,6 +61,9 @@ pageextension 52649 "ORB Whse. Item Journal" extends "Whse. Item Journal"
                     LIFTIntegration: Codeunit "ORB LIFT Integration";
                     LIFTAPICodes: Codeunit "ORB LIFT API Codes";
                 begin
+                    if UserId <> 'BCADMIN' then
+                        Error('Unauthorized access');
+
                     LIFTERPSetupRecLcl.Get();
                     LIFTIntegrationDataLogRecLcl.Reset();
                     LIFTIntegrationDataLogRecLcl.SetCurrentKey("Transaction ID");
