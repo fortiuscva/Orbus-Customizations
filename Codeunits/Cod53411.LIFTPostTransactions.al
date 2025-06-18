@@ -31,8 +31,41 @@ codeunit 53411 "ORB LIFT Post Transactions"
             end;
         OrbusSingleInstanceCUGbl.SetSuppressWhseConfirm(false);
 
+
+        ClearLastError();
+        if not RunWhseAdjustment(rec) then
+            if StopOnError then
+                Error(GetLastErrorText);
+
+        ClearLastError();
+        ItemJnlRecLcl.Reset();
+        ItemJnlRecLcl.SetRange("Journal Template Name", 'ITEM');
+        ItemJnlRecLcl.SetRange("Journal Batch Name", 'LIFTERP');
+        ItemJnlRecLcl.SetRange("Document No.", Rec."No.");
+
+        OrbusSingleInstanceCUGbl.SetSuppressItemJnlConfirm(true);
+        if ItemJnlRecLcl.FindSet() then
+            if not CODEUNIT.Run(CODEUNIT::"Item Jnl.-Post", ItemJnlRecLcl) then
+                if StopOnError then begin
+                    OrbusSingleInstanceCUGbl.SetSuppressItemJnlConfirm(false);
+                    Error(GetLastErrorText);
+                end;
+
+        OrbusSingleInstanceCUGbl.SetSuppressItemJnlConfirm(false);
+    end;
+
+    [TryFunction]
+    procedure RunWhseAdjustment(SalesHeader: Record "Sales Header")
+    var
+        LIFTCalcWhseAdjmt: Report "ORB LIFT Calculate Whse. Adj";
+        ItemRecLcl: Record Item;
+        ItemRecTempLcl: Record Item temporary;
+        WarehouseEntryRecLcl: Record "Warehouse Entry";
+        ItemJnlRecLcl: Record "Item Journal Line";
+        ItemNoLcl: Code[1024];
+    begin
         WarehouseEntryRecLcl.Reset();
-        WarehouseEntryRecLcl.SetRange("Whse. Document No.", Rec."No.");
+        WarehouseEntryRecLcl.SetRange("Whse. Document No.", SalesHeader."No.");
         if WarehouseEntryRecLcl.FindSet() then
             repeat
                 ItemRecTempLcl.Reset();
@@ -56,54 +89,20 @@ codeunit 53411 "ORB LIFT Post Transactions"
 
         ItemRecLcl.Reset;
         ItemRecLcl.SetFilter("No.", ItemNoLcl);
-        ItemRecLcl.SetFilter("Location Filter", Rec."Location Code");
+        ItemRecLcl.SetFilter("Location Filter", SalesHeader."Location Code");
 
         if ItemRecLcl.FindSet() then begin
             ItemJnlRecLcl.Init();
             ItemJnlRecLcl."Journal Template Name" := 'ITEM';
             ItemJnlRecLcl."Journal Batch Name" := 'LIFTERP';
 
-            // LIFTCalcWhseAdjmt.SetItemJnlLine(ItemJnlRecLcl);
-            // LIFTCalcWhseAdjmt.SetHideValidationDialog(true);
-            // LIFTCalcWhseAdjmt.InitializeRequest(Today, Rec."No.");
-            // LIFTCalcWhseAdjmt.SetTableView(ItemRecLcl);
-            // LIFTCalcWhseAdjmt.UseRequestPage(false);
-            // LIFTCalcWhseAdjmt.RunModal();
-            // Clear(LIFTCalcWhseAdjmt);
-            ClearLastError();
-            if not RunWhseAdjutment(ItemJnlRecLcl, rec, ItemRecLcl) then
-                if StopOnError then
-                    Error(GetLastErrorText);
-
-            ClearLastError();
-            ItemJnlRecLcl.Reset();
-            ItemJnlRecLcl.SetRange("Journal Template Name", 'ITEM');
-            ItemJnlRecLcl.SetRange("Journal Batch Name", 'LIFTERP');
-            ItemJnlRecLcl.SetRange("Document No.", Rec."No.");
-
-            OrbusSingleInstanceCUGbl.SetSuppressItemJnlConfirm(true);
-            if ItemJnlRecLcl.FindSet() then
-                if not CODEUNIT.Run(CODEUNIT::"Item Jnl.-Post", ItemJnlRecLcl) then
-                    if StopOnError then begin
-                        OrbusSingleInstanceCUGbl.SetSuppressItemJnlConfirm(false);
-                        Error(GetLastErrorText);
-                    end;
-
-            OrbusSingleInstanceCUGbl.SetSuppressItemJnlConfirm(false);
+            LIFTCalcWhseAdjmt.SetItemJnlLine(ItemJnlRecLcl);
+            LIFTCalcWhseAdjmt.SetHideValidationDialog(true);
+            LIFTCalcWhseAdjmt.InitializeRequest(Today, SalesHeader."No.");
+            LIFTCalcWhseAdjmt.SetTableView(ItemRecLcl);
+            LIFTCalcWhseAdjmt.UseRequestPage(false);
+            LIFTCalcWhseAdjmt.RunModal();
+            Clear(LIFTCalcWhseAdjmt);
         end;
-    end;
-
-    [TryFunction]
-    procedure RunWhseAdjutment(ItemJnlRec: Record "Item Journal Line"; SalesHeader: Record "Sales Header"; ItemRec: Record Item)
-    var
-        LIFTCalcWhseAdjmt: Report "ORB LIFT Calculate Whse. Adj";
-    begin
-        LIFTCalcWhseAdjmt.SetItemJnlLine(ItemJnlRec);
-        LIFTCalcWhseAdjmt.SetHideValidationDialog(true);
-        LIFTCalcWhseAdjmt.InitializeRequest(Today, SalesHeader."No.");
-        LIFTCalcWhseAdjmt.SetTableView(ItemRec);
-        LIFTCalcWhseAdjmt.UseRequestPage(false);
-        LIFTCalcWhseAdjmt.RunModal();
-        Clear(LIFTCalcWhseAdjmt);
     end;
 }
