@@ -5,7 +5,7 @@ page 52631 "ORB LIFT Integration Data Log"
     PageType = List;
     SourceTable = "ORB LIFT Integration Data Log";
     UsageCategory = Lists;
-    Editable = false;
+    // Editable = false;
 
     layout
     {
@@ -65,4 +65,22 @@ page 52631 "ORB LIFT Integration Data Log"
             }
         }
     }
+
+    trigger OnInsertRecord(BelowxRec: Boolean): Boolean
+    begin
+        if UserId <> 'BCADMIN' then
+            Error('Unauthorized access');
+    end;
+
+    trigger OnModifyRecord(): Boolean
+    begin
+        if UserId <> 'BCADMIN' then
+            Error('Unauthorized access');
+    end;
+
+    trigger OnDeleteRecord(): Boolean
+    begin
+        if UserId <> 'BCADMIN' then
+            Error('Unauthorized access');
+    end;
 }
