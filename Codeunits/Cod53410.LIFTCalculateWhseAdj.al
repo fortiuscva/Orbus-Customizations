@@ -1,4 +1,4 @@
-codeunit 53410 "ORB LIFT Whse Adjmt Processor"
+codeunit 53410 "ORB LIFT Calculate Whse. Adj."
 {
     TableNo = "Sales Header";
 
@@ -13,6 +13,14 @@ codeunit 53410 "ORB LIFT Whse Adjmt Processor"
         WarehouseEntryRecLcl: Record "Warehouse Entry";
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
     begin
+        if ItemJnlTemplateNameGbl = '' then
+            ItemJnlTemplateNameGbl := 'ITEM';
+
+        if ItemJnlBatchNameGbl = '' then
+            ItemJnlBatchNameGbl := 'LIFTERP';
+
+
+
         WarehouseEntryRecLcl.Reset();
         WarehouseEntryRecLcl.SetRange("Whse. Document No.", Rec."No.");
         if WarehouseEntryRecLcl.FindSet() then
@@ -41,9 +49,15 @@ codeunit 53410 "ORB LIFT Whse Adjmt Processor"
         ItemRecLcl.SetFilter("Location Filter", Rec."Location Code");
 
         if ItemRecLcl.FindSet() then begin
+            ItemJnlRecLcl.Reset();
+            ItemJnlRecLcl.SetRange("Journal Template Name", ItemJnlTemplateNameGbl);
+            ItemJnlRecLcl.SetRange("Journal Batch Name", ItemJnlBatchNameGbl);
+            ItemJnlRecLcl.SetRange("Document No.", Rec."No.");
+            ItemJnlRecLcl.DeleteAll(true);
+
             ItemJnlRecLcl.Init();
-            ItemJnlRecLcl."Journal Template Name" := 'ITEM';
-            ItemJnlRecLcl."Journal Batch Name" := 'LIFTERP';
+            ItemJnlRecLcl."Journal Template Name" := ItemJnlTemplateNameGbl;
+            ItemJnlRecLcl."Journal Batch Name" := ItemJnlBatchNameGbl;
 
             LIFTCalcWhseAdjmt.SetItemJnlLine(ItemJnlRecLcl);
             LIFTCalcWhseAdjmt.SetHideValidationDialog(true);
@@ -53,16 +67,15 @@ codeunit 53410 "ORB LIFT Whse Adjmt Processor"
             LIFTCalcWhseAdjmt.RunModal();
             Clear(LIFTCalcWhseAdjmt);
         end;
-
-        ItemJnlRecLcl.Reset();
-        ItemJnlRecLcl.SetRange("Journal Template Name", 'ITEM');
-        ItemJnlRecLcl.SetRange("Journal Batch Name", 'LIFTERP');
-        ItemJnlRecLcl.SetRange("Document No.", Rec."No.");
-
-        OrbusSingleInstanceCUGbl.SetSuppressItemJnlConfirm(true);
-        if ItemJnlRecLcl.FindSet() then
-            CODEUNIT.Run(CODEUNIT::"Item Jnl.-Post", ItemJnlRecLcl);
-
-        OrbusSingleInstanceCUGbl.SetSuppressItemJnlConfirm(false);
     end;
+
+    procedure InitializeRequest(JournalTemplateNamePar: Code[10]; JournalBatchNamePar: Code[10])
+    begin
+        ItemJnlTemplateNameGbl := JournalTemplateNamePar;
+        ItemJnlBatchNameGbl := JournalBatchNamePar;
+    end;
+
+    var
+        ItemJnlTemplateNameGbl: Code[10];
+        ItemJnlBatchNameGbl: Code[10];
 }
