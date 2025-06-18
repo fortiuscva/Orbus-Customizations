@@ -48,7 +48,7 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
             repeat
                 ClearLastError();
                 ORBSingleInstance.SetSuppressWhseConfirm(true);
-                if not Codeunit.Run(Codeunit::"ORB LIFT Post Inventory Jnl", SalesHeader) then
+                if not Codeunit.Run(Codeunit::"ORB LIFT Register Whse. Jnl.", SalesHeader) then
                     if GuiAllowed then
                         Error(GetLastErrorText);
                 ORBSingleInstance.SetSuppressWhseConfirm(false);
