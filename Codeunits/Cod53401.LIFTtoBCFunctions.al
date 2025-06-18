@@ -43,9 +43,21 @@ codeunit 53401 "ORB LIFTtoBC Functions"
                 TransactionIDvar += '|' + Format(WhseTransaByIdQry.TransactionID);
         end;
 
+        if TransactionIDvar = '' then
+            TransactionIDvar := '-1';
+
         WarehouseEntryRec.Reset();
         WarehouseEntryRec.SetFilter("ORB LIFT Inv. Transaction ID", TransactionIDvar);
         Page.RunModal(Page::"Warehouse Entries", WarehouseEntryRec);
+    end;
+
+    procedure OpenILETransactions(SalesHeaderRecLcl: Record "Sales Header")
+    var
+        ItemLedgerEntryRecLcl: Record "Item Ledger Entry";
+    begin
+        ItemLedgerEntryRecLcl.Reset();
+        ItemLedgerEntryRecLcl.SetRange("Document No.", SalesHeaderRecLcl."No.");
+        Page.RunModal(Page::"Item Ledger Entries", ItemLedgerEntryRecLcl);
     end;
 
     var
