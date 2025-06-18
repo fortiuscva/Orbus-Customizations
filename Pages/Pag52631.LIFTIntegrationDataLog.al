@@ -65,4 +65,22 @@ page 52631 "ORB LIFT Integration Data Log"
             }
         }
     }
+
+    trigger OnInsertRecord(BelowxRec: Boolean): Boolean
+    begin
+        if UserId <> 'BCADMIN' then
+            Error('Unauthorized access');
+    end;
+
+    trigger OnModifyRecord(): Boolean
+    begin
+        if UserId <> 'BCADMIN' then
+            Error('Unauthorized access');
+    end;
+
+    trigger OnDeleteRecord(): Boolean
+    begin
+        if UserId <> 'BCADMIN' then
+            Error('Unauthorized access');
+    end;
 }

@@ -87,6 +87,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         SalesHeader.Validate("Sell-To Contact No. (Custom)", LIFTSalesOrderBuffer."Sell-to Contact No.");
         //SalesHeader.Validate("Sell-to Contact", LIFTSalesOrderBuffer."Sell-to Contact");
         SalesHeader.Validate("Your Reference", LIFTSalesOrderBuffer."Your Reference");
+        SalesHeader."ORB Lift Order" := true;
     end;
 
     procedure PropagateOnSalesLineInsert(var LIFTSalesLineBuffer: Record "ORB LIFT Sales Line Buffer")
@@ -125,12 +126,10 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         SalesLine.SetRange("Document Type", LIFTSalesLineBuffer."Document Type");
         SalesLine.SetRange("Document No.", LIFTSalesLineBuffer."Document No.");
         SalesLine.SetRange("ORB LIFT Line ID", LIFTSalesLineBuffer."LIFT Line ID");
-        if SalesLine.FindLast() then begin
-            if SalesHeader.Get(LIFTSalesLineBuffer."Document Type", LIFTSalesLineBuffer."Document No.") then begin
-                ArchiveManagement.ArchiveSalesDocument(SalesHeader);
+        if SalesLine.FindLast() then
+            // if SalesHeader.Get(LIFTSalesLineBuffer."Document Type", LIFTSalesLineBuffer."Document No.") then begin
+            //     ArchiveManagement.ArchiveSalesDocument(SalesHeader);
                 UpdateSalesLine(LIFTSalesLineBuffer);
-            end;
-        end;
     end;
 
     local procedure UpdateSalesLine(var LIFTSalesLineBuffer: Record "ORB LIFT Sales Line Buffer")
