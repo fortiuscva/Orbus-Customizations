@@ -332,82 +332,87 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 end;
 
             }
-            action("ORB Post LIFT Inventory Transactions")
+            group("ORB LIFT")
             {
-                Image = Order;
-                ApplicationArea = all;
-                Caption = 'Post Inventory Transactions';
+                Caption = 'LIFT';
 
-                trigger OnAction()
-                var
-                    SalesHeaderRecLcl: Record "Sales Header";
-                begin
-                    SalesHeaderRecLcl.Reset();
-                    SalesHeaderRecLcl.SetRange("Document Type", rec."Document Type");
-                    SalesHeaderRecLcl.SetRange("No.", Rec."No.");
-                    if SalesHeaderRecLcl.FindFirst() then
-                        Report.RunModal(Report::"ORB Post LIFT Transactions", true, false, SalesHeaderRecLcl);
+                action("ORB Post LIFT Inventory Transactions")
+                {
+                    Image = Order;
+                    ApplicationArea = all;
+                    Caption = 'Post LIFT Inventory Transactions';
 
-                end;
-            }
-            action("ORB Get & Post LIFT Inventory Transactions")
-            {
-                Image = Order;
-                ApplicationArea = all;
-                Caption = 'Get & Post Inventory Transactions';
-                Visible = false;
+                    trigger OnAction()
+                    var
+                        SalesHeaderRecLcl: Record "Sales Header";
+                    begin
+                        SalesHeaderRecLcl.Reset();
+                        SalesHeaderRecLcl.SetRange("Document Type", rec."Document Type");
+                        SalesHeaderRecLcl.SetRange("No.", Rec."No.");
+                        if SalesHeaderRecLcl.FindFirst() then
+                            Report.RunModal(Report::"ORB Post LIFT Transactions", true, false, SalesHeaderRecLcl);
 
-                trigger OnAction()
-                var
-                    LIFTSalesOrderInvTrans: Codeunit "LIFT Sales Order Inv. Trans";
-                begin
-                    if UserId <> 'BCADMIN' then
-                        Error('Unauthorized access');
+                    end;
+                }
+                action("ORB Get & Post LIFT Inventory Transactions")
+                {
+                    Image = Order;
+                    ApplicationArea = all;
+                    Caption = 'Get & Post Inventory Transactions';
+                    Visible = false;
 
-                    if not Confirm('Do you want to Proceed?', false) then
-                        exit;
+                    trigger OnAction()
+                    var
+                        LIFTSalesOrderInvTrans: Codeunit "LIFT Sales Order Inv. Trans";
+                    begin
+                        if UserId <> 'BCADMIN' then
+                            Error('Unauthorized access');
 
-                    //Get all Inventory Transactions from LIFTERP
-                    ClearLastError();
-                    if not Codeunit.Run(Codeunit::"ORB LIFT Read Inv.Transactions") then;
+                        if not Confirm('Do you want to Proceed?', false) then
+                            exit;
 
-                    Commit();
+                        //Get all Inventory Transactions from LIFTERP
+                        ClearLastError();
+                        if not Codeunit.Run(Codeunit::"ORB LIFT Read Inv.Transactions") then;
 
-
-                    //Register Warehouse Item journals specific to Sales order
-                    Codeunit.Run(Codeunit::"ORB LIFT Register Whse. Jnl.", rec);
-                end;
-            }
-            action("ORB Run LIFT Warehouse Adjustments")
-            {
-                ApplicationArea = All;
-                Caption = 'Run LIFT Warehouse Adjustments';
-                Image = CalculateWarehouseAdjustment;
-                Visible = false;
-
-                trigger OnAction()
-                var
-                    LIFTCalcWhseAdjmt: Report "ORB LIFT Calculate Whse. Adj";
-                    ItemJnlRecLcl: Record "Item Journal Line";
-                    ItemNoLcl: Code[1024];
-                    SalesLineRecLcl: Record "Sales Line";
-                    ItemRecLcl: Record Item;
-                    ItemRecTempLcl: Record Item temporary;
-                    WarehouseEntryRecLcl: Record "Warehouse Entry";
-                begin
-                    if UserId <> 'BCADMIN' then
-                        Error('Unauthorized access');
-
-                    if not Confirm('Do you want to Proceed?', false) then
-                        exit;
-
-                    // Execute LIFT Calculate Warehouse Adjustment
-                    Codeunit.Run(Codeunit::"ORB LIFT Calculate Whse. Adj.", rec);
+                        Commit();
 
 
-                    // Post Warehouse Adjustments (Item journals)
-                    Codeunit.Run(Codeunit::"ORB LIFT Post Adjustment Jnl.", rec);
-                end;
+                        //Register Warehouse Item journals specific to Sales order
+                        Codeunit.Run(Codeunit::"ORB LIFT Register Whse. Jnl.", rec);
+                    end;
+                }
+                action("ORB Run LIFT Warehouse Adjustments")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Run LIFT Warehouse Adjustments';
+                    Image = CalculateWarehouseAdjustment;
+                    Visible = false;
+
+                    trigger OnAction()
+                    var
+                        LIFTCalcWhseAdjmt: Report "ORB LIFT Calculate Whse. Adj";
+                        ItemJnlRecLcl: Record "Item Journal Line";
+                        ItemNoLcl: Code[1024];
+                        SalesLineRecLcl: Record "Sales Line";
+                        ItemRecLcl: Record Item;
+                        ItemRecTempLcl: Record Item temporary;
+                        WarehouseEntryRecLcl: Record "Warehouse Entry";
+                    begin
+                        if UserId <> 'BCADMIN' then
+                            Error('Unauthorized access');
+
+                        if not Confirm('Do you want to Proceed?', false) then
+                            exit;
+
+                        // Execute LIFT Calculate Warehouse Adjustment
+                        Codeunit.Run(Codeunit::"ORB LIFT Calculate Whse. Adj.", rec);
+
+
+                        // Post Warehouse Adjustments (Item journals)
+                        Codeunit.Run(Codeunit::"ORB LIFT Post Adjustment Jnl.", rec);
+                    end;
+                }
             }
         }
 
