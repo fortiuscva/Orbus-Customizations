@@ -278,12 +278,25 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
                 {
                     ApplicationArea = All;
                     Caption = 'Open LIFT Warehouse Entries';
+                    Image = Entries;
 
                     trigger OnAction()
                     var
                         LIFTBCFunctionsCULcl: Codeunit "ORB LIFTtoBC Functions";
                     begin
                         LIFTBCFunctionsCULcl.OpenWhseTransactions(Rec);
+                    end;
+                }
+                action("ORB LIFT Item Ledger Entries")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Open Item Ledger Entries';
+                    Image = ItemLedger;
+                    trigger OnAction()
+                    var
+                        LIFTBCFunctionsCULcl: Codeunit "ORB LIFTtoBC Functions";
+                    begin
+                        LIFTBCFunctionsCULcl.OpenILETransactions(Rec);
                     end;
                 }
             }
