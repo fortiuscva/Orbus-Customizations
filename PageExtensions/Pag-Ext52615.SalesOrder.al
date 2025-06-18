@@ -422,6 +422,18 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 RunObject = Page "ORB LIFT Integration Data Log";
                 RunPageLink = "Source No." = field("No.");
             }
+            action("ORB LIFT Warehouse Entries")
+            {
+                ApplicationArea = All;
+                Caption = 'Open LIFT Warehouse Entries';
+
+                trigger OnAction()
+                var
+                    LIFTBCFunctionsCULcl: Codeunit "ORB LIFTtoBC Functions";
+                begin
+                    LIFTBCFunctionsCULcl.OpenWhseTransactions(Rec);
+                end;
+            }
         }
 
     }
