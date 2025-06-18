@@ -27,6 +27,27 @@ codeunit 53401 "ORB LIFTtoBC Functions"
         end;
     end;
 
+
+    procedure OpenWhseTransactions(SalesHeaderRecLcl: Record "Sales Header")
+    var
+        WhseTransaByIdQry: Query "ORB LIFT Whse. Trans. By Id";
+        TransactionIDvar: Text;
+        WarehouseEntryRec: Record "Warehouse Entry";
+    begin
+        WhseTransaByIdQry.SetRange(SourceNo, SalesHeaderRecLcl."No.");
+        WhseTransaByIdQry.Open();
+        while WhseTransaByIdQry.Read() do begin
+            if TransactionIDvar = '' then
+                TransactionIDvar := Format(WhseTransaByIdQry.TransactionID)
+            else
+                TransactionIDvar += '|' + Format(WhseTransaByIdQry.TransactionID);
+        end;
+
+        WarehouseEntryRec.Reset();
+        WarehouseEntryRec.SetFilter("ORB LIFT Inv. Transaction ID", TransactionIDvar);
+        Page.RunModal(Page::"Warehouse Entries", WarehouseEntryRec);
+    end;
+
     var
         BCDatatypes: enum "ORB LIFT BC Datatypes";
 }
