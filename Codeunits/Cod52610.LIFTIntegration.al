@@ -179,15 +179,6 @@ codeunit 52610 "ORB LIFT Integration"
                 exit(JToken.AsValue().AsBoolean());
     end;
 
-    procedure SelectJsonTokenasDate(JObject: JsonObject; Path: Text): Date
-    var
-        JToken: JsonToken;
-    begin
-        if JObject.SelectToken(Path, JToken) then
-            if not JToken.AsValue().IsNull() then
-                exit(JToken.AsValue().AsDate());
-    end;
-
     procedure GetValueAsText(JToken: JsonToken; ParamString: Text): Text
     var
         JObject: JsonObject;
@@ -226,14 +217,6 @@ codeunit 52610 "ORB LIFT Integration"
     begin
         JObject := JToken.AsObject();
         exit(SelectJsonTokenasBoolean(JObject, ParamString));
-    end;
-
-    procedure GetValueAsDate(JToken: JsonToken; ParamString: Text): Date
-    var
-        JObject: JsonObject;
-    begin
-        JObject := JToken.AsObject();
-        exit(SelectJsonTokenasDate(JObject, ParamString));
     end;
 
     local procedure EvaluateUTCDateTime(DataTimeText: Text) EvaluatedDateTime: DateTime;
