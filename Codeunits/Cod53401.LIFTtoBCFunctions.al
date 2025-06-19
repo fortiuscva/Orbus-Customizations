@@ -27,6 +27,15 @@ codeunit 53401 "ORB LIFTtoBC Functions"
         end;
     end;
 
+    procedure PostLIFTInventoryTransactions(SalesHeaderRec: Record "Sales Header")
+    var
+        SalesHeaderLcl: Record "Sales Header";
+    begin
+        SalesHeaderLcl.SetRange("Document Type", SalesHeaderRec."Document Type");
+        SalesHeaderLcl.SetRange("No.", SalesHeaderRec."No.");
+        if SalesHeaderLcl.FindFirst() then
+            Report.RunModal(Report::"ORB Post LIFT Transactions", true, false, SalesHeaderLcl);
+    end;
 
     procedure OpenWhseTransactions(SalesHeaderRecLcl: Record "Sales Header")
     var
@@ -69,6 +78,62 @@ codeunit 53401 "ORB LIFTtoBC Functions"
         LiftIntegrationDataLogLcl.SetRange("Source No.", SalesOrderNumber);
         Page.RunModal(Page::"ORB LIFT Inv. Transactions Log", LiftIntegrationDataLogLcl);
     end;
+
+    procedure GetWhseCount(SalesHeaderRec: Record "Sales Header"): Integer
+    var
+        WhseTransQry: Query "ORB LIFT Whse. Trans. By Id";
+        TransactionIDvar: Text;
+        WarehouseEntryRec: Record "Warehouse Entry";
+    begin
+        WhseTransQry.SetRange(SourceNo, SalesHeaderRec."No.");
+        WhseTransQry.Open();
+        while WhseTransQry.Read() do begin
+            if TransactionIDvar = '' then
+                TransactionIDvar := Format(WhseTransQry.TransactionID)
+            else
+                TransactionIDvar += '|' + Format(WhseTransQry.TransactionID);
+        end;
+        WhseTransQry.Close();
+
+        if TransactionIDvar = '' then
+            TransactionIDvar := '-1';
+
+        WarehouseEntryRec.SetFilter("ORB LIFT Inv. Transaction ID", TransactionIDvar);
+        exit(WarehouseEntryRec.Count());
+    end;
+
+    procedure GetILECount(SalesHeaderRec: Record "Sales Header"): Integer
+    var
+        ILE: Record "Item Ledger Entry";
+    begin
+        ILE.SetRange("Document No.", SalesHeaderRec."No.");
+        exit(ILE.Count());
+    end;
+
+    procedure GetIntegrationLogCount(SalesHeaderRec: Record "Sales Header"): Integer
+    var
+        IntegrationLog: Record "ORB LIFT Integration Data Log";
+    begin
+        IntegrationLog.SetRange("Source No.", SalesHeaderRec."No.");
+        exit(IntegrationLog.Count());
+    end;
+
+    procedure ValidateRestrictedLineChanges(SalesLine: Record "Sales Line"; xSalesLine: Record "Sales Line")
+    var
+        SalesHeader: Record "Sales Header";
+    begin
+        SalesHeader.Get(SalesLine."Document Type", SalesLine."Document No.");
+
+        if not SalesHeader."ORB Lift Order" then
+            exit;
+
+        if (SalesLine."Unit Price" <> xSalesLine."Unit Price") or
+           (SalesLine."Line Discount %" <> xSalesLine."Line Discount %") or
+           (SalesLine."Line Discount Amount" <> xSalesLine."Line Discount Amount")
+        then
+            SalesHeader.TestField("ORB Lift Order", false);
+    end;
+
 
     var
         BCDatatypes: enum "ORB LIFT BC Datatypes";
