@@ -108,12 +108,12 @@ codeunit 52610 "ORB LIFT Integration"
             end;
             SalesLine.Modify(true);
 
-            InsertIntergationDataLog(Database::"Sales Header", 1, SalesLine."Document No.", SalesLine."Line No.", SalesLine."No.", 0);
+            InsertIntergationDataLog(Database::"Sales Header", 1, SalesLine."Document No.", SalesLine."Line No.", SalesLine."No.", 0, 0, '', '', '', '', 0, 0, '', 0D, '', '', '', 0);
             Commit();
         end;
     end;
 
-    procedure InsertIntergationDataLog(SourceType: Integer; SourceSubType: Integer; SourceNo: Code[20]; SourceLineNo: Integer; ItemNo: Code[20]; TransactionID: Integer)
+    procedure InsertIntergationDataLog(SourceType: Integer; SourceSubType: Integer; SourceNo: Code[20]; SourceLineNo: Integer; ItemNo: Code[20]; TransactionID: Integer; EntryType: Option; Material: Text[100]; StorageType: Text[100]; MaterialSKU: Text[100]; TransactionType: Code[10]; Quantity: Decimal; UnitCost: Decimal; UnitOfMeasure: Code[10]; PostingDate: Date; LocationCode: Code[10]; ShortcutDimension1Code: Code[10]; ShortcutDimension2Code: Code[10]; LIFTLineNo: Decimal)
     var
         LIFTIntegrationDataLogRecLcl: Record "ORB LIFT Integration Data Log";
         EntryNoVarLcl: Integer;
@@ -133,6 +133,20 @@ codeunit 52610 "ORB LIFT Integration"
         LIFTIntegrationDataLogRecLcl."Source No." := SourceNo;
         LIFTIntegrationDataLogRecLcl."Source Line No." := SourceLineNo;
         LIFTIntegrationDataLogRecLcl."Transaction ID" := TransactionID;
+        LIFTIntegrationDataLogRecLcl."Entry Type" := EntryType;
+        LIFTIntegrationDataLogRecLcl.Material := Material;
+        LIFTIntegrationDataLogRecLcl."Storage Type" := StorageType;
+        LIFTIntegrationDataLogRecLcl."Material SKU" := MaterialSKU;
+        LIFTIntegrationDataLogRecLcl."Item No." := ItemNo;
+        LIFTIntegrationDataLogRecLcl."Transaction Type" := TransactionType;
+        LIFTIntegrationDataLogRecLcl.Quantity := Quantity;
+        LIFTIntegrationDataLogRecLcl."Unit Cost" := UnitCost;
+        LIFTIntegrationDataLogRecLcl."Unit Of Measure" := UnitOfMeasure;
+        LIFTIntegrationDataLogRecLcl."Posting Date" := PostingDate;
+        LIFTIntegrationDataLogRecLcl."Location Code" := LocationCode;
+        LIFTIntegrationDataLogRecLcl."Shortcut Dimension 1 Code" := ShortcutDimension1Code;
+        LIFTIntegrationDataLogRecLcl."Shortcut Dimension 2 Code" := ShortcutDimension2Code;
+        LIFTIntegrationDataLogRecLcl."LIFT Line No." := LIFTLineNo;
         LIFTIntegrationDataLogRecLcl.Insert();
 
     end;
@@ -173,6 +187,15 @@ codeunit 52610 "ORB LIFT Integration"
                 exit(JToken.AsValue().AsBoolean());
     end;
 
+    procedure SelectJsonTokenasDate(JObject: JsonObject; Path: Text): Date
+    var
+        JToken: JsonToken;
+    begin
+        if JObject.SelectToken(Path, JToken) then
+            if not JToken.AsValue().IsNull() then
+                exit(JToken.AsValue().AsDate());
+    end;
+
     procedure GetValueAsText(JToken: JsonToken; ParamString: Text): Text
     var
         JObject: JsonObject;
@@ -211,6 +234,14 @@ codeunit 52610 "ORB LIFT Integration"
     begin
         JObject := JToken.AsObject();
         exit(SelectJsonTokenasBoolean(JObject, ParamString));
+    end;
+
+    procedure GetValueAsDate(JToken: JsonToken; ParamString: Text): Date
+    var
+        JObject: JsonObject;
+    begin
+        JObject := JToken.AsObject();
+        exit(SelectJsonTokenasDate(JObject, ParamString));
     end;
 
     local procedure EvaluateUTCDateTime(DataTimeText: Text) EvaluatedDateTime: DateTime;
@@ -338,7 +369,7 @@ codeunit 52610 "ORB LIFT Integration"
 
         Customer."ORB LIFT Customer" := true;
         if Customer.Insert() then
-            InsertIntergationDataLog(Database::Customer, 0, Customer."No.", 0, '', 0);
+            InsertIntergationDataLog(Database::Customer, 0, Customer."No.", 0, '', 0, 0, '', '', '', '', 0, 0, '', 0D, '', '', '', 0);
     end;
 
     procedure InventoryJournalDataRead(ResponsePar: text)
@@ -415,23 +446,36 @@ codeunit 52610 "ORB LIFT Integration"
             WarehouseJournalLine.Validate("Entry Type", WarehouseJournalLine."Entry Type"::"Negative Adjmt.")
         ELSE
             WarehouseJournalLine.Validate("Entry Type", WarehouseJournalLine."Entry Type"::"Positive Adjmt.");
-        // WarehouseJournalLine.Validate("Location Code", GetValueAsCode(JsonOrderToken, 'LOCATION_CODE'));
+        WarehouseJournalLine.Validate("Location Code", GetValueAsCode(JsonOrderToken, 'LOCATION_CODE'));
         WarehouseJournalLine.Validate("Bin Code", 'WR-LIFT');
+        WarehouseJournalLine.Validate("ORB LIFT Material", GetValueAsText(JsonOrderToken, 'MATERIAL'));
+        WarehouseJournalLine.Validate("ORB LIFT Storage Type", GetValueAsText(JsonOrderToken, 'STORAGE_TYPE'));
+        WarehouseJournalLine.Validate("ORB LIFT Material SKU", GetValueAsText(JsonOrderToken, 'MATERIAL_SKU'));
         WarehouseJournalLine.Validate("Item No.", GetValueAsText(JsonOrderToken, 'MATERIAL_BARCODE'));
+        WarehouseJournalLine.Validate("ORB LIFT Transaction Type", GetValueAsCode(JsonOrderToken, 'TRANSACTION_TYPE'));
         WarehouseJournalLine.Validate("Whse. Document No.", GetValueAsText(JsonOrderToken, 'DOCUMENT_NUMBER'));
         WarehouseJournalLine.Validate("Unit of Measure Code", GetValueAsCode(JsonOrderToken, 'UNIT_OF_MEASURE'));
         WarehouseJournalLine.Validate(Quantity, GetValueAsDecimal(JsonOrderToken, 'QUANTITY'));
-        //WarehouseJournalLine.Validate("Unit Cost", GetValueAsDecimal(JsonOrderToken, 'UNIT_COST'));
+        WarehouseJournalLine.Validate("ORB LIFT Unit Cost", GetValueAsDecimal(JsonOrderToken, 'UNIT_COST'));
+        WarehouseJournalLine.Validate("ORB LIFT Posting Date", GetValueAsDate(JsonOrderToken, 'POSTING_DATE'));
+        WarehouseJournalLine.Validate("ORB Shortcut Dimension 1 Code", GetValueAsCode(JsonOrderToken, 'SHORCUT_DIMENSION_1_CODE'));
+        WarehouseJournalLine.Validate("ORB Shortcut Dimension 2 Code", GetValueAsCode(JsonOrderToken, 'SHORCUT_DIMENSION_2_CODE'));
         //WarehouseJournalLine.Validate(Amount, GetValueAsDecimal(JsonOrderToken, 'AMOUNT'));
         //WarehouseJournalLine.Validate("Unit Cost", GetUnitCost(WarehouseJournalLine."Location Code", WarehouseJournalLine."Item No.", WarehouseJournalLine."Variant Code"));        
         WarehouseJournalLine."ORB LIFT Inv. Transaction ID" := GetValueAsInteger(JsonOrderToken, 'INVENTORY_TRANSACTION_ID');
+        WarehouseJournalLine."ORB LIFT Line No." := GetValueAsDecimal(JsonOrderToken, 'LINE_NUMBER');
         WarehouseJournalLine."ORB LIFT Order Line ID" := GetValueAsInteger(JsonOrderToken, 'ORDER_LINE_ID');
         WarehouseJournalLine."Source Code" := 'WHITEM';
         WarehouseJournalLine.SetUpAdjustmentBin();
         WarehouseJournalLine.Modify(true);
 
         InsertIntergationDataLog(Database::"Warehouse Journal Line", 0, WarehouseJournalLine."Whse. Document No.", WarehouseJournalLine."ORB LIFT Order Line ID",
-                            WarehouseJournalLine."Item No.", WarehouseJournalLine."ORB LIFT Inv. Transaction ID");
+                            WarehouseJournalLine."Item No.", WarehouseJournalLine."ORB LIFT Inv. Transaction ID", WarehouseJournalLine."Entry Type",
+                            WarehouseJournalLine."ORB LIFT Material", WarehouseJournalLine."ORB LIFT Storage Type", WarehouseJournalLine."ORB LIFT Material SKU",
+                            WarehouseJournalLine."ORB LIFT Transaction Type", WarehouseJournalLine.Quantity, WarehouseJournalLine."ORB LIFT Unit Cost",
+                            WarehouseJournalLine."Unit of Measure Code", WarehouseJournalLine."ORB LIFT Posting Date", WarehouseJournalLine."Location Code",
+                            WarehouseJournalLine."ORB Shortcut Dimension 1 Code", WarehouseJournalLine."ORB Shortcut Dimension 2 Code",
+                            WarehouseJournalLine."ORB LIFT Line No.");
     end;
 
     procedure GetUnitCost(LocationCode: Code[10]; ItemNo: Code[20]; VariantCode: Code[10]): Decimal;
