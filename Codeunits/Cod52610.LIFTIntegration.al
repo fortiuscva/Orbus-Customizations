@@ -446,24 +446,24 @@ codeunit 52610 "ORB LIFT Integration"
             WarehouseJournalLine.Validate("Entry Type", WarehouseJournalLine."Entry Type"::"Negative Adjmt.")
         ELSE
             WarehouseJournalLine.Validate("Entry Type", WarehouseJournalLine."Entry Type"::"Positive Adjmt.");
-        WarehouseJournalLine.Validate("Location Code", GetValueAsCode(JsonOrderToken, 'LOCATION_CODE'));
+        //WarehouseJournalLine.Validate("Location Code", GetValueAsCode(JsonOrderToken, 'LOCATION_CODE'));
         WarehouseJournalLine.Validate("Bin Code", 'WR-LIFT');
-        WarehouseJournalLine.Validate("ORB LIFT Material", GetValueAsText(JsonOrderToken, 'MATERIAL'));
-        WarehouseJournalLine.Validate("ORB LIFT Storage Type", GetValueAsText(JsonOrderToken, 'STORAGE_TYPE'));
-        WarehouseJournalLine.Validate("ORB LIFT Material SKU", GetValueAsText(JsonOrderToken, 'MATERIAL_SKU'));
+        //WarehouseJournalLine.Validate("ORB LIFT Material", GetValueAsText(JsonOrderToken, 'MATERIAL'));
+        //WarehouseJournalLine.Validate("ORB LIFT Storage Type", GetValueAsText(JsonOrderToken, 'STORAGE_TYPE'));
+        //WarehouseJournalLine.Validate("ORB LIFT Material SKU", GetValueAsText(JsonOrderToken, 'MATERIAL_SKU'));
         WarehouseJournalLine.Validate("Item No.", GetValueAsText(JsonOrderToken, 'MATERIAL_BARCODE'));
-        WarehouseJournalLine.Validate("ORB LIFT Transaction Type", GetValueAsCode(JsonOrderToken, 'TRANSACTION_TYPE'));
+        //WarehouseJournalLine.Validate("ORB LIFT Transaction Type", GetValueAsCode(JsonOrderToken, 'TRANSACTION_TYPE'));
         WarehouseJournalLine.Validate("Whse. Document No.", GetValueAsText(JsonOrderToken, 'DOCUMENT_NUMBER'));
         WarehouseJournalLine.Validate("Unit of Measure Code", GetValueAsCode(JsonOrderToken, 'UNIT_OF_MEASURE'));
         WarehouseJournalLine.Validate(Quantity, GetValueAsDecimal(JsonOrderToken, 'QUANTITY'));
-        WarehouseJournalLine.Validate("ORB LIFT Unit Cost", GetValueAsDecimal(JsonOrderToken, 'UNIT_COST'));
-        WarehouseJournalLine.Validate("ORB LIFT Posting Date", GetValueAsDate(JsonOrderToken, 'POSTING_DATE'));
-        WarehouseJournalLine.Validate("ORB Shortcut Dimension 1 Code", GetValueAsCode(JsonOrderToken, 'SHORCUT_DIMENSION_1_CODE'));
-        WarehouseJournalLine.Validate("ORB Shortcut Dimension 2 Code", GetValueAsCode(JsonOrderToken, 'SHORCUT_DIMENSION_2_CODE'));
+        //WarehouseJournalLine.Validate("ORB LIFT Unit Cost", GetValueAsDecimal(JsonOrderToken, 'UNIT_COST'));
+        //WarehouseJournalLine.Validate("ORB LIFT Posting Date", GetValueAsDate(JsonOrderToken, 'POSTING_DATE'));
+        //WarehouseJournalLine.Validate("ORB Shortcut Dimension 1 Code", GetValueAsCode(JsonOrderToken, 'SHORCUT_DIMENSION_1_CODE'));
+        //WarehouseJournalLine.Validate("ORB Shortcut Dimension 2 Code", GetValueAsCode(JsonOrderToken, 'SHORCUT_DIMENSION_2_CODE'));
         //WarehouseJournalLine.Validate(Amount, GetValueAsDecimal(JsonOrderToken, 'AMOUNT'));
         //WarehouseJournalLine.Validate("Unit Cost", GetUnitCost(WarehouseJournalLine."Location Code", WarehouseJournalLine."Item No.", WarehouseJournalLine."Variant Code"));        
         WarehouseJournalLine."ORB LIFT Inv. Transaction ID" := GetValueAsInteger(JsonOrderToken, 'INVENTORY_TRANSACTION_ID');
-        WarehouseJournalLine."ORB LIFT Line No." := GetValueAsDecimal(JsonOrderToken, 'LINE_NUMBER');
+        //WarehouseJournalLine."ORB LIFT Line No." := GetValueAsDecimal(JsonOrderToken, 'LINE_NUMBER');
         WarehouseJournalLine."ORB LIFT Order Line ID" := GetValueAsInteger(JsonOrderToken, 'ORDER_LINE_ID');
         WarehouseJournalLine."Source Code" := 'WHITEM';
         WarehouseJournalLine.SetUpAdjustmentBin();
