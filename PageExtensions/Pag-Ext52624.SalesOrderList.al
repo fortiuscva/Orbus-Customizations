@@ -88,12 +88,12 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
                 Editable = false;
             }
         }
-        addafter(IncomingDocAttachFactBox)
+        addfirst(factboxes)
         {
-            part("LIFT SO Actions FactBox"; "ORB LIFT SO Actions FactBox")
+            part("LIFT SO Actions FactBox"; "ORB LIFT Activities")
             {
                 ApplicationArea = All;
-                Caption = 'LIFT SO Actions FactBox';
+                Caption = 'LIFT Activities';
                 SubPageLink = "Document Type" = FIELD("Document Type"),
                               "No." = FIELD("No.");
             }
