@@ -66,10 +66,9 @@ page 53422 "ORB LIFT Activities"
 
                     trigger OnDrillDown()
                     var
-                        IntegrationLogRec: Record "ORB LIFT Integration Data Log";
+                        LIFTBCFunctionsCU: Codeunit "ORB LIFTtoBC Functions";
                     begin
-                        IntegrationLogRec.SetRange("Source No.", Rec."No.");
-                        Page.RunModal(Page::"ORB LIFT Integration Data Log", IntegrationLogRec);
+                        LIFTBCFunctionsCU.OpenInventoryTransactionLog(Rec."No.");
                     end;
                 }
 
