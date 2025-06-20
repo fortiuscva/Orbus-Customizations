@@ -20,6 +20,7 @@ query 53400 "ORB LIFT Items by Location"
             dataitem(Item; Item)
             {
                 DataItemLink = "No." = ItemLedgerEntry."Item No.";
+                DataItemTableFilter = "ORB Material Id" = filter(<> 0), "ORB Stroage Type Id" = filter(<> 0);
                 column(Material_Id; "ORB Material Id") { }
                 column(Storage_Type_Id; "ORB Stroage Type Id") { }
 
