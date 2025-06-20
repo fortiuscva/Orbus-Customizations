@@ -8,8 +8,13 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             SalesHeader.Validate("No.", LIFTSalesOrderBuffer."No.");
             SalesHeader.Insert();
         end;
-
+        if not DShipPackOptions.Get(LIFTSalesOrderBuffer."No.") then begin
+            DShipPackOptions.Init();
+            DShipPackOptions.Validate("License Plate No.", LIFTSalesOrderBuffer."No.");
+            DShipPackOptions.Insert();
+        end;
         UpdateSalesHeader(LIFTSalesOrderBuffer, true);
+        UpdateDShipPackageOptions(LIFTSalesOrderBuffer);
     end;
 
     procedure PropagateOnSalesHeaderModify(var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer")
@@ -18,6 +23,8 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             ArchiveManagement.ArchiveSalesDocument(SalesHeader);
             UpdateSalesHeader(LIFTSalesOrderBuffer, false);
         end;
+        if DShipPackOptions.Get(LIFTSalesOrderBuffer."No.") then
+            UpdateDShipPackageOptions(LIFTSalesOrderBuffer);
     end;
 
     local procedure UpdateSalesHeader(var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer"; CreateSO: Boolean)
@@ -190,9 +197,26 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             SalesLine.Delete();
     end;
 
+    procedure UpdateDShipPackageOptions(var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer")
+    begin
+        ValidateDShipPackOptionFields(DShipPackOptions, LIFTSalesOrderBuffer);
+        DShipPackOptions.Modify();
+    end;
+
+    procedure ValidateDShipPackOptionFields(var DShipPackOptions: Record "DSHIP Package Options"; var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer")
+    begin
+        if LIFTSalesOrderBuffer."Sales Order Payment Type" = LIFTSalesOrderBuffer."Sales Order Payment Type"::"3rd Party" then
+            DShipPackOptions.Validate("Payment Type", SalesHeader."Sales Order Payment Type"::"Third Party")
+        else if LIFTSalesOrderBuffer."Sales Order Payment Type" = LIFTSalesOrderBuffer."Sales Order Payment Type"::Free then
+            DShipPackOptions.Validate("Payment Type", SalesHeader."Sales Order Payment Type"::Collect)
+        else
+            DShipPackOptions.Validate("Payment Type", LIFTSalesOrderBuffer."Sales Order Payment Type");
+    end;
+
     var
         SalesHeader: Record "Sales Header";
         SalesLine: Record "Sales Line";
+        DShipPackOptions: Record "DSHIP Package Options";
         ArchiveManagement: Codeunit ArchiveManagement;
         LineNo: Integer;
 }
