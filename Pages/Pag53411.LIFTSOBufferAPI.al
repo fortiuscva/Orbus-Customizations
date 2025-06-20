@@ -213,6 +213,18 @@ page 53411 "ORB LIFT SO Buffer API"
                 {
                     Caption = 'LIFT Status';
                 }
+                field(paymentPostalCode; Rec."Payment Postal Code")
+                {
+                    Caption = 'Payment Postal Code';
+                }
+                field(paymentProvince; Rec."Payment Province")
+                {
+                    Caption = 'Payment Province';
+                }
+                field(paymentCountryCode; Rec."Payment Country Code")
+                {
+                    Caption = 'Payment Country Code';
+                }
             }
         }
     }
