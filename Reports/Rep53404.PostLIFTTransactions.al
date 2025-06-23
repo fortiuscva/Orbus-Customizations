@@ -9,11 +9,10 @@ report 53404 "ORB Post LIFT Transactions"
     {
         dataitem(SalesHeader; "Sales Header")
         {
-            DataItemTableView = where("Document Type" = const(Order));
+            DataItemTableView = where("Document Type" = const(Order), "ORB Lift Order" = const(true));
             trigger OnPreDataItem()
             begin
-                SalesHeader.SetRange("ORB Lift Order", true);
-                SalesHeader.SetFilter("Document Date", '%1..', Today);
+                SalesHeader.SetFilter("Document Date", '>=%1', Today);
             end;
 
             trigger OnAfterGetRecord()
