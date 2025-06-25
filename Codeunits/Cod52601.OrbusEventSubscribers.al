@@ -762,6 +762,13 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             IsHandled := true;
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", OnAfterReleaseSalesDoc, '', false, false)]
+    local procedure "Release Sales Document_OnAfterReleaseSalesDoc"(var SalesHeader: Record "Sales Header"; PreviewMode: Boolean; var LinesWereModified: Boolean; SkipWhseRequestOperations: Boolean)
+    begin
+        if SalesHeader."Document Type" = SalesHeader."Document Type"::Order then
+            OrbusFunctionsCUGbl.AutomaticShipToAddressValidation(SalesHeader);
+    end;
+
 
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
