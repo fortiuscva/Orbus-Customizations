@@ -1659,7 +1659,7 @@
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=Fields!ORBMustHaveDateVarGbl.Value</Value>
+                                      <Value>= IIF(Fields!ORBMustHaveDateVarGbl.Value &lt;&gt;"" ,Format(Fields!ORBMustHaveDateVarGbl.Value,"MM/dd/yyyy"),"")</Value>
                                       <Style />
                                     </TextRun>
                                   </TextRuns>
@@ -1668,7 +1668,7 @@
                               </Paragraphs>
                               <rd:DefaultName>Textbox57</rd:DefaultName>
                               <Top>11.39312cm</Top>
-                              <Left>14.20988cm</Left>
+                              <Left>14.02459cm</Left>
                               <Height>0.6cm</Height>
                               <Width>2.27664cm</Width>
                               <ZIndex>22</ZIndex>
