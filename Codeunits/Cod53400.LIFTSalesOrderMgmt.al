@@ -163,8 +163,6 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             //SalesLine.Validate("Location Code", LIFTSalesLineBuffer."Location Code");
 
             SalesLine.Validate(Quantity, LIFTSalesLineBuffer.Quantity);
-            // SalesLine.Validate("Unit Price", LIFTSalesLineBuffer."Unit Price");
-            // SalesLine.Validate("Line Discount %", LIFTSalesLineBuffer."Line Discount %");
             // SalesLine.Validate("Line Discount Amount", LIFTSalesLineBuffer."Line Discount Amount");
             //SalesLine.Validate("Shortcut Dimension 1 Code", LIFTSalesLineBuffer."Shortcut Dimension 1 Code");
             SalesLine.Validate("Shortcut Dimension 2 Code", LIFTSalesLineBuffer."Shortcut Dimension 2 Code");
@@ -179,7 +177,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             SalesLine.Validate(Height, LIFTSalesLineBuffer.Height);
             SalesLine.Validate("Hardware Price", LIFTSalesLineBuffer."Hardware Price");
             SalesLine.Validate("Graphics Price", LIFTSalesLineBuffer."Graphics Price");
-            SalesLine.Validate("Line Discount %", 0);
+            SalesLine.Validate("Line Discount %", LIFTSalesLineBuffer."Line Discount %");
             SalesLine.Validate("Unit Price", LIFTSalesLineBuffer."Unit Price");
             SalesLine."ORB LIFT Line ID" := LIFTSalesLineBuffer."LIFT Line ID";
         end
