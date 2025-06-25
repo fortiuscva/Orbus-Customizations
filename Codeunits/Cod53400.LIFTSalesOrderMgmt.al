@@ -1,6 +1,8 @@
 codeunit 53400 "ORB LIFT Sales Order Mgmt"
 {
     procedure PropagateOnSalesHeaderInsert(var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer")
+    var
+        DShipPackOptions: Record "DSHIP Package Options";
     begin
         if not SalesHeader.Get(LIFTSalesOrderBuffer."Document Type", LIFTSalesOrderBuffer."No.") then begin
             SalesHeader.Init();
@@ -8,23 +10,21 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             SalesHeader.Validate("No.", LIFTSalesOrderBuffer."No.");
             SalesHeader.Insert();
         end;
-        if not DShipPackOptions.Get(LIFTSalesOrderBuffer."No.") then begin
-            DShipPackOptions.Init();
-            DShipPackOptions.Validate("License Plate No.", LIFTSalesOrderBuffer."No.");
-            DShipPackOptions.Insert();
-        end;
+        DShipPackOptions.RetrievePackageOptions(Enum::"DSHIP Document Type"::"Sales Order", LIFTSalesOrderBuffer."No.", '');
         UpdateSalesHeader(LIFTSalesOrderBuffer, true);
-        UpdateDShipPackageOptions(LIFTSalesOrderBuffer);
+        UpdateDShipPackageOptions(DShipPackOptions, LIFTSalesOrderBuffer);
     end;
 
     procedure PropagateOnSalesHeaderModify(var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer")
+    var
+        DShipPackOptions: Record "DSHIP Package Options";
     begin
         if SalesHeader.Get(LIFTSalesOrderBuffer."Document Type", LIFTSalesOrderBuffer."No.") then begin
             ArchiveManagement.ArchiveSalesDocument(SalesHeader);
             UpdateSalesHeader(LIFTSalesOrderBuffer, false);
         end;
-        if DShipPackOptions.Get(LIFTSalesOrderBuffer."No.") then
-            UpdateDShipPackageOptions(LIFTSalesOrderBuffer);
+        DShipPackOptions.RetrievePackageOptions(Enum::"DSHIP Document Type"::"Sales Order", LIFTSalesOrderBuffer."No.", '');
+        UpdateDShipPackageOptions(DShipPackOptions, LIFTSalesOrderBuffer);
     end;
 
     local procedure UpdateSalesHeader(var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer"; CreateSO: Boolean)
@@ -195,7 +195,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             SalesLine.Delete();
     end;
 
-    procedure UpdateDShipPackageOptions(var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer")
+    procedure UpdateDShipPackageOptions(var DShipPackOptions: Record "DSHIP Package Options"; var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer")
     begin
         ValidateDShipPackOptionFields(DShipPackOptions, LIFTSalesOrderBuffer);
         DShipPackOptions.Modify();
@@ -222,7 +222,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
     var
         SalesHeader: Record "Sales Header";
         SalesLine: Record "Sales Line";
-        DShipPackOptions: Record "DSHIP Package Options";
+
         ArchiveManagement: Codeunit ArchiveManagement;
         LineNo: Integer;
 }
