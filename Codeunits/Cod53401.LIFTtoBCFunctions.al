@@ -134,7 +134,54 @@ codeunit 53401 "ORB LIFTtoBC Functions"
             SalesHeader.TestField("ORB Lift Order", false);
     end;
 
+    procedure NotifyErrorsWhilePostingLIFTInventoryTranscations(SalesHeader: Record "Sales Header"; WhichStep: Text; ErrorMessage: Text)
+    var
+        EmailMessage: Codeunit "Email Message";
+        Email: Codeunit Email;
+        LIFTERPSetup: Record "ORB LIFT ERP Setup";
+        EmailScenario: Enum "Email Scenario";
+        EmailSubject: Text;
+    begin
+        LIFTERPSetup.Get();
+        EmailSubject := 'Error Notification while Posting LIFT Inventory Transactions at ' + WhichStep + ' Step' + 'for Sales Order ' + SalesHeader."No.";
+        EmailMessage.Create(LIFTERPSetup."JQ Error Notification Email", EmailSubject, ErrorMessage, true);
+        Email.Send(EmailMessage, EmailScenario::Default);
+    end;
+
+    procedure StartJobQueueLogEntry(ProcessID: Integer; ProcessDescription: Text[100]): Integer
+    var
+        EntryNo: Integer;
+    begin
+        Clear(EntryNo);
+        LIFTPostInvTransactionLog.Reset();
+        if LIFTPostInvTransactionLog.FindLast() then
+            EntryNo := LIFTPostInvTransactionLog."Entry No." + 1
+        else
+            EntryNo := 1;
+
+        LIFTPostInvTransactionLog.Init();
+        LIFTPostInvTransactionLog.Validate("Entry No.", EntryNo);
+        LIFTPostInvTransactionLog.Insert();
+        LIFTPostInvTransactionLog.Validate("Process ID", ProcessID);
+        LIFTPostInvTransactionLog.Validate("Process Description", ProcessDescription);
+        LIFTPostInvTransactionLog.Validate("Start Date & Time", CurrentDateTime);
+        LIFTPostInvTransactionLog.Modify();
+        exit(EntryNo);
+    end;
+
+    procedure EndJobQueueLogEntry(EntryNo: Integer; ErrorMsg: Text[250])
+    begin
+        LIFTPostInvTransactionLog.Reset();
+        if LIFTPostInvTransactionLog.Get(EntryNo) then begin
+            LIFTPostInvTransactionLog.Validate("Error Message", ErrorMsg);
+            LIFTPostInvTransactionLog.Validate("End Date & Time", CurrentDateTime);
+            LIFTPostInvTransactionLog.Modify();
+        end;
+    end;
+
 
     var
         BCDatatypes: enum "ORB LIFT BC Datatypes";
+        LIFTPostInvTransactionLog: Record "LIFT Post Inv Transactions Log";
+
 }

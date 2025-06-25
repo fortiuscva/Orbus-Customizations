@@ -29,6 +29,10 @@ table 52617 "ORB LIFT ERP Setup"
         {
             Caption = 'Lift ERP Integration Active';
         }
+        field(7; "JQ Error Notification Email"; Text[80])
+        {
+            Caption = 'JobQueue Error Notification Email';
+        }
     }
     keys
     {
