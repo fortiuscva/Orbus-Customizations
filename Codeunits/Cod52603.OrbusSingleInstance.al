@@ -218,6 +218,16 @@ codeunit 52603 "ORB Orbus Single Instance"
         exit(StopOnError);
     end;
 
+    procedure SetCampaignNo(CampaignNo: Code[20])
+    begin
+        CampaignNoGbl := CampaignNo;
+    end;
+
+    procedure GetCampaignNo(): Code[20]
+    begin
+        exit(CampaignNoGbl);
+    end;
+
     var
         ShowDialogLookupProfileVarGbl: Boolean;
         ShowDialogSendEmailToCustVarGbl: Boolean;
@@ -242,4 +252,5 @@ codeunit 52603 "ORB Orbus Single Instance"
         SuppressWhseRegisterConfirm: Boolean;
         SuppressItemJnlConfirm: Boolean;
         StopOnError: Boolean;
+        CampaignNoGbl: Code[20];
 }
