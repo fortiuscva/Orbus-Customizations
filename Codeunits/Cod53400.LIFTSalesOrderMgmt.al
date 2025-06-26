@@ -177,8 +177,8 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             SalesLine.Validate("Hardware Price", LIFTSalesLineBuffer."Hardware Price");
             SalesLine.Validate("Graphics Price", LIFTSalesLineBuffer."Graphics Price");
             //SalesLine.Validate("Line Discount %", LIFTSalesLineBuffer."Line Discount %");
+            SalesLine.Validate("Unit Price", LIFTSalesLineBuffer."Original Unit Price");
             SalesLine.Validate("Line Discount Amount", LIFTSalesLineBuffer."Line Discount Amount");
-            SalesLine.Validate("Unit Price", LIFTSalesLineBuffer."Unit Price");
             SalesLine."ORB LIFT Line ID" := LIFTSalesLineBuffer."LIFT Line ID";
         end
     end;

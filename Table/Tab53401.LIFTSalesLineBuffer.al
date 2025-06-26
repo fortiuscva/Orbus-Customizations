@@ -50,6 +50,10 @@ table 53401 "ORB LIFT Sales Line Buffer"
         {
             Caption = 'Unit Price';
         }
+        field(23; "Original Unit Price"; Decimal)
+        {
+            Caption = 'Original Unit Price';
+        }
         field(27; "Line Discount %"; Decimal)
         {
             Caption = 'Line Discount %';

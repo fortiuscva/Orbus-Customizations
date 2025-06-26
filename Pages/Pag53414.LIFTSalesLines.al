@@ -1,11 +1,11 @@
-page 53414 "LIFT Sales Lines"
+page 53414 "ORB LIFT Sales Lines"
 {
     ApplicationArea = All;
     Caption = 'LIFT Sales Lines';
     PageType = List;
     SourceTable = "ORB LIFT Sales Line Buffer";
     UsageCategory = Lists;
-    
+
     layout
     {
         area(Content)
@@ -28,7 +28,7 @@ page 53414 "LIFT Sales Lines"
                 {
                     ToolTip = 'Specifies the value of the Line No. field.', Comment = '%';
                 }
-                field("Type"; Rec."Type")
+                field(Type; Rec."Type")
                 {
                     ToolTip = 'Specifies the value of the Type field.', Comment = '%';
                 }
@@ -43,6 +43,18 @@ page 53414 "LIFT Sales Lines"
                 field("Unit Price"; Rec."Unit Price")
                 {
                     ToolTip = 'Specifies the value of the Unit Price field.', Comment = '%';
+                }
+                field("Original Unit Price"; Rec."Original Unit Price")
+                {
+                    ToolTip = 'Specifies the value of the Original Unit Price field.', Comment = '%';
+                }
+                field("Line Discount %"; Rec."Line Discount %")
+                {
+                    ToolTip = 'Specifies the value of the Line Discount % field.', Comment = '%';
+                }
+                field("Line Discount Amount"; Rec."Line Discount Amount")
+                {
+                    ToolTip = 'Specifies the value of the Line Discount Amount field.', Comment = '%';
                 }
                 field("Planned Shipment Date"; Rec."Planned Shipment Date")
                 {
