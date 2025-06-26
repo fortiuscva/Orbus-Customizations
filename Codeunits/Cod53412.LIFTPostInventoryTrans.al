@@ -25,16 +25,16 @@ codeunit 53412 "ORB LIFT Post Inventory Trans."
 
         ClearLastError();
         Clear(EntryNo);
-        EntryNo := LIFTtoBCFunctions.StartJobQueueLogEntry(1, 'Fetch Inventory Transactions');
+        //EntryNo := LIFTtoBCFunctions.StartJobQueueLogEntry(1, 'Fetch Inventory Transactions');
         if not Codeunit.Run(Codeunit::"ORB LIFT Read Inv.Transactions") then
             if StopOnError then begin
                 Window.Close();
                 Error(GetLastErrorText);
             end else begin
-                if not GuiAllowed then
-                    LIFTtoBCFunctions.NotifyErrorsWhilePostingLIFTInventoryTranscations(Rec, 'Fetch Inventory Transactions', GetLastErrorText);
+                // if not GuiAllowed then
+                //     LIFTtoBCFunctions.NotifyErrorsWhilePostingLIFTInventoryTranscations(Rec, 'Fetch Inventory Transactions', GetLastErrorText);
             end;
-        LIFTtoBCFunctions.EndJobQueueLogEntry(EntryNo, GetLastErrorText);
+        //LIFTtoBCFunctions.EndJobQueueLogEntry(EntryNo, GetLastErrorText);
         Commit();
         Window.Close();
 
@@ -45,18 +45,18 @@ codeunit 53412 "ORB LIFT Post Inventory Trans."
         ClearLastError();
         Clear(EntryNo);
         OrbusSingleInstanceCUGbl.SetSuppressWhseConfirm(true);
-        EntryNo := LIFTtoBCFunctions.StartJobQueueLogEntry(2, 'Register Warehouse Item Journals');
+        // EntryNo := LIFTtoBCFunctions.StartJobQueueLogEntry(2, 'Register Warehouse Item Journals');
         if not Codeunit.Run(Codeunit::"ORB LIFT Register Whse. Jnl.", rec) then
             if StopOnError then begin
                 OrbusSingleInstanceCUGbl.SetSuppressWhseConfirm(false);
                 Window.Close();
                 Error(GetLastErrorText);
             end else begin
-                if not GuiAllowed then
-                    LIFTtoBCFunctions.NotifyErrorsWhilePostingLIFTInventoryTranscations(Rec, 'Register Warehouse Item Journals', GetLastErrorText);
+                // if not GuiAllowed then
+                //     LIFTtoBCFunctions.NotifyErrorsWhilePostingLIFTInventoryTranscations(Rec, 'Register Warehouse Item Journals', GetLastErrorText);
             end;
         OrbusSingleInstanceCUGbl.SetSuppressWhseConfirm(false);
-        LIFTtoBCFunctions.EndJobQueueLogEntry(EntryNo, GetLastErrorText);
+        // LIFTtoBCFunctions.EndJobQueueLogEntry(EntryNo, GetLastErrorText);
         Window.Close();
 
         // Execute LIFT Calculate Warehouse Adjustment
@@ -64,16 +64,16 @@ codeunit 53412 "ORB LIFT Post Inventory Trans."
 
         ClearLastError();
         Clear(EntryNo);
-        EntryNo := LIFTtoBCFunctions.StartJobQueueLogEntry(3, 'Calculate Warehouse Adjustments');
+        // EntryNo := LIFTtoBCFunctions.StartJobQueueLogEntry(3, 'Calculate Warehouse Adjustments');
         if not Codeunit.Run(Codeunit::"ORB LIFT Calculate Whse. Adj.", rec) then
             if StopOnError then begin
                 Window.Close();
                 Error(GetLastErrorText);
             end else begin
-                if not GuiAllowed then
-                    LIFTtoBCFunctions.NotifyErrorsWhilePostingLIFTInventoryTranscations(Rec, 'Calculate Warehouse Adjustments', GetLastErrorText);
+                // if not GuiAllowed then
+                //     LIFTtoBCFunctions.NotifyErrorsWhilePostingLIFTInventoryTranscations(Rec, 'Calculate Warehouse Adjustments', GetLastErrorText);
             end;
-        LIFTtoBCFunctions.EndJobQueueLogEntry(EntryNo, GetLastErrorText);
+        // LIFTtoBCFunctions.EndJobQueueLogEntry(EntryNo, GetLastErrorText);
         Window.Close();
 
         // Post Warehouse Adjustments (Item journals)
@@ -81,7 +81,7 @@ codeunit 53412 "ORB LIFT Post Inventory Trans."
 
         ClearLastError();
         Clear(EntryNo);
-        EntryNo := LIFTtoBCFunctions.StartJobQueueLogEntry(4, 'Post Warehouse Adjustments');
+        // EntryNo := LIFTtoBCFunctions.StartJobQueueLogEntry(4, 'Post Warehouse Adjustments');
         OrbusSingleInstanceCUGbl.SetSuppressItemJnlConfirm(true);
         if not Codeunit.Run(Codeunit::"ORB LIFT Post Adjustment Jnl.", rec) then
             if StopOnError then begin
@@ -89,11 +89,11 @@ codeunit 53412 "ORB LIFT Post Inventory Trans."
                 Window.Close();
                 Error(GetLastErrorText);
             end else begin
-                if not GuiAllowed then
-                    LIFTtoBCFunctions.NotifyErrorsWhilePostingLIFTInventoryTranscations(Rec, 'Post Warehouse Adjustments', GetLastErrorText);
+                // if not GuiAllowed then
+                //     LIFTtoBCFunctions.NotifyErrorsWhilePostingLIFTInventoryTranscations(Rec, 'Post Warehouse Adjustments', GetLastErrorText);
             end;
         OrbusSingleInstanceCUGbl.SetSuppressItemJnlConfirm(false);
-        LIFTtoBCFunctions.EndJobQueueLogEntry(EntryNo, GetLastErrorText);
+        // LIFTtoBCFunctions.EndJobQueueLogEntry(EntryNo, GetLastErrorText);
         Window.Close();
     end;
 
