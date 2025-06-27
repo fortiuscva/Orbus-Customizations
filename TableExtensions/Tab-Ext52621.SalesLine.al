@@ -120,6 +120,11 @@ tableextension 52621 "ORB Sales Line" extends "Sales Line"
             DecimalPlaces = 0 : 2;
             DataClassification = CustomerContent;
         }
+        field(53401; "ORB LIFT Discount Amount"; Decimal)
+        {
+            Caption = 'LIFT Discount Amount';
+            DataClassification = CustomerContent;
+        }
     }
 
     trigger OnAfterModify()
