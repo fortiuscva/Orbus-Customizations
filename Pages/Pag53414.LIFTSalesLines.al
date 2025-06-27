@@ -56,6 +56,10 @@ page 53414 "ORB LIFT Sales Lines"
                 {
                     ToolTip = 'Specifies the value of the Line Discount Amount field.', Comment = '%';
                 }
+                field("Unit Discount Amount"; Rec."Unit Discount Amount")
+                {
+                    ToolTip = 'Specifies the value of the Unit Discount Amount field.', Comment = '%';
+                }
                 field("Planned Shipment Date"; Rec."Planned Shipment Date")
                 {
                     ToolTip = 'Specifies the value of the Planned Shipment Date field.', Comment = '%';

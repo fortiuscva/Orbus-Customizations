@@ -178,7 +178,9 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             SalesLine.Validate("Graphics Price", LIFTSalesLineBuffer."Graphics Price");
             //SalesLine.Validate("Line Discount %", LIFTSalesLineBuffer."Line Discount %");
             SalesLine.Validate("Unit Price", LIFTSalesLineBuffer."Original Unit Price");
-            SalesLine.Validate("Line Discount Amount", LIFTSalesLineBuffer."Line Discount Amount");
+            BCLineDiscount := SalesLine."Line Discount Amount";
+            SalesLine.Validate("ORB LIFT Discount Amount", LIFTSalesLineBuffer."Line Discount Amount");
+            SalesLine.Validate("Line Discount Amount", (BCLineDiscount + SalesLine."ORB LIFT Discount Amount"));
             SalesLine."ORB LIFT Line ID" := LIFTSalesLineBuffer."LIFT Line ID";
         end
     end;
@@ -222,7 +224,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
     var
         SalesHeader: Record "Sales Header";
         SalesLine: Record "Sales Line";
-
+        BCLineDiscount: Decimal;
         ArchiveManagement: Codeunit ArchiveManagement;
         LineNo: Integer;
 }

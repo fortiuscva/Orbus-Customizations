@@ -25,6 +25,11 @@ tableextension 52620 "ORB Sales Cr.Memo Line" extends "Sales Cr.Memo Line"
             FieldClass = FlowField;
             CalcFormula = lookup("Dimension Set Entry"."Dimension Value Code" where("Dimension Set ID" = field("Dimension Set ID"), "Dimension Code" = const('PRDLN')));
         }
+        field(53401; "ORB LIFT Discount Amount"; Decimal)
+        {
+            Caption = 'LIFT Discount Amount';
+            DataClassification = CustomerContent;
+        }
 
     }
 }

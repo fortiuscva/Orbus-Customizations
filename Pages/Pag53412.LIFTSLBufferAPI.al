@@ -69,6 +69,10 @@ page 53412 "ORB LIFT SL Buffer API"
                 {
                     Caption = 'Line Discount Amount';
                 }
+                field(unitDiscountAmount; Rec."Unit Discount Amount")
+                {
+                    Caption = 'Unit Discount Amount';
+                }
                 field(shortcutDimension1Code; Rec."Shortcut Dimension 1 Code")
                 {
                     Caption = 'Shortcut Dimension 1 Code';

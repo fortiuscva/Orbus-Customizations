@@ -8,6 +8,22 @@ pageextension 52658 "Posted Sales Shipment Lines" extends "Posted Sales Shipment
             {
                 ApplicationArea = All;
             }
+            field("ORB LIFT Discount Amount"; Rec."ORB LIFT Discount Amount")
+            {
+                ApplicationArea = All;
+                Editable = IsLIFTDiscountEditable;
+            }
+
         }
     }
+    trigger OnAfterGetRecord()
+    begin
+        if UserId <> 'BCADMIN' then
+            IsLIFTDiscountEditable := false
+        else
+            IsLIFTDiscountEditable := true;
+    end;
+
+    var
+        IsLIFTDiscountEditable: Boolean;
 }
