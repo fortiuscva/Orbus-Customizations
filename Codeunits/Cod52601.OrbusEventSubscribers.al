@@ -773,6 +773,9 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
     begin
         if CampaignNo = '' then
             CampaignNo := OrbusSingleInstanceCUGbl.GetCampaignNo();
+
+        if CampaignNo = '' then
+            IsHandled := true;
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", OnCodeOnBeforeSetStatusReleased, '', false, false)]
