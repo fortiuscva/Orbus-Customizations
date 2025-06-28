@@ -31,5 +31,11 @@ tableextension 52619 "ORB Sales Invoice Line" extends "Sales Invoice Line"
             FieldClass = FlowField;
             CalcFormula = lookup("Dimension Set Entry"."Dimension Value Code" where("Dimension Set ID" = field("Dimension Set ID"), "Dimension Code" = const('PRDLN')));
         }
+        field(53401; "ORB LIFT Discount Amount"; Decimal)
+        {
+            Caption = 'LIFT Discount Amount';
+            Editable = false;
+            DataClassification = CustomerContent;
+        }
     }
 }

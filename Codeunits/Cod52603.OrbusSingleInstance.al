@@ -190,6 +190,46 @@ codeunit 52603 "ORB Orbus Single Instance"
         exit(LocationCode);
     end;
 
+    procedure SetSuppressWhseConfirm(Value: Boolean)
+    begin
+        SuppressWhseRegisterConfirm := Value;
+    end;
+
+    procedure GetSuppressWhseConfirm(): Boolean
+    begin
+        exit(SuppressWhseRegisterConfirm);
+    end;
+
+    procedure SetSuppressItemJnlConfirm(Value: Boolean)
+    begin
+        SuppressItemJnlConfirm := Value;
+    end;
+
+    procedure GetSuppressItemJnlConfirm(): Boolean
+    begin
+        exit(SuppressItemJnlConfirm);
+    end;
+
+    procedure SetStopOnError(Value: Boolean)
+    begin
+        StopOnError := Value;
+    end;
+
+    procedure GetStopOnError(): Boolean
+    begin
+        exit(StopOnError);
+    end;
+
+    procedure SetCampaignNo(CampaignNo: Code[20])
+    begin
+        CampaignNoGbl := CampaignNo;
+    end;
+
+    procedure GetCampaignNo(): Code[20]
+    begin
+        exit(CampaignNoGbl);
+    end;
+
     var
         ShowDialogLookupProfileVarGbl: Boolean;
         ShowDialogSendEmailToCustVarGbl: Boolean;
@@ -211,4 +251,8 @@ codeunit 52603 "ORB Orbus Single Instance"
         LastActivityNoGbl: Code[20];
         RunFromOrderConfirmationGbl: Boolean;
         LocationCode: Code[20];
+        SuppressWhseRegisterConfirm: Boolean;
+        SuppressItemJnlConfirm: Boolean;
+        StopOnError: Boolean;
+        CampaignNoGbl: Code[20];
 }

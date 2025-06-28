@@ -14,6 +14,10 @@ pageextension 52639 "ORB Postd Sale Credt Memo Line" extends "Posted Sales Credi
             {
                 ApplicationArea = All;
             }
+            field("ORB LIFT Discount Amount"; Rec."ORB LIFT Discount Amount")
+            {
+                ApplicationArea = All;
+            }
         }
     }
 }

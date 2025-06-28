@@ -735,6 +735,54 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         end;
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Whse. Jnl.-Register", 'OnBeforeConfirmRegisterLines', '', false, false)]
+    local procedure "Whse. Jnl.-Register_OnBeforeConfirmRegisterLines"(WhseJnlLine: Record "Warehouse Journal Line"; var Result: Boolean; var IsHandled: Boolean)
+    begin
+        if OrbusSingleInstanceCUGbl.GetSuppressWhseConfirm() then begin
+            Result := true;
+            IsHandled := true;
+        end;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Jnl.-Post", OnBeforeCode, '', false, false)]
+    local procedure "Item Jnl.-Post_OnBeforeCode"(var ItemJournalLine: Record "Item Journal Line"; var HideDialog: Boolean; var SuppressCommit: Boolean; var IsHandled: Boolean)
+    begin
+        if OrbusSingleInstanceCUGbl.GetSuppressItemJnlConfirm() then
+            HideDialog := true;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales Price Calc. Mgt.", OnBeforeSalesLineLineDiscExists, '', false, false)]
+    local procedure "Sales Price Calc. Mgt._OnBeforeSalesLineLineDiscExists"(var SalesLine: Record "Sales Line"; var SalesHeader: Record "Sales Header"; var TempSalesLineDisc: Record "Sales Line Discount" temporary; StartingDate: Date; Qty: Decimal; QtyPerUOM: Decimal; ShowAll: Boolean; var IsHandled: Boolean)
+    begin
+        OrbusSingleInstanceCUGbl.SetCampaignNo(SalesHeader."Campaign No.");
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales Price Calc. Mgt.", OnAfterSalesLineLineDiscExists, '', false, false)]
+    local procedure "Sales Price Calc. Mgt._OnAfterSalesLineLineDiscExists"(var SalesLine: Record "Sales Line"; var SalesHeader: Record "Sales Header"; var TempSalesLineDisc: Record "Sales Line Discount" temporary; ShowAll: Boolean)
+    begin
+        OrbusSingleInstanceCUGbl.SetCampaignNo('');
+    end;
+
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales Price Calc. Mgt.", OnBeforeActivatedCampaignExists, '', false, false)]
+    local procedure "Sales Price Calc. Mgt._OnBeforeActivatedCampaignExists"(var ToCampaignTargetGr: Record "Campaign Target Group"; CustNo: Code[20]; ContNo: Code[20]; CampaignNo: Code[20]; var IsHandled: Boolean)
+    begin
+        if CampaignNo = '' then
+            CampaignNo := OrbusSingleInstanceCUGbl.GetCampaignNo();
+
+        if CampaignNo = '' then
+            IsHandled := true;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", OnCodeOnBeforeSetStatusReleased, '', false, false)]
+    local procedure "Release Sales Document_OnCodeOnBeforeSetStatusReleased"(var SalesHeader: Record "Sales Header")
+    begin
+        if SalesHeader."Document Type" = SalesHeader."Document Type"::Order then
+            OrbusFunctionsCUGbl.AutomaticShipToAddressValidation(SalesHeader);
+    end;
+
+
+
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
         SOPla: page "Sales Order Planning";

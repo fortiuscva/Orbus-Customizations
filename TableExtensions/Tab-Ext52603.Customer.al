@@ -172,7 +172,6 @@ tableextension 52603 "ORB Customer" extends Customer
             Editable = false;
             DataClassification = CustomerContent;
         }
-
     }
 
 

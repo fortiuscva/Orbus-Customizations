@@ -230,6 +230,108 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
                 end;
             end;
         }
+        modify("Ship-to Code")
+        {
+            trigger OnAfterValidate()
+            var
+                ORBFunctions: codeunit "ORB Functions";
+            begin
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to Code');
+            end;
+        }
+        modify("Ship-to Name")
+        {
+            trigger OnAfterValidate()
+            var
+                ORBFunctions: codeunit "ORB Functions";
+            begin
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to Name');
+            end;
+        }
+        modify("Ship-to Address")
+        {
+            trigger OnAfterValidate()
+            var
+                ORBFunctions: codeunit "ORB Functions";
+            begin
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to Address');
+            end;
+        }
+        modify("Ship-to Address 2")
+        {
+            trigger OnAfterValidate()
+            var
+                ORBFunctions: codeunit "ORB Functions";
+            begin
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to Address 2');
+            end;
+        }
+        modify("Ship-to City")
+        {
+            trigger OnAfterValidate()
+            var
+                ORBFunctions: codeunit "ORB Functions";
+            begin
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to City');
+            end;
+        }
+        modify("Ship-to County")
+        {
+            trigger OnAfterValidate()
+            var
+                ORBFunctions: codeunit "ORB Functions";
+            begin
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to County');
+            end;
+        }
+        modify("Ship-to Post Code")
+        {
+            trigger OnAfterValidate()
+            var
+                ORBFunctions: codeunit "ORB Functions";
+            begin
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to Post Code');
+            end;
+        }
+        modify("Ship-to Country/Region Code")
+        {
+            trigger OnAfterValidate()
+            var
+                ORBFunctions: codeunit "ORB Functions";
+            begin
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to Country/Region Code');
+            end;
+        }
+        modify("Ship-to Phone No.")
+        {
+            trigger OnAfterValidate()
+            var
+                ORBFunctions: codeunit "ORB Functions";
+            begin
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to Phone No.');
+            end;
+        }
+
+        modify("Ship-to Contact")
+        {
+            trigger OnAfterValidate()
+            var
+                ORBFunctions: codeunit "ORB Functions";
+            begin
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to Contact');
+            end;
+        }
+
 
     }
 
@@ -300,6 +402,17 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             Rec.Validate("Your Reference", "ORB Your Reference (API)");
         Rec.Modify();
     end;
+
+    local procedure ModifyShipToAddressFields(): Boolean;
+    begin
+        if Rec.Status <> Rec.Status::Released then
+            exit(true)
+        else
+            exit(false);
+    end;
+
+
+
 
     var
         LocationNotFoundlbl: Label 'Location is missing for this order: %1';
