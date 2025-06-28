@@ -27,6 +27,7 @@ query 53400 "ORB LIFT Items by Location"
                 dataitem(Location; Location)
                 {
                     DataItemLink = Code = ItemLedgerEntry."Location Code";
+                    DataItemTableFilter = "ORB Location Id" = filter(<> 0);
                     column(LocationCode; Code) { }
                     column(Location_Id; "ORB Location Id")
                     { }
