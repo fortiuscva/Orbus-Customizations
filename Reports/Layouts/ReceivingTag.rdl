@@ -11,37 +11,6 @@
       <rd:DataSourceID>6bdeaf00-979d-473e-b0d0-2f827b246582</rd:DataSourceID>
     </DataSource>
   </DataSources>
-  <DataSets>
-    <DataSet Name="DataSet_Result">
-      <Query>
-        <DataSourceName>DataSource</DataSourceName>
-        <CommandText />
-      </Query>
-      <Fields>
-        <Field Name="BarcodeString">
-          <DataField>BarcodeString</DataField>
-        </Field>
-        <Field Name="PrintedBy">
-          <DataField>PrintedBy</DataField>
-        </Field>
-        <Field Name="Quantity">
-          <DataField>Quantity</DataField>
-        </Field>
-        <Field Name="QuantityFormat">
-          <DataField>QuantityFormat</DataField>
-        </Field>
-        <Field Name="ItemNo">
-          <DataField>ItemNo</DataField>
-        </Field>
-        <Field Name="ItemVariant">
-          <DataField>ItemVariant</DataField>
-        </Field>
-        <Field Name="PurchaseOrderNumber">
-          <DataField>PurchaseOrderNumber</DataField>
-        </Field>
-      </Fields>
-    </DataSet>
-  </DataSets>
   <ReportSections>
     <ReportSection>
       <Body>
@@ -839,12 +808,6 @@
       </Page>
     </ReportSection>
   </ReportSections>
-  <ReportParametersLayout>
-    <GridLayoutDefinition>
-      <NumberOfColumns>4</NumberOfColumns>
-      <NumberOfRows>2</NumberOfRows>
-    </GridLayoutDefinition>
-  </ReportParametersLayout>
   <Code>Public Function BlankZero(ByVal Value As Decimal)
     if Value = 0 then
         Return ""
@@ -913,4 +876,35 @@ AMJTL6jrBXamMOeqpdy89B9tK/OBKcy0TfD+pm1lYuhKbXsklnrePxGRICGVprm22/4kNwGQ/JgEVJux
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>0eeb6585-38ae-40f1-885b-8d50088d51b4</rd:ReportID>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="BarcodeString">
+          <DataField>BarcodeString</DataField>
+        </Field>
+        <Field Name="PrintedBy">
+          <DataField>PrintedBy</DataField>
+        </Field>
+        <Field Name="Quantity">
+          <DataField>Quantity</DataField>
+        </Field>
+        <Field Name="QuantityFormat">
+          <DataField>QuantityFormat</DataField>
+        </Field>
+        <Field Name="ItemNo">
+          <DataField>ItemNo</DataField>
+        </Field>
+        <Field Name="ItemVariant">
+          <DataField>ItemVariant</DataField>
+        </Field>
+        <Field Name="PurchaseOrderNumber">
+          <DataField>PurchaseOrderNumber</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
 </Report>
