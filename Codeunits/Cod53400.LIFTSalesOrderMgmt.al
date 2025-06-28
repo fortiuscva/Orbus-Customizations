@@ -210,6 +210,14 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             DShipPackOptions.Validate("Payment Type", SalesHeader."Sales Order Payment Type"::Collect)
         else
             DShipPackOptions.Validate("Payment Type", LIFTSalesOrderBuffer."Sales Order Payment Type");
+        if LIFTSalesOrderBuffer."SO Payment Account No." <> '' then
+            DShipPackOptions.Validate("Payment Account No.", LIFTSalesOrderBuffer."SO Payment Account No.");
+        if LIFTSalesOrderBuffer."Payment Postal Code" <> '' then
+            DShipPackOptions.Validate("Payment Postal Code", LIFTSalesOrderBuffer."Payment Postal Code");
+        if LIFTSalesOrderBuffer."Payment Province" <> '' then
+            DShipPackOptions.Validate("Payment Province", LIFTSalesOrderBuffer."Payment Province");
+        if LIFTSalesOrderBuffer."Payment Country Code" <> '' then
+            DShipPackOptions.Validate("Payment Country Code", LIFTSalesOrderBuffer."Payment Country Code");
     end;
 
     var

@@ -258,6 +258,20 @@ table 53400 "ORB LIFT Sales Order Buffer"
             Caption = 'LIFT Status';
             DataClassification = CustomerContent;
         }
+        field(55120; "Payment Postal Code"; Code[50])
+        {
+            Caption = 'Payment Postal Code';
+            DataClassification = CustomerContent;
+        }
+        field(55121; "Payment Province"; Code[50])
+        {
+            Caption = 'Payment Province';
+            DataClassification = CustomerContent;
+        }
+        field(55122; "Payment Country Code"; Code[50])
+        {
+            DataClassification = ToBeClassified;
+        }
     }
     keys
     {
