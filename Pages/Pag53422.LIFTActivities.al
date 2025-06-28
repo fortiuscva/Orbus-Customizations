@@ -18,13 +18,8 @@ page 53422 "ORB LIFT Activities"
                     ShowCaption = false;
 
                     trigger OnDrillDown()
-                    var
-                        SalesHeaderRecLcl: Record "Sales Header";
                     begin
-                        SalesHeaderRecLcl.SetRange("Document Type", Rec."Document Type");
-                        SalesHeaderRecLcl.SetRange("No.", Rec."No.");
-                        if SalesHeaderRecLcl.FindFirst() then
-                            Report.RunModal(Report::"ORB Post LIFT Transactions", true, false, SalesHeaderRecLcl);
+                        LIFTBCFunctionsCU.PostLIFTInventoryTransactions(Rec);
                     end;
                 }
             }
@@ -37,8 +32,6 @@ page 53422 "ORB LIFT Activities"
                     DrillDown = true;
 
                     trigger OnDrillDown()
-                    var
-                        LIFTBCFunctionsCU: Codeunit "ORB LIFTtoBC Functions";
                     begin
                         LIFTBCFunctionsCU.OpenWhseTransactions(Rec);
                     end;
@@ -51,8 +44,6 @@ page 53422 "ORB LIFT Activities"
                     DrillDown = true;
 
                     trigger OnDrillDown()
-                    var
-                        LIFTBCFunctionsCU: Codeunit "ORB LIFTtoBC Functions";
                     begin
                         LIFTBCFunctionsCU.OpenILETransactions(Rec);
                     end;
@@ -65,8 +56,6 @@ page 53422 "ORB LIFT Activities"
                     DrillDown = true;
 
                     trigger OnDrillDown()
-                    var
-                        LIFTBCFunctionsCU: Codeunit "ORB LIFTtoBC Functions";
                     begin
                         LIFTBCFunctionsCU.OpenInventoryTransactionLog(Rec."No.");
                     end;
@@ -83,40 +72,21 @@ page 53422 "ORB LIFT Activities"
         ILE: Record "Item Ledger Entry";
         WhseEntry: Record "Warehouse Entry";
         IntegrationLog: Record "ORB LIFT Integration Data Log";
+        LIFTBCFunctionsCU: Codeunit "ORB LIFTtoBC Functions";
         DummyText: Label 'Post Inventory Transactions';
 
     local procedure GetWhseCount(): Integer
-    var
-        TransactionIDvar: Text;
-        EntryCount: Integer;
     begin
-        WhseTransQry.SetRange(SourceNo, Rec."No.");
-        WhseTransQry.Open();
-        while WhseTransQry.Read() do begin
-            if TransactionIDvar = '' then
-                TransactionIDvar := Format(WhseTransQry.TransactionID)
-            else
-                TransactionIDvar += '|' + Format(WhseTransQry.TransactionID);
-        end;
-        WhseTransQry.Close();
-
-        if TransactionIDvar = '' then
-            TransactionIDvar := '-1';
-
-        WhseEntry.SetFilter("ORB LIFT Inv. Transaction ID", TransactionIDvar);
-        EntryCount := WhseEntry.Count();
-        exit(EntryCount);
+        exit(LIFTBCFunctionsCU.GetWhseCount(Rec));
     end;
 
     local procedure GetILECount(): Integer
     begin
-        ILE.SetRange("Document No.", Rec."No.");
-        exit(ILE.Count());
+        exit(LIFTBCFunctionsCU.GetILECount(Rec));
     end;
 
     local procedure GetLogCount(): Integer
     begin
-        IntegrationLog.SetRange("Source No.", Rec."No.");
-        exit(IntegrationLog.Count());
+        exit(LIFTBCFunctionsCU.GetIntegrationLogCount(Rec));
     end;
 }
