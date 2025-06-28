@@ -27,6 +27,10 @@ table 52618 "ORB LIFT Integration Data Log"
         {
             Caption = 'Source Line No.';
         }
+        field(6; "Item No."; Code[20])
+        {
+            Caption = 'Item No.';
+        }
         field(10; "Transaction ID"; Integer)
         {
             Caption = 'Transaction ID';

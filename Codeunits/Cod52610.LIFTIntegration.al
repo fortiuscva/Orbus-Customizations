@@ -108,12 +108,12 @@ codeunit 52610 "ORB LIFT Integration"
             end;
             SalesLine.Modify(true);
 
-            InsertIntergationDataLog(Database::"Sales Header", 1, SalesLine."Document No.", SalesLine."Line No.");
+            InsertIntergationDataLog(Database::"Sales Header", 1, SalesLine."Document No.", SalesLine."Line No.", SalesLine."No.", 0);
             Commit();
         end;
     end;
 
-    procedure InsertIntergationDataLog(SourceType: Integer; SourceSubType: Integer; SourceNo: Code[20]; SourceLineNo: Integer)
+    procedure InsertIntergationDataLog(SourceType: Integer; SourceSubType: Integer; SourceNo: Code[20]; SourceLineNo: Integer; ItemNo: Code[20]; TransactionID: Integer)
     var
         LIFTIntegrationDataLogRecLcl: Record "ORB LIFT Integration Data Log";
         EntryNoVarLcl: Integer;
@@ -338,7 +338,7 @@ codeunit 52610 "ORB LIFT Integration"
 
         Customer."ORB LIFT Customer" := true;
         if Customer.Insert() then
-            InsertIntergationDataLog(Database::Customer, 0, Customer."No.", 0);
+            InsertIntergationDataLog(Database::Customer, 0, Customer."No.", 0, '', 0);
     end;
 
     procedure InventoryJournalDataRead(ResponsePar: text)
@@ -430,7 +430,8 @@ codeunit 52610 "ORB LIFT Integration"
         WarehouseJournalLine.SetUpAdjustmentBin();
         WarehouseJournalLine.Modify(true);
 
-        InsertIntergationDataLog(Database::"Warehouse Journal Line", 0, WarehouseJournalLine."Item No.", WarehouseJournalLine."ORB LIFT Inv. Transaction ID");
+        InsertIntergationDataLog(Database::"Warehouse Journal Line", 0, WarehouseJournalLine."Whse. Document No.", WarehouseJournalLine."ORB LIFT Order Line ID",
+                            WarehouseJournalLine."Item No.", WarehouseJournalLine."ORB LIFT Inv. Transaction ID");
     end;
 
     procedure GetUnitCost(LocationCode: Code[10]; ItemNo: Code[20]; VariantCode: Code[10]): Decimal;
