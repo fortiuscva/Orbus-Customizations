@@ -113,7 +113,7 @@ table 53401 "ORB LIFT Sales Line Buffer"
             DecimalPlaces = 0 : 2;
             DataClassification = CustomerContent;
         }
-        field(60103; "ORB LIFT Status"; enum "ORB LIFT Status")
+        field(60103; "ORB LIFT Status"; Integer)
         {
             Caption = 'LIFT Status';
             DataClassification = CustomerContent;
