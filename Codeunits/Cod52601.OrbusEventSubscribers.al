@@ -735,6 +735,16 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         end;
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Whse. Jnl.-Register", 'OnBeforeConfirmRegisterLines', '', false, false)]
+    local procedure SuppressConfirmOnlyForLIFT(WhseJnlLine: Record "Warehouse Journal Line"; var Result: Boolean; var IsHandled: Boolean)
+    begin
+        if OrbusSingleInstanceCUGbl.GetSuppressWhseConfirm() then begin
+            Result := true;
+            IsHandled := true;
+        end;
+    end;
+
+
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
         SOPla: page "Sales Order Planning";

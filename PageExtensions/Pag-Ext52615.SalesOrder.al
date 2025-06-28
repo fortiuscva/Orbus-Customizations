@@ -288,6 +288,9 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 var
                     LIFTSalesOrderInvTrans: Codeunit "LIFT Sales Order Inv. Trans";
                 begin
+                    if not Confirm('Do you want to Post the LIFT Transactions?', false) then
+                        exit;
+
                     LIFTSalesOrderInvTrans.RunForSalesOrder(rec."No.");
                 end;
             }
@@ -307,6 +310,10 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                     ItemRecTempLcl: Record Item temporary;
                     WarehouseEntryRecLcl: Record "Warehouse Entry";
                 begin
+                    ClearLastError();
+                    if not Codeunit.Run(Codeunit::"ORB LIFT Whse Adjmt Processor", rec) then
+                        Message(GetLastErrorText);
+                    /*
                     WarehouseEntryRecLcl.Reset();
                     WarehouseEntryRecLcl.SetRange("Whse. Document No.", Rec."No.");
                     if WarehouseEntryRecLcl.FindSet() then
@@ -355,7 +362,7 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                     if ItemJnlRecLcl.FindSet() then
                         CODEUNIT.Run(CODEUNIT::"Item Jnl.-Post", ItemJnlRecLcl)
                     else
-                        Message('There is nothing to post');
+                        Message('There is nothing to post');*/
                 end;
             }
         }
