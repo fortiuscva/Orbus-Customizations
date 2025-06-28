@@ -184,4 +184,17 @@ page 53416 "ORB LIFT Customer API"
             }
         }
     }
+    trigger OnInsertRecord(BelowxRec: Boolean): Boolean
+    begin
+        LIFTCustomerMgmt.PropagateOnCustomerInsert(Rec);
+    end;
+
+    trigger OnModifyRecord(): Boolean
+    begin
+        LIFTCustomerMgmt.PropagateOnCustomerModify(Rec);
+    end;
+
+    var
+        LIFTCustomerMgmt: Codeunit "ORB LIFT Customer Mgmt";
 }
+
