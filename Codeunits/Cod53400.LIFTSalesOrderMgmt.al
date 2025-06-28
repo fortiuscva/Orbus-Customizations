@@ -29,7 +29,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
     procedure ValidateSalesHeaderFields(var SalesHeader: Record "Sales Header"; var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer"; CreateSO: Boolean)
     begin
         SalesHeader.Validate("Sell-to Customer No.", LIFTSalesOrderBuffer."Sell-to Customer No.");
-        SalesHeader.Validate("Bill-to Customer No.", LIFTSalesOrderBuffer."Bill-to Customer No.");
+        //SalesHeader.Validate("Bill-to Customer No.", LIFTSalesOrderBuffer."Bill-to Customer No.");
         SalesHeader.Validate("Ship-to Code", LIFTSalesOrderBuffer."Ship-to Code");
         SalesHeader.Validate("Ship-to Name", LIFTSalesOrderBuffer."Ship-to Name");
         SalesHeader.Validate("Ship-to Name 2", LIFTSalesOrderBuffer."Ship-to Name 2");
