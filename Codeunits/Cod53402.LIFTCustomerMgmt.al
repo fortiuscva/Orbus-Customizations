@@ -51,9 +51,9 @@ codeunit 53402 "ORB LIFT Customer Mgmt"
         Customer.Validate("Currency Id", LIFTCustomer."Currency Id");
         Customer.Validate("Contact ID", LIFTCustomer."Contact ID");
         if LIFTCustomer."ORB LIFT TermsStatus" = 'PENDING' then
-            Customer.Validate(Needs_Approval, Customer.Needs_Approval::yesNeedsApproval)
+            Customer.Validate(Needs_Approval, Customer.Needs_Approval::noNeedsApproval)
         else
-            Customer.Validate(Needs_Approval, Customer.Needs_Approval::noNeedsApproval);
+            Customer.Validate(Needs_Approval, Customer.Needs_Approval::yesNeedsApproval);
         Customer.Validate("Magento ID", LIFTCustomer."Magento ID");
         Customer.Validate(ORBAPPAssociationsName, LIFTCustomer.ORBAPPAssociationsName);
         Customer.Validate("ORB Regional Sales Executive", LIFTCustomer."ORB Regional Sales Executive");
