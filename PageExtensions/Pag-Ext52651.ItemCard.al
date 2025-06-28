@@ -17,5 +17,19 @@ pageextension 52651 "ORB Item Card" extends "Item Card"
                 ToolTip = 'Quantity packed in a bag';
             }
         }
+        //LIFT
+        addlast(Item)
+        {
+            field("ORB Material Id"; Rec."ORB Material Id")
+            {
+                Caption = 'Material Id';
+                ApplicationArea = All;
+            }
+            field("ORB Stroage Type Id"; Rec."ORB Stroage Type Id")
+            {
+                Caption = 'Stroage Type Id';
+                ApplicationArea = All;
+            }
+        }
     }
 }
