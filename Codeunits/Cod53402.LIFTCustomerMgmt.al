@@ -63,8 +63,8 @@ codeunit 53402 "ORB LIFT Customer Mgmt"
         Customer.Validate("Needs Magento ID", LIFTCustomer."Needs Magento ID");
         Customer.Validate("Last Visit Date", LIFTCustomer."Last Visit Date");
         Customer.Validate(International, LIFTCustomer.International);
-        Customer.Validate("Shortcut Dimension 5 Code", LIFTCustomer."Channel Code");
-        Customer.Validate("Shortcut Dimension 6 Code", LIFTCustomer."Industry Code");
+        Customer.Validate("Shortcut Dimension 5 Code", LIFTCustomer.Channel);
+        Customer.Validate("Shortcut Dimension 6 Code", LIFTCustomer.Industry);
     end;
 
     var
