@@ -278,17 +278,33 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 end;
 
             }
+            action("ORB Post LIFT Inventory Transactions")
+            {
+                Image = Order;
+                ApplicationArea = all;
+                Caption = 'Post Inventory Transactions';
+                Visible = false;
+
+                trigger OnAction()
+                begin
+                    if not Confirm('Do you want to Post?', false) then
+                        exit;
+
+                    if not Codeunit.Run(Codeunit::"ORB LIFT Post Transactions", rec) then;
+                end;
+            }
             action("ORB Get & Post LIFT Inventory Transactions")
             {
                 Image = Order;
                 ApplicationArea = all;
                 Caption = 'Get & Post Inventory Transactions';
+                Visible = false;
 
                 trigger OnAction()
                 var
                     LIFTSalesOrderInvTrans: Codeunit "LIFT Sales Order Inv. Trans";
                 begin
-                    if not Confirm('Do you want to Post the LIFT Transactions?', false) then
+                    if not Confirm('Do you want to Post?', false) then
                         exit;
 
                     LIFTSalesOrderInvTrans.RunForSalesOrder(rec."No.");
@@ -299,6 +315,7 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 ApplicationArea = All;
                 Caption = 'Run LIFT Warehouse Adjustments';
                 Image = CalculateWarehouseAdjustment;
+                Visible = false;
 
                 trigger OnAction()
                 var

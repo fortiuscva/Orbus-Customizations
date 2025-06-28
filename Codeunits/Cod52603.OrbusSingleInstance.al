@@ -210,6 +210,16 @@ codeunit 52603 "ORB Orbus Single Instance"
         exit(SuppressItemJnlConfirm);
     end;
 
+    procedure SetStopOnError(Value: Boolean)
+    begin
+        StopOnError := Value;
+    end;
+
+    procedure GetStopOnError(): Boolean
+    begin
+        exit(StopOnError);
+    end;
+
     var
         ShowDialogLookupProfileVarGbl: Boolean;
         ShowDialogSendEmailToCustVarGbl: Boolean;
@@ -233,4 +243,5 @@ codeunit 52603 "ORB Orbus Single Instance"
         LocationCode: Code[20];
         SuppressWhseRegisterConfirm: Boolean;
         SuppressItemJnlConfirm: Boolean;
+        StopOnError: Boolean;
 }
