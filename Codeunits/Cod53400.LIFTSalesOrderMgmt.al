@@ -4,24 +4,29 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
     begin
         if not SalesHeader.Get(LIFTSalesOrderBuffer."Document Type", LIFTSalesOrderBuffer."No.") then begin
             SalesHeader.Init();
-            SalesHeader."Document Type" := LIFTSalesOrderBuffer."Document Type";
-            SalesHeader."No." := LIFTSalesOrderBuffer."No.";
+            SalesHeader.Validate("Document Type", LIFTSalesOrderBuffer."Document Type");
+            SalesHeader.Validate("No.", LIFTSalesOrderBuffer."No.");
             SalesHeader.Insert();
-            SalesHeader := ValidateSalesHeaderFields(SalesHeader, LIFTSalesOrderBuffer);
-            SalesHeader.Modify();
-        end
+        end;
+
+        UpdateSalesHeader(LIFTSalesOrderBuffer);
     end;
 
     procedure PropagateOnSalesHeaderModify(var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer")
     begin
         if SalesHeader.Get(LIFTSalesOrderBuffer."Document Type", LIFTSalesOrderBuffer."No.") then begin
             ArchiveManagement.ArchiveSalesDocument(SalesHeader);
-            SalesHeader := ValidateSalesHeaderFields(SalesHeader, LIFTSalesOrderBuffer);
-            SalesHeader.Modify();
+            UpdateSalesHeader(LIFTSalesOrderBuffer);
         end;
     end;
 
-    procedure ValidateSalesHeaderFields(var SalesHeader: Record "Sales Header"; var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer"): Record "Sales Header";
+    local procedure UpdateSalesHeader(var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer")
+    begin
+        ValidateSalesHeaderFields(SalesHeader, LIFTSalesOrderBuffer);
+        SalesHeader.Modify();
+    end;
+
+    procedure ValidateSalesHeaderFields(var SalesHeader: Record "Sales Header"; var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer")
     begin
         SalesHeader.Validate("Sell-to Customer No.", LIFTSalesOrderBuffer."Sell-to Customer No.");
         SalesHeader.Validate("Bill-to Customer No.", LIFTSalesOrderBuffer."Bill-to Customer No.");
@@ -52,13 +57,13 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         SalesHeader.Validate("Payment Method Code", LIFTSalesOrderBuffer."Payment Method Code");
         SalesHeader.Validate("Shipping Agent Code", LIFTSalesOrderBuffer."Shipping Agent Code");
         SalesHeader.Validate("Work Description", LIFTSalesOrderBuffer."Work Description");
-        SalesHeader.Validate("Sell-to Contact No.", LIFTSalesOrderBuffer."Sell-To Contact No.");
+        SalesHeader.Validate("Sell-to Contact No.", LIFTSalesOrderBuffer."Sell-to Contact No.");
         SalesHeader.Validate("Shipping Advice", LIFTSalesOrderBuffer."Shipping Advice");
         SalesHeader.Validate("Shipping Agent Service Code", LIFTSalesOrderBuffer."Shipping Agent Service Code");
         SalesHeader.Validate("Order Status", LIFTSalesOrderBuffer."Order Status");
         SalesHeader.Validate("Location Override", LIFTSalesOrderBuffer."Location Override");
-        SalesHeader.Validate(Created_By, LIFTSalesOrderBuffer.Created_By);
-        SalesHeader.Validate(Rush, LIFTSalesOrderBuffer.Rush);
+        SalesHeader.Validate("Created_By", LIFTSalesOrderBuffer."Created_By");
+        SalesHeader.Validate("Rush", LIFTSalesOrderBuffer."Rush");
         SalesHeader.Validate("ORB Declared Value", LIFTSalesOrderBuffer."ORB Declared Value");
         SalesHeader.Validate("ORB International Contact", LIFTSalesOrderBuffer."ORB International Contact");
         SalesHeader.Validate("ORB Magento Order #", LIFTSalesOrderBuffer."ORB Magento Order #");
@@ -67,20 +72,19 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         SalesHeader.Validate("SO Payment Account No.", LIFTSalesOrderBuffer."SO Payment Account No.");
         SalesHeader.Validate("In-Hands Date", LIFTSalesOrderBuffer."In-Hands Date");
         SalesHeader.Validate("Created At", LIFTSalesOrderBuffer."Created At");
-        exit(SalesHeader);
     end;
 
     procedure PropagateOnSalesLineInsert(var LIFTSalesLineBuffer: Record "ORB LIFT Sales Line Buffer")
     begin
         if not SalesLine.Get(LIFTSalesLineBuffer."Document Type", LIFTSalesLineBuffer."Document No.", LIFTSalesLineBuffer."Line No.") then begin
             SalesLine.Init();
-            SalesLine."Document Type" := LIFTSalesLineBuffer."Document Type";
-            SalesLine."Document No." := LIFTSalesLineBuffer."Document No.";
-            SalesLine."Line No." := LIFTSalesLineBuffer."Line No.";
+            SalesLine.Validate("Document Type", LIFTSalesLineBuffer."Document Type");
+            SalesLine.Validate("Document No.", LIFTSalesLineBuffer."Document No.");
+            SalesLine.Validate("Line No.", LIFTSalesLineBuffer."Line No.");
             SalesLine.Insert();
-            SalesLine := ValidateSalesLineFields(SalesLine, LIFTSalesLineBuffer);
-            SalesLine.Modify();
         end;
+
+        UpdateSalesLine(LIFTSalesLineBuffer);
     end;
 
     procedure PropagateOnSalesLineModify(var LIFTSalesLineBuffer: Record "ORB LIFT Sales Line Buffer")
@@ -88,13 +92,18 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         if SalesLine.Get(LIFTSalesLineBuffer."Document Type", LIFTSalesLineBuffer."Document No.", LIFTSalesLineBuffer."Line No.") then begin
             if SalesHeader.Get(LIFTSalesLineBuffer."Document Type", LIFTSalesLineBuffer."Document No.") then begin
                 ArchiveManagement.ArchiveSalesDocument(SalesHeader);
-                SalesLine := ValidateSalesLineFields(SalesLine, LIFTSalesLineBuffer);
-                SalesLine.Modify();
+                UpdateSalesLine(LIFTSalesLineBuffer);
             end;
         end;
     end;
 
-    procedure ValidateSalesLineFields(var SalesLine: Record "Sales Line"; var LIFTSalesLineBuffer: Record "ORB LIFT Sales Line Buffer"): Record "Sales Line";
+    local procedure UpdateSalesLine(var LIFTSalesLineBuffer: Record "ORB LIFT Sales Line Buffer")
+    begin
+        ValidateSalesLineFields(SalesLine, LIFTSalesLineBuffer);
+        SalesLine.Modify();
+    end;
+
+    procedure ValidateSalesLineFields(var SalesLine: Record "Sales Line"; var LIFTSalesLineBuffer: Record "ORB LIFT Sales Line Buffer")
     begin
         SalesLine.Validate("Sell-to Customer No.", LIFTSalesLineBuffer."Sell-to Customer No.");
         SalesLine.Validate(Type, LIFTSalesLineBuffer.Type);
@@ -117,12 +126,9 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         SalesLine.Validate(Height, LIFTSalesLineBuffer.Height);
         SalesLine.Validate("Hardware Price", LIFTSalesLineBuffer."Hardware Price");
         SalesLine.Validate("Graphics Price", LIFTSalesLineBuffer."Graphics Price");
-        exit(SalesLine);
     end;
 
     procedure PropagateOnSalesLineDelete(LIFTSalesLineBuffer: Record "ORB LIFT Sales Line Buffer")
-    var
-        SalesLine: Record "Sales Line";
     begin
         if SalesLine.Get(LIFTSalesLineBuffer."Document Type", LIFTSalesLineBuffer."Document No.", LIFTSalesLineBuffer."Line No.") then begin
             if SalesHeader.Get(LIFTSalesLineBuffer."Document Type", LIFTSalesLineBuffer."Document No.") then begin
