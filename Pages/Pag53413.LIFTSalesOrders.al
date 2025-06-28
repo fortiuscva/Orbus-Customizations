@@ -28,6 +28,11 @@ page 53413 "ORB LIFT Sales Orders"
                 {
                     ToolTip = 'Specifies the value of the Bill-to Customer No. field.', Comment = '%';
                 }
+                field("Your Reference"; Rec."Your Reference")
+                {
+                    Caption = 'Versapay ID';
+                    ToolTip = 'Specifies the value of the Versapay ID field.', Comment = '%';
+                }
                 field("Document Date"; Rec."Document Date")
                 {
                     ToolTip = 'Specifies the value of the Document Date field.', Comment = '%';
@@ -103,6 +108,14 @@ page 53413 "ORB LIFT Sales Orders"
                 field("Shipment Date"; Rec."Shipment Date")
                 {
                     ToolTip = 'Specifies the value of the Shipment Date field.', Comment = '%';
+                }
+                field("ORB Magento Order #"; Rec."ORB Magento Order #")
+                {
+                    ToolTip = 'Specifies the value of the Magento Order # field.', Comment = '%';
+                }
+                field("ORB Magento CC 4 Digits"; Rec."ORB Magento CC 4 Digits")
+                {
+                    ToolTip = 'Specifies the value of the Magento CC 4 Digits field.', Comment = '%';
                 }
             }
         }

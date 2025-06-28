@@ -35,6 +35,11 @@ table 53400 "ORB LIFT Sales Order Buffer"
             TableRelation = Customer.Name;
             ValidateTableRelation = false;
         }
+        field(11; "Your Reference"; Text[35])
+        {
+            Caption = 'Versapay ID';
+            DataClassification = CustomerContent;
+        }
         field(12; "Ship-to Code"; Code[10])
         {
             Caption = 'Ship-to Code';
