@@ -134,7 +134,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         SalesLine.Validate("Sell-to Customer No.", LIFTSalesLineBuffer."Sell-to Customer No.");
         SalesLine.Validate(Type, SalesLine.Type::Item);
         SalesLine.Validate("No.", LIFTSalesLineBuffer."No.");
-        SalesLine.Validate("Location Code", LIFTSalesLineBuffer."Location Code");
+        //SalesLine.Validate("Location Code", LIFTSalesLineBuffer."Location Code");
         SalesLine.Validate("Shipment Date", LIFTSalesLineBuffer."Shipment Date");
         SalesLine.Validate(Quantity, LIFTSalesLineBuffer.Quantity);
         SalesLine.Validate("Unit Price", LIFTSalesLineBuffer."Unit Price");
