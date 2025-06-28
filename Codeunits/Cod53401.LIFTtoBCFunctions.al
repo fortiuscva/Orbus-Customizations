@@ -44,7 +44,7 @@ codeunit 53401 "ORB LIFTtoBC Functions"
         end;
 
         if TransactionIDvar = '' then
-            Error('There are no transactions for this order');
+            TransactionIDvar := '-1';
 
         WarehouseEntryRec.Reset();
         WarehouseEntryRec.SetFilter("ORB LIFT Inv. Transaction ID", TransactionIDvar);
