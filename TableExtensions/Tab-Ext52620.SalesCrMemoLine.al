@@ -28,6 +28,7 @@ tableextension 52620 "ORB Sales Cr.Memo Line" extends "Sales Cr.Memo Line"
         field(53401; "ORB LIFT Discount Amount"; Decimal)
         {
             Caption = 'LIFT Discount Amount';
+            Editable = false;
             DataClassification = CustomerContent;
         }
 

@@ -11,18 +11,7 @@ pageextension 52659 "ORB Sales Line Archive List" extends "Sales Line Archive Li
             field("ORB LIFT Discount Amount"; Rec."ORB LIFT Discount Amount")
             {
                 ApplicationArea = All;
-                Editable = IsLIFTDiscountEditable;
             }
         }
     }
-    trigger OnAfterGetRecord()
-    begin
-        if UserId <> 'BCADMIN' then
-            IsLIFTDiscountEditable := false
-        else
-            IsLIFTDiscountEditable := true;
-    end;
-
-    var
-        IsLIFTDiscountEditable: Boolean;
 }
