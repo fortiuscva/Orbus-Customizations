@@ -103,6 +103,13 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
         }
         addfirst(factboxes)
         {
+            part("LIFT SO Actions FactBox"; "ORB LIFT Activities")
+            {
+                ApplicationArea = All;
+                Caption = 'LIFT Activities';
+                SubPageLink = "Document Type" = FIELD("Document Type"),
+                              "No." = FIELD("No.");
+            }
             part(ORBSalesLineAddFieldsFB; "ORB Sales Line Add. Fields FB")
             {
                 ApplicationArea = Suite;
