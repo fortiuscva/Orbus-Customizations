@@ -36,25 +36,9 @@ page 53423 "ORB LIFT Inv. Transactions Log"
                 {
                     ToolTip = 'Specifies the value of the Source Line No. field.', Comment = '%';
                 }
-                field(Material; Rec.Material)
-                {
-                    ToolTip = 'Specifies the value of the Material field.', Comment = '%';
-                }
-                field("Storage Type"; Rec."Storage Type")
-                {
-                    ToolTip = 'Specifies the value of the Storage Type field.', Comment = '%';
-                }
-                field("Material SKU"; Rec."Material SKU")
-                {
-                    ToolTip = 'Specifies the value of the Material field.', Comment = '%';
-                }
                 field("Item No."; Rec."Item No.")
                 {
                     ToolTip = 'Specifies the value of the Item No. field.', Comment = '%';
-                }
-                field("Transaction Type"; Rec."Transaction Type")
-                {
-                    ToolTip = 'Specifies the value of the Transaction Type field.', Comment = '%';
                 }
                 field(Quantity; Rec.Quantity)
                 {
@@ -76,21 +60,9 @@ page 53423 "ORB LIFT Inv. Transactions Log"
                 {
                     ToolTip = 'Specifies the value of the Location Code field.', Comment = '%';
                 }
-                field("Shortcut Dimension 1 Code"; Rec."Shortcut Dimension 1 Code")
-                {
-                    ToolTip = 'Specifies the value of the Shortcut Dimension 1 Code field.', Comment = '%';
-                }
-                field("Shortcut Dimension 2 Code"; Rec."Shortcut Dimension 2 Code")
-                {
-                    ToolTip = 'Specifies the value of the Shortcut Dimension 2 Code field.', Comment = '%';
-                }
                 field("Transaction ID"; Rec."Transaction ID")
                 {
                     ToolTip = 'Specifies the value of the Transaction ID field.', Comment = '%';
-                }
-                field("LIFT Line No."; Rec."LIFT Line No.")
-                {
-                    ToolTip = 'Specifies the value of the LIFT Line No. field.', Comment = '%';
                 }
                 field(SystemCreatedAt; Rec.SystemCreatedAt)
                 {
