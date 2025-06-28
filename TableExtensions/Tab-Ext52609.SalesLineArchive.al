@@ -47,6 +47,7 @@ tableextension 52609 "ORB Sales Line Archive" extends "Sales Line Archive"
         field(53401; "ORB LIFT Discount Amount"; Decimal)
         {
             Caption = 'LIFT Discount Amount';
+            Editable = false;
             DataClassification = CustomerContent;
         }
     }
