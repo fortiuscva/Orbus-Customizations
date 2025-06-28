@@ -2,29 +2,31 @@ query 53400 "ORB LIFT Items by Location"
 {
     Caption = 'LIFT Items by Location';
     QueryType = API;
-    APIGroup = 'Orbus';
-    APIPublisher = 'Orbus';
+    APIGroup = 'orbus';
+    APIPublisher = 'orbus';
     APIVersion = 'v2.0';
-    EntityName = 'LIFTItemsByLocation';
-    EntitySetName = 'LIFTItemsByLocation';
+    EntityName = 'itemsByLocation';
+    EntitySetName = 'itemsByLocation';
 
     elements
     {
-        dataitem(Item; Item)
+        dataitem(ItemLedgerEntry; "Item Ledger Entry")
         {
-            column("ItemNo"; "No.")
+            column(ItemNo; "Item No.") { }
+            column(Quantity; Quantity) { Method = Sum; }
+
+            dataitem(Item; Item)
             {
-            }
-            column("ItemDescription"; Description)
-            {
-            }
-            dataitem(Item_Ledger_Entry; "Item Ledger Entry")
-            {
-                DataItemLink = "Item No." = Item."No.";
-                column(Location_Code; "Location Code") { }
-                column(Quantity; Quantity)
+                DataItemLink = "No." = ItemLedgerEntry."Item No.";
+                column(Material_Id; "ORB Material Id") { }
+                column(Storage_Type_Id; "ORB Stroage Type Id") { }
+
+                dataitem(Location; Location)
                 {
-                    Method = sum;
+                    DataItemLink = Code = ItemLedgerEntry."Location Code";
+                    column(LocationCode; Code) { }
+                    column(Location_Id; "ORB Location Id")
+                    { }
                 }
             }
         }
