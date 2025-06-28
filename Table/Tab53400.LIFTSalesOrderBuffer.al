@@ -232,8 +232,8 @@ table 53400 "ORB LIFT Sales Order Buffer"
         {
             Caption = 'Sales Order Payment Type';
             DataClassification = CustomerContent;
-            OptionCaption = 'None,Sender,Third Party,Receiver,Collect';
-            OptionMembers = "None","Sender","Third Party","Receiver","Collect";
+            OptionCaption = 'None,Sender,Third Party,Receiver,Free';
+            OptionMembers = "None","Sender","3rd Party","Receiver","Free";
         }
         field(54103; "SO Payment Account No."; Text[100])
         {
