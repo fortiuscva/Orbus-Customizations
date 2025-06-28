@@ -1,4 +1,4 @@
-codeunit 52616 "ORB LIFTtoBC Functions"
+codeunit 53401 "ORB LIFTtoBC Functions"
 {
     procedure IsValidValue(TargetDatatype: enum "ORB LIFT BC Datatypes"; TargetValue: Text): Boolean
     var
