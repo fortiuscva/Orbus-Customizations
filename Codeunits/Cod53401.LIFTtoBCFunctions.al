@@ -60,6 +60,16 @@ codeunit 53401 "ORB LIFTtoBC Functions"
         Page.RunModal(Page::"Item Ledger Entries", ItemLedgerEntryRecLcl);
     end;
 
+    procedure OpenInventoryTransactionLog(SalesOrderNumber: Code[20])
+    var
+        LiftIntegrationDataLogLcl: Record "ORB LIFT Integration Data Log";
+    begin
+        LiftIntegrationDataLogLcl.Reset();
+        LiftIntegrationDataLogLcl.SetRange("Source Type", 7311);
+        LiftIntegrationDataLogLcl.SetRange("Source No.", SalesOrderNumber);
+        Page.RunModal(Page::"ORB LIFT Inv. Transactions Log", LiftIntegrationDataLogLcl);
+    end;
+
     var
         BCDatatypes: enum "ORB LIFT BC Datatypes";
 }

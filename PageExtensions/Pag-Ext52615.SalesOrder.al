@@ -371,8 +371,12 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                     ApplicationArea = all;
                     Caption = 'Show Inventory Transaction Log';
                     Image = Log;
-                    RunObject = Page "ORB LIFT Integration Data Log";
-                    RunPageLink = "Source No." = field("No.");
+                    trigger OnAction()
+                    var
+                        LIFTBCFunctionsCULcl: Codeunit "ORB LIFTtoBC Functions";
+                    begin
+                        LIFTBCFunctionsCULcl.OpenInventoryTransactionLog(Rec."No.");
+                    end;
                 }
                 action("ORB LIFT Warehouse Entries")
                 {
