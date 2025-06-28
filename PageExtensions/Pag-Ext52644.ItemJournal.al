@@ -30,9 +30,12 @@ pageextension 52644 "ORB Item Journal" extends "Item Journal"
                 PromotedIsBig = true;
                 PromotedCategory = Process;
                 Image = UpdateUnitCost;
-                Visible = IsLiftRollupCostAllowed;
+                Visible = false;
                 trigger OnAction()
                 begin
+                    if UserId <> 'BCADMIN' then
+                        Error('Unauthorized access');
+
                     if not Confirm(RollupCostConfirmMsgLbl, false) then
                         exit;
                     LiftFunctions.ItemJournalRollupCost(Rec."Journal Template Name", Rec."Journal Batch Name");
@@ -47,11 +50,14 @@ pageextension 52644 "ORB Item Journal" extends "Item Journal"
                 PromotedCategory = Process;
                 Ellipsis = true;
                 Image = CalculateWarehouseAdjustment;
-                Visible = IsLiftCalcWhseAdjmtAllowed;
+                Visible = false;
                 ToolTip = 'Calculate adjustments in quantity based on the warehouse adjustment bin for each item in the journal. New lines are added for negative and positive quantities.';
 
                 trigger OnAction()
                 begin
+                    if UserId <> 'BCADMIN' then
+                        Error('Unauthorized access');
+
                     LIFTCalcWhseAdjmt.SetItemJnlLine(Rec);
                     LIFTCalcWhseAdjmt.RunModal();
                     Clear(LIFTCalcWhseAdjmt);
