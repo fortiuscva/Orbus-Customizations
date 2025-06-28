@@ -56,7 +56,8 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         SalesHeader.Validate("External Document No.", LIFTSalesOrderBuffer."External Document No.");
         SalesHeader.Validate("Payment Method Code", LIFTSalesOrderBuffer."Payment Method Code");
         SalesHeader.Validate("Shipping Agent Code", LIFTSalesOrderBuffer."Shipping Agent Code");
-        SalesHeader.Validate("Work Description", LIFTSalesOrderBuffer."Work Description");
+        SalesHeader.SetWorkDescription(LIFTSalesOrderBuffer."Work Description");
+        SalesHeader.GetWorkDescription();
         SalesHeader.Validate("Sell-to Contact No.", LIFTSalesOrderBuffer."Sell-to Contact No.");
         SalesHeader.Validate("Shipping Advice", LIFTSalesOrderBuffer."Shipping Advice");
         SalesHeader.Validate("Shipping Agent Service Code", LIFTSalesOrderBuffer."Shipping Agent Service Code");
