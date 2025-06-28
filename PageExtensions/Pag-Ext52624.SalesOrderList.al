@@ -237,6 +237,26 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
                         Codeunit.Run(Codeunit::"ORB LIFT Post Adjustment Jnl.", rec);
                     end;
                 }
+                action("ORB Show Inventory Transaction Log")
+                {
+                    ApplicationArea = all;
+                    Caption = 'Show Inventory Transaction Log';
+                    Image = Log;
+                    RunObject = Page "ORB LIFT Integration Data Log";
+                    RunPageLink = "Source No." = field("No.");
+                }
+                action("ORB LIFT Warehouse Entries")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Open LIFT Warehouse Entries';
+
+                    trigger OnAction()
+                    var
+                        LIFTBCFunctionsCULcl: Codeunit "ORB LIFTtoBC Functions";
+                    begin
+                        LIFTBCFunctionsCULcl.OpenWhseTransactions(Rec);
+                    end;
+                }
             }
         }
 
