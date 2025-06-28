@@ -26,6 +26,7 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
         WhseJnlLine: Record "Warehouse Journal Line";
         BatchName: Code[20];
         i: Integer;
+        HasErrors: Boolean;
     begin
         if not TryParseJsonArray(JsonText, JsonArray) and GuiAllowed() then
             Error('Invalid or unexpected JSON structure. No data to process.');
@@ -36,13 +37,23 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
         BatchName := DelChr(SalesOrderNo, '=', '-');
         CreateWhseBatch(BatchName);
 
+        HasErrors := false;
+
         for i := 0 to JsonArray.Count() - 1 do begin
             JsonArray.Get(i, JsonEntry);
-            if not TryCreateJournalLine(WhseJnlLine, JsonEntry.AsObject(), BatchName) and GuiAllowed() then
-                Message('Failed to create journal line at index %1', i + 1);
+            if not TryCreateJournalLine(WhseJnlLine, JsonEntry.AsObject(), BatchName) then begin
+                HasErrors := true;
+                if GuiAllowed() then
+                    Message(GetLastErrorText);
+            end;
         end;
 
-        PostWarehouseJournal(BatchName);
+        if not HasErrors then
+            PostWarehouseJournal(BatchName)
+        else
+            if GuiAllowed() then
+                Message('Errors occurred during journal line creation. Posting skipped.');
+
         DeleteWhseBatch(BatchName);
     end;
 
@@ -78,7 +89,7 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
         WhseJnlLine.SetRange("Journal Template Name", 'ITEM');
         WhseJnlLine.SetRange("Journal Batch Name", BatchName);
         if not Codeunit.Run(Codeunit::"Whse. Jnl.-Register", WhseJnlLine) and GuiAllowed() then
-            Error('Warehouse journal posting failed.');
+            Error(GetLastErrorText);
     end;
 
     [TryFunction]
@@ -102,7 +113,7 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
             EntryNo := 10000;
 
         if not TryGetTemplate(Template, 'ITEM') and GuiAllowed() then
-            Error('Template "ITEM" not found.');
+            Error(GetLastErrorText);
 
         Line.Init();
         Line."Journal Template Name" := 'ITEM';
@@ -218,9 +229,14 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
     local procedure GetValueAsDate(JObject: JsonObject; Path: Text): Date
     var
         JToken: JsonToken;
+        DateText: Text;
+        ResultDate: Date;
     begin
-        if JObject.SelectToken(Path, JToken) and not JToken.AsValue().IsNull() then
-            exit(JToken.AsValue().AsDate());
+        if JObject.SelectToken(Path, JToken) and not JToken.AsValue().IsNull() then begin
+            DateText := JToken.AsValue().AsText();
+            if Evaluate(ResultDate, DateText) then
+                exit(ResultDate);
+        end;
     end;
 
     local procedure EvaluateUTCDateTime(DateTimeText: Text): DateTime
