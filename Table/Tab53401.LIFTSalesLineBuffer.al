@@ -107,6 +107,17 @@ table 53401 "ORB LIFT Sales Line Buffer"
         {
             Caption = 'Graphics Price';
         }
+        field(60102; "LIFT Line ID"; Decimal)
+        {
+            Caption = 'LIFT Line ID';
+            DecimalPlaces = 0 : 2;
+            DataClassification = CustomerContent;
+        }
+        field(60103; "ORB LIFT Status"; enum "ORB LIFT Status")
+        {
+            Caption = 'LIFT Status';
+            DataClassification = CustomerContent;
+        }
     }
     keys
     {

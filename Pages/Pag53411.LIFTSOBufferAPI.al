@@ -17,6 +17,10 @@ page 53411 "ORB LIFT SO Buffer API"
         {
             repeater(General)
             {
+                field(documentType; Rec."Document Type")
+                {
+                    Caption = 'Document Type';
+                }
                 field(sellToCustomerNo; Rec."Sell-to Customer No.")
                 {
                     Caption = 'Sell-to Customer No.';
@@ -200,6 +204,10 @@ page 53411 "ORB LIFT SO Buffer API"
                 field(createdAt; Rec."Created At")
                 {
                     Caption = 'Created At';
+                }
+                field(liftStatus; Rec."ORB LIFT Status")
+                {
+                    Caption = 'LIFT Status';
                 }
             }
         }

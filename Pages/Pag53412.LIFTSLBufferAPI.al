@@ -113,6 +113,14 @@ page 53412 "ORB LIFT SL Buffer API"
                 {
                     Caption = 'Graphics Price';
                 }
+                field(liftLineID; Rec."LIFT Line ID")
+                {
+                    Caption = 'LIFT Line ID';
+                }
+                field(liftStatus; Rec."ORB LIFT Status")
+                {
+                    Caption = 'LIFT Status';
+                }
             }
         }
     }
@@ -132,14 +140,11 @@ page 53412 "ORB LIFT SL Buffer API"
 
     trigger OnModifyRecord(): Boolean
     begin
-        LIFTSalesOrderMgmt.PropagateOnSalesLineModify(Rec);
+        if Rec."ORB LIFT Status" = Rec."ORB LIFT Status"::Cancelled then
+            LIFTSalesOrderMgmt.PropagateOnSalesLineDelete(Rec)
+        else
+            LIFTSalesOrderMgmt.PropagateOnSalesLineModify(Rec);
     end;
-
-    trigger OnDeleteRecord(): Boolean
-    begin
-        LIFTSalesOrderMgmt.PropagateOnSalesLineDelete(Rec);
-    end;
-
     var
         LIFTSalesOrderMgmt: Codeunit "ORB LIFT Sales Order Mgmt";
 }
