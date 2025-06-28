@@ -15,18 +15,7 @@ pageextension 52657 "ORB Posted Sales Invoice Lines" extends "Posted Sales Invoi
             field("ORB LIFT Discount Amount"; Rec."ORB LIFT Discount Amount")
             {
                 ApplicationArea = All;
-                Editable = IsLIFTDiscountEditable;
             }
         }
     }
-    trigger OnAfterGetRecord()
-    begin
-        if UserId <> 'BCADMIN' then
-            IsLIFTDiscountEditable := false
-        else
-            IsLIFTDiscountEditable := true;
-    end;
-
-    var
-        IsLIFTDiscountEditable: Boolean;
 }

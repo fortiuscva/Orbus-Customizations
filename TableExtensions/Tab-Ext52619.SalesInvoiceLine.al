@@ -34,6 +34,7 @@ tableextension 52619 "ORB Sales Invoice Line" extends "Sales Invoice Line"
         field(53401; "ORB LIFT Discount Amount"; Decimal)
         {
             Caption = 'LIFT Discount Amount';
+            Editable = false;
             DataClassification = CustomerContent;
         }
     }

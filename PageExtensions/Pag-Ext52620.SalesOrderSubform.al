@@ -17,7 +17,6 @@ pageextension 52620 "ORB Sales Order Subform" extends "Sales Order Subform"
             field("ORB LIFT Discount Amount"; Rec."ORB LIFT Discount Amount")
             {
                 ApplicationArea = All;
-                Editable = IsLIFTDiscountEditable;
             }
         }
         modify(Quantity)
@@ -97,16 +96,8 @@ pageextension 52620 "ORB Sales Order Subform" extends "Sales Order Subform"
 
         }
     }
-    trigger OnAfterGetRecord()
-    begin
-        if UserId <> 'BCADMIN' then
-            IsLIFTDiscountEditable := false
-        else
-            IsLIFTDiscountEditable := true;
-    end;
 
     var
         OrbusSingleInstanceCUGbl: codeunit "ORB Orbus Single Instance";
         LIFTBCFunctionsCU: Codeunit "ORB LIFTtoBC Functions";
-        IsLIFTDiscountEditable: Boolean;
 }
