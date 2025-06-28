@@ -35,6 +35,61 @@ table 52618 "ORB LIFT Integration Data Log"
         {
             Caption = 'Transaction ID';
         }
+        field(11; "Entry Type"; Option)
+        {
+            Caption = 'Entry Type';
+            OptionCaption = 'Negative Adjmt.,Positive Adjmt.,Movement';
+            OptionMembers = "Negative Adjmt.","Positive Adjmt.",Movement;
+        }
+        field(12; Material; Text[100])
+        {
+            Caption = 'Material';
+        }
+        field(13; "Storage Type"; Text[100])
+        {
+            Caption = 'Storage Type';
+        }
+        field(14; "Transaction Type"; Code[10])
+        {
+            Caption = 'Transaction Type';
+        }
+        field(15; Quantity; Decimal)
+        {
+            Caption = 'Quantity';
+        }
+        field(16; "Unit Cost"; Decimal)
+        {
+            Caption = 'Unit Cost';
+        }
+        field(17; "Unit Of Measure"; Code[10])
+        {
+            Caption = 'Unit Of Measure';
+        }
+        field(18; "Posting Date"; Date)
+        {
+            Caption = 'Posting Date';
+        }
+        field(19; "Location Code"; Code[10])
+        {
+            Caption = 'Location Code';
+        }
+        field(20; "Shortcut Dimension 1 Code"; Code[10])
+        {
+            Caption = 'Shortcut Dimension 1 Code';
+        }
+        field(21; "Shortcut Dimension 2 Code"; Code[10])
+        {
+            Caption = 'Shortcut Dimension 2 Code';
+        }
+        field(22; "LIFT Line No."; Decimal)
+        {
+            Caption = 'LIFT Line No.';
+        }
+        field(23; "Material SKU"; Text[100])
+        {
+            Caption = 'Material SKU';
+            DataClassification = ToBeClassified;
+        }
     }
     keys
     {
