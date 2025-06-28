@@ -109,10 +109,6 @@ page 53400 "ORB LIFT Ship-to Address"
                 {
                     Caption = 'Email';
                 }
-                field(homePage; Rec."Home Page")
-                {
-                    Caption = 'Home Page';
-                }
                 field(taxAreaCode; Rec."Tax Area Code")
                 {
                     Caption = 'Tax Area Code';
