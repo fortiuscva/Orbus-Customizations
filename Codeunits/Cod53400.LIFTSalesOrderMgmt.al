@@ -87,6 +87,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         SalesHeader.Validate("Sell-To Contact No. (Custom)", LIFTSalesOrderBuffer."Sell-to Contact No.");
         //SalesHeader.Validate("Sell-to Contact", LIFTSalesOrderBuffer."Sell-to Contact");
         SalesHeader.Validate("Your Reference", LIFTSalesOrderBuffer."Your Reference");
+        SalesHeader."ORB Lift Order" := true;
     end;
 
     procedure PropagateOnSalesLineInsert(var LIFTSalesLineBuffer: Record "ORB LIFT Sales Line Buffer")
