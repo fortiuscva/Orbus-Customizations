@@ -393,18 +393,6 @@ page 52641 "ORB LIFT Customer"
                 {
                     Caption = 'Industry Dimension';
                 }
-                field(locationCode; Rec."Location Code")
-                {
-                    Caption = 'Location Code';
-                }
-                field(salespersonCode; Rec."Salesperson Code")
-                {
-                    Caption = 'Salesperson Code';
-                }
-                field(currencyCode; Rec."Currency Code")
-                {
-                    Caption = 'Currency Code';
-                }
             }
         }
     }
