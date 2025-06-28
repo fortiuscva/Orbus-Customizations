@@ -172,12 +172,6 @@ tableextension 52603 "ORB Customer" extends Customer
             Editable = false;
             DataClassification = CustomerContent;
         }
-        field(52622; "ORB Customer Approval Status"; Option)
-        {
-            Caption = 'Approval Status';
-            OptionMembers = PENDING,APPROVED;
-            DataClassification = CustomerContent;
-        }
     }
 
 

@@ -405,10 +405,6 @@ page 52641 "ORB LIFT Customer"
                 {
                     Caption = 'Currency Code';
                 }
-                field(customerApprovalStatus; Rec."ORB Customer Approval Status")
-                {
-                    Caption = 'Customer Approval Status';
-                }
             }
         }
     }
