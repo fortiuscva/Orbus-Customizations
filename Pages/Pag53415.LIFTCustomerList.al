@@ -76,6 +76,10 @@ page 53415 "ORB LIFT Customer List"
                 {
                     ToolTip = 'Specifies the value of the Last Date Modified field.', Comment = '%';
                 }
+                field("Gen. Bus. Posting Group"; Rec."Gen. Bus. Posting Group")
+                {
+                    ToolTip = 'Specifies the value of the Gen. Bus. Posting Group field.', Comment = '%';
+                }
                 field("Post Code"; Rec."Post Code")
                 {
                     ToolTip = 'Specifies the value of the Post Code field.', Comment = '%';

@@ -106,6 +106,11 @@ table 53402 "ORB LIFT Customer Buffer"
             Caption = 'Last Date Modified';
             DataClassification = CustomerContent;
         }
+        field(88; "Gen. Bus. Posting Group"; Code[20])
+        {
+            Caption = 'Gen. Bus. Posting Group';
+            TableRelation = "Gen. Business Posting Group";
+        }
         field(91; "Post Code"; Code[20])
         {
             Caption = 'Post Code';
