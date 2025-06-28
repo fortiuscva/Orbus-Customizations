@@ -44,11 +44,16 @@ codeunit 53402 "ORB LIFT Customer Mgmt"
         Customer.Validate("Post Code", LIFTCustomer."Post Code");
         Customer.Validate(County, LIFTCustomer.County);
         Customer.Validate("E-Mail", LIFTCustomer."E-Mail");
-        Customer.Validate("Tax Liable", LIFTCustomer."Tax Liable");
+        if LIFTCustomer."ORB LIFT TaxExempt" = 'Y' then
+            Customer.Validate("Tax Liable", true)
+        else
+            Customer.Validate("Tax Liable", False);
         Customer.Validate("Currency Id", LIFTCustomer."Currency Id");
         Customer.Validate("Contact ID", LIFTCustomer."Contact ID");
-        Customer.Validate(Needs_Approval, LIFTCustomer.Needs_Approval);
-        Customer.Validate("ORB Customer Approval Status", LIFTCustomer."ORB Customer Approval Status");
+        if LIFTCustomer."ORB LIFT TermsStatus" = 'PENDING' then
+            Customer.Validate(Needs_Approval, Customer.Needs_Approval::yesNeedsApproval)
+        else
+            Customer.Validate(Needs_Approval, Customer.Needs_Approval::noNeedsApproval);
         Customer.Validate("Magento ID", LIFTCustomer."Magento ID");
         Customer.Validate(ORBAPPAssociationsName, LIFTCustomer.ORBAPPAssociationsName);
         Customer.Validate("ORB Regional Sales Executive", LIFTCustomer."ORB Regional Sales Executive");

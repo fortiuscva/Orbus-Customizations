@@ -88,7 +88,7 @@ page 53415 "ORB LIFT Customer List"
                 {
                     ToolTip = 'Specifies the value of the E-Mail field.', Comment = '%';
                 }
-                field("Tax Liable"; Rec."Tax Liable")
+                field(TaxExempt; Rec."ORB LIFT TaxExempt")
                 {
                     ToolTip = 'Specifies the value of the Tax Liable field.', Comment = '%';
                 }
@@ -104,13 +104,9 @@ page 53415 "ORB LIFT Customer List"
                 {
                     ToolTip = 'Specifies the value of the Contact ID field.', Comment = '%';
                 }
-                field(Needs_Approval; Rec.Needs_Approval)
+                field(TermsStatus; Rec."ORB LIFT TermsStatus")
                 {
                     ToolTip = 'Specifies the value of the Needs_Approval field.', Comment = '%';
-                }
-                field("Approval Status"; Rec."ORB Customer Approval Status")
-                {
-
                 }
                 field("Magento ID"; Rec."Magento ID")
                 {

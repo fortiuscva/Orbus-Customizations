@@ -101,21 +101,17 @@ page 53416 "ORB LIFT Customer API"
                 {
                     Caption = 'E-Mail';
                 }
-                field(taxLiable; Rec."Tax Liable")
+                field(TaxExempt; Rec."ORB LIFT TaxExempt")
                 {
-                    Caption = 'Tax Liable';
+                    Caption = 'Tax Exempt';
                 }
                 field(contactID; Rec."Contact ID")
                 {
                     Caption = 'Contact ID';
                 }
-                field(needsApproval; Rec.Needs_Approval)
+                field(TermsStatus; Rec."ORB LIFT TermsStatus")
                 {
-                    Caption = 'Needs_Approval';
-                }
-                field(approvalStatus; Rec."ORB Customer Approval Status")
-                {
-
+                    Caption = 'TermsStatus';
                 }
                 field(magentoID; Rec."Magento ID")
                 {
