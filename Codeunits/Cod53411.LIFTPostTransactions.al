@@ -45,7 +45,7 @@ codeunit 53411 "ORB LIFT Post Transactions"
 
         OrbusSingleInstanceCUGbl.SetSuppressItemJnlConfirm(true);
         if ItemJnlRecLcl.FindSet() then
-            if not CODEUNIT.Run(CODEUNIT::"Item Jnl.-Post", ItemJnlRecLcl) then
+            if not TryPostItemJournal(ItemJnlRecLcl) then
                 if StopOnError then begin
                     OrbusSingleInstanceCUGbl.SetSuppressItemJnlConfirm(false);
                     Error(GetLastErrorText);
@@ -103,6 +103,16 @@ codeunit 53411 "ORB LIFT Post Transactions"
             LIFTCalcWhseAdjmt.UseRequestPage(false);
             LIFTCalcWhseAdjmt.RunModal();
             Clear(LIFTCalcWhseAdjmt);
+
+            Commit();
         end;
+    end;
+
+    [TryFunction]
+    local procedure TryPostItemJournal(ItemJnlLine: Record "Item Journal Line")
+    var
+        ItemJnlPost: Codeunit "Item Jnl.-Post";
+    begin
+        ItemJnlPost.Run(ItemJnlLine);
     end;
 }
