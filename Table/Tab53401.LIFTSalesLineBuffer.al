@@ -62,6 +62,10 @@ table 53401 "ORB LIFT Sales Line Buffer"
         {
             Caption = 'Line Discount Amount';
         }
+        field(29; "Unit Discount Amount"; Decimal)
+        {
+            Caption = 'Unit Discount Amount';
+        }
         field(40; "Shortcut Dimension 1 Code"; Code[20])
         {
             Caption = 'Shortcut Dimension 1 Code';
