@@ -14,6 +14,8 @@ query 53400 "ORB LIFT Items by Location"
         {
             column(ItemNo; "Item No.") { }
             column(Quantity; Quantity) { Method = Sum; }
+            column(ItemLedgerEntry_LocationCode; "Location Code")
+            { }
 
             dataitem(Item; Item)
             {
