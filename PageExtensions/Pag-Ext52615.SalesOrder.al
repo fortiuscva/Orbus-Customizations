@@ -283,7 +283,6 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 Image = Order;
                 ApplicationArea = all;
                 Caption = 'Post Inventory Transactions';
-                Visible = false;
 
                 trigger OnAction()
                 begin
