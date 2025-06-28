@@ -751,6 +751,13 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             HideDialog := true;
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales Price Calc. Mgt.", OnBeforeActivatedCampaignExists, '', false, false)]
+    local procedure "Sales Price Calc. Mgt._OnBeforeActivatedCampaignExists"(var ToCampaignTargetGr: Record "Campaign Target Group"; CustNo: Code[20]; ContNo: Code[20]; CampaignNo: Code[20]; var IsHandled: Boolean)
+    begin
+        if CampaignNo = '' then
+            IsHandled := true;
+    end;
+
 
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
