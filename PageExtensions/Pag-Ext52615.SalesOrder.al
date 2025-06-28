@@ -278,6 +278,19 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 end;
 
             }
+            action("ORB Get & Post LIFT Inventory Transactions")
+            {
+                Image = Order;
+                ApplicationArea = all;
+                Caption = 'Get & Post Inventory Transactions';
+
+                trigger OnAction()
+                var
+                    LIFTSalesOrderInvTrans: Codeunit "LIFT Sales Order Inv. Trans";
+                begin
+                    LIFTSalesOrderInvTrans.RunForSalesOrder(rec."No.");
+                end;
+            }
         }
 
     }
