@@ -132,7 +132,7 @@ codeunit 52610 "ORB LIFT Integration"
         LIFTIntegrationDataLogRecLcl."Source Subtype" := SourceSubType;
         LIFTIntegrationDataLogRecLcl."Source No." := SourceNo;
         LIFTIntegrationDataLogRecLcl."Source Line No." := SourceLineNo;
-        LIFTIntegrationDataLogRecLcl."Transaction ID" := SourceLineNo;
+        LIFTIntegrationDataLogRecLcl."Transaction ID" := TransactionID;
         LIFTIntegrationDataLogRecLcl.Insert();
 
     end;

@@ -323,12 +323,13 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
 
                     ItemNoLcl := '';
                     ItemRecTempLcl.Reset();
-                    repeat
-                        if ItemNoLcl <> '' then
-                            ItemNoLcl += '|' + ItemRecTempLcl."No."
-                        else
-                            ItemNoLcl := ItemRecTempLcl."No.";
-                    until ItemRecTempLcl.Next() = 0;
+                    if ItemRecTempLcl.FindSet then
+                        repeat
+                            if ItemNoLcl <> '' then
+                                ItemNoLcl += '|' + ItemRecTempLcl."No."
+                            else
+                                ItemNoLcl := ItemRecTempLcl."No.";
+                        until ItemRecTempLcl.Next() = 0;
 
                     ItemRecLcl.Reset;
                     ItemRecLcl.SetFilter("No.", ItemNoLcl);
