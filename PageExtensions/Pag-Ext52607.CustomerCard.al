@@ -77,6 +77,10 @@ pageextension 52607 "ORB Customer Card" extends "Customer Card"
             {
                 ApplicationArea = all;
             }
+            field("ORB Approval Status"; Rec."ORB Customer Approval Status")
+            {
+                ApplicationArea = all;
+            }
         }
 
 
