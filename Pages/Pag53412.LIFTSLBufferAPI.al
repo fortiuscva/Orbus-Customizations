@@ -57,6 +57,10 @@ page 53412 "ORB LIFT SL Buffer API"
                 {
                     Caption = 'Unit Price';
                 }
+                field(originalUnitPrice; Rec."Original Unit Price")
+                {
+                    Caption = 'Original Unit Price';
+                }
                 field(lineDiscount; Rec."Line Discount %")
                 {
                     Caption = 'Line Discount %';
