@@ -15,7 +15,7 @@ page 53422 "ORB LIFT Activities"
                     ApplicationArea = All;
                     Caption = 'Post Inventory Transactions';
                     DrillDown = true;
-                    StyleExpr = 'StrongAccent';
+                    ShowCaption = false;
 
                     trigger OnDrillDown()
                     var
@@ -78,17 +78,13 @@ page 53422 "ORB LIFT Activities"
         }
     }
 
-    trigger OnAfterGetRecord()
-    begin
-        DummyText := '';
-    end;
 
     var
         WhseTransQry: Query "ORB LIFT Whse. Trans. By Id";
         ILE: Record "Item Ledger Entry";
         WhseEntry: Record "Warehouse Entry";
         IntegrationLog: Record "ORB LIFT Integration Data Log";
-        DummyText: Text[1];
+        DummyText: Label 'Post Inventory Transactions';
 
     local procedure GetWhseCount(): Integer
     var
