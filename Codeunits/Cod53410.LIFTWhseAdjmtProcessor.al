@@ -11,6 +11,7 @@ codeunit 53410 "ORB LIFT Whse Adjmt Processor"
         ItemRecLcl: Record Item;
         ItemRecTempLcl: Record Item temporary;
         WarehouseEntryRecLcl: Record "Warehouse Entry";
+        OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
     begin
         WarehouseEntryRecLcl.Reset();
         WarehouseEntryRecLcl.SetRange("Whse. Document No.", Rec."No.");
@@ -58,7 +59,10 @@ codeunit 53410 "ORB LIFT Whse Adjmt Processor"
         ItemJnlRecLcl.SetRange("Journal Batch Name", 'LIFTERP');
         ItemJnlRecLcl.SetRange("Document No.", Rec."No.");
 
+        OrbusSingleInstanceCUGbl.SetSuppressItemJnlConfirm(true);
         if ItemJnlRecLcl.FindSet() then
-            CODEUNIT.Run(CODEUNIT::"Item Jnl.-Post", ItemJnlRecLcl)
+            CODEUNIT.Run(CODEUNIT::"Item Jnl.-Post", ItemJnlRecLcl);
+
+        OrbusSingleInstanceCUGbl.SetSuppressItemJnlConfirm(false);
     end;
 }
