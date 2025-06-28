@@ -25,7 +25,7 @@ table 53401 "ORB LIFT Sales Line Buffer"
         {
             Caption = 'Line No.';
         }
-        field(5; Type; Enum "Sales Line Type")
+        field(5; Type; Enum "ORB LIFT Sales Line Type")
         {
             Caption = 'Type';
         }
