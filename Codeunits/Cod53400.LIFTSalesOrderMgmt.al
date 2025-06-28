@@ -125,12 +125,10 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         SalesLine.SetRange("Document Type", LIFTSalesLineBuffer."Document Type");
         SalesLine.SetRange("Document No.", LIFTSalesLineBuffer."Document No.");
         SalesLine.SetRange("ORB LIFT Line ID", LIFTSalesLineBuffer."LIFT Line ID");
-        if SalesLine.FindLast() then begin
-            if SalesHeader.Get(LIFTSalesLineBuffer."Document Type", LIFTSalesLineBuffer."Document No.") then begin
-                ArchiveManagement.ArchiveSalesDocument(SalesHeader);
+        if SalesLine.FindLast() then
+            // if SalesHeader.Get(LIFTSalesLineBuffer."Document Type", LIFTSalesLineBuffer."Document No.") then begin
+            //     ArchiveManagement.ArchiveSalesDocument(SalesHeader);
                 UpdateSalesLine(LIFTSalesLineBuffer);
-            end;
-        end;
     end;
 
     local procedure UpdateSalesLine(var LIFTSalesLineBuffer: Record "ORB LIFT Sales Line Buffer")
