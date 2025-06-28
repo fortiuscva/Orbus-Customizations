@@ -40,6 +40,11 @@ page 52644 "ORB LIFT ERP Setup"
                     ApplicationArea = all;
                     ToolTip = 'Specifies the value of the Inventory Journal API field.', Comment = '%';
                 }
+                field("JQ Error Notification Email"; Rec."JQ Error Notification Email")
+                {
+                    ApplicationArea = all;
+                    ToolTip = 'Specifies the value of the Job Queue Error Notification Email Field', Comment = '%';
+                }
             }
         }
     }
