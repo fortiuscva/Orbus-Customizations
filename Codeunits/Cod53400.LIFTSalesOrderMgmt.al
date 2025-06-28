@@ -52,7 +52,10 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
 
         SalesHeader.Validate("Ship-to Post Code", LIFTSalesOrderBuffer."Ship-to Post Code");
         SalesHeader.Validate("Ship-to County", LIFTSalesOrderBuffer."Ship-to County");
-        SalesHeader.Validate("Ship-to Country/Region Code", LIFTSalesOrderBuffer."Ship-to Country/Region Code");
+        if LIFTSalesOrderBuffer."Ship-to Country/Region Code" <> '' then
+            SalesHeader.Validate("Ship-to Country/Region Code", LIFTSalesOrderBuffer."Ship-to Country/Region Code")
+        else
+            SalesHeader.Validate("Ship-to Country/Region Code", 'US');
         SalesHeader.Validate("Document Date", LIFTSalesOrderBuffer."Document Date");
         SalesHeader.Validate("External Document No.", LIFTSalesOrderBuffer."External Document No.");
         if LIFTSalesOrderBuffer."Your Reference" <> '' then
@@ -179,12 +182,10 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         SalesLine.SetRange("Document Type", LIFTSalesLineBuffer."Document Type");
         SalesLine.SetRange("Document No.", LIFTSalesLineBuffer."Document No.");
         SalesLine.SetRange("ORB LIFT Line ID", LIFTSalesLineBuffer."LIFT Line ID");
-        if SalesLine.FindLast() then begin
-            if SalesHeader.Get(LIFTSalesLineBuffer."Document Type", LIFTSalesLineBuffer."Document No.") then begin
-                ArchiveManagement.ArchiveSalesDocument(SalesHeader);
-                SalesLine.Delete();
-            end;
-        end;
+        if SalesLine.FindLast() then
+            // if SalesHeader.Get(LIFTSalesLineBuffer."Document Type", LIFTSalesLineBuffer."Document No.") then begin
+            //     ArchiveManagement.ArchiveSalesDocument(SalesHeader);
+            SalesLine.Delete();
     end;
 
     var
