@@ -16,9 +16,9 @@ report 53404 "ORB Post LIFT Transactions"
             begin
                 OrbusSingleInstanceCUGbl.SetStopOnError(StopOnError);
                 if StopOnError then
-                    Codeunit.Run(Codeunit::"ORB LIFT Post Transactions", SalesHeader)
+                    Codeunit.Run(Codeunit::"ORB LIFT Post Inventory Trans.", SalesHeader)
                 else
-                    if not Codeunit.Run(Codeunit::"ORB LIFT Post Transactions", SalesHeader) then;
+                    if not Codeunit.Run(Codeunit::"ORB LIFT Post Inventory Trans.", SalesHeader) then;
 
                 OrbusSingleInstanceCUGbl.SetStopOnError(false);
             end;

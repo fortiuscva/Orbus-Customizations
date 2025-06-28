@@ -285,11 +285,15 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 Caption = 'Post Inventory Transactions';
 
                 trigger OnAction()
+                var
+                    SalesHeaderRecLcl: Record "Sales Header";
                 begin
-                    if not Confirm('Do you want to Post?', false) then
-                        exit;
+                    SalesHeaderRecLcl.Reset();
+                    SalesHeaderRecLcl.SetRange("Document Type", rec."Document Type");
+                    SalesHeaderRecLcl.SetRange("No.", Rec."No.");
+                    if SalesHeaderRecLcl.FindFirst() then
+                        Report.RunModal(Report::"ORB Post LIFT Transactions", true, false, SalesHeaderRecLcl);
 
-                    if not Codeunit.Run(Codeunit::"ORB LIFT Post Transactions", rec) then;
                 end;
             }
             action("ORB Get & Post LIFT Inventory Transactions")
@@ -303,10 +307,21 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 var
                     LIFTSalesOrderInvTrans: Codeunit "LIFT Sales Order Inv. Trans";
                 begin
-                    if not Confirm('Do you want to Post?', false) then
+                    if UserId <> 'BCADMIN' then
+                        Error('Unauthorized access');
+
+                    if not Confirm('Do you want to Proceed?', false) then
                         exit;
 
-                    LIFTSalesOrderInvTrans.RunForSalesOrder(rec."No.");
+                    //Get all Inventory Transactions from LIFTERP
+                    ClearLastError();
+                    if not Codeunit.Run(Codeunit::"ORB LIFT Read Inv.Transactions") then;
+
+                    Commit();
+
+
+                    //Register Warehouse Item journals specific to Sales order
+                    Codeunit.Run(Codeunit::"ORB LIFT Register Whse. Jnl.", rec);
                 end;
             }
             action("ORB Run LIFT Warehouse Adjustments")
@@ -326,59 +341,18 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                     ItemRecTempLcl: Record Item temporary;
                     WarehouseEntryRecLcl: Record "Warehouse Entry";
                 begin
-                    ClearLastError();
-                    if not Codeunit.Run(Codeunit::"ORB LIFT Whse Adjmt Processor", rec) then
-                        Message(GetLastErrorText);
-                    /*
-                    WarehouseEntryRecLcl.Reset();
-                    WarehouseEntryRecLcl.SetRange("Whse. Document No.", Rec."No.");
-                    if WarehouseEntryRecLcl.FindSet() then
-                        repeat
-                            ItemRecTempLcl.Reset();
-                            ItemRecTempLcl.SetRange("No.", WarehouseEntryRecLcl."Item No.");
-                            if not ItemRecTempLcl.FindFirst() then begin
-                                ItemRecTempLcl.Init();
-                                ItemRecTempLcl."No." := WarehouseEntryRecLcl."Item No.";
-                                ItemRecTempLcl.Insert()
-                            end;
-                        until WarehouseEntryRecLcl.Next() = 0;
+                    if UserId <> 'BCADMIN' then
+                        Error('Unauthorized access');
+
+                    if not Confirm('Do you want to Proceed?', false) then
+                        exit;
+
+                    // Execute LIFT Calculate Warehouse Adjustment
+                    Codeunit.Run(Codeunit::"ORB LIFT Calculate Whse. Adj.", rec);
 
 
-                    ItemNoLcl := '';
-                    ItemRecTempLcl.Reset();
-                    if ItemRecTempLcl.FindSet then
-                        repeat
-                            if ItemNoLcl <> '' then
-                                ItemNoLcl += '|' + ItemRecTempLcl."No."
-                            else
-                                ItemNoLcl := ItemRecTempLcl."No.";
-                        until ItemRecTempLcl.Next() = 0;
-
-                    ItemRecLcl.Reset;
-                    ItemRecLcl.SetFilter("No.", ItemNoLcl);
-                    ItemRecLcl.SetFilter("Location Filter", Rec."Location Code");
-                    If ItemRecLcl.FindSet() then begin
-                        ItemJnlRecLcl.Init();
-                        ItemJnlRecLcl."Journal Template Name" := 'ITEM';
-                        ItemJnlRecLcl."Journal Batch Name" := 'LIFTERP';
-
-                        LIFTCalcWhseAdjmt.SetItemJnlLine(ItemJnlRecLcl);
-                        LIFTCalcWhseAdjmt.SetHideValidationDialog(true);
-                        LIFTCalcWhseAdjmt.InitializeRequest(Today, Rec."No.");
-                        LIFTCalcWhseAdjmt.SetTableView(ItemRecLcl);
-                        LIFTCalcWhseAdjmt.UseRequestPage(false);
-                        LIFTCalcWhseAdjmt.RunModal();
-                        Clear(LIFTCalcWhseAdjmt);
-                    end;
-
-                    ItemJnlRecLcl.Reset();
-                    ItemJnlRecLcl.SetRange("Journal Template Name", 'ITEM');
-                    ItemJnlRecLcl.SetRange("Journal Batch Name", 'LIFTERP');
-                    ItemJnlRecLcl.SetRange("Document No.", Rec."No.");
-                    if ItemJnlRecLcl.FindSet() then
-                        CODEUNIT.Run(CODEUNIT::"Item Jnl.-Post", ItemJnlRecLcl)
-                    else
-                        Message('There is nothing to post');*/
+                    // Post Warehouse Adjustments (Item journals)
+                    Codeunit.Run(Codeunit::"ORB LIFT Post Adjustment Jnl.", rec);
                 end;
             }
         }
