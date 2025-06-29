@@ -777,8 +777,8 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", OnCodeOnBeforeSetStatusReleased, '', false, false)]
     local procedure "Release Sales Document_OnCodeOnBeforeSetStatusReleased"(var SalesHeader: Record "Sales Header")
     begin
-        if SalesHeader."Document Type" = SalesHeader."Document Type"::Order then
-            OrbusFunctionsCUGbl.AutomaticShipToAddressValidation(SalesHeader);
+        //if SalesHeader."Document Type" = SalesHeader."Document Type"::Order then
+        //OrbusFunctionsCUGbl.AutomaticShipToAddressValidation(SalesHeader);
     end;
 
 
