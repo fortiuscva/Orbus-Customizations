@@ -39,12 +39,12 @@ codeunit 53405 "ORB LIFT Contact Mgmt"
         Contact.Validate("First Name", LIFTContact."First Name");
         Contact.Validate(Surname, LIFTContact."Last Name");
         Contact.Validate(Type, LIFTContact.Type);
-        if LIFTContact.Type = LIFTContact.Type::Company then begin
-            Contact.Validate("Company No.", LIFTContact."No.");
-            contact.Validate("Company Name", LIFTContact."Customer Name");
-        end
-        else
-            Contact.Validate("Company Name", LIFTContact."Customer Name");
+        // if LIFTContact.Type = LIFTContact.Type::Company then begin
+        //     Contact.Validate("Company No.", LIFTContact."No.");
+        //     contact.Validate("Company Name", LIFTContact."Customer Name");
+        // end
+        // else
+        //     Contact.Validate("Company Name", LIFTContact."Customer Name");
     end;
 
     procedure UpdateContactBusinessRelation(var ContactBusinessRelation: Record "Contact Business Relation"; var LIFTContact: Record "LIFT Contact")
