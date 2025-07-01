@@ -176,10 +176,16 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             SalesLine.Validate("Hardware Price", LIFTSalesLineBuffer."Hardware Price");
             SalesLine.Validate("Graphics Price", LIFTSalesLineBuffer."Graphics Price");
             //SalesLine.Validate("Line Discount %", LIFTSalesLineBuffer."Line Discount %");
+            //Calculate "Discount Grp Code Discount" on Net Jnit Price coming from LIFT start
+            SalesLine.Validate("Unit Price", LIFTSalesLineBuffer."Unit Price");
+            BCOriginalDiscount := SalesLine."Line Discount Amount";
+            //Calculate "Discount Grp Code Discount" on Net Jnit Price coming from LIFT End
             SalesLine.Validate("Unit Price", LIFTSalesLineBuffer."Original Unit Price");
-            BCLineDiscount := SalesLine."Line Discount Amount";
+            //SalesLine.Validate("Line Discount Amount", LIFTSalesLineBuffer."Line Discount Amount");
+            //BCLineDiscount := SalesLine."Line Discount Amount";
             SalesLine.Validate("ORB LIFT Discount Amount", LIFTSalesLineBuffer."Line Discount Amount");
-            SalesLine.Validate("Line Discount Amount", (BCLineDiscount + SalesLine."ORB LIFT Discount Amount"));
+            //SalesLine.Validate("Line Discount Amount", (BCLineDiscount + SalesLine."ORB LIFT Discount Amount"));
+            SalesLine.Validate("Line Discount Amount", (BCOriginalDiscount + SalesLine."ORB LIFT Discount Amount"));
             SalesLine."ORB LIFT Line ID" := LIFTSalesLineBuffer."LIFT Line ID";
         end
     end;
@@ -224,6 +230,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         SalesHeader: Record "Sales Header";
         SalesLine: Record "Sales Line";
         BCLineDiscount: Decimal;
+        BCOriginalDiscount: Decimal;
         ArchiveManagement: Codeunit ArchiveManagement;
         LineNo: Integer;
 }
