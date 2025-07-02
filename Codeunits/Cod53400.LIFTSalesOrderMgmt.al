@@ -34,6 +34,8 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
     end;
 
     procedure ValidateSalesHeaderFields(var SalesHeader: Record "Sales Header"; var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer"; CreateSO: Boolean)
+    var
+        Contact: Record Contact;
     begin
         SalesHeader.Validate("Sell-to Customer No.", LIFTSalesOrderBuffer."Sell-to Customer No.");
         //SalesHeader.Validate("Bill-to Customer No.", LIFTSalesOrderBuffer."Bill-to Customer No.");
@@ -51,9 +53,6 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             SalesHeader.Validate("Payment Terms Code", 'CC');
         SalesHeader.Validate("Due Date", LIFTSalesOrderBuffer."Due Date");
         SalesHeader.Validate("Shipment Method Code", LIFTSalesOrderBuffer."Shipment Method Code");
-        SalesHeader.Validate("Location Code", LIFTSalesOrderBuffer."Location Code");
-        SalesHeader.Validate("Shortcut Dimension 1 Code", LIFTSalesOrderBuffer."Shortcut Dimension 1 Code");
-        SalesHeader.Validate("Shortcut Dimension 2 Code", LIFTSalesOrderBuffer."Shortcut Dimension 2 Code");
         SalesHeader.Validate("Customer Price Group", LIFTSalesOrderBuffer."Customer Price Group");
         SalesHeader.Validate("Salesperson Code", LIFTSalesOrderBuffer."Salesperson Code");
 
@@ -74,6 +73,9 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         SalesHeader.Validate("Shipping Agent Service Code", LIFTSalesOrderBuffer."Shipping Agent Service Code");
         if CreateSO then
             SalesHeader.Validate("Order Status", LIFTSalesOrderBuffer."Order Status");
+        SalesHeader.Validate("Location Code", LIFTSalesOrderBuffer."Location Code");
+        SalesHeader.Validate("Shortcut Dimension 1 Code", LIFTSalesOrderBuffer."Shortcut Dimension 1 Code");
+        SalesHeader.Validate("Shortcut Dimension 2 Code", LIFTSalesOrderBuffer."Shortcut Dimension 2 Code");
         SalesHeader.Validate("Location Override", LIFTSalesOrderBuffer."Location Override");
         SalesHeader.Validate("Created_By", LIFTSalesOrderBuffer."Created_By");
         SalesHeader.Validate("Rush", LIFTSalesOrderBuffer."Rush");
@@ -92,6 +94,18 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         SalesHeader.Validate("Created At", LIFTSalesOrderBuffer."Created At");
         //SalesHeader.Validate("Sell-to Contact No.", LIFTSalesOrderBuffer."Sell-to Contact No.");
         SalesHeader.Validate("Sell-To Contact No. (Custom)", LIFTSalesOrderBuffer."Sell-to Contact No.");
+        Contact.Reset();
+        if Contact.Get(LIFTSalesOrderBuffer."Sell-To Contact No.") then begin
+            SalesHeader.Validate("Sell-to Contact No.", Contact."No.");
+            SalesHeader.Validate("Sell-To Contact Name (Custom)", Contact.Name);
+            SalesHeader.Validate("Sell-to Contact", Contact.Name);
+            SalesHeader.Validate("Sell-To Phone No. (Custom)", Contact."Phone No.");
+            SalesHeader.Validate("Sell-to Phone No.", Contact."Phone No.");
+            SalesHeader.Validate("Sell-To Email (Custom)", Contact."E-Mail");
+            SalesHeader.Validate("Sell-to E-Mail", Contact."E-Mail");
+            SalesHeader.Validate("Bill-to Contact No.", Contact."No.");
+            SalesHeader.Validate("Bill-to Contact", Contact.Name);
+        end;
         //SalesHeader.Validate("Sell-to Contact", LIFTSalesOrderBuffer."Sell-to Contact");
         SalesHeader.Validate("Your Reference", LIFTSalesOrderBuffer."Your Reference");
         SalesHeader."ORB Lift Order" := true;

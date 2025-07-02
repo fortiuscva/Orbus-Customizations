@@ -5,6 +5,7 @@ page 53423 "ORB LIFT Inv. Transactions Log"
     PageType = List;
     SourceTable = "ORB LIFT Integration Data Log";
     UsageCategory = Lists;
+    Editable = false;
 
     layout
     {
