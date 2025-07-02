@@ -34,6 +34,8 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
     end;
 
     procedure ValidateSalesHeaderFields(var SalesHeader: Record "Sales Header"; var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer"; CreateSO: Boolean)
+    var
+        Contact: Record Contact;
     begin
         SalesHeader.Validate("Sell-to Customer No.", LIFTSalesOrderBuffer."Sell-to Customer No.");
         //SalesHeader.Validate("Bill-to Customer No.", LIFTSalesOrderBuffer."Bill-to Customer No.");
@@ -92,6 +94,18 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         SalesHeader.Validate("Created At", LIFTSalesOrderBuffer."Created At");
         //SalesHeader.Validate("Sell-to Contact No.", LIFTSalesOrderBuffer."Sell-to Contact No.");
         SalesHeader.Validate("Sell-To Contact No. (Custom)", LIFTSalesOrderBuffer."Sell-to Contact No.");
+        Contact.Reset();
+        if Contact.Get(LIFTSalesOrderBuffer."Sell-To Contact No.") then begin
+            SalesHeader.Validate("Sell-to Contact No.", Contact."No.");
+            SalesHeader.Validate("Sell-To Contact Name (Custom)", Contact.Name);
+            SalesHeader.Validate("Sell-to Contact", Contact.Name);
+            SalesHeader.Validate("Sell-To Phone No. (Custom)", Contact."Phone No.");
+            SalesHeader.Validate("Sell-to Phone No.", Contact."Phone No.");
+            SalesHeader.Validate("Sell-To Email (Custom)", Contact."E-Mail");
+            SalesHeader.Validate("Sell-to E-Mail", Contact."E-Mail");
+            SalesHeader.Validate("Bill-to Contact No.", Contact."No.");
+            SalesHeader.Validate("Bill-to Contact", Contact.Name);
+        end;
         //SalesHeader.Validate("Sell-to Contact", LIFTSalesOrderBuffer."Sell-to Contact");
         SalesHeader.Validate("Your Reference", LIFTSalesOrderBuffer."Your Reference");
         SalesHeader."ORB Lift Order" := true;
