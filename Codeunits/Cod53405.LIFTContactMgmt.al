@@ -7,14 +7,17 @@ codeunit 53405 "ORB LIFT Contact Mgmt"
             Contact.Validate("No.", LIFTContact."No.");
             Contact.Insert();
         end;
-        if not ContactBusinessRelation.Get(LIFTContact."No.", 'CUST') then begin
-            ContactBusinessRelation.Init();
-            ContactBusinessRelation.Validate("Contact No.", LIFTContact."No.");
-            ContactBusinessRelation.Validate("Business Relation Code", 'CUST');
-            ContactBusinessRelation.Insert();
+        if (LIFTContact.Type = LIFTContact.Type::Company) then begin
+            if not ContactBusinessRelation.Get(LIFTContact."No.", 'CUST') then begin
+                ContactBusinessRelation.Init();
+                ContactBusinessRelation.Validate("Contact No.", LIFTContact."No.");
+                ContactBusinessRelation.Validate("Business Relation Code", 'CUST');
+                ContactBusinessRelation.Insert();
+            end;
         end;
         UpdateContact(Contact, LIFTContact);
-        UpdateContactBusinessRelation(ContactBusinessRelation, LIFTContact);
+        if (LIFTContact.Type = LIFTContact.Type::Company) then
+            UpdateContactBusinessRelation(ContactBusinessRelation, LIFTContact);
     end;
 
     Procedure PropagateOnContactModify(var LIFTContact: Record "LIFT Contact")
@@ -30,6 +33,8 @@ codeunit 53405 "ORB LIFT Contact Mgmt"
     end;
 
     procedure ValidateContactFields(var Contact: Record Contact; var LIFTContact: Record "LIFT Contact")
+    var
+        ContactRecLcl: Record Contact;
     begin
         Clear(ContactName);
         ContactName := LIFTContact."First Name" + LIFTContact."Last Name";
@@ -39,9 +44,10 @@ codeunit 53405 "ORB LIFT Contact Mgmt"
         Contact.Validate("First Name", LIFTContact."First Name");
         Contact.Validate(Surname, LIFTContact."Last Name");
         Contact.Validate(Type, LIFTContact.Type);
-        if LIFTContact.Type = LIFTContact.Type::Person then
-            Contact.Validate("Company Name", LIFTContact."Customer Name");
-
+        if (LIFTContact.Type = LIFTContact.Type::Person) then
+            Contact.Validate("Company Name", LIFTContact."Customer Name")
+        else if (LIFTContact.Type = LIFTContact.Type::Company) then
+            Contact."Company No." := LiftContact."No.";
     end;
 
     procedure UpdateContactBusinessRelation(var ContactBusinessRelation: Record "Contact Business Relation"; var LIFTContact: Record "LIFT Contact")
