@@ -5,7 +5,7 @@ page 53423 "ORB LIFT Inv. Transactions Log"
     SourceTable = "ORB LIFT Integration Data Log";
     UsageCategory = Lists;
     Editable = false;
-    DeleteAllowed = true;
+    DeleteAllowed = false;
 
     layout
     {
