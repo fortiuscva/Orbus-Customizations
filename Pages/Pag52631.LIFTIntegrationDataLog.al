@@ -1,6 +1,5 @@
 page 52631 "ORB LIFT Integration Data Log"
 {
-    ApplicationArea = All;
     Caption = 'LIFT Integration Data Log';
     PageType = List;
     SourceTable = "ORB LIFT Integration Data Log";
