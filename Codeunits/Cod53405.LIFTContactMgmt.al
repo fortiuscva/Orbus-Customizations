@@ -40,22 +40,26 @@ codeunit 53405 "ORB LIFT Contact Mgmt"
     var
         ContactBusinessRelationRecLcl: Record "Contact Business Relation";
     begin
-        Clear(ContactName);
-        ContactName := LIFTContact."First Name" + LIFTContact."Last Name";
-        Contact.Validate(Name, ContactName);
+        // Clear(ContactName);
+        // ContactName := LIFTContact."First Name" + LIFTContact."Last Name";
+        Contact.Validate(Name, LIFTContact.Name);
         Contact.Validate("Phone No.", LIFTContact."Phone No.");
         Contact.Validate("E-Mail", LIFTContact."E-Mail");
         Contact.Validate("First Name", LIFTContact."First Name");
         Contact.Validate(Surname, LIFTContact."Last Name");
         Contact.Validate(Type, LIFTContact.Type);
+        // Contact.Validate("Company Name", LIFTContact."Customer Name");
+        // Contact.Validate("Contact Business Relation", Contact."Contact Business Relation"::Customer);
         if LIFTContact.Type = LIFTContact.Type::Person then begin
             ContactBusinessRelationRecLcl.Reset();
             ContactBusinessRelationRecLcl.SetRange("Link to Table", ContactBusinessRelationRecLcl."Link to Table"::Customer);
             ContactBusinessRelationRecLcl.SetRange("No.", LIFTContact."Customer No.");
             if ContactBusinessRelationRecLcl.FindLast() then begin
-                Contact.Validate("Company No.", ContactBusinessRelationRecLcl."Contact No.");
-                Contact.Validate("Company Name", ContactBusinessRelationRecLcl."Contact Name");
-                Contact.Validate("Lookup Contact No.", ContactBusinessRelationRecLcl."Contact No.");
+                //Error('Contact Business Relation Found %1 %2');
+                Contact."Company No." := ContactBusinessRelationRecLcl."Contact No.";
+                ContactBusinessRelationRecLcl.CalcFields("Contact Name");
+                Contact."Company Name" := ContactBusinessRelationRecLcl."Contact Name";
+                Contact."Lookup Contact No." := ContactBusinessRelationRecLcl."Contact No.";
                 Contact.Validate("Contact Business Relation", Contact."Contact Business Relation"::Customer);
             end;
             // else if (LIFTContact.Type = LIFTContact.Type::Company) then
@@ -81,5 +85,5 @@ codeunit 53405 "ORB LIFT Contact Mgmt"
     var
         //ContactBusinessRelation: Record "Contact Business Relation";
         Contact: Record Contact;
-        ContactName: Text[100];
+    //ContactName: Text[100];
 }
