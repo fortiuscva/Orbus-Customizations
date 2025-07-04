@@ -9,7 +9,7 @@ page 53420 "ORB LIFT Contact API"
     EntityName = 'LIFTContactAPI';
     EntitySetName = 'LIFTContactAPI';
     PageType = API;
-    SourceTable = "LIFT Contact";
+    SourceTable = "ORB LIFT Contact";
 
     layout
     {
