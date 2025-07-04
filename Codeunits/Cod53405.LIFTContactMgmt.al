@@ -1,6 +1,6 @@
 codeunit 53405 "ORB LIFT Contact Mgmt"
 {
-    Procedure PropagateOnContactInsert(var LIFTContact: Record "LIFT Contact")
+    Procedure PropagateOnContactInsert(var LIFTContact: Record "ORB LIFT Contact")
     begin
         if not Contact.Get(LIFTContact."No.") then begin
             Contact.Init();
@@ -17,19 +17,21 @@ codeunit 53405 "ORB LIFT Contact Mgmt"
         UpdateContactBusinessRelation(ContactBusinessRelation, LIFTContact);
     end;
 
-    Procedure PropagateOnContactModify(var LIFTContact: Record "LIFT Contact")
+    Procedure PropagateOnContactModify(var LIFTContact: Record "ORB LIFT Contact")
     begin
         if Contact.Get(LIFTContact."No.") then
             UpdateContact(Contact, LIFTContact);
     end;
 
-    procedure UpdateContact(var Contact: Record Contact; var LIFTContact: Record "LIFT Contact")
+    procedure UpdateContact(var Contact: Record Contact; var LIFTContact: Record "ORB LIFT Contact")
     begin
         ValidateContactFields(Contact, LIFTContact);
         Contact.Modify();
     end;
 
-    procedure ValidateContactFields(var Contact: Record Contact; var LIFTContact: Record "LIFT Contact")
+    procedure ValidateContactFields(var Contact: Record Contact; var LIFTContact: Record "ORB LIFT Contact")
+    var
+        ContactBusinessRelationRecLcl: Record "Contact Business Relation";
     begin
         Clear(ContactName);
         ContactName := LIFTContact."First Name" + LIFTContact."Last Name";
@@ -41,13 +43,13 @@ codeunit 53405 "ORB LIFT Contact Mgmt"
         Contact.Validate(Type, LIFTContact.Type);
     end;
 
-    procedure UpdateContactBusinessRelation(var ContactBusinessRelation: Record "Contact Business Relation"; var LIFTContact: Record "LIFT Contact")
+    procedure UpdateContactBusinessRelation(var ContactBusinessRelation: Record "Contact Business Relation"; var LIFTContact: Record "ORB LIFT Contact")
     begin
         ValidateContactBusinessRelationFields(ContactBusinessRelation, LIFTContact);
         ContactBusinessRelation.Modify();
     end;
 
-    procedure ValidateContactBusinessRelationFields(var ContactBusinessRelation: Record "Contact Business Relation"; var LIFTContact: Record "LIFT Contact")
+    procedure ValidateContactBusinessRelationFields(var ContactBusinessRelation: Record "Contact Business Relation"; var LIFTContact: Record "ORB LIFT Contact")
     begin
         ContactBusinessRelation.Validate("Link to Table", ContactBusinessRelation."Link to Table"::Customer);
         ContactBusinessRelation.Validate("No.", LIFTContact."Customer No.");
