@@ -3,9 +3,9 @@ page 53419 "LIFT Contact List"
     ApplicationArea = All;
     Caption = 'LIFT Contact List';
     PageType = List;
-    SourceTable = "LIFT Contact";
+    SourceTable = "ORB LIFT Contact";
     UsageCategory = Lists;
-    
+
     layout
     {
         area(Content)

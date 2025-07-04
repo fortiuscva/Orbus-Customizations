@@ -1,6 +1,6 @@
 codeunit 53405 "ORB LIFT Contact Mgmt"
 {
-    Procedure PropagateOnContactInsert(var LIFTContact: Record "LIFT Contact")
+    Procedure PropagateOnContactInsert(var LIFTContact: Record "ORB LIFT Contact")
     begin
         if LIFTContact.Type = LIFTContact.Type::Company then
             exit;
@@ -22,7 +22,7 @@ codeunit 53405 "ORB LIFT Contact Mgmt"
         //     UpdateContactBusinessRelation(ContactBusinessRelation, LIFTContact);
     end;
 
-    Procedure PropagateOnContactModify(var LIFTContact: Record "LIFT Contact")
+    Procedure PropagateOnContactModify(var LIFTContact: Record "ORB LIFT Contact")
     begin
         if LIFTContact.Type = LIFTContact.Type::Company then
             exit;
@@ -30,13 +30,13 @@ codeunit 53405 "ORB LIFT Contact Mgmt"
             UpdateContact(Contact, LIFTContact);
     end;
 
-    procedure UpdateContact(var Contact: Record Contact; var LIFTContact: Record "LIFT Contact")
+    procedure UpdateContact(var Contact: Record Contact; var LIFTContact: Record "ORB LIFT Contact")
     begin
         ValidateContactFields(Contact, LIFTContact);
         Contact.Modify(true);
     end;
 
-    procedure ValidateContactFields(var Contact: Record Contact; var LIFTContact: Record "LIFT Contact")
+    procedure ValidateContactFields(var Contact: Record Contact; var LIFTContact: Record "ORB LIFT Contact")
     var
         ContactBusinessRelationRecLcl: Record "Contact Business Relation";
     begin
