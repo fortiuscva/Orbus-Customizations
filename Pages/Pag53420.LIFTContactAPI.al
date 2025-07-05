@@ -53,6 +53,10 @@ page 53420 "ORB LIFT Contact API"
                 {
                     Caption = 'Type';
                 }
+                field(mobilePhoneNumber; Rec."Mobile Phone No.")
+                {
+                    Caption = 'Mobile Phone No.';
+                }
             }
         }
     }
