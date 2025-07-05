@@ -44,6 +44,7 @@ codeunit 53405 "ORB LIFT Contact Mgmt"
         // ContactName := LIFTContact."First Name" + LIFTContact."Last Name";
         Contact.Validate(Name, LIFTContact.Name);
         Contact.Validate("Phone No.", LIFTContact."Phone No.");
+        Contact.Validate("Mobile Phone No.", LIFTContact."Mobile Phone No.");
         Contact.Validate("E-Mail", LIFTContact."E-Mail");
         Contact.Validate("First Name", LIFTContact."First Name");
         Contact.Validate(Surname, LIFTContact."Last Name");
