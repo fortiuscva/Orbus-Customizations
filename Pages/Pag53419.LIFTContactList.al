@@ -1,4 +1,4 @@
-page 53419 "LIFT Contact List"
+page 53419 "ORB LIFT Contact List"
 {
     ApplicationArea = All;
     Caption = 'LIFT Contact List';
@@ -44,9 +44,13 @@ page 53419 "LIFT Contact List"
                 {
                     ToolTip = 'Specifies the value of the Last Name field.', Comment = '%';
                 }
-                field("Type"; Rec."Type")
+                field(Type; Rec."Type")
                 {
                     ToolTip = 'Specifies the value of the Type field.', Comment = '%';
+                }
+                field("Mobile Phone No."; Rec."Mobile Phone No.")
+                {
+                    ToolTip = 'Specifies the value of the Mobile Phone No. field.', Comment = '%';
                 }
             }
         }
