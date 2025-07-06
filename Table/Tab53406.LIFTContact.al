@@ -34,7 +34,7 @@ table 53406 "ORB LIFT Contact"
             Caption = 'E-Mail';
             DataClassification = CustomerContent;
         }
-        field(5050; "Type"; Enum "Contact Type")
+        field(5050; Type; Enum "Contact Type")
         {
             Caption = 'Type';
         }
@@ -46,6 +46,11 @@ table 53406 "ORB LIFT Contact"
         field(5055; "Last Name"; Text[50])
         {
             Caption = 'Last Name';
+            DataClassification = CustomerContent;
+        }
+        field(5061; "Mobile Phone No."; Text[30])
+        {
+            Caption = 'Mobile Phone No.';
             DataClassification = CustomerContent;
         }
     }

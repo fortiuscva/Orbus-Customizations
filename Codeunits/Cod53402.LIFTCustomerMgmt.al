@@ -4,8 +4,8 @@ codeunit 53402 "ORB LIFT Customer Mgmt"
     begin
         if not Customer.Get(LIFTCustomer."No.") then begin
             Customer.Init();
-            Customer.Validate("No.", LIFTCustomer."No.");
-            Customer.Insert();
+            Customer."No." := LIFTCustomer."No.";
+            Customer.Insert(true);
         end;
         UpdateCustomer(LIFTCustomer, true);
     end;
@@ -19,7 +19,7 @@ codeunit 53402 "ORB LIFT Customer Mgmt"
     procedure UpdateCustomer(var LIFTCustomer: Record "ORB LIFT Customer Buffer"; CreateCustomer: Boolean)
     begin
         ValidateCustomerFields(Customer, LIFTCustomer, CreateCustomer);
-        Customer.Modify();
+        Customer.Modify(true);
     end;
 
     procedure ValidateCustomerFields(var Customer: Record Customer; var LIFTCustomer: Record "ORB LIFT Customer Buffer"; CreateCustomer: Boolean)
