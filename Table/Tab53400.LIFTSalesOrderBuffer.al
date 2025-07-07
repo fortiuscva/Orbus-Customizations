@@ -213,6 +213,12 @@ table 53400 "ORB LIFT Sales Order Buffer"
         {
             Caption = 'Rush';
         }
+        field(52603; "ORB Customer Support"; Code[20])
+        {
+            Caption = 'Customer Support';
+            TableRelation = "Salesperson/Purchaser" where(Blocked = const(false));
+            DataClassification = CustomerContent;
+        }
         field(52611; "ORB Declared Value"; Text[60])
         {
             Caption = 'Declared Value';
