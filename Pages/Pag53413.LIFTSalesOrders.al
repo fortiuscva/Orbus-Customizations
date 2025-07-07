@@ -109,6 +109,10 @@ page 53413 "ORB LIFT Sales Orders"
                 {
                     ToolTip = 'Specifies the value of the Shipment Date field.', Comment = '%';
                 }
+                field("ORB Customer Support"; Rec."ORB Customer Support")
+                {
+                    ToolTip = 'Specifies the value of the Customer Support field.', Comment = '%';
+                }
                 field("ORB Magento Order #"; Rec."ORB Magento Order #")
                 {
                     ToolTip = 'Specifies the value of the Magento Order # field.', Comment = '%';
