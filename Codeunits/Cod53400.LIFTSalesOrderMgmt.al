@@ -67,8 +67,10 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         if LIFTSalesOrderBuffer."Your Reference" <> '' then
             SalesHeader.Validate("Payment Method Code", LIFTSalesOrderBuffer."Payment Method Code");
         SalesHeader.Validate("Shipping Agent Code", LIFTSalesOrderBuffer."Shipping Agent Code");
-        SalesHeader.SetWorkDescription(LIFTSalesOrderBuffer."Work Description");
-
+        if (LIFTSalesOrderBuffer."ORB LIFT ART_NOTE" <> '') then
+            SalesHeader.SetWorkDescription(LIFTSalesOrderBuffer."ORB LIFT ART_NOTE")
+        else if (LIFTSalesOrderBuffer."ORB LIFT PRODUCTION_NOTE" <> '') then
+            SalesHeader.SetWorkDescription(LIFTSalesOrderBuffer."ORB LIFT PRODUCTION_NOTE");
         //SalesHeader.Validate("Shipping Advice", LIFTSalesOrderBuffer."Shipping Advice");
         SalesHeader.Validate("Shipping Agent Service Code", LIFTSalesOrderBuffer."Shipping Agent Service Code");
         if CreateSO then
