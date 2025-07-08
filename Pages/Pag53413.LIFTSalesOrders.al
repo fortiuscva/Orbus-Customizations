@@ -121,6 +121,14 @@ page 53413 "ORB LIFT Sales Orders"
                 {
                     ToolTip = 'Specifies the value of the Magento CC 4 Digits field.', Comment = '%';
                 }
+                field("ORB LIFT ART_NOTE"; Rec."ORB LIFT ART_NOTE")
+                {
+                    ToolTip = 'Specifies the value of the LIFT ART_NOTE field.', Comment = '%';
+                }
+                field("ORB LIFT PRODUCTION_NOTE"; Rec."ORB LIFT PRODUCTION_NOTE")
+                {
+                    ToolTip = 'Specifies the value of the LIFT PRODUCTION_NOTE field.', Comment = '%';
+                }
             }
         }
     }
