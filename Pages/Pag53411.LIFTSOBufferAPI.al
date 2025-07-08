@@ -225,6 +225,14 @@ page 53411 "ORB LIFT SO Buffer API"
                 {
                     Caption = 'Payment Country Code';
                 }
+                field(artNote; Rec."ORB LIFT ART_NOTE")
+                {
+                    Caption = 'LIFT ART_NOTE';
+                }
+                field(productionNote; Rec."ORB LIFT PRODUCTION_NOTE")
+                {
+                    Caption = 'LIFT PRODUCTION_NOTE';
+                }
             }
         }
     }

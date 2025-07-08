@@ -233,6 +233,17 @@ table 53400 "ORB LIFT Sales Order Buffer"
             Caption = 'Magento CC 4 Digits';
             DataClassification = ToBeClassified;
         }
+        field(53400; "ORB LIFT ART_NOTE"; Text[2048])
+        {
+            Caption = 'LIFT ART_NOTE';
+            DataClassification = CustomerContent;
+        }
+        field(53401; "ORB LIFT PRODUCTION_NOTE"; Text[2048])
+        {
+            Caption = 'LIFT PRODUCTION_NOTE';
+            DataClassification = CustomerContent;
+        }
+
         field(54102; "Sales Order Payment Type"; Option)
         {
             Caption = 'Sales Order Payment Type';
