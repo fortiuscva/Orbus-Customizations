@@ -55,7 +55,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         SalesHeader.Validate("Shipment Method Code", LIFTSalesOrderBuffer."Shipment Method Code");
         SalesHeader.Validate("Customer Price Group", LIFTSalesOrderBuffer."Customer Price Group");
         SalesHeader.Validate("Salesperson Code", LIFTSalesOrderBuffer."Salesperson Code");
-
+        SalesHeader.Validate("ORB Customer Support", LIFTSalesOrderBuffer."ORB Customer Support");
         SalesHeader.Validate("Ship-to Post Code", LIFTSalesOrderBuffer."Ship-to Post Code");
         SalesHeader.Validate("Ship-to County", LIFTSalesOrderBuffer."Ship-to County");
         if LIFTSalesOrderBuffer."Ship-to Country/Region Code" <> '' then
