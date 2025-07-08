@@ -177,6 +177,10 @@ page 53411 "ORB LIFT SO Buffer API"
                 {
                     Caption = 'Rush';
                 }
+                field(orbCustomerSupport; Rec."ORB Customer Support")
+                {
+                    Caption = 'Customer Support';
+                }
                 field(orbDeclaredValue; Rec."ORB Declared Value")
                 {
                     Caption = 'Declared Value';
