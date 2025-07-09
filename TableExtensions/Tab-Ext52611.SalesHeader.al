@@ -232,9 +232,9 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         modify("Ship-to Code")
         {
             trigger OnAfterValidate()
-            var
-                ORBFunctions: codeunit "ORB Functions";
             begin
+                if not OrbusSetup.Get() or not OrbusSetup."Enable Auto Address Validation" then
+                    exit;
                 if not ModifyShipToAddressFields() then
                     Error('Reopen the Sales Order to modify Ship-to Code');
             end;
@@ -242,9 +242,9 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         modify("Ship-to Name")
         {
             trigger OnAfterValidate()
-            var
-                ORBFunctions: codeunit "ORB Functions";
             begin
+                if not OrbusSetup.Get() or not OrbusSetup."Enable Auto Address Validation" then
+                    exit;
                 if not ModifyShipToAddressFields() then
                     Error('Reopen the Sales Order to modify Ship-to Name');
             end;
@@ -252,9 +252,9 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         modify("Ship-to Address")
         {
             trigger OnAfterValidate()
-            var
-                ORBFunctions: codeunit "ORB Functions";
             begin
+                if not OrbusSetup.Get() or not OrbusSetup."Enable Auto Address Validation" then
+                    exit;
                 if not ModifyShipToAddressFields() then
                     Error('Reopen the Sales Order to modify Ship-to Address');
             end;
@@ -262,9 +262,9 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         modify("Ship-to Address 2")
         {
             trigger OnAfterValidate()
-            var
-                ORBFunctions: codeunit "ORB Functions";
             begin
+                if not OrbusSetup.Get() or not OrbusSetup."Enable Auto Address Validation" then
+                    exit;
                 if not ModifyShipToAddressFields() then
                     Error('Reopen the Sales Order to modify Ship-to Address 2');
             end;
@@ -272,9 +272,9 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         modify("Ship-to City")
         {
             trigger OnAfterValidate()
-            var
-                ORBFunctions: codeunit "ORB Functions";
             begin
+                if not OrbusSetup.Get() or not OrbusSetup."Enable Auto Address Validation" then
+                    exit;
                 if not ModifyShipToAddressFields() then
                     Error('Reopen the Sales Order to modify Ship-to City');
             end;
@@ -282,9 +282,9 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         modify("Ship-to County")
         {
             trigger OnAfterValidate()
-            var
-                ORBFunctions: codeunit "ORB Functions";
             begin
+                if not OrbusSetup.Get() or not OrbusSetup."Enable Auto Address Validation" then
+                    exit;
                 if not ModifyShipToAddressFields() then
                     Error('Reopen the Sales Order to modify Ship-to County');
             end;
@@ -292,9 +292,9 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         modify("Ship-to Post Code")
         {
             trigger OnAfterValidate()
-            var
-                ORBFunctions: codeunit "ORB Functions";
             begin
+                if not OrbusSetup.Get() or not OrbusSetup."Enable Auto Address Validation" then
+                    exit;
                 if not ModifyShipToAddressFields() then
                     Error('Reopen the Sales Order to modify Ship-to Post Code');
             end;
@@ -302,9 +302,9 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         modify("Ship-to Country/Region Code")
         {
             trigger OnAfterValidate()
-            var
-                ORBFunctions: codeunit "ORB Functions";
             begin
+                if not OrbusSetup.Get() or not OrbusSetup."Enable Auto Address Validation" then
+                    exit;
                 if not ModifyShipToAddressFields() then
                     Error('Reopen the Sales Order to modify Ship-to Country/Region Code');
             end;
@@ -312,9 +312,9 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         modify("Ship-to Phone No.")
         {
             trigger OnAfterValidate()
-            var
-                ORBFunctions: codeunit "ORB Functions";
             begin
+                if not OrbusSetup.Get() or not OrbusSetup."Enable Auto Address Validation" then
+                    exit;
                 if not ModifyShipToAddressFields() then
                     Error('Reopen the Sales Order to modify Ship-to Phone No.');
             end;
@@ -323,15 +323,13 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         modify("Ship-to Contact")
         {
             trigger OnAfterValidate()
-            var
-                ORBFunctions: codeunit "ORB Functions";
             begin
+                if not OrbusSetup.Get() or not OrbusSetup."Enable Auto Address Validation" then
+                    exit;
                 if not ModifyShipToAddressFields() then
                     Error('Reopen the Sales Order to modify Ship-to Contact');
             end;
         }
-
-
     }
 
     trigger OnDelete()
@@ -418,4 +416,5 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         LocationNotFoundlbl: Label 'Location is missing for this order: %1';
         UserSetupRecGbl: Record "User Setup";
         DeletionErrorMsgLbl: Label '%1 not allowed to delete';
+        OrbusSetup: Record "ORB Orbus Setup";
 }
