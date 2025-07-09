@@ -19,6 +19,14 @@ page 52656 "ORB Orbus Setup"
                     ToolTip = 'Specifies the value of the Enable User Pick Zone field.', Comment = '%';
                 }
             }
+            group("Address Validation")
+            {
+                Caption = 'Address Validation';
+                field("Enable Auto Address Validation"; Rec."Enable Auto Address Validation")
+                {
+                    ToolTip = 'Specifies the value of the Enable Auto Address Validation on Sales Order Release field.', Comment = '%';
+                }
+            }
         }
     }
 
