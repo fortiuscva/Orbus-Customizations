@@ -46,7 +46,11 @@ pageextension 52605 "ORB Posted Sales Inv. - Update" extends "Posted Sales Inv. 
                 Editable = true;
                 ToolTip = 'Specifies the sub-reason code for Shipment Delay';
             }
-
+            field("ORB Sell-To Contact Name (Custom)"; Rec."Sell-To Contact Name (Custom)")
+            {
+                ApplicationArea = all;
+                Caption = 'Contact Name';
+            }
         }
     }
 }
