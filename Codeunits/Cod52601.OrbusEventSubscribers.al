@@ -803,7 +803,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
     [EventSubscriber(ObjectType::Table, Database::"Sales Header", 'OnAfterModifyEvent', '', true, true)]
     local procedure OnAfterModifySalesHeader(var Rec: Record "Sales Header"; var xRec: Record "Sales Header"; RunTrigger: Boolean)
     begin
-        OrbusSingleInstanceCUGbl.SetShipToAddressFields(Rec."Ship-to Code", Rec."Ship-to Name", Rec."Ship-to Address", Rec."Ship-to Address 2", Rec."Ship-to City", Rec."Ship-to County", Rec."Ship-to Country/Region Code", Rec."Ship-to Post Code", Rec."Ship-to Contact");
+        OrbusSingleInstanceCUGbl.SetShipToAddressFields(Rec."Ship-to Name", Rec."Ship-to Address", Rec."Ship-to Address 2", Rec."Ship-to City", Rec."Ship-to County", Rec."Ship-to Country/Region Code", Rec."Ship-to Post Code", Rec."Ship-to Contact");
     end;
 
 

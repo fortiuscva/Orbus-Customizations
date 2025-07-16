@@ -565,7 +565,6 @@ codeunit 52606 "ORB Functions"
             if (AddressValidation.RunAddressValidation(SalesHeaderRec, false)) then begin
                 // If validation was performed, we need to update the record reference.
                 SalesHeaderRec.Get(SalesHeaderRec."Document Type", SalesHeaderRec."No.");
-                SalesHeaderRec."Ship-to Code" := OrbusSingleInstanceCULcl.GetShipToCode();
                 SalesHeaderRec."Ship-to Name" := OrbusSingleInstanceCULcl.GetShipToName();
                 SalesHeaderRec."Ship-to Address" := OrbusSingleInstanceCULcl.GetShipToAddress();
                 SalesHeaderRec."Ship-to Address 2" := OrbusSingleInstanceCULcl.GetShipToAddress2();

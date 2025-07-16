@@ -228,9 +228,8 @@ codeunit 52603 "ORB Orbus Single Instance"
         exit(CampaignNoGbl);
     end;
 
-    procedure SetShipToAddressFields(ShipToCodePar: Code[10]; ShipToNamePar: Text[100]; ShipToAddressPar: Text[100]; ShipToAddress2Par: Text[50]; ShipToCityPar: Text[30]; ShipToStatePar: Text[30]; ShipToCountryRegionPar: Code[10]; ShipToPostCodePar: Code[20]; ShipToContactPar: Text[100])
+    procedure SetShipToAddressFields(ShipToNamePar: Text[100]; ShipToAddressPar: Text[100]; ShipToAddress2Par: Text[50]; ShipToCityPar: Text[30]; ShipToStatePar: Text[30]; ShipToCountryRegionPar: Code[10]; ShipToPostCodePar: Code[20]; ShipToContactPar: Text[100])
     begin
-        ShipToCodeGbl := ShipToCodePar;
         ShipToNameGbl := ShipToNamePar;
         ShipToAddressGbl := ShipToAddressPar;
         ShipToAddress2Gbl := ShipToAddress2Par;
@@ -239,11 +238,6 @@ codeunit 52603 "ORB Orbus Single Instance"
         ShipToCountryRegionCodeGbl := ShipToCountryRegionPar;
         ShipToPostCodeGbl := ShipToPostCodePar;
         ShipToContactGbl := ShipToContactPar;
-    end;
-
-    procedure GetShipToCode(): Code[10]
-    begin
-        exit(ShipToCodeGbl);
     end;
 
     procedure GetShipToName(): Text[100]
@@ -311,7 +305,6 @@ codeunit 52603 "ORB Orbus Single Instance"
         SuppressItemJnlConfirm: Boolean;
         StopOnError: Boolean;
         CampaignNoGbl: Code[20];
-        ShipToCodeGbl: Code[10];
         ShipToNameGbl: Text[100];
         ShipToAddressGbl: Text[100];
         ShipToAddress2Gbl: Text[50];
