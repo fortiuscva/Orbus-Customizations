@@ -338,10 +338,16 @@ page 52650 "ORB Sales Quotes API"
                 {
                     Caption = 'Direct Debit Mandate ID';
                 }
-                field(doNotSyncVersapayARCCL; Rec."Do not Sync Versapay ARC -CL-")
+                /* field(doNotSyncVersapayARCCL; Rec."Do not Sync Versapay ARC -CL-")
                 {
                     Caption = 'Do not Sync with the Versapay Cloud Platform';
+                    Replaced by new field - Versapay Sync Option -CL-
+                } */
+                field(VersapaySyncOptionCL; Rec."Versapay Sync Option -CL-")
+                {
+                    Caption = 'Versapay Sync Option -CL-';
                 }
+
                 field(docNoOccurrence; Rec."Doc. No. Occurrence")
                 {
                     Caption = 'Doc. No. Occurrence';
@@ -402,10 +408,11 @@ page 52650 "ORB Sales Quotes API"
                 {
                     Caption = 'EU 3-Party Trade';
                 }
-                field(electronicInvoiceTypeCL; Rec."Electronic Invoice Type -CL-")
+                /* field(electronicInvoiceTypeCL; Rec."Electronic Invoice Type -CL-")
                 {
                     Caption = 'Electronic Invoice Type';
-                }
+                    Removed - new Versapay Update
+                } */
                 field(encryptionSaltCL; Rec."Encryption Salt -CL-")
                 {
                     Caption = 'Encryption Salt';
