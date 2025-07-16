@@ -3,7 +3,12 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
 
     [EventSubscriber(ObjectType::Page, Page::"Posted Sales Inv. - Update", OnAfterRecordChanged, '', false, false)]
     local procedure Pag1355_OnAfterRecordChanged(var SalesInvoiceHeader: Record "Sales Invoice Header"; xSalesInvoiceHeader: Record "Sales Invoice Header"; var IsChanged: Boolean);
+    var
+        PreviousWorkDescription: Text;
+        CurrentWorkDescription: Text;
     begin
+        PreviousWorkDescription := xSalesInvoiceHeader.GetWorkDescription();
+        CurrentWorkDescription := SalesInvoiceHeader.GetWorkDescription();
         IsChanged := (SalesInvoiceHeader."Sell-to Customer Name" <> xSalesInvoiceHeader."Sell-to Customer Name") or
                      (SalesInvoiceHeader."Bill-to Name" <> xSalesInvoiceHeader."Bill-to Name") or
                      (SalesInvoiceHeader."Ship-to Name" <> xSalesInvoiceHeader."Ship-to Name") or
@@ -12,7 +17,10 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
                      (SalesInvoiceHeader."External Document No." <> xSalesInvoiceHeader."External Document No.") or
                      (SalesInvoiceHeader."ORB Delayed Ship Reason Code" <> xSalesInvoiceHeader."ORB Delayed Ship Reason Code") or
                      (SalesInvoiceHeader."ORB Delayed Ship Sub-Reason" <> xSalesInvoiceHeader."ORB Delayed Ship Sub-Reason") or
-                     (SalesInvoiceHeader."Sell-To Contact Name (Custom)" <> xSalesInvoiceHeader."Sell-To Contact Name (Custom)");
+                     (SalesInvoiceHeader."Sell-to Contact" <> xSalesInvoiceHeader."Sell-to Contact") or
+                     (SalesInvoiceHeader."Bill-to Contact" <> xSalesInvoiceHeader."Bill-to Contact") or
+                     (SalesInvoiceHeader."Sell-To Contact Name (Custom)" <> xSalesInvoiceHeader."Sell-To Contact Name (Custom)") or
+                     (PreviousWorkDescription <> CurrentWorkDescription);
     end;
 
 
@@ -27,7 +35,10 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         SalesInvoiceHeader."External Document No." := SalesInvoiceHeaderRec."External Document No.";
         SalesInvoiceHeader."ORB Delayed Ship Reason Code" := SalesInvoiceHeaderRec."ORB Delayed Ship Reason Code";
         SalesInvoiceHeader."ORB Delayed Ship Sub-Reason" := SalesInvoiceHeaderRec."ORB Delayed Ship Sub-Reason";
+        SalesInvoiceHeader."Sell-to Contact" := SalesInvoiceHeaderRec."Sell-to Contact";
+        SalesInvoiceHeader."Bill-to Contact" := SalesInvoiceHeaderRec."Bill-to Contact";
         SalesInvoiceHeader."Sell-To Contact Name (Custom)" := SalesInvoiceHeaderRec."Sell-To Contact Name (Custom)";
+        SalesInvoiceHeader."Work Description" := SalesInvoiceHeaderRec."Work Description";
     end;
 
     [EventSubscriber(ObjectType::Page, Page::"Pstd. Sales Cr. Memo - Update", OnAfterRecordChanged, '', false, false)]
