@@ -173,6 +173,10 @@ page 52608 "ORB Customer API"
                 {
                     Caption = 'Last Visit Date';
                 }
+                field(blocked; Rec.Blocked)
+                {
+                    Caption = 'Blocked';
+                }
             }
         }
     }
