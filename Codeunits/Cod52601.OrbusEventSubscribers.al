@@ -652,7 +652,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", OnCodeOnAfterCheckCustomerCreated, '', false, false)]
     local procedure "Release Sales Document_OnCodeOnAfterCheckCustomerCreated"(var SalesHeader: Record "Sales Header"; PreviewMode: Boolean; var IsHandled: Boolean; var LinesWereModified: Boolean)
     begin
-        SalesHeader.TestField("Ship-to Contact");
+        SalesHeader.TestField("Ship-to Name");
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnAfterCopyToTempLines, '', false, false)]
