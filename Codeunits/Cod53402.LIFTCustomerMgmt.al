@@ -47,9 +47,9 @@ codeunit 53402 "ORB LIFT Customer Mgmt"
         Customer.Validate(County, LIFTCustomer.County);
         Customer.Validate("E-Mail", LIFTCustomer."E-Mail");
         if LIFTCustomer."ORB LIFT TaxExempt" = 'Y' then
-            Customer.Validate("Tax Liable", true)
+            Customer.Validate("Tax Liable", false)
         else
-            Customer.Validate("Tax Liable", False);
+            Customer.Validate("Tax Liable", true);
         Customer.Validate("Currency Id", LIFTCustomer."Currency Id");
         Customer.Validate("Contact ID", LIFTCustomer."Contact ID");
         if LIFTCustomer."ORB LIFT TermsStatus" = 'PENDING' then
