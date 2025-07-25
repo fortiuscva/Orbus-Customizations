@@ -806,6 +806,11 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         OrbusSingleInstanceCUGbl.SetShipToAddressFields(Rec."Ship-to Name", Rec."Ship-to Address", Rec."Ship-to Address 2", Rec."Ship-to City", Rec."Ship-to County", Rec."Ship-to Country/Region Code", Rec."Ship-to Post Code", Rec."Ship-to Contact");
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Whse.-Act.-Post (Yes/No)", OnBeforeConfirmPost, '', false, false)]
+    local procedure "Whse.-Act.-Post (Yes/No)_OnBeforeConfirmPost"(var WhseActivLine: Record "Warehouse Activity Line"; var HideDialog: Boolean; var Selection: Integer; var DefaultOption: Integer; var IsHandled: Boolean; var PrintDoc: Boolean)
+    begin
+        DefaultOption := 1;
+    end;
 
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
