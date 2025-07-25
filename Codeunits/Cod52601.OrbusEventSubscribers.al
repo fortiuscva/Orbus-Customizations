@@ -636,6 +636,13 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         WarehouseJournalLine."ORB LIFT Order Line ID" := ItemJournalLine."ORB LIFT Order Line ID";
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Whse.-Act.-Post (Yes/No)", OnBeforeConfirmPost, '', false, false)]
+    local procedure "Whse.-Act.-Post (Yes/No)_OnBeforeConfirmPost"(var WhseActivLine: Record "Warehouse Activity Line"; var HideDialog: Boolean; var Selection: Integer; var DefaultOption: Integer; var IsHandled: Boolean; var PrintDoc: Boolean)
+    begin
+        DefaultOption := 1;
+    end;
+
+
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
         OrbusFunctionsCUGbl: Codeunit "ORB Functions";
