@@ -31,17 +31,17 @@ codeunit 52614 "ORB Create Inventory Pick"
                 WhseRequest.SetRange("Source Document", WhseRequest."Source Document"::"Sales Return Order");
         end;
         WhseRequest.SetRange("Source No.", SalesHeader."No.");
-        if not WhseRequest.IsEmpty() then begin
-            CreateInvtPutawayPickMvmt.InitializeRequest(false, true, false, false, false);
-            CreateInvtPutawayPickMvmt.SuppressMessages(SuppressMessagesGbl);
-            CreateInvtPutawayPickMvmt.SetTableView(WhseRequest);
-            CreateInvtPutawayPickMvmt.UseRequestPage(UseRequestPageGbl);
-            CreateInvtPutawayPickMvmt.Run();
+        // if not WhseRequest.IsEmpty() then begin
+        CreateInvtPutawayPickMvmt.InitializeRequest(false, true, false, false, false);
+        CreateInvtPutawayPickMvmt.SuppressMessages(SuppressMessagesGbl);
+        CreateInvtPutawayPickMvmt.SetTableView(WhseRequest);
+        CreateInvtPutawayPickMvmt.UseRequestPage(UseRequestPageGbl);
+        CreateInvtPutawayPickMvmt.Run();
 
-            SalesHeader.get(SalesHeader."Document Type", SalesHeader."No.");
-            SalesHeader."Order Status" := SalesHeader."Order Status"::"Pick Released";
-            SalesHeader.Modify();
-        end;
+        SalesHeader.get(SalesHeader."Document Type", SalesHeader."No.");
+        SalesHeader."Order Status" := SalesHeader."Order Status"::"Pick Released";
+        SalesHeader.Modify();
+        // end;
     end;
 
     procedure SetValuesToShowMessagesOrRequestPage(SuppressMessagesPar: Boolean; UseRequestPagePar: Boolean)
