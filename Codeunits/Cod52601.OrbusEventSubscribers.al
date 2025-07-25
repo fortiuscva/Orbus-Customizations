@@ -3,7 +3,12 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
 
     [EventSubscriber(ObjectType::Page, Page::"Posted Sales Inv. - Update", OnAfterRecordChanged, '', false, false)]
     local procedure Pag1355_OnAfterRecordChanged(var SalesInvoiceHeader: Record "Sales Invoice Header"; xSalesInvoiceHeader: Record "Sales Invoice Header"; var IsChanged: Boolean);
+    var
+        PreviousWorkDescription: Text;
+        CurrentWorkDescription: Text;
     begin
+        PreviousWorkDescription := xSalesInvoiceHeader.GetWorkDescription();
+        CurrentWorkDescription := SalesInvoiceHeader.GetWorkDescription();
         IsChanged := (SalesInvoiceHeader."Sell-to Customer Name" <> xSalesInvoiceHeader."Sell-to Customer Name") or
                      (SalesInvoiceHeader."Bill-to Name" <> xSalesInvoiceHeader."Bill-to Name") or
                      (SalesInvoiceHeader."Ship-to Name" <> xSalesInvoiceHeader."Ship-to Name") or
@@ -11,7 +16,11 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
                      (SalesInvoiceHeader."ORB Email Sent by JQ" <> xSalesInvoiceHeader."ORB Email Sent by JQ") or
                      (SalesInvoiceHeader."External Document No." <> xSalesInvoiceHeader."External Document No.") or
                      (SalesInvoiceHeader."ORB Delayed Ship Reason Code" <> xSalesInvoiceHeader."ORB Delayed Ship Reason Code") or
-                     (SalesInvoiceHeader."ORB Delayed Ship Sub-Reason" <> xSalesInvoiceHeader."ORB Delayed Ship Sub-Reason");
+                     (SalesInvoiceHeader."ORB Delayed Ship Sub-Reason" <> xSalesInvoiceHeader."ORB Delayed Ship Sub-Reason") or
+                     (SalesInvoiceHeader."Sell-to Contact" <> xSalesInvoiceHeader."Sell-to Contact") or
+                     (SalesInvoiceHeader."Bill-to Contact" <> xSalesInvoiceHeader."Bill-to Contact") or
+                     (SalesInvoiceHeader."Sell-To Contact Name (Custom)" <> xSalesInvoiceHeader."Sell-To Contact Name (Custom)") or
+                     (PreviousWorkDescription <> CurrentWorkDescription);
     end;
 
 
@@ -26,6 +35,10 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         SalesInvoiceHeader."External Document No." := SalesInvoiceHeaderRec."External Document No.";
         SalesInvoiceHeader."ORB Delayed Ship Reason Code" := SalesInvoiceHeaderRec."ORB Delayed Ship Reason Code";
         SalesInvoiceHeader."ORB Delayed Ship Sub-Reason" := SalesInvoiceHeaderRec."ORB Delayed Ship Sub-Reason";
+        SalesInvoiceHeader."Sell-to Contact" := SalesInvoiceHeaderRec."Sell-to Contact";
+        SalesInvoiceHeader."Bill-to Contact" := SalesInvoiceHeaderRec."Bill-to Contact";
+        SalesInvoiceHeader."Sell-To Contact Name (Custom)" := SalesInvoiceHeaderRec."Sell-To Contact Name (Custom)";
+        SalesInvoiceHeader."Work Description" := SalesInvoiceHeaderRec."Work Description";
     end;
 
     [EventSubscriber(ObjectType::Page, Page::"Pstd. Sales Cr. Memo - Update", OnAfterRecordChanged, '', false, false)]
@@ -636,15 +649,172 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         WarehouseJournalLine."ORB LIFT Order Line ID" := ItemJournalLine."ORB LIFT Order Line ID";
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", OnCodeOnAfterCheckCustomerCreated, '', false, false)]
+    local procedure "Release Sales Document_OnCodeOnAfterCheckCustomerCreated"(var SalesHeader: Record "Sales Header"; PreviewMode: Boolean; var IsHandled: Boolean; var LinesWereModified: Boolean)
+    begin
+        SalesHeader.TestField("Ship-to Name");
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnAfterCopyToTempLines, '', false, false)]
+    local procedure "Sales-Post_OnAfterCopyToTempLines"(var TempSalesLine: Record "Sales Line" temporary; SalesHeader: Record "Sales Header")
+    var
+        SalesCommentLine: Record "Sales Comment Line";
+        HighestLineNo: Integer;
+        SingleInstanceCU: Codeunit "ORB Orbus Single Instance";
+    begin
+        if SingleInstanceCU.GetRunFromOrderConfirmation then begin
+            if TempSalesLine.FindSet() then
+                repeat
+                    HighestLineNo := TempSalesLine."Line No.";
+
+                    SalesCommentLine.Reset();
+                    SalesCommentLine.SetRange("Document Type", TempSalesLine."Document Type");
+                    SalesCommentLine.SetRange("No.", TempSalesLine."Document No.");
+                    SalesCommentLine.SetRange("Document Line No.", TempSalesLine."Line No.");
+                    if SalesCommentLine.FindSet() then
+                        repeat
+                            TempSalesLine.Init();
+                            TempSalesLine."Document No." := SalesCommentLine."No.";
+                            TempSalesLine."Line No." := HighestLineNo + 1;
+                            HighestLineNo := TempSalesLine."Line No.";
+                            TempSalesLine.Description := SalesCommentLine.Comment;
+                            TempSalesLine.Insert();
+                        until SalesCommentLine.Next() = 0;
+                until TempSalesLine.Next() = 0;
+        end;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Inventory Pick/Movement", OnBeforeFindFromBinContent, '', false, false)]
+    local procedure "Create Inventory Pick/Movement_OnBeforeFindFromBinContent"(var FromBinContent: Record "Bin Content"; var WarehouseActivityLine: Record "Warehouse Activity Line"; FromBinCode: Code[20]; BinCode: Code[20]; IsInvtMovement: Boolean; IsBlankInvtMovement: Boolean; DefaultBin: Boolean; WhseItemTrackingSetup: Record "Item Tracking Setup" temporary; var WarehouseActivityHeader: Record "Warehouse Activity Header"; var WarehouseRequest: Record "Warehouse Request")
+    var
+        UserPickZone: Record "ORB User Pick Zone";
+        Zone: Record Zone;
+    begin
+        if not OrbusSetup.Get() or not OrbusSetup."Enable User Pick Zone" then
+            exit;
+
+        if WarehouseActivityLine."Source Type" = DATABASE::"Production Order" then
+            exit;
+
+        case WarehouseActivityLine."Activity Type" of
+            WarehouseActivityLine."Activity Type"::"Invt. Pick":
+                ;
+            WarehouseActivityLine."Activity Type"::Pick:
+                if WarehouseActivityLine."Action Type" <> WarehouseActivityLine."Action Type"::Take then
+                    exit;
+            else
+                exit;
+        end;
+
+        UserPickZone.SetRange("User ID", UserId);
+        UserPickZone.SetRange("Location Code", WarehouseActivityLine."Location Code");
+        if not UserPickZone.FindLast() then
+            exit;
+
+        Zone.SetRange(Code, UserPickZone."Zone Code");
+        Zone.SetRange("Location Code", FromBinContent."Location Code");
+        if not Zone.FindFirst() then
+            Error('Zone "%1" assigned to user "%2" does not exist in the Warehouse Zone table.', UserPickZone."Zone Code", UserId);
+
+        if FromBinContent.GetFilter("Bin Code") <> '' then
+            FromBinContent.SetRange("Bin Code");
+
+        FromBinContent.SetRange("Zone Code", UserPickZone."Zone Code");
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Pick", OnBeforeGetBinContent, '', false, false)]
+    local procedure "Create Pick_OnBeforeGetBinContent"(var TempBinContent: Record "Bin Content" temporary; ItemNo: Code[20]; VariantCode: Code[10]; UnitofMeasureCode: Code[10]; LocationCode: Code[10]; ToBinCode: Code[20]; CrossDock: Boolean; IsMovementWorksheet: Boolean; WhseItemTrkgExists: Boolean; BreakbulkBins: Boolean; SmallerUOMBins: Boolean; WhseItemTrackingSetup: Record "Item Tracking Setup" temporary; TotalQtytoPick: Decimal; TotalQtytoPickBase: Decimal; var Result: Boolean; var IsHandled: Boolean)
+    begin
+        OrbusSingleInstanceCUGbl.SetWarehousePickLocationCode(LocationCode);
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Bin Content", OnAfterBinContentExists, '', false, false)]
+    local procedure "Bin Content_OnAfterBinContentExists"(var BinContent: Record "Bin Content")
+    var
+        UserPickZone: Record "ORB User Pick Zone";
+        Zone: Record Zone;
+    begin
+        if not OrbusSetup.Get() or not OrbusSetup."Enable User Pick Zone" then
+            exit;
+
+        UserPickZone.SetRange("User ID", UserId);
+        UserPickZone.SetRange("Location Code", OrbusSingleInstanceCUGbl.GetWarehousePickLocationCode);
+        if not UserPickZone.FindLast() then
+            exit;
+
+        Zone.SetRange(Code, UserPickZone."Zone Code");
+        Zone.SetRange("Location Code", OrbusSingleInstanceCUGbl.GetWarehousePickLocationCode);
+        if not Zone.FindFirst() then
+            Error('Zone "%1" assigned to user "%2" does not exist in the Warehouse Zone table.', UserPickZone."Zone Code", UserId);
+
+        BinContent.SetRange("Zone Code", UserPickZone."Zone Code");
+
+        OrbusSingleInstanceCUGbl.SetWarehousePickLocationCode('');
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Whse. Jnl.-Register", 'OnBeforeConfirmRegisterLines', '', false, false)]
+    local procedure "Whse. Jnl.-Register_OnBeforeConfirmRegisterLines"(WhseJnlLine: Record "Warehouse Journal Line"; var Result: Boolean; var IsHandled: Boolean)
+    begin
+        if OrbusSingleInstanceCUGbl.GetSuppressWhseConfirm() then begin
+            Result := true;
+            IsHandled := true;
+        end;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item Jnl.-Post", OnBeforeCode, '', false, false)]
+    local procedure "Item Jnl.-Post_OnBeforeCode"(var ItemJournalLine: Record "Item Journal Line"; var HideDialog: Boolean; var SuppressCommit: Boolean; var IsHandled: Boolean)
+    begin
+        if OrbusSingleInstanceCUGbl.GetSuppressItemJnlConfirm() then
+            HideDialog := true;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales Price Calc. Mgt.", OnBeforeSalesLineLineDiscExists, '', false, false)]
+    local procedure "Sales Price Calc. Mgt._OnBeforeSalesLineLineDiscExists"(var SalesLine: Record "Sales Line"; var SalesHeader: Record "Sales Header"; var TempSalesLineDisc: Record "Sales Line Discount" temporary; StartingDate: Date; Qty: Decimal; QtyPerUOM: Decimal; ShowAll: Boolean; var IsHandled: Boolean)
+    begin
+        OrbusSingleInstanceCUGbl.SetCampaignNo(SalesHeader."Campaign No.");
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales Price Calc. Mgt.", OnAfterSalesLineLineDiscExists, '', false, false)]
+    local procedure "Sales Price Calc. Mgt._OnAfterSalesLineLineDiscExists"(var SalesLine: Record "Sales Line"; var SalesHeader: Record "Sales Header"; var TempSalesLineDisc: Record "Sales Line Discount" temporary; ShowAll: Boolean)
+    begin
+        OrbusSingleInstanceCUGbl.SetCampaignNo('');
+    end;
+
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales Price Calc. Mgt.", OnBeforeActivatedCampaignExists, '', false, false)]
+    local procedure "Sales Price Calc. Mgt._OnBeforeActivatedCampaignExists"(var ToCampaignTargetGr: Record "Campaign Target Group"; CustNo: Code[20]; ContNo: Code[20]; CampaignNo: Code[20]; var IsHandled: Boolean)
+    begin
+        if CampaignNo = '' then
+            CampaignNo := OrbusSingleInstanceCUGbl.GetCampaignNo();
+
+        if CampaignNo = '' then
+            IsHandled := true;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", OnCodeOnBeforeSetStatusReleased, '', false, false)]
+    local procedure "Release Sales Document_OnCodeOnBeforeSetStatusReleased"(var SalesHeader: Record "Sales Header")
+    begin
+        if not OrbusSetup.Get() or not OrbusSetup."Enable Auto Address Validation" then
+            exit;
+        if SalesHeader."Document Type" = SalesHeader."Document Type"::Order then
+            OrbusFunctionsCUGbl.AutomaticShipToAddressValidation(SalesHeader);
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Sales Header", 'OnAfterModifyEvent', '', true, true)]
+    local procedure OnAfterModifySalesHeader(var Rec: Record "Sales Header"; var xRec: Record "Sales Header"; RunTrigger: Boolean)
+    begin
+        OrbusSingleInstanceCUGbl.SetShipToAddressFields(Rec."Ship-to Name", Rec."Ship-to Address", Rec."Ship-to Address 2", Rec."Ship-to City", Rec."Ship-to County", Rec."Ship-to Country/Region Code", Rec."Ship-to Post Code", Rec."Ship-to Contact");
+    end;
+
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Whse.-Act.-Post (Yes/No)", OnBeforeConfirmPost, '', false, false)]
     local procedure "Whse.-Act.-Post (Yes/No)_OnBeforeConfirmPost"(var WhseActivLine: Record "Warehouse Activity Line"; var HideDialog: Boolean; var Selection: Integer; var DefaultOption: Integer; var IsHandled: Boolean; var PrintDoc: Boolean)
     begin
         DefaultOption := 1;
     end;
 
-
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
         OrbusFunctionsCUGbl: Codeunit "ORB Functions";
+        OrbusSetup: Record "ORB Orbus Setup";
 
 }

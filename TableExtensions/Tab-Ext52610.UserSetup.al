@@ -22,6 +22,39 @@ tableextension 52610 "ORB User Setup" extends "User Setup"
             DataClassification = CustomerContent;
             Caption = 'Tax Liable Edit on the Customer is Allowed';
         }
+        field(52604; "ORB Cust.Support Edit Allowed"; Boolean)
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Customer Support Edit Allowed';
+        }
+        field(52605; "ORB Buss. Devlop Edit Allowed"; Boolean)
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Business Development Edit Allowed';
+        }
+
+        field(52607; "ORB Regional Sales Executive"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Regional Sales Executive Edit Allowed';
+        }
+        field(52606; "ORB Versapay ID Edit Allowed"; Boolean)
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Versapay ID Edit Allowed';
+
+        }
+        field(52608; "ORB Key Account Manager"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Key Account Edit Allowed';
+        }
+        field(52609; "ORB Sales Return Del Allowed"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Sales Return Delete Allowed';
+        }
+
     }
 
 }

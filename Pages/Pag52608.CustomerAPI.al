@@ -97,54 +97,95 @@ page 52608 "ORB Customer API"
                 {
                     Caption = 'magentoContactNo', Locked = true;
                 }
-                field(thisYearSales; ThisYearSales)
+                field(thisYearSales; Rec."ORB This Year Sales")
                 {
                     Caption = 'This Year Sales Total';
                     Editable = false;
                 }
-                field(previousYearSales; PreviousYearSales)
+                field(previousYearSales; Rec."ORB Prev Year Sales")
                 {
                     Caption = 'Previous Year Sales Total';
                     Editable = false;
                 }
-                field(ltmSales; LTMSales)
+                field(ltmSales; Rec."ORB LTM Sales")
                 {
                     Caption = 'LTM Sales Total';
                     Editable = false;
                 }
-                field(lifetimeSalesTotal; LifetimeSales)
+                field(lifetimeSalesTotal; Rec."ORB Lifetime Sales Total")
                 {
                     Caption = 'Lifetime Sales Total';
                     Editable = false;
                 }
-                field(thisYearSalesCrMemo; ThisYearSalesCrMemo)
+                field(thisYearSalesCrMemo; Rec."ORB ThisYearSalesCrMemo")
                 {
                     Caption = 'This Year Sales Cr. Memo';
                     Editable = false;
                 }
-                field(previousYearSalesCrMemo; PreviousYearSalesCrMemo)
+                field(previousYearSalesCrMemo; Rec."ORB PreviousYearSalesCrMemo")
                 {
                     Caption = 'Previous Year Sales Cr. Memo';
                     Editable = false;
                 }
-                field(ltmSalesCrMemo; LTMSalesCrMemo)
+                field(ltmSalesCrMemo; Rec."ORB LTMSalesCrMemo")
                 {
                     Caption = 'LTM Sales Cr. Memo';
                     Editable = false;
                 }
-                field(lifetimeSalesTotalCrMemo; LifetimeSalesCrMemo)
+                field(lifetimeSalesTotalCrMemo; Rec."ORB LifetimeSalesTotalCrMemo")
                 {
                     Caption = 'Lifetime Sales Cr. Memo Total';
                     Editable = false;
                 }
+                field(association; Rec.ORBAPPAssociationsName)
+                {
+                    Caption = 'Association';
+                }
+                field(salespersonCode; Rec."Salesperson Code")
+                {
+                    Caption = 'Salesperson Code';
+                }
+                field(regionalSalesExecutive; Rec."ORB Regional Sales Executive")
+                {
+                    Caption = 'Regional Sales Executive';
+                }
+                field(customerSupport; Rec."ORB Customer Support")
+                {
+                    Caption = 'Customer Support';
+                }
+                field(businessDevelopment; Rec."ORB Business Development")
+                {
+                    Caption = 'Business Development';
+                }
+                field(rowID; Rec.SystemId)
+                {
+                    Caption = 'Row ID';
+                }
+                field(customerDiscGroup; Rec."Customer Disc. Group")
+                {
+                    caption = 'Customer Disc. Group';
+                }
+                field(isCoreTeam; Rec."ORB Is Core Team")
+                {
+                    caption = 'Is Core Team';
+                }
+                field(lastVisitDate; Rec."Last Visit Date")
+                {
+                    Caption = 'Last Visit Date';
+                }
+                field(blocked; Rec.Blocked)
+                {
+                    Caption = 'Blocked';
+                }
             }
         }
     }
+    /*
     trigger OnAfterGetRecord()
     var
         FunctionsCU: Codeunit "ORB Functions";
     begin
-        FunctionsCU.CalculateSalesTotals(ThisYearSales, PreviousYearSales, LTMSales, LifetimeSales, Rec."No.");
+        FunctionsCU.CalculateSalesTotals(ThisYearSales, PreviousYearSales, LTMSales, Rec."ORB Lifetime Sales Total", Rec."No.");
         FunctionsCU.CalculateCreditMemoTotals(ThisYearSalesCrMemo, PreviousYearSalesCrMemo, LTMSalesCrMemo, LifetimeSalesCrMemo, Rec."No.");
     end;
 
@@ -152,10 +193,10 @@ page 52608 "ORB Customer API"
         ThisYearSales: Decimal;
         PreviousYearSales: Decimal;
         LTMSales: Decimal;
-        LifetimeSales: Decimal;
         ThisYearSalesCrMemo: Decimal;
         PreviousYearSalesCrMemo: Decimal;
         LTMSalesCrMemo: Decimal;
         LifetimeSalesCrMemo: Decimal;
+    */
 }
 

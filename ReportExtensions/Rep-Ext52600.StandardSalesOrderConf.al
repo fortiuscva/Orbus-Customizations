@@ -42,9 +42,25 @@ reportextension 52600 "ORB Standard Sales-Order Conf." extends "Standard Sales -
 
         }
     }
+    trigger OnPreReport()
+    var
+        OrbusSingleInstanceCU: Codeunit "ORB Orbus Single Instance";
+    begin
+        OrbusSingleInstanceCU.SetRunFromOrderConfirmation(true);
+    end;
+
+    trigger OnPostReport()
+    var
+        OrbusSingleInstanceCU: Codeunit "ORB Orbus Single Instance";
+    begin
+        OrbusSingleInstanceCU.SetRunFromOrderConfirmation(false);
+    end;
+
     var
         ShippingAgentCodeLblLcl: Label 'Shipping Agent Code';
         ShippingAgentServiceCodeLblLcl: Label 'Shipping Agent Service Code';
         LocationCodeLblLcl: Label 'Location Code';
         WillcallinfoLcl: Text[1000];
+
+
 }

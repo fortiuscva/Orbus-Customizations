@@ -12,6 +12,13 @@ pageextension 52620 "ORB Sales Order Subform" extends "Sales Order Subform"
                 Editable = false;
             }
         }
+        addafter("Line Discount %")
+        {
+            field("ORB LIFT Discount Amount"; Rec."ORB LIFT Discount Amount")
+            {
+                ApplicationArea = All;
+            }
+        }
         modify(Quantity)
         {
             trigger OnAfterValidate()
@@ -31,6 +38,27 @@ pageextension 52620 "ORB Sales Order Subform" extends "Sales Order Subform"
                     OrbusSingleInstanceCUGbl.SetExplodeBOMConfirm(false);
                     CurrPage.Update(false);
                 end;
+            end;
+        }
+        modify("Unit Price")
+        {
+            trigger OnAfterValidate()
+            begin
+                LIFTBCFunctionsCU.ValidateRestrictedLineChanges(rec, xRec);
+            end;
+        }
+        modify("Line Discount %")
+        {
+            trigger OnAfterValidate()
+            begin
+                LIFTBCFunctionsCU.ValidateRestrictedLineChanges(rec, xRec);
+            end;
+        }
+        modify("Line Discount Amount")
+        {
+            trigger OnAfterValidate()
+            begin
+                LIFTBCFunctionsCU.ValidateRestrictedLineChanges(rec, xRec);
             end;
         }
     }
@@ -68,6 +96,8 @@ pageextension 52620 "ORB Sales Order Subform" extends "Sales Order Subform"
 
         }
     }
+
     var
         OrbusSingleInstanceCUGbl: codeunit "ORB Orbus Single Instance";
+        LIFTBCFunctionsCU: Codeunit "ORB LIFTtoBC Functions";
 }

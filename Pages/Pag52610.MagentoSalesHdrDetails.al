@@ -188,7 +188,15 @@ page 52610 "ORB Magento Sales Hdr. Details"
                 }
                 field(yourReference; Rec."ORB Your Reference (API)")
                 {
-                    Caption = 'yourReference', Locked = true;
+                    Caption = 'VersapayID', Locked = true;
+                }
+                field(paymentMethodCode; Rec."Payment Method Code")
+                {
+                    Caption = 'paymentMethodCode', Locked = true;
+                }
+                field(campaignNo; Rec."Campaign No.")
+                {
+                    Caption = 'campaignNo';
                 }
             }
         }
@@ -217,7 +225,6 @@ page 52610 "ORB Magento Sales Hdr. Details"
     begin
         Rec."Ship-to Name" := Rec."Ship-to Name";
         Rec."Ship-to Address" := Rec."Ship-to Address";
-
     end;
 
 }

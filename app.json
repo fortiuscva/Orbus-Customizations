@@ -2,7 +2,7 @@
   "id": "30815d47-8f7f-430a-b516-aaf2e1cfb1d4",
   "name": "Orbus Customizations",
   "publisher": "Adcirrus ERP",
-  "version": "23.0.0.154",
+  "version": "23.0.0.329",
   "brief": "",
   "description": "",
   "privacyStatement": "",
@@ -90,7 +90,7 @@
   "idRanges": [
     {
       "from": 52600,
-      "to": 52800
+      "to": 54000
     }
   ],
   "resourceExposurePolicy": {

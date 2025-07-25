@@ -32,6 +32,11 @@ report 52617 "Purchase Order Inventory Tag"
             {
                 
             }
+            column(ItemVariant; ItemVariantVarGbl)
+            {
+                
+            }
+           
             column(PurchaseOrderNumber; PurchaseOrderNumberVarGbl)
             {
                 
@@ -59,8 +64,13 @@ report 52617 "Purchase Order Inventory Tag"
             NoValidEntryErrorLbl:Label 'Please check your Tag entries';
               begin
                 SetRange(Number,1,1);
-                iF (WareHouseReceiptNoVarGbl = '') OR (ItemNoVarGbl ='') or (QuantityVarGbl =0 ) then
-                 Error(NoValidEntryErrorLbl);
+                if not NotonDocumentVarGbl then begin
+                    if (WareHouseReceiptNoVarGbl = '') OR (ItemNoVarGbl ='') or (QuantityVarGbl =0 ) then
+                        Error(NoValidEntryErrorLbl);
+                end else begin
+                    if  (ItemNoVarGbl ='') or (QuantityVarGbl =0 ) then
+                        Error(NoValidEntryErrorLbl);
+                end;
             end;           
     } 
     }       
@@ -80,8 +90,10 @@ report 52617 "Purchase Order Inventory Tag"
                                 var
                                     WareHouseReceiptHeaderRecLcl: Record "Warehouse Receipt Header";
                                 begin
-                                    If Page.RunModal(Page::"Warehouse Receipts",WareHouseReceiptHeaderRecLcl) = Action::LookupOK then
-                                     WareHouseReceiptNoVarGbl := WareHouseReceiptHeaderRecLcl."No.";
+                                    if not NotonDocumentVarGbl then begin
+                                        If Page.RunModal(Page::"Warehouse Receipts",WareHouseReceiptHeaderRecLcl) = Action::LookupOK then
+                                        WareHouseReceiptNoVarGbl := WareHouseReceiptHeaderRecLcl."No.";
+                                     end;
                                 end;
                             }
                             field(ItemNoVarGbl;ItemNoVarGbl)
@@ -92,12 +104,13 @@ report 52617 "Purchase Order Inventory Tag"
                                var
                                 WarehouseReceiptRecLcl : Record "Warehouse Receipt Line";
                                begin
-                                WarehouseReceiptRecLcl.SetRange("No.", WareHouseReceiptNoVarGbl);
-                                if Page.RunModal(Page::"Whse. Receipt Lines",WarehouseReceiptRecLcl) = Action::LookupOK then begin
-                                    QuantityVarGbl := WarehouseReceiptRecLcl.Quantity;
-                                    ItemNoVarGbl := WarehouseReceiptRecLcl."Item No.";
-                                    PurchaseOrderNumberVarGbl := WarehouseReceiptRecLcl."Source No.";
-                                end;
+                                    if not NotonDocumentVarGbl then begin
+                                        WarehouseReceiptRecLcl.SetRange("No.", WareHouseReceiptNoVarGbl);
+                                        if Page.RunModal(Page::"Whse. Receipt Lines",WarehouseReceiptRecLcl) = Action::LookupOK then begin
+                                            QuantityVarGbl := WarehouseReceiptRecLcl.Quantity;
+                                            ItemNoVarGbl := WarehouseReceiptRecLcl."Item No.";
+                                        end;
+                                    end;
                                end;
 
                                trigger OnValidate()
@@ -105,26 +118,43 @@ report 52617 "Purchase Order Inventory Tag"
                                 WarehouseReceiptLineRecLcl : Record "Warehouse Receipt Line";
                                 InValidItemErrorLbl : Label 'Check your Item No';
                                 begin
-                                    WarehouseReceiptLineRecLcl .reset;
-                                    WarehouseReceiptLineRecLcl .SetRange("No.",WareHouseReceiptNoVarGbl);
-                                    WarehouseReceiptLineRecLcl.SetRange("Item No.",ItemNoVarGbl);
-                                    If not WarehouseReceiptLineRecLcl.FindFirst() then begin
-                                        QuantityVarGbl := 0;
-                                        Error(InValidItemErrorLbl);
-                                    end;
-                                    
-                                end; 
+                                    if not NotonDocumentVarGbl then begin
+                                        WarehouseReceiptLineRecLcl .reset;
+                                        WarehouseReceiptLineRecLcl .SetRange("No.",WareHouseReceiptNoVarGbl);
+                                        WarehouseReceiptLineRecLcl.SetRange("Item No.",ItemNoVarGbl);
+                                        If not WarehouseReceiptLineRecLcl.FindFirst() then begin
+                                            QuantityVarGbl := 0;
+                                            Error(InValidItemErrorLbl);
+                                        end;
+                                    end; 
+                                end;
+                         }
+                         field(ItemVariantVarGbl;ItemVariantVarGbl)
+                         {
+                            Caption = 'Item Variant';
+                            ApplicationArea = All;
+                            ToolTip = 'Item Variant';
                          }
                         field(QuantityVarGbl;QuantityVarGbl)
                         {
                                 Caption = 'Quantity';
                                 ApplicationArea = All;
                         }
+                        field(PurchaseOrderNumberVarGbl;PurchaseOrderNumberVarGbl)
+                            {
+                                Caption = 'PO No';
+                                ApplicationArea = All;
+                            }
+                        field(NotonDocumentVarGbl;NotonDocumentVarGbl)
+                            {
+                                Caption = 'Not on Document';
+                                ApplicationArea = All;
+                            }
                         }
-                }
-            
-            }
 
+                        
+                }
+            }
     }
     trigger OnInitReport()
         begin
@@ -132,26 +162,26 @@ report 52617 "Purchase Order Inventory Tag"
         end;
 
     trigger OnPostReport()
-      var
+    var
         ConfirmOkVarLcl : Boolean;
         LocalReportReportLcl : Report "Purchase Order Inventory Tag";
      begin
-        begin
-                ConfirmOkVarLcl := Confirm('Continue Printing Tag',true);
-                if ConfirmOkVarLcl then begin
-                 clear(LocalReportReportLcl);
-                 LocalReportReportLcl.Run;
-                end                
-            end;        
-    end;
-        var
+       // ConfirmOkVarLcl := Confirm('Continue Printing Tag',true);
+       // if ConfirmOkVarLcl then begin
+            clear(LocalReportReportLcl);
+            LocalReportReportLcl.Run;
+           // end                
+       end;        
+    var
         EncodedTextVarGbl:Text;   
         UserIDVarGbl: Code[100];
         WareHouseReceiptNoVarGbl:Code[20];
         QuantityVarGbl: Decimal;
         ItemNoVarGbl: Code[20];
-        PurchaseOrderNumberVarGbl: Code[20];      
-        }
+        ItemVariantVarGbl: Code[10];
+        PurchaseOrderNumberVarGbl: Code[200];
+        NotonDocumentVarGbl:Boolean;     
+    }
 
     
     

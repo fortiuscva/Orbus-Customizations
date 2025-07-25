@@ -90,8 +90,10 @@ tableextension 52603 "ORB Customer" extends Customer
                                                                         "Global Dimension 1 Code" = field("Global Dimension 1 Filter"),
                                                                         "Global Dimension 2 Code" = field("Global Dimension 2 Filter"),
                                                                         "Posting Date" = field("ORB Year To Date Filter"),
-                                                                         "Currency Code" = field("Currency Filter")));
+                                                                         "Currency Code" = field("Currency Filter"),
+                                                                         "Document Type" = Filter('Invoice|Credit Memo')));
         }
+
 
         field(52610; "ORB LIFT Customer"; boolean)
         {
@@ -102,10 +104,82 @@ tableextension 52603 "ORB Customer" extends Customer
         {
             Caption = 'Key/National Account Manager';
         }
+        field(52611; "ORB Previous Year Date Filter"; Date)
+        {
+            Caption = 'Year To Date Filter';
+            FieldClass = FlowFilter;
+        }
+        field(52612; "ORB Previous Year Sales"; Decimal)
+        {
+            AutoFormatType = 1;
+            Caption = 'Total Sales - Fiscal Year';
+            FieldClass = FlowField;
+            Editable = false;
+            CalcFormula = sum("Cust. Ledger Entry"."Sales (LCY)" where("Customer No." = field("No."),
+                                                                        "Global Dimension 1 Code" = field("Global Dimension 1 Filter"),
+                                                                        "Global Dimension 2 Code" = field("Global Dimension 2 Filter"),
+                                                                        "Posting Date" = field("ORB Previous Year Date Filter"),
+                                                                         "Currency Code" = field("Currency Filter"),
+                                                                         "Document Type" = Filter('Invoice|Credit Memo')));
+        }
+        field(52613; "ORB Lifetime Sales Total"; Decimal)
+        {
+            Caption = 'Lifetime Sales Total';
+            Editable = false;
+            DataClassification = CustomerContent;
+        }
+        field(52614; "ORB Is Core Team"; Boolean)
+        {
+            Caption = 'Is Core Team';
+            Editable = false;
+            DataClassification = CustomerContent;
+        }
+        field(52615; "ORB This Year Sales"; Decimal)
+        {
+            Caption = 'This Year Sales Total';
+            Editable = false;
+            DataClassification = CustomerContent;
+        }
+        field(52616; "ORB Prev Year Sales"; Decimal)
+        {
+            Caption = 'Previous Year Sales Total';
+            Editable = false;
+            DataClassification = CustomerContent;
+        }
+        field(52617; "ORB LTM Sales"; Decimal)
+        {
+            Caption = 'LTM Sales Total';
+            Editable = false;
+            DataClassification = CustomerContent;
+        }
+        field(52618; "ORB ThisYearSalesCrMemo"; Decimal)
+        {
+            Caption = 'This Year Sales Cr. Memo Total';
+            Editable = false;
+            DataClassification = CustomerContent;
+        }
+        field(52619; "ORB PreviousYearSalesCrMemo"; Decimal)
+        {
+            Caption = 'Previous Year Sales Cr. Memo Total';
+            Editable = false;
+            DataClassification = CustomerContent;
+        }
+        field(52620; "ORB LTMSalesCrMemo"; Decimal)
+        {
+            Caption = 'LTM Sales Cr. Memo Total';
+            Editable = false;
+            DataClassification = CustomerContent;
+        }
+        field(52621; "ORB LifetimeSalesTotalCrMemo"; Decimal)
+        {
+            Caption = 'Lifetime Sales Cr. Memo Total';
+            Editable = false;
+            DataClassification = CustomerContent;
+        }
     }
+
 
     var
         ProcessInterruptedLbl: Label 'Process has been interrupted to respect the warning.';
-
 
 }

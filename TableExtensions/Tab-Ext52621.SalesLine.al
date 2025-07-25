@@ -81,7 +81,13 @@ tableextension 52621 "ORB Sales Line" extends "Sales Line"
             FieldClass = FlowField;
             calcformula = Lookup("Sales Header"."Order Status" where("Document Type" = const(Order), "No." = field("Document No.")));
         }
-
+        field(52120; "ORB Quote Status"; Enum QuoteStatus)
+        {
+            Caption = 'Quote Status';
+            Editable = false;
+            FieldClass = FlowField;
+            CalcFormula = Lookup("Sales Header"."Quote Status" where("Document Type" = const(Quote), "No." = field("Document No.")));
+        }
         modify(Quantity)
         {
             trigger OnAfterValidate()
@@ -93,6 +99,32 @@ tableextension 52621 "ORB Sales Line" extends "Sales Line"
                 //if CurrFieldNo = FieldNo(Quantity) then begin
                 //end;
             end;
+        }
+        field(52121; "ORB Custom"; Boolean)
+        {
+            Caption = 'Custom';
+            Editable = false;
+            FieldClass = FlowField;
+            calcformula = Lookup("Sales Header".Custom where("Document Type" = const(Order), "No." = field("Document No.")));
+        }
+        field(52122; "ORB ProductLine Dim"; Code[20])
+        {
+            Caption = 'ProductLine Dim';
+            Editable = false;
+            FieldClass = FlowField;
+            CalcFormula = lookup("Dimension Set Entry"."Dimension Value Code" where("Dimension Set ID" = field("Dimension Set ID"), "Dimension Code" = const('PRDLN')));
+        }
+        field(53400; "ORB LIFT Line ID"; Decimal)
+        {
+            Caption = 'LIFT Line ID';
+            DecimalPlaces = 0 : 2;
+            DataClassification = CustomerContent;
+        }
+        field(53401; "ORB LIFT Discount Amount"; Decimal)
+        {
+            Caption = 'LIFT Discount Amount';
+            Editable = false;
+            DataClassification = CustomerContent;
         }
     }
 

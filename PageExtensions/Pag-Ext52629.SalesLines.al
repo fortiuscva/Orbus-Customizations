@@ -13,6 +13,24 @@ pageextension 52629 "ORB Sales Lines" extends "Sales Lines"
                 ToolTip = 'Specifies Ship to State';
             }
         }
+        addafter("Location Code")
+        {
+            field("ORB Order Status"; Rec."ORB Order Status")
+            {
+                ApplicationArea = All;
+            }
+            field("ORB ProductLine Dim"; rec."ORB ProductLine Dim")
+            {
+                ApplicationArea = All;
+            }
+            field("ORB Custom"; Rec."ORB Custom")
+            {
+                ApplicationArea = All;
+            }
+            field("ORB LIFT Discount Amount"; Rec."ORB LIFT Discount Amount")
+            {
+                ApplicationArea = All;
+            }
+        }
     }
-
 }

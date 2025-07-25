@@ -2,40 +2,40 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
 {
     fields
     {
-        modify("Order Status")
-        {
-            trigger OnAfterValidate()
-            var
-                salesHeader: Record "Sales Header";
-                ORBFunctions: codeunit "ORB Functions";
-            begin
-                if Rec."Location Code" = '' then
-                    Error(LocationNotFoundlbl, Rec."No.");
+        // modify("Order Status")
+        // {
+        //     trigger OnAfterValidate()
+        //     var
+        //         salesHeader: Record "Sales Header";
+        //         ORBFunctions: codeunit "ORB Functions";
+        //     begin
+        //         if Rec."Location Code" = '' then
+        //             Error(LocationNotFoundlbl, Rec."No.");
 
-                if Xrec."Order Status" = Xrec."Order Status"::Draft then begin
-                    ORBFunctions.SendOrderConfirmationEmailItem(Rec, false);
+        //         if Xrec."Order Status" = Xrec."Order Status"::Draft then begin
+        //             ORBFunctions.SendOrderConfirmationEmailItem(Rec, false);
 
-                    salesHeader.get(Rec."Document Type"::Order, Rec."No.");
-                    salesHeader."Order Status" := Rec."Order Status";
-                    Rec := salesHeader;
-                end;
-            end;
-        }
+        //             salesHeader.get(Rec."Document Type"::Order, Rec."No.");
+        //             salesHeader."Order Status" := Rec."Order Status";
+        //             Rec := salesHeader;
+        //         end;
+        //     end;
+        // }
 
-        modify(Status)
-        {
-            trigger OnAfterValidate()
-            var
-                myInt: Integer;
-            begin
-                if (Rec.Status = Rec.Status::Released) and (Rec."Document Type" = rec."Document Type"::Order) then begin
-                    if Rec."ORB Original Promised Ship Dt." = 0D then begin
-                        Rec."ORB Original Promised Ship Dt." := Today();
-                        Rec.Modify()
-                    end;
-                end;
-            end;
-        }
+        // modify(Status)
+        // {
+        //     trigger OnAfterValidate()
+        //     var
+        //         myInt: Integer;
+        //     begin
+        //         if (Rec.Status = Rec.Status::Released) and (Rec."Document Type" = rec."Document Type"::Order) then begin
+        //             if Rec."ORB Original Promised Ship Dt." = 0D then begin
+        //                 Rec."ORB Original Promised Ship Dt." := Today();
+        //                 Rec.Modify()
+        //             end;
+        //         end;
+        //     end;
+        // }
 
         field(52610; "ORB Tax ID"; Code[20])
         {
@@ -205,8 +205,132 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         {
             Caption = 'Your Reference (API)';
         }
-    }
+        field(52656; "ORB Customer Support"; Code[20])
+        {
+            Caption = 'Customer Support';
+            DataClassification = CustomerContent;
+            Editable = false;
+        }
+        field(52657; "ORB Business Development"; Code[20])
+        {
+            Caption = 'Business Development';
+            DataClassification = CustomerContent;
+            Editable = false;
+        }
+        modify("Sell-to Customer No.")
+        {
+            trigger OnAfterValidate()
+            var
+                CustomerRecLcl: Record Customer;
+            begin
+                if CustomerRecLcl.get("Sell-to Customer No.") then begin
+                    Rec."ORB Customer Support" := CustomerRecLcl."ORB Customer Support";
+                    Rec."ORB Business Development" := CustomerRecLcl."ORB Business Development";
+                end;
+            end;
+        }
+        modify("Ship-to Code")
+        {
+            trigger OnAfterValidate()
+            begin
+                if not OrbusSetup.Get() or not OrbusSetup."Enable Auto Address Validation" then
+                    exit;
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to Code');
+            end;
+        }
+        modify("Ship-to Name")
+        {
+            trigger OnAfterValidate()
+            begin
+                if not OrbusSetup.Get() or not OrbusSetup."Enable Auto Address Validation" then
+                    exit;
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to Name');
+            end;
+        }
+        modify("Ship-to Address")
+        {
+            trigger OnAfterValidate()
+            begin
+                if not OrbusSetup.Get() or not OrbusSetup."Enable Auto Address Validation" then
+                    exit;
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to Address');
+            end;
+        }
+        modify("Ship-to Address 2")
+        {
+            trigger OnAfterValidate()
+            begin
+                if not OrbusSetup.Get() or not OrbusSetup."Enable Auto Address Validation" then
+                    exit;
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to Address 2');
+            end;
+        }
+        modify("Ship-to City")
+        {
+            trigger OnAfterValidate()
+            begin
+                if not OrbusSetup.Get() or not OrbusSetup."Enable Auto Address Validation" then
+                    exit;
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to City');
+            end;
+        }
+        modify("Ship-to County")
+        {
+            trigger OnAfterValidate()
+            begin
+                if not OrbusSetup.Get() or not OrbusSetup."Enable Auto Address Validation" then
+                    exit;
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to State');
+            end;
+        }
+        modify("Ship-to Post Code")
+        {
+            trigger OnAfterValidate()
+            begin
+                if not OrbusSetup.Get() or not OrbusSetup."Enable Auto Address Validation" then
+                    exit;
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to Post Code');
+            end;
+        }
+        modify("Ship-to Country/Region Code")
+        {
+            trigger OnAfterValidate()
+            begin
+                if not OrbusSetup.Get() or not OrbusSetup."Enable Auto Address Validation" then
+                    exit;
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to Country/Region Code');
+            end;
+        }
+        modify("Ship-to Phone No.")
+        {
+            trigger OnAfterValidate()
+            begin
+                if not OrbusSetup.Get() or not OrbusSetup."Enable Auto Address Validation" then
+                    exit;
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to Phone No.');
+            end;
+        }
 
+        modify("Ship-to Contact")
+        {
+            trigger OnAfterValidate()
+            begin
+                if not OrbusSetup.Get() or not OrbusSetup."Enable Auto Address Validation" then
+                    exit;
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to Contact');
+            end;
+        }
+    }
 
     trigger OnDelete()
     var
@@ -214,6 +338,15 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
     begin
         if SalesHeaderAdditionalFields.Get(Rec."Document Type", Rec."No.") then
             SalesHeaderAdditionalFields.Delete(true);
+        if GuiAllowed then
+            if (Rec."Document Type" = Rec."Document Type"::"Return Order") then
+                if UserSetupRecGbl.get(UserId) then
+                    if not UserSetupRecGbl."ORB Sales Return Del Allowed" then
+                        Error(DeletionErrorMsgLbl, UserId);
+
+
+
+
     end;
 
     trigger OnAfterInsert()
@@ -221,6 +354,7 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         contactRecLcl: Record Contact;
         ShippinAgenetCode: Code[10];
         ShippingAgentServiceCode: Code[20];
+
 
     begin
         if GuiAllowed then
@@ -267,6 +401,20 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         Rec.Modify();
     end;
 
+    local procedure ModifyShipToAddressFields(): Boolean;
+    begin
+        if Rec.Status <> Rec.Status::Released then
+            exit(true)
+        else
+            exit(false);
+    end;
+
+
+
+
     var
         LocationNotFoundlbl: Label 'Location is missing for this order: %1';
+        UserSetupRecGbl: Record "User Setup";
+        DeletionErrorMsgLbl: Label '%1 not allowed to delete';
+        OrbusSetup: Record "ORB Orbus Setup";
 }

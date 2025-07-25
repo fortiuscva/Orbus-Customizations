@@ -25,6 +25,42 @@ pageextension 52614 "ORB User Setup" extends "User Setup"
                 ApplicationArea = all;
                 ToolTip = 'To Allow Tax Liable Edit on the Customer';
             }
+
+            field("ORB Versapay ID Edit Allowed"; Rec."ORB Versapay ID Edit Allowed")
+            {
+                ApplicationArea = all;
+                ToolTip = 'To Allow User Edit Versapay ID';
+            }
+            field("ORB Cust.Support Edit Allowed"; Rec."ORB Cust.Support Edit Allowed")
+            {
+                Caption = 'Edit Customer Support';
+                ApplicationArea = all;
+                ToolTip = 'To Allow Customer Support Edit on the Customer Card';
+            }
+            field("ORB Buss. Devlop Edit Allowed"; Rec."ORB Buss. Devlop Edit Allowed")
+            {
+                Caption = 'Edit Business Development';
+                ApplicationArea = all;
+                ToolTip = 'To Allow Business Development Edit on the Customer Card';
+            }
+            field("ORB Regional Sales Executive"; Rec."ORB Regional Sales Executive")
+            {
+                Caption = 'Edit Regional Sales Executive';
+                ApplicationArea = all;
+                ToolTip = 'To Allow Regional Sales Executive Edit on the Customer Card';
+            }
+            field("ORB Key Account Manager"; Rec."ORB Key Account Manager")
+            {
+                Caption = 'Edit Key/National Account Manager';
+                ApplicationArea = all;
+                ToolTip = 'To Allow Key/National Account Manager Edit on the Customer Card';
+            }
+            field("ORB Sales Return Del Allowed"; Rec."ORB Sales Return Del Allowed")
+            {
+                Caption = 'Allow Sales Return Deletion';
+                ApplicationArea = all;
+                ToolTip = 'To Allow Sales Return Deletion';
+            }
         }
     }
 

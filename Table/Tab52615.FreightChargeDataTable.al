@@ -55,7 +55,7 @@ table 52615 "ORB FreightChargeDataTable"
             Caption = 'Package Tracking';
             DataClassification = ToBeClassified;
         }
-        field(11; Case_No_; text[35])
+        field(11; Case_No_; text[150])
         {
             Caption = 'Case No';
             DataClassification = ToBeClassified;

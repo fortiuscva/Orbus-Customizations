@@ -46,7 +46,52 @@ pageextension 52605 "ORB Posted Sales Inv. - Update" extends "Posted Sales Inv. 
                 Editable = true;
                 ToolTip = 'Specifies the sub-reason code for Shipment Delay';
             }
+            field("ORB Sell-to Contact"; Rec."Sell-to Contact")
+            {
+                ApplicationArea = all;
+                Caption = 'Contact Name';
+            }
+            field("ORB Bill-to Contact"; Rec."Bill-to Contact")
+            {
+                ApplicationArea = all;
+                Caption = 'Bill-to Contact';
+            }
+            field("ORB Sell-To Contact Name (Custom)"; Rec."Sell-To Contact Name (Custom)")
+            {
+                ApplicationArea = all;
+                Caption = 'Sell-To Contact Name';
+            }
+            field("ORB WorkDescription"; WorkDescription)
+            {
+                ApplicationArea = all;
+                MultiLine = true;
+                Caption = 'Work Description';
 
+                trigger OnValidate()
+                begin
+                    SetWorkDescription(WorkDescription);
+                end;
+            }
         }
     }
+    trigger OnAfterGetRecord()
+    var
+        SalesInvHdr: Record "Sales Invoice Header";
+    begin
+        if SalesInvHdr.get(rec."No.") then
+            WorkDescription := SalesInvHdr.GetWorkDescription();
+    end;
+
+    var
+        WorkDescription: Text;
+
+    procedure SetWorkDescription(NewWorkDescription: Text)
+    var
+        OutStream: OutStream;
+    begin
+        Clear(rec."Work Description");
+        rec."Work Description".CreateOutStream(OutStream, TEXTENCODING::UTF8);
+        OutStream.WriteText(NewWorkDescription);
+        rec.Modify();
+    end;
 }
