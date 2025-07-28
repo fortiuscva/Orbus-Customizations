@@ -90,9 +90,15 @@ page 52654 "ORB PostedSalesInvoiceAPI"
     begin
         Clear(CreateByEmail);
         UserVar.Reset();
-        UserVar.SetRange("Full Name", rec.Created_By);
-        if UserVar.FindFirst() then
-            CreateByEmail := UserVar."Authentication Email";
+        UserVar.SetRange("User Name", rec.Created_By);
+        if UserVar.FindFirst() then begin
+            CreateByEmail := UserVar."Authentication Email"
+        end else begin
+            UserVar.Reset();
+            UserVar.SetRange("Full Name", rec.Created_By);
+            if UserVar.FindFirst() then
+                CreateByEmail := UserVar."Authentication Email";
+        end;
     end;
 
     var
