@@ -36,7 +36,8 @@ codeunit 53402 "ORB LIFT Customer Mgmt"
         Customer.Validate("Currency Code", LIFTCustomer."Currency Code");
         Customer.Validate("Customer Price Group", LIFTCustomer."Customer Price Group");
         Customer.Validate("Payment Terms Code", LIFTCustomer."Payment Terms Code");
-        Customer.Validate("Salesperson Code", LIFTCustomer."Salesperson Code");
+        if (LIFTCustomer."Salesperson Code" <> '') then
+            Customer.Validate("Salesperson Code", LIFTCustomer."Salesperson Code");
         Customer.Validate("Country/Region Code", LIFTCustomer."Country/Region Code");
         Customer.Validate(Blocked, LIFTCustomer.Blocked);
         Customer.Validate("Payment Method Code", LIFTCustomer."Payment Method Code");
@@ -57,10 +58,11 @@ codeunit 53402 "ORB LIFT Customer Mgmt"
         else
             Customer.Validate(Needs_Approval, Customer.Needs_Approval::yesNeedsApproval);
         Customer.Validate("Magento ID", LIFTCustomer."Magento ID");
-        Customer.Validate(ORBAPPAssociationsName, LIFTCustomer.ORBAPPAssociationsName);
-        Customer.Validate("ORB Regional Sales Executive", LIFTCustomer."ORB Regional Sales Executive");
-        Customer.Validate("ORB Customer Support", LIFTCustomer."ORB Customer Support");
-        Customer.Validate("ORB Business Development", LIFTCustomer."ORB Business Development");
+        //Customer.Validate(ORBAPPAssociationsName, LIFTCustomer.ORBAPPAssociationsName);
+        //Customer.Validate("ORB Regional Sales Executive", LIFTCustomer."ORB Regional Sales Executive");
+        if (LIFTCustomer."ORB Customer Support" <> '') then
+            Customer.Validate("ORB Customer Support", LIFTCustomer."ORB Customer Support");
+        //Customer.Validate("ORB Business Development", LIFTCustomer."ORB Business Development");
         Customer.Validate("ORB LIFT Customer", LIFTCustomer."ORB LIFT Customer");
         Customer.Validate("First Invoice Date", LIFTCustomer."First Invoice Date");
         Customer.Validate("Magento Contact No.", LIFTCustomer."Magento Contact No.");
