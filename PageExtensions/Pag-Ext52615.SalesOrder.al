@@ -272,19 +272,21 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                     PaymentMethodLbl: label 'CREDITCARD';
                     NoValidCreditCardErrorLbl: Label 'No Valid Credit Card Authorization Charged, Please Authorize Valid Credit Card to Release Sales Order.';
                 begin
+                    /*
                     CurrPage.SetSelectionFilter(SalesHeaderRecLcl);
                     SalesHeaderRecLcl.MarkedOnly(true);
                     IF SalesHeaderRecLcl.FindSet() then
                         repeat
+
                             OrbusFunctions.RestrictZeroTransactionAmountforCreditCardPayment(SalesHeaderRecLcl);
-                            /*
-                                if (SalesHeaderRecLcl."Shipping Agent Code" = '') and (SalesHeaderRecLcl."Shipping Agent Service Code" = '') then
-                                    Error('Shipping Agent Code and Shipping Agent Service have a value of "blank". Both fields need a value other than "blank"');
-                                if (SalesHeaderRecLcl."Shipping Agent Code" = '') then
-                                    Error('Shipping Agent Code cannot have a value of "blank"');
-                                if SalesHeaderRecLcl."Shipping Agent Service Code" = '' then
-                                    Error('Shipping Agent Service Code cannot have a value of "blank"');
-                            */
+                            
+                                // if (SalesHeaderRecLcl."Shipping Agent Code" = '') and (SalesHeaderRecLcl."Shipping Agent Service Code" = '') then
+                                //     Error('Shipping Agent Code and Shipping Agent Service have a value of "blank". Both fields need a value other than "blank"');
+                                // if (SalesHeaderRecLcl."Shipping Agent Code" = '') then
+                                //     Error('Shipping Agent Code cannot have a value of "blank"');
+                                // if SalesHeaderRecLcl."Shipping Agent Service Code" = '' then
+                                //     Error('Shipping Agent Service Code cannot have a value of "blank"');
+                        
                             OrbusFunctions.CheckForShippingAgentCode(SalesHeaderRecLcl);
                             OrbusFunctions.CheckForShippingCollect(SalesHeaderRecLcl);
                             OrbusFunctions.CheckForSenderReceiverPaymentType(SalesHeaderRecLcl);
@@ -300,7 +302,22 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                             if not ORBCreateInventoryPick.Run(SalesHeaderRecLcl) then;
                         Until SalesHeaderRecLcl.Next() = 0;
                     //CurrPage.Update();
+                    */
+                    // Check for Zero Amount Transaction and other validations
+                    OrbusFunctions.RestrictZeroTransactionAmountforCreditCardPayment(Rec);
+                    OrbusFunctions.CheckForShippingAgentCode(Rec);
+                    OrbusFunctions.CheckForShippingCollect(Rec);
+                    OrbusFunctions.CheckForSenderReceiverPaymentType(Rec);
+
+                    // Create Inventory Pick
+                    Clear(ORBCreateInventoryPick);
+                    if GuiAllowed then
+                        ORBCreateInventoryPick.SetValuesToShowMessagesOrRequestPage(false, true)
+                    else
+                        ORBCreateInventoryPick.SetValuesToShowMessagesOrRequestPage(true, false);
+                    if not ORBCreateInventoryPick.Run(Rec) then;
                 end;
+
             }
         }
         addafter("Release & Pick_Promoted")
