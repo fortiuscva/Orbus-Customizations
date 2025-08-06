@@ -6,7 +6,7 @@ codeunit 52614 "ORB Create Inventory Pick"
         CreateInvtPutAwayPick(Rec);
     end;
 
-    procedure CreateInvtPutAwayPick(SalesHeader: Record "Sales Header")
+    procedure CreateInvtPutAwayPick(Var SalesHeader: Record "Sales Header")
     var
         WhseRequest: Record "Warehouse Request";
         CreateInvtPutawayPickMvmt: Report "Create Invt Put-away/Pick/Mvmt";
@@ -14,6 +14,7 @@ codeunit 52614 "ORB Create Inventory Pick"
         WarehouseActivityHeaderTemp: Record "Warehouse Activity Header" temporary;
         SalesHeaderLcl: Record "Sales Header";
         SalesLineLcl: Record "Sales Line";
+        ReleaseSalesDocument: Codeunit "Release Sales Document";
     begin
         IsOrderReleased := false;
         // Default "Qty. to Ship" with Outstanding Quantity for the Non-Blank Type Sales Order Lines
@@ -28,9 +29,11 @@ codeunit 52614 "ORB Create Inventory Pick"
                 end;
             until SalesLineLcl.Next() = 0;
         end;
-        Commit();
+        //Commit();
+
         if SalesHeader.Status = SalesHeader.Status::Open then begin
-            SalesHeader.PerformManualRelease();
+            ReleaseSalesDocument.PerformManualRelease(SalesHeader);
+            //SalesHeader.PerformManualRelease();
             IsOrderReleased := true;
         end;
 
@@ -88,15 +91,17 @@ codeunit 52614 "ORB Create Inventory Pick"
         end;
 
         if IsInventoryPickCreated then begin
-            SalesHeader.get(SalesHeader."Document Type", SalesHeader."No.");
+            //SalesHeader.get(SalesHeader."Document Type", SalesHeader."No.");
             SalesHeader."Order Status" := SalesHeader."Order Status"::"Pick Released";
-            SalesHeader.Modify();
+            SalesHeader.Modify(true);
         end
         else begin
             if IsOrderReleased then begin
-                SalesHeaderLcl.SetRange("Document Type", SalesHeader."Document Type");
-                SalesHeaderLcl.SetRange("No.", SalesHeader."No.");
-                SalesHeaderLcl.PerformManualReopen(SalesHeaderLcl);
+                Clear(ReleaseSalesDocument);
+                ReleaseSalesDocument.PerformManualReopen(SalesHeader);
+                // SalesHeaderLcl.SetRange("Document Type", SalesHeader."Document Type");
+                // SalesHeaderLcl.SetRange("No.", SalesHeader."No.");
+                // SalesHeaderLcl.PerformManualReopen(SalesHeaderLcl);
                 /*
                     SalesHeader.get(SalesHeader."Document Type", SalesHeader."No.");
                     SalesHeader.Validate(Status, SalesHeader.Status::Open);
