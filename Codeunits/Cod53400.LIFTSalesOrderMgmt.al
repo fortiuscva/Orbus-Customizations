@@ -21,9 +21,15 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
     begin
         Clear(OrderStatusReopen);
         OrderStatusReopen := false;
-        if SalesHeader.Get(LIFTSalesOrderBuffer."Document Type", LIFTSalesOrderBuffer."No.") then begin
-            if SalesHeader.Status = SalesHeader.Status::Released then
+        SalesHeader.Reset();
+        SalesHeader.SetRange("Document Type", LIFTSalesOrderBuffer."Document Type");
+        SalesHeader.SetRange("No.", LIFTSalesOrderBuffer."No.");
+        if SalesHeader.FindFirst() then begin
+            //if SalesHeader.Get(LIFTSalesOrderBuffer."Document Type", LIFTSalesOrderBuffer."No.") then begin
+            if SalesHeader.Status = SalesHeader.Status::Released then begin
                 ReOpenSalesOrder(SalesHeader);
+                OrderStatusReopen := true;
+            end;
             ArchiveManagement.ArchiveSalesDocument(SalesHeader);
             UpdateSalesHeader(LIFTSalesOrderBuffer, false);
         end;
@@ -249,15 +255,19 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
     end;
 
     local procedure ReOpenSalesOrder(var SalesHeader: Record "Sales Header")
+    var
+        ReleaseSalesDocument: Codeunit "Release Sales Document";
     begin
-        SalesHeader.PerformManualReopen(SalesHeader);
-        OrderStatusReopen := true;
+        ReleaseSalesDocument.PerformManualReopen(SalesHeader);
+        //SalesHeader.PerformManualReopen(SalesHeader);
     end;
 
     local procedure ReleaseSalesOrder(var SalesHeader: Record "Sales Header")
+    var
+        ReleaseSalesDocument: Codeunit "Release Sales Document";
     begin
-        SalesHeader.PerformManualRelease(SalesHeader);
-        OrderStatusReopen := false;
+        ReleaseSalesDocument.PerformManualRelease(SalesHeader);
+        //SalesHeader.PerformManualRelease(SalesHeader);
     end;
 
     var
