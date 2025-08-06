@@ -12,6 +12,7 @@ codeunit 52614 "ORB Create Inventory Pick"
         CreateInvtPutawayPickMvmt: Report "Create Invt Put-away/Pick/Mvmt";
         WarehouseActivityHeader: Record "Warehouse Activity Header";
         WarehouseActivityHeaderTemp: Record "Warehouse Activity Header" temporary;
+        SalesHeaderLcl: Record "Sales Header";
         SalesLineLcl: Record "Sales Line";
     begin
         IsOrderReleased := false;
@@ -93,10 +94,14 @@ codeunit 52614 "ORB Create Inventory Pick"
         end
         else begin
             if IsOrderReleased then begin
-                // SalesHeader.PerformManualReopen(SalesHeader);
-                SalesHeader.get(SalesHeader."Document Type", SalesHeader."No.");
-                SalesHeader.Validate(Status, SalesHeader.Status::Open);
-                SalesHeader.Modify();
+                SalesHeaderLcl.SetRange("Document Type", SalesHeader."Document Type");
+                SalesHeaderLcl.SetRange("No.", SalesHeader."No.");
+                SalesHeaderLcl.PerformManualReopen(SalesHeaderLcl);
+                /*
+                    SalesHeader.get(SalesHeader."Document Type", SalesHeader."No.");
+                    SalesHeader.Validate(Status, SalesHeader.Status::Open);
+                    SalesHeader.Modify();
+                */
             end;
         end;
     end;
