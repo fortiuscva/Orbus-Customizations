@@ -22,15 +22,18 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         Clear(OrderStatusReopen);
         OrderStatusReopen := false;
         if SalesHeader.Get(LIFTSalesOrderBuffer."Document Type", LIFTSalesOrderBuffer."No.") then begin
-            if SalesHeader.Status = SalesHeader.Status::Released then
-                ReOpenSalesOrder(SalesHeader);
+            if SalesHeader.Status = SalesHeader.Status::Released then begin
+                SalesHeader.PerformManualReopen(SalesHeader);
+                Commit();
+                OrderStatusReopen := true;
+            end;
             ArchiveManagement.ArchiveSalesDocument(SalesHeader);
             UpdateSalesHeader(LIFTSalesOrderBuffer, false);
         end;
         DShipPackOptions.RetrievePackageOptions(Enum::"DSHIP Document Type"::"Sales Order", LIFTSalesOrderBuffer."No.", '');
         UpdateDShipPackageOptions(DShipPackOptions, LIFTSalesOrderBuffer);
         if OrderStatusReopen then
-            ReleaseSalesOrder(SalesHeader);
+            SalesHeader.PerformManualRelease(SalesHeader);
     end;
 
     local procedure UpdateSalesHeader(var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer"; CreateSO: Boolean)
@@ -247,19 +250,19 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         if LIFTSalesOrderBuffer."Payment Country Code" <> '' then
             DShipPackOptions.Validate("Payment Country Code", LIFTSalesOrderBuffer."Payment Country Code");
     end;
+    /*
+        local procedure ReOpenSalesOrder(var SalesHeader: Record "Sales Header")
+        begin
+            SalesHeader.PerformManualReopen(SalesHeader);
+            OrderStatusReopen := true;
+        end;
 
-    local procedure ReOpenSalesOrder(var SalesHeader: Record "Sales Header")
-    begin
-        SalesHeader.PerformManualReopen(SalesHeader);
-        OrderStatusReopen := true;
-    end;
-
-    local procedure ReleaseSalesOrder(var SalesHeader: Record "Sales Header")
-    begin
-        SalesHeader.PerformManualRelease(SalesHeader);
-        OrderStatusReopen := false;
-    end;
-
+        local procedure ReleaseSalesOrder(var SalesHeader: Record "Sales Header")
+        begin
+            SalesHeader.PerformManualRelease(SalesHeader);
+            OrderStatusReopen := false;
+        end;
+    */
     var
         SalesHeader: Record "Sales Header";
         SalesLine: Record "Sales Line";
