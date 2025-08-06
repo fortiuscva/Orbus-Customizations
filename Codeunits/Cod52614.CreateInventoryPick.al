@@ -92,8 +92,12 @@ codeunit 52614 "ORB Create Inventory Pick"
             SalesHeader.Modify();
         end
         else begin
-            if IsOrderReleased then
-                SalesHeader.PerformManualReopen(SalesHeader);
+            if IsOrderReleased then begin
+                // SalesHeader.PerformManualReopen(SalesHeader);
+                SalesHeader.get(SalesHeader."Document Type", SalesHeader."No.");
+                SalesHeader.Validate(Status, SalesHeader.Status::Open);
+                SalesHeader.Modify();
+            end;
         end;
     end;
 
