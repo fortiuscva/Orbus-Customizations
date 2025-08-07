@@ -8,13 +8,22 @@ codeunit 53415 "ORB LIFT Post Item Jnl."
         ItemJnlRecLcl: Record "Item Journal Line";
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
     begin
-        LIFTERPSetuplcl.Get();
+        if not LIFTERPSetuplcl.Get() then
+            LIFTERPSetuplcl.Init();
 
-        if ItemJnlTemplateNameGbl = '' then
-            ItemJnlTemplateNameGbl := 'ITEM';
 
-        if ItemJnlBatchNameGbl = '' then
-            ItemJnlBatchNameGbl := LIFTERPSetuplcl."Inventory Pick Posting Batch";
+        LIFTERPSetuplcl.TestField("Inv. Pick Post. Jnl. Batch");
+
+
+        if ItemJnlTemplateNameGbl = '' then begin
+            LIFTERPSetuplcl.TestField("Inv. Pick Post. Jnl. Template");
+            ItemJnlTemplateNameGbl := LIFTERPSetuplcl."Inv. Pick Post. Jnl. Template";
+        end;
+
+        if ItemJnlBatchNameGbl = '' then begin
+            LIFTERPSetuplcl.TestField("Inv. Pick Post. Jnl. Batch");
+            ItemJnlBatchNameGbl := LIFTERPSetuplcl."Inv. Pick Post. Jnl. Batch";
+        end;
 
         ItemJnlRecLcl.Reset();
         ItemJnlRecLcl.SetRange("Journal Template Name", ItemJnlTemplateNameGbl);
