@@ -45,6 +45,10 @@ page 52644 "ORB LIFT ERP Setup"
                     ApplicationArea = all;
                     ToolTip = 'Specifies the value of the Job Queue Error Notification Email Field', Comment = '%';
                 }
+                field("Inventory Pick Posting Batch"; Rec."Inventory Pick Posting Batch")
+                {
+                    ApplicationArea = all;
+                }
             }
         }
     }
