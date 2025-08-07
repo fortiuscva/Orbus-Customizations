@@ -22,6 +22,31 @@ pageextension 52644 "ORB Item Journal" extends "Item Journal"
     {
         addlast("F&unctions")
         {
+            action("ORB LIFT Get Inventory Transactions")
+            {
+                Image = Order;
+                ApplicationArea = all;
+                Caption = 'LIFT Get Inventory Transactions';
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                trigger OnAction()
+                var
+                    LIFTERPSetupRecLcl: Record "ORB LIFT ERP Setup";
+                    LIFTIntegrationDataLogRecLcl: Record "ORB LIFT Integration Data Log";
+                    LIFTIntegration: Codeunit "ORB LIFT Integration";
+                    LIFTAPICodes: Codeunit "ORB LIFT API Codes";
+                begin
+                    LIFTERPSetupRecLcl.Get();
+                    LIFTIntegrationDataLogRecLcl.Reset();
+                    LIFTIntegrationDataLogRecLcl.SetCurrentKey("Transaction ID");
+                    LIFTIntegrationDataLogRecLcl.SetRange("Source Type", Database::"Item Journal Line");
+                    if LIFTIntegrationDataLogRecLcl.FindLast() then
+                        LIFTIntegration.ParseData(LIFTERPSetupRecLcl."Inventory Journal API" + '&p1=' + format(LIFTIntegrationDataLogRecLcl."Transaction ID"), LIFTAPICodes.GetItemJournalAPICode())
+                    else
+                        LIFTIntegration.ParseData(LIFTERPSetupRecLcl."Inventory Journal API", LIFTAPICodes.GetItemJournalAPICode());
+                end;
+            }
             action("ORB LIFT Roll Up Cost")
             {
                 ApplicationArea = All;
