@@ -65,6 +65,7 @@ table 52618 "ORB LIFT Integration Data Log"
         {
             Caption = 'Item Jnl. Entry Type';
         }
+    }
     keys
     {
         key(PK; "Entry No.")
