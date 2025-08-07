@@ -61,7 +61,10 @@ table 52618 "ORB LIFT Integration Data Log"
         {
             Caption = 'Location Code';
         }
-    }
+        field(25; "Item Jnl. Entry Type"; Enum "Item Ledger Entry Type")
+        {
+            Caption = 'Item Jnl. Entry Type';
+        }
     keys
     {
         key(PK; "Entry No.")
