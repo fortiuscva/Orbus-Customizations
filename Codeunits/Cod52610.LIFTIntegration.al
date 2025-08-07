@@ -494,14 +494,17 @@ codeunit 52610 "ORB LIFT Integration"
 
     procedure CreateItemJournal(var ItemJournalLine: Record "Item Journal Line"; jsonOrderObject: JsonObject)
     var
+        LIFTERPSetup: Record "ORB LIFT ERP Setup";
         EntryNo: Integer;
         JsonOrderToken: JsonToken;
         EntryTypeVarLcl: Text;
     begin
+        LIFTERPSetup.Get();
+
         Clear(EntryNo);
         ItemJournalLine.Reset();
         ItemJournalLine.SetRange("Journal Template Name", 'ITEM');
-        ItemJournalLine.SetRange("Journal Batch Name", 'LIFTERP');
+        ItemJournalLine.SetRange("Journal Batch Name", LIFTERPSetup."Inventory Pick Posting Batch");
         if ItemJournalLine.FindLast() then
             EntryNo := ItemJournalLine."Line No." + 10000
         else
@@ -510,7 +513,7 @@ codeunit 52610 "ORB LIFT Integration"
         JsonOrderToken := jsonOrderObject.AsToken();
         ItemJournalLine.Init();
         ItemJournalLine."Journal Template Name" := 'ITEM';
-        ItemJournalLine."Journal Batch Name" := 'LIFTERP';
+        ItemJournalLine."Journal Batch Name" := LIFTERPSetup."Inventory Pick Posting Batch";
         ItemJournalLine."Line No." := EntryNo;
         ItemJournalLine.Insert(true);
 
