@@ -312,9 +312,8 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                     // Create Inventory Pick
                     Clear(ORBCreateInventoryPick);
                     if GuiAllowed then
-                        ORBCreateInventoryPick.SetValuesToShowMessagesOrRequestPage(false, true)
-                    else
-                        ORBCreateInventoryPick.SetValuesToShowMessagesOrRequestPage(true, false);
+                        ORBCreateInventoryPick.SetValuesToShowMessagesOrRequestPage(false, true);
+                    //ORBCreateInventoryPick.Run(Rec);
                     if not ORBCreateInventoryPick.Run(Rec) then;
                 end;
 
