@@ -29,12 +29,12 @@
             "schemaUpdateMode": "Synchronize"
         },
         {
-            "name": "SandBox_ISV_UAT_033124",
+            "name": "Sandbox_ISV_040825",
             "request": "launch",
             "type": "al",
             "tenant": "09c433f2-4ad2-49f4-b0e7-8562e0331493",
             "environmentType": "Sandbox",
-            "environmentName": "SandBox_ISV_UAT_033124",
+            "environmentName": "Sandbox_ISV_040825",
             "startupObjectId": 9305,
             "startupObjectType": "Page",
             "breakOnError": true,
