@@ -498,13 +498,20 @@ codeunit 52610 "ORB LIFT Integration"
         EntryNo: Integer;
         JsonOrderToken: JsonToken;
         EntryTypeVarLcl: Text;
+        JnlTemplateName: Code[10];
+        JnlBatchName: Code[10];
     begin
         LIFTERPSetup.Get();
+        LIFTERPSetup.TestField("Inv. Pick Post. Jnl. Template");
+        LIFTERPSetup.TestField("Inv. Pick Post. Jnl. Batch");
+
+        JnlTemplateName := LIFTERPSetup."Inv. Pick Post. Jnl. Template";
+        JnlBatchName := LIFTERPSetup."Inv. Pick Post. Jnl. Batch";
 
         Clear(EntryNo);
         ItemJournalLine.Reset();
-        ItemJournalLine.SetRange("Journal Template Name", 'ITEM');
-        ItemJournalLine.SetRange("Journal Batch Name", LIFTERPSetup."Inventory Pick Posting Batch");
+        ItemJournalLine.SetRange("Journal Template Name", JnlTemplateName);
+        ItemJournalLine.SetRange("Journal Batch Name", JnlBatchName);
         if ItemJournalLine.FindLast() then
             EntryNo := ItemJournalLine."Line No." + 10000
         else
@@ -512,8 +519,8 @@ codeunit 52610 "ORB LIFT Integration"
 
         JsonOrderToken := jsonOrderObject.AsToken();
         ItemJournalLine.Init();
-        ItemJournalLine."Journal Template Name" := 'ITEM';
-        ItemJournalLine."Journal Batch Name" := LIFTERPSetup."Inventory Pick Posting Batch";
+        ItemJournalLine."Journal Template Name" := JnlTemplateName;
+        ItemJournalLine."Journal Batch Name" := JnlBatchName;
         ItemJournalLine."Line No." := EntryNo;
         ItemJournalLine.Insert(true);
 
