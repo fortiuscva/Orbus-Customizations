@@ -1,13 +1,14 @@
 codeunit 53416 "ORB LIFT Events & Subscribers"
 {
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"WMS Management", OnInitWhseJnlLineOnAfterGetQuantity, '', false, false)]
-    local procedure "WMS Management_OnInitWhseJnlLineOnAfterGetQuantity"(ItemJnlLine: Record "Item Journal Line"; var WhseJnlLine: Record "Warehouse Journal Line"; Location: Record Location)
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"WMS Management", OnInitWhseJnlLineCopyFromItemJnlLine, '', false, false)]
+    local procedure "WMS Management_OnInitWhseJnlLineCopyFromItemJnlLine"(var WarehouseJournalLine: Record "Warehouse Journal Line"; ItemJournalLine: Record "Item Journal Line")
     begin
-        WhseJnlLine.Quantity := Round(ItemJnlLine."Quantity (Base)" / ItemJnlLine."Qty. per Unit of Measure", UOMMgt.QtyRndPrecision());
-        WhseJnlLine."Unit of Measure Code" := ItemJnlLine."Unit of Measure Code";
-        WhseJnlLine."Qty. per Unit of Measure" := ItemJnlLine."Qty. per Unit of Measure";
+        WarehouseJournalLine.Quantity := Round(ItemJournalLine."Quantity (Base)" / ItemJournalLine."Qty. per Unit of Measure", UOMMgt.QtyRndPrecision());
+        WarehouseJournalLine."Unit of Measure Code" := ItemJournalLine."Unit of Measure Code";
+        WarehouseJournalLine."Qty. per Unit of Measure" := ItemJournalLine."Qty. per Unit of Measure";
     end;
+
 
     var
         UOMMgt: Codeunit "Unit of Measure Management";
