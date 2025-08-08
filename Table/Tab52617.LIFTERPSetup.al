@@ -42,7 +42,7 @@ table 52617 "ORB LIFT ERP Setup"
 
         field(16; "Inv. Pick Post. Jnl. Batch"; Code[10])
         {
-            Caption = 'Inv. Pick Posting Jnl. Template Name';
+            Caption = 'Inv. Pick Posting Jnl. Batch Name';
             TableRelation = "Item Journal Batch".Name WHERE("Journal Template Name" = FIELD("Inv. Pick Post. Jnl. Template"));
         }
     }
