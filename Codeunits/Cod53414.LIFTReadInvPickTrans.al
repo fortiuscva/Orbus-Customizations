@@ -11,7 +11,7 @@ codeunit 53414 "ORB LIFT Read InvPick Trans."
 
         LIFTIntegrationDataLogRec.Reset();
         LIFTIntegrationDataLogRec.SetCurrentKey("Transaction ID");
-        LIFTIntegrationDataLogRec.SetRange("Source Type", Database::"Warehouse Journal Line");
+        LIFTIntegrationDataLogRec.SetRange("Source Type", Database::"Item Journal Line");
 
         if LIFTIntegrationDataLogRec.FindLast() then
             LIFTIntegration.ParseData(
