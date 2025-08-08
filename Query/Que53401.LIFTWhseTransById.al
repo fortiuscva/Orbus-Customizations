@@ -7,7 +7,7 @@ query 53401 "ORB LIFT Whse. Trans. By Id"
     {
         dataitem(ORBLIFTIntegrationDataLog; "ORB LIFT Integration Data Log")
         {
-            DataItemTableFilter = "Source Type" = const(7311);
+            DataItemTableFilter = "Source Type" = const(83);
             column(SourceNo; "Source No.")
             {
             }

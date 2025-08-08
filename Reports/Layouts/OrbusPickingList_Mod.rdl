@@ -3224,6 +3224,9 @@ End Function
         <Field Name="AssembleToOrderQty">
           <DataField>AssembleToOrderQty</DataField>
         </Field>
+        <Field Name="CreatedBy">
+          <DataField>CreatedBy</DataField>
+        </Field>
         <Field Name="No_">
           <DataField>No_</DataField>
         </Field>
