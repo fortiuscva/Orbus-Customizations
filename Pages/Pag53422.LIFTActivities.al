@@ -16,16 +16,17 @@ page 53422 "ORB LIFT Activities"
                     Caption = 'Post Inventory Transactions';
                     DrillDown = true;
                     ShowCaption = false;
+                    Visible = false;
 
                     trigger OnDrillDown()
                     begin
                         LIFTBCFunctionsCU.PostLIFTInventoryTransactions(Rec);
                     end;
                 }
-                field("Post Inventory Transactions (Inventory Pick)"; DummyText1)
+                field("Post Inv. Transactions (Inv. Pick)"; DummyText1)
                 {
                     ApplicationArea = All;
-                    Caption = 'Post Inventory Transactions (Inventory Pick)';
+                    Caption = 'Post Inv. Transactions (Inv. Pick)';
                     DrillDown = true;
                     ShowCaption = false;
 
