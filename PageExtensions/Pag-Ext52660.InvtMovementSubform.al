@@ -9,7 +9,7 @@ pageextension 52660 "ORB Invt. Movement Subform" extends "Invt. Movement Subform
                 ApplicationArea = Suite;
                 Caption = '&Change Unit Of Measure';
                 Ellipsis = true;
-                Visible = false;
+                Visible = true;
                 Image = UnitConversions;
                 ToolTip = 'Specify which unit of measure you want to change during the warehouse activity, for example, because you want to ship an item in boxes although you store it in pallets.';
                 trigger OnAction()
