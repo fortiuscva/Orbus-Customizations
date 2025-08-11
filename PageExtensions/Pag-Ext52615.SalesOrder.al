@@ -208,7 +208,7 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
         }
         modify("Release & Pick")
         {
-            Visible = true;
+            Visible = false;
             trigger OnBeforeAction()
             var
                 EFTTransactionRecLcl: Record "EFT Transaction -CL-";
@@ -261,7 +261,7 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
         {
             action("ORB Release & Inventory Pick")
             {
-                Caption = 'Release & Pick(Inventory Picks)';
+                Caption = 'Release & Create Inv. Pick';
                 ApplicationArea = all;
                 Image = CreateWarehousePick;
 
