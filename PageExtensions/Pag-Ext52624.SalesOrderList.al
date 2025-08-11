@@ -163,7 +163,7 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
                 Caption = 'Release & Create Inv. Pick';
                 ApplicationArea = all;
                 Promoted = true;
-                PromotedCategory = Category5;
+                PromotedCategory = Category6;
                 Image = CreateWarehousePick;
 
                 trigger OnAction()
