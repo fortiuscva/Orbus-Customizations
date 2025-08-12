@@ -554,16 +554,15 @@ codeunit 52606 "ORB Functions"
                 if TempReportSelectionWarehouse.Insert() then;
             until ReportSelectionWarehouse.Next() = 0;
     end;
-    /*
-        procedure AutomaticShipToAddressValidation(SalesHeaderRec: Record "Sales Header")
-        var
-            AddressValidation: Codeunit "DSHIP Address Validation";
-        begin
-            if SalesHeaderRec."Ship-to Country/Region Code" = 'US' then begin
-                AddressValidation.RunAddressValidation(SalesHeaderRec, true);
-            end;
+
+    procedure AutomaticShipToAddressValidation(SalesHeaderRec: Record "Sales Header")
+    var
+        AddressValidation: Codeunit "DSHIP Address Validation";
+    begin
+        if SalesHeaderRec."Ship-to Country/Region Code" = 'US' then begin
+            AddressValidation.RunAddressValidation(SalesHeaderRec, true);
         end;
-    */
+    end;
 
     var
         ReportSelectionWarehouse: Record "Report Selection Warehouse";
