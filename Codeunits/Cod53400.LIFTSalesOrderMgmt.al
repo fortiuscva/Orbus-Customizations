@@ -238,20 +238,25 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
 
     procedure ValidateDShipPackOptionFields(var DShipPackOptions: Record "DSHIP Package Options"; var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer")
     begin
-        if LIFTSalesOrderBuffer."Sales Order Payment Type" = LIFTSalesOrderBuffer."Sales Order Payment Type"::"3rd Party" then
-            DShipPackOptions.Validate("Payment Type", SalesHeader."Sales Order Payment Type"::"Third Party")
-        else if LIFTSalesOrderBuffer."Sales Order Payment Type" = LIFTSalesOrderBuffer."Sales Order Payment Type"::Free then
-            DShipPackOptions.Validate("Payment Type", SalesHeader."Sales Order Payment Type"::Collect)
-        else
-            DShipPackOptions.Validate("Payment Type", LIFTSalesOrderBuffer."Sales Order Payment Type");
-        if LIFTSalesOrderBuffer."SO Payment Account No." <> '' then
-            DShipPackOptions.Validate("Payment Account No.", LIFTSalesOrderBuffer."SO Payment Account No.");
-        if LIFTSalesOrderBuffer."Payment Postal Code" <> '' then
-            DShipPackOptions.Validate("Payment Postal Code", LIFTSalesOrderBuffer."Payment Postal Code");
-        if LIFTSalesOrderBuffer."Payment Province" <> '' then
-            DShipPackOptions.Validate("Payment Province", LIFTSalesOrderBuffer."Payment Province");
-        if LIFTSalesOrderBuffer."Payment Country Code" <> '' then
-            DShipPackOptions.Validate("Payment Country Code", LIFTSalesOrderBuffer."Payment Country Code");
+        if LIFTSalesOrderBuffer."Sales Order Payment Type" = LIFTSalesOrderBuffer."Sales Order Payment Type"::"3rd Party" then begin
+            DShipPackOptions.Validate("Payment Type", SalesHeader."Sales Order Payment Type"::"Third Party");
+            if LIFTSalesOrderBuffer."SO Payment Account No." <> '' then
+                DShipPackOptions.Validate("Payment Account No.", LIFTSalesOrderBuffer."SO Payment Account No.");
+            if LIFTSalesOrderBuffer."Payment Postal Code" <> '' then
+                DShipPackOptions.Validate("Payment Postal Code", LIFTSalesOrderBuffer."Payment Postal Code");
+            if LIFTSalesOrderBuffer."Payment Province" <> '' then
+                DShipPackOptions.Validate("Payment Province", LIFTSalesOrderBuffer."Payment Province");
+            if LIFTSalesOrderBuffer."Payment Country Code" <> '' then
+                DShipPackOptions.Validate("Payment Country Code", LIFTSalesOrderBuffer."Payment Country Code");
+        end
+        else if LIFTSalesOrderBuffer."Sales Order Payment Type" = LIFTSalesOrderBuffer."Sales Order Payment Type"::Free then begin
+            DShipPackOptions.Validate("Payment Type", SalesHeader."Sales Order Payment Type"::Collect);
+            ClearDSPaymentDetails(DShipPackOptions);
+        end
+        else if LIFTSalesOrderBuffer."Sales Order Payment Type" = LIFTSalesOrderBuffer."Sales Order Payment Type"::None then begin
+            DShipPackOptions.Validate("Payment Type", LIFTSalesOrderBuffer."Sales Order Payment Type"::None);
+            ClearDSPaymentDetails(DShipPackOptions);
+        end;
     end;
 
     local procedure ReOpenSalesOrder(var SalesHeader: Record "Sales Header")
@@ -268,6 +273,14 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
     begin
         ReleaseSalesDocument.PerformManualRelease(SalesHeader);
         //SalesHeader.PerformManualRelease(SalesHeader);
+    end;
+
+    local procedure ClearDSPaymentDetails(var DShipPackOptions: Record "DSHIP Package Options")
+    begin
+        DShipPackOptions.Validate("Payment Account No.", '');
+        DShipPackOptions.Validate("Payment Postal Code", '');
+        DShipPackOptions.Validate("Payment Province", '');
+        DShipPackOptions.Validate("Payment Country Code", '');
     end;
 
     var
