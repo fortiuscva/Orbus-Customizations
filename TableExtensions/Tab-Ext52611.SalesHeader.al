@@ -236,8 +236,8 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             var
                 ORBFunctions: codeunit "ORB Functions";
             begin
-                // if not ModifyShipToAddressFields() then
-                //     Error('Reopen the Sales Order to modify Ship-to Code');
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to Code');
             end;
         }
         modify("Ship-to Name")
@@ -246,8 +246,8 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             var
                 ORBFunctions: codeunit "ORB Functions";
             begin
-                // if not ModifyShipToAddressFields() then
-                //     Error('Reopen the Sales Order to modify Ship-to Name');
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to Name');
             end;
         }
         modify("Ship-to Address")
@@ -256,8 +256,8 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             var
                 ORBFunctions: codeunit "ORB Functions";
             begin
-                // if not ModifyShipToAddressFields() then
-                //     Error('Reopen the Sales Order to modify Ship-to Address');
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to Address');
             end;
         }
         modify("Ship-to Address 2")
@@ -266,8 +266,8 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             var
                 ORBFunctions: codeunit "ORB Functions";
             begin
-                // if not ModifyShipToAddressFields() then
-                //     Error('Reopen the Sales Order to modify Ship-to Address 2');
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to Address 2');
             end;
         }
         modify("Ship-to City")
@@ -276,8 +276,8 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             var
                 ORBFunctions: codeunit "ORB Functions";
             begin
-                // if not ModifyShipToAddressFields() then
-                //     Error('Reopen the Sales Order to modify Ship-to City');
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to City');
             end;
         }
         modify("Ship-to County")
@@ -286,8 +286,8 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             var
                 ORBFunctions: codeunit "ORB Functions";
             begin
-                // if not ModifyShipToAddressFields() then
-                //     Error('Reopen the Sales Order to modify Ship-to County');
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to County');
             end;
         }
         modify("Ship-to Post Code")
@@ -296,8 +296,8 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             var
                 ORBFunctions: codeunit "ORB Functions";
             begin
-                // if not ModifyShipToAddressFields() then
-                //     Error('Reopen the Sales Order to modify Ship-to Post Code');
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to Post Code');
             end;
         }
         modify("Ship-to Country/Region Code")
@@ -306,8 +306,8 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             var
                 ORBFunctions: codeunit "ORB Functions";
             begin
-                // if not ModifyShipToAddressFields() then
-                //     Error('Reopen the Sales Order to modify Ship-to Country/Region Code');
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to Country/Region Code');
             end;
         }
         modify("Ship-to Phone No.")
@@ -316,8 +316,8 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             var
                 ORBFunctions: codeunit "ORB Functions";
             begin
-                // if not ModifyShipToAddressFields() then
-                //     Error('Reopen the Sales Order to modify Ship-to Phone No.');
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to Phone No.');
             end;
         }
 
@@ -327,12 +327,10 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             var
                 ORBFunctions: codeunit "ORB Functions";
             begin
-                // if not ModifyShipToAddressFields() then
-                //     Error('Reopen the Sales Order to modify Ship-to Contact');
+                if not ModifyShipToAddressFields() then
+                    Error('Reopen the Sales Order to modify Ship-to Contact');
             end;
         }
-
-
     }
 
     trigger OnDelete()
