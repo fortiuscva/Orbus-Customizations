@@ -778,16 +778,16 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             IsHandled := true;
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", OnCodeOnBeforeSetStatusReleased, '', false, false)]
-    local procedure "Release Sales Document_OnCodeOnBeforeSetStatusReleased"(var SalesHeader: Record "Sales Header")
-    begin
-        if not OrbusSetup.Get() or not OrbusSetup."Enable Auto Address Validation" then
-            exit;
-        if SalesHeader."Document Type" = SalesHeader."Document Type"::Order then
-            OrbusFunctionsCUGbl.AutomaticShipToAddressValidation(SalesHeader);
-    end;
-
-
+    /*
+        [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", OnCodeOnBeforeSetStatusReleased, '', false, false)]
+        local procedure "Release Sales Document_OnCodeOnBeforeSetStatusReleased"(var SalesHeader: Record "Sales Header")
+        begin
+            if not OrbusSetup.Get() or not OrbusSetup."Enable Auto Address Validation" then
+                exit;
+            if SalesHeader."Document Type" = SalesHeader."Document Type"::Order then
+                OrbusFunctionsCUGbl.AutomaticShipToAddressValidation(SalesHeader);
+        end;
+    */
 
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
