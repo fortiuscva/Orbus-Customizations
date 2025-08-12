@@ -796,8 +796,8 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
     begin
         if not OrbusSetup.Get() or not OrbusSetup."Enable Auto Address Validation" then
             exit;
-        if SalesHeader."Document Type" = SalesHeader."Document Type"::Order then
-            OrbusFunctionsCUGbl.AutomaticShipToAddressValidation(SalesHeader);
+        // if SalesHeader."Document Type" = SalesHeader."Document Type"::Order then
+        //      OrbusFunctionsCUGbl.AutomaticShipToAddressValidation(SalesHeader);
     end;
 
     [EventSubscriber(ObjectType::Table, Database::"Sales Header", 'OnAfterModifyEvent', '', true, true)]
