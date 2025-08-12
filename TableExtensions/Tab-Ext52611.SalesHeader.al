@@ -287,7 +287,7 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
                 if not OrbusSetup.Get() or not OrbusSetup."Enable Auto Address Validation" then
                     exit;
                 if not ModifyShipToAddressFields() then
-                    Error('Reopen the Sales Order to modify Ship-to County');
+                    Error('Reopen the Sales Order to modify Ship-to State');
             end;
         }
         modify("Ship-to Post Code")
