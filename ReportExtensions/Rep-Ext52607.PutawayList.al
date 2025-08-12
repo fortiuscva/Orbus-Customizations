@@ -15,7 +15,8 @@ reportextension 52607 "ORB Put-away List" extends "Put-away List"
         {
             trigger OnAfterAfterGetRecord()
             begin
-                GetScannableBarcode("Warehouse Activity Header"."No.");
+                EndocdePutAwayTagVarGbl := '';
+                EndocdePutAwayTagVarGbl :=GetScannableBarcode("Warehouse Activity Header"."No.");
             end;
         }
       add(WhseActLine)
@@ -29,6 +30,7 @@ reportextension 52607 "ORB Put-away List" extends "Put-away List"
         {
             trigger OnAfterAfterGetRecord()
             begin
+                EncodedItemNoVarGbl := '';
                 EncodedItemNoVarGbl :=GetScannableBarcode(WhseActLine."Item No.");
             end;
         }
