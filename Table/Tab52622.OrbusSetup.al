@@ -13,6 +13,11 @@ table 52622 "ORB Orbus Setup"
         {
             Caption = 'Enable User Pick Zone';
         }
+        field(3; "Enable Auto Address Validation"; Boolean)
+        {
+            Caption = 'Enable Auto Address Validation On Sales Order Release';
+            DataClassification = CustomerContent;
+        }
 
     }
     keys
