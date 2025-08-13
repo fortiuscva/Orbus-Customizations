@@ -53,7 +53,7 @@ codeunit 52606 "ORB Functions"
             if (SalesHeader."Sales Order Payment Type" = SalesHeader."Sales Order Payment Type"::Collect) then begin
                 if (ShippingAgentCodeVarLcl.Contains('FED')) then
                     Error(NoCollectOrderFedexLbl);
-                if (SalesHeader."Case No." = '') then
+                if (SalesHeader."Case No." = '') and (SalesHeader."ORB Lift Order" = false) then
                     Error(NoCollectwithoutCaseLbl);
             end;
         end;
