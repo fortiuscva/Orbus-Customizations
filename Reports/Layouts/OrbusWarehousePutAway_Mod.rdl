@@ -724,6 +724,7 @@
                                 <TextRun>
                                   <Value>=Fields!ORBEndocdePutAwayTagVarGbl.Value</Value>
                                   <Style>
+                                    <FontFamily>IDAutomationC39S</FontFamily>
                                     <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
