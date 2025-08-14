@@ -65,6 +65,10 @@ table 52618 "ORB LIFT Integration Data Log"
         {
             Caption = 'Item Jnl. Entry Type';
         }
+        field(26; "Bin Code"; Code[20])
+        {
+            Caption = 'Bin Code';
+        }
     }
     keys
     {
