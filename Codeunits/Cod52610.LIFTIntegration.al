@@ -407,7 +407,12 @@ codeunit 52610 "ORB LIFT Integration"
         WarehouseJournalLine.Init();
         WarehouseJournalLine."Journal Template Name" := 'ITEM';
         WarehouseJournalLine."Journal Batch Name" := 'LIFTERP';
+        WarehouseJournalLine.Validate("Whse. Document No.", GetValueAsText(JsonOrderToken, 'DOCUMENT_NUMBER'));
         WarehouseJournalLine.Validate("Location Code", GetValueAsCode(JsonOrderToken, 'LOCATION_CODE'));
+        WarehouseJournalLine.Validate("Item No.", GetValueAsText(JsonOrderToken, 'MATERIAL_BARCODE'));
+        WarehouseJournalLine.Validate("Bin Code", GetValueAsCode(JsonOrderToken, 'BIN_CODE'));
+        if WarehouseJournalLine."Bin Code" = '' then
+            Error('Bin Code is blank for Document No. %1, Item No. %2 and Location Code %3', WarehouseJournalLine."Whse. Document No.", WarehouseJournalLine."Item No.", WarehouseJournalLine."Location Code");
         WarehouseJournalLine."Line No." := EntryNo;
         WarehouseJournalLine.Insert(true);
 
@@ -426,12 +431,10 @@ codeunit 52610 "ORB LIFT Integration"
             WarehouseJournalLine.Validate("Entry Type", WarehouseJournalLine."Entry Type"::"Negative Adjmt.")
         ELSE
             WarehouseJournalLine.Validate("Entry Type", WarehouseJournalLine."Entry Type"::"Positive Adjmt.");
-        //WarehouseJournalLine.Validate("Location Code", GetValueAsCode(JsonOrderToken, 'LOCATION_CODE'));
+        // WarehouseJournalLine.Validate("Location Code", GetValueAsCode(JsonOrderToken, 'LOCATION_CODE'));
         // WarehouseJournalLine.Validate("Bin Code", 'WR-LIFT');
-        WarehouseJournalLine.Validate("Bin Code", GetValueAsCode(JsonOrderToken, 'BIN_CODE'));
-        WarehouseJournalLine.TestField("Bin Code");
-        WarehouseJournalLine.Validate("Item No.", GetValueAsText(JsonOrderToken, 'MATERIAL_BARCODE'));
-        WarehouseJournalLine.Validate("Whse. Document No.", GetValueAsText(JsonOrderToken, 'DOCUMENT_NUMBER'));
+        // WarehouseJournalLine.Validate("Item No.", GetValueAsText(JsonOrderToken, 'MATERIAL_BARCODE'));
+        // WarehouseJournalLine.Validate("Whse. Document No.", GetValueAsText(JsonOrderToken, 'DOCUMENT_NUMBER'));
         WarehouseJournalLine.Validate("Unit of Measure Code", GetValueAsCode(JsonOrderToken, 'UNIT_OF_MEASURE'));
         WarehouseJournalLine.Validate(Quantity, GetValueAsDecimal(JsonOrderToken, 'QUANTITY'));
         //WarehouseJournalLine.Validate(Amount, GetValueAsDecimal(JsonOrderToken, 'AMOUNT'));
@@ -524,6 +527,12 @@ codeunit 52610 "ORB LIFT Integration"
         ItemJournalLine.Init();
         ItemJournalLine."Journal Template Name" := JnlTemplateName;
         ItemJournalLine."Journal Batch Name" := JnlBatchName;
+        ItemJournalLine.Validate("Document No.", GetValueAsText(JsonOrderToken, 'DOCUMENT_NUMBER'));
+        ItemJournalLine.Validate("Item No.", GetValueAsText(JsonOrderToken, 'MATERIAL_BARCODE'));
+        ItemJournalLine.Validate("Location Code", GetValueAsCode(JsonOrderToken, 'LOCATION_CODE'));
+        ItemJournalLine.Validate("Bin Code", GetValueAsCode(JsonOrderToken, 'BIN_CODE'));
+        if ItemJournalLine."Bin Code" = '' then
+            Error('Bin Code is blank for Document No. %1, Item No. %2 and Location Code %3', ItemJournalLine."Document No.", ItemJournalLine."Item No.", ItemJournalLine."Location Code");
         ItemJournalLine."Line No." := EntryNo;
         ItemJournalLine.Insert(true);
 
@@ -533,12 +542,10 @@ codeunit 52610 "ORB LIFT Integration"
             ItemJournalLine.Validate("Entry Type", ItemJournalLine."Entry Type"::"Negative Adjmt.")
         ELSE
             ItemJournalLine.Validate("Entry Type", ItemJournalLine."Entry Type"::"Positive Adjmt.");
-        ItemJournalLine.Validate("Document No.", GetValueAsText(JsonOrderToken, 'DOCUMENT_NUMBER'));
-        ItemJournalLine.Validate("Item No.", GetValueAsText(JsonOrderToken, 'MATERIAL_BARCODE'));
-        ItemJournalLine.Validate("Location Code", GetValueAsCode(JsonOrderToken, 'LOCATION_CODE'));
+        // ItemJournalLine.Validate("Document No.", GetValueAsText(JsonOrderToken, 'DOCUMENT_NUMBER'));
+        // ItemJournalLine.Validate("Item No.", GetValueAsText(JsonOrderToken, 'MATERIAL_BARCODE'));
+        // ItemJournalLine.Validate("Location Code", GetValueAsCode(JsonOrderToken, 'LOCATION_CODE'));
         // ItemJournalLine.Validate("Bin Code", 'WR-LIFT');
-        ItemJournalLine.Validate("Bin Code", GetValueAsCode(JsonOrderToken, 'BIN_CODE'));
-        ItemJournalLine.TestField("Bin Code");
         ItemJournalLine.Validate("Unit of Measure Code", GetValueAsCode(JsonOrderToken, 'UNIT_OF_MEASURE'));
         ItemJournalLine.Validate(Quantity, Abs(GetValueAsDecimal(JsonOrderToken, 'QUANTITY')));
         //ItemJournalLine.Validate("Unit Cost", GetValueAsDecimal(JsonOrderToken, 'UNIT_COST'));
