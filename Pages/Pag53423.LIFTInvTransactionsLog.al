@@ -62,6 +62,10 @@ page 53423 "ORB LIFT Inv. Transactions Log"
                 {
                     ToolTip = 'Specifies the value of the Location Code field.', Comment = '%';
                 }
+                field("Bin Code"; Rec."Bin Code")
+                {
+                    ToolTip = 'Specifies the value of the Bin Code field.', Comment = '%';
+                }
                 field("Transaction ID"; Rec."Transaction ID")
                 {
                     ToolTip = 'Specifies the value of the Transaction ID field.', Comment = '%';
