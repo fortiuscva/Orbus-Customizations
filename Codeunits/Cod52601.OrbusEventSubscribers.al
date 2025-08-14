@@ -813,6 +813,13 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             DefaultOption := 1;
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", 'OnBeforePerformManualRelease', '', true, true)]
+    local procedure OnBeforeReleaseSalesDoc(var SalesHeader: Record "Sales Header"; PreviewMode: Boolean; var IsHandled: Boolean)
+    begin
+        if SalesHeader."Ship-to Country/Region Code" <> 'US' then
+            exit;
+    end;
+
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
         OrbusFunctionsCUGbl: Codeunit "ORB Functions";
