@@ -813,6 +813,18 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             DefaultOption := 1;
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"DSHIP Event Publisher", OnBeforeAddressValidation, '', false, false)]
+    local procedure "DSHIP Event Publisher_OnBeforeAddressValidation"(addressSource: Variant; var isManual: Boolean; var isHandled: Boolean; var isCorrectionAccepted: Boolean)
+    var
+        SalesHeader: Record "Sales Header";
+    begin
+        if addressSource.IsRecord then begin
+            SalesHeader := addressSource;
+            if SalesHeader."Ship-to Country/Region Code" <> 'US' then
+                isHandled := true;
+        end;
+    end;
+
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
         OrbusFunctionsCUGbl: Codeunit "ORB Functions";
