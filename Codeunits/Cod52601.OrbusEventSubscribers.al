@@ -783,11 +783,16 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
 
 
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", 'OnBeforePerformManualRelease', '', true, true)]
-    local procedure OnBeforeReleaseSalesDoc(var SalesHeader: Record "Sales Header"; PreviewMode: Boolean; var IsHandled: Boolean)
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"DSHIP Event Publisher", OnBeforeAddressValidation, '', false, false)]
+    local procedure "DSHIP Event Publisher_OnBeforeAddressValidation"(addressSource: Variant; var isManual: Boolean; var isHandled: Boolean; var isCorrectionAccepted: Boolean)
+    var
+        SalesHeader: Record "Sales Header";
     begin
-        if SalesHeader."Ship-to Country/Region Code" <> 'US' then
-            exit;
+        if addressSource.IsRecord then begin
+            SalesHeader := addressSource;
+            if SalesHeader."Ship-to Country/Region Code" <> 'US' then
+                isHandled := true;
+        end;
     end;
 
     var
