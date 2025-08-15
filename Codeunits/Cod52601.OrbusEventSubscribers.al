@@ -820,7 +820,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         RecRef: RecordRef;
     begin
         if addressSource.IsRecord then begin
-            RecRef := addressSource;
+            RecRef.GetTable(addressSource);
             if RecRef.Number = Database::"Sales Header" then begin
                 SalesHeader := addressSource;
                 if SalesHeader."Ship-to Country/Region Code" <> 'US' then
