@@ -817,11 +817,15 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
     local procedure "DSHIP Event Publisher_OnBeforeAddressValidation"(addressSource: Variant; var isManual: Boolean; var isHandled: Boolean; var isCorrectionAccepted: Boolean)
     var
         SalesHeader: Record "Sales Header";
+        RecRef: RecordRef;
     begin
         if addressSource.IsRecord then begin
-            SalesHeader := addressSource;
-            if SalesHeader."Ship-to Country/Region Code" <> 'US' then
-                isHandled := true;
+            RecRef := addressSource;
+            if RecRef.Number = Database::"Sales Header" then begin
+                SalesHeader := addressSource;
+                if SalesHeader."Ship-to Country/Region Code" <> 'US' then
+                    isHandled := true;
+            end;
         end;
     end;
 
