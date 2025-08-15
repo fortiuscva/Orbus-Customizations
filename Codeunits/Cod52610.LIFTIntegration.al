@@ -393,17 +393,32 @@ codeunit 52610 "ORB LIFT Integration"
         JsonOrderToken: JsonToken;
         EntryTypeVarLcl: Text;
         ItemJnlEntryType: Enum "Item Ledger Entry Type";
+        LocationCodeVarLcl: Code[20];
+        BinCodeVarLcl: Code[20];
+        LocationCodeBlankErr: Label 'Location Code is blank for Document No. %1, Item No. %2.';
+        BinCodeBlankErr: Label 'Bin Code is blank for Document No. %1, Item No. %2 and Location Code %3.';
     begin
+        JsonOrderToken := jsonOrderObject.AsToken();
+        LocationCodeVarLcl := GetValueAsCode(JsonOrderToken, 'LOCATION_CODE');
+        BinCodeVarLcl := GetValueAsCode(JsonOrderToken, 'BIN_CODE');
+
+        if LocationCodeVarLcl = '' then
+            Error(StrSubstNo(LocationCodeBlankErr, WarehouseJournalLine."Whse. Document No.", WarehouseJournalLine."Item No."));
+
+        if BinCodeVarLcl = '' then
+            Error(StrSubstNo(BinCodeBlankErr, WarehouseJournalLine."Whse. Document No.", WarehouseJournalLine."Item No.", WarehouseJournalLine."Location Code"));
+
         Clear(EntryNo);
         WarehouseJournalLine.Reset();
         WarehouseJournalLine.SetRange("Journal Template Name", 'ITEM');
         WarehouseJournalLine.SetRange("Journal Batch Name", 'LIFTERP');
+        WarehouseJournalLine.SetRange("Location Code", LocationCodeVarLcl);
         if WarehouseJournalLine.FindLast() then
             EntryNo := WarehouseJournalLine."Line No." + 10000
         else
             EntryNo := 10000;
 
-        JsonOrderToken := jsonOrderObject.AsToken();
+
         WarehouseJournalLine.Init();
         WarehouseJournalLine."Journal Template Name" := 'ITEM';
         WarehouseJournalLine."Journal Batch Name" := 'LIFTERP';
@@ -411,8 +426,6 @@ codeunit 52610 "ORB LIFT Integration"
         WarehouseJournalLine.Validate("Location Code", GetValueAsCode(JsonOrderToken, 'LOCATION_CODE'));
         WarehouseJournalLine.Validate("Item No.", GetValueAsText(JsonOrderToken, 'MATERIAL_BARCODE'));
         WarehouseJournalLine.Validate("Bin Code", GetValueAsCode(JsonOrderToken, 'BIN_CODE'));
-        if WarehouseJournalLine."Bin Code" = '' then
-            Error('Bin Code is blank for Document No. %1, Item No. %2 and Location Code %3', WarehouseJournalLine."Whse. Document No.", WarehouseJournalLine."Item No.", WarehouseJournalLine."Location Code");
         WarehouseJournalLine."Line No." := EntryNo;
         WarehouseJournalLine.Insert(true);
 
