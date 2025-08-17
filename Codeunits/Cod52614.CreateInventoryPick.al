@@ -12,8 +12,22 @@ codeunit 52614 "ORB Create Inventory Pick"
         CreateInvtPutawayPickMvmt: Report "Create Invt Put-away/Pick/Mvmt";
         WarehouseActivityHeader: Record "Warehouse Activity Header";
         WarehouseActivityHeaderTemp: Record "Warehouse Activity Header" temporary;
+        SalesLineLcl: Record "Sales Line";
     begin
         IsOrderReleased := false;
+        // Default "Qty. to Ship" with Outstanding Quantity for the Non-Blank Type Sales Order Lines
+        SalesLineLcl.Reset();
+        SalesLineLcl.SetRange("Document Type", SalesHeader."Document Type");
+        SalesLineLcl.SetRange("Document No.", SalesHeader."No.");
+        if SalesLineLcl.FindSet() then begin
+            repeat
+                if (SalesLineLcl.Type <> SalesLineLcl.Type::" ") then begin
+                    SalesLineLcl.Validate("Qty. to Ship", SalesLineLcl."Outstanding Quantity");
+                    SalesLineLcl.Modify();
+                end;
+            until SalesLineLcl.Next() = 0;
+        end;
+        Commit();
         if SalesHeader.Status = SalesHeader.Status::Open then begin
             SalesHeader.PerformManualRelease();
             IsOrderReleased := true;
