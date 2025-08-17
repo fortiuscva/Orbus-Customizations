@@ -185,51 +185,51 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>0.23213cm</Width>
+                  <Width>0.07938cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.68214cm</Width>
+                  <Width>1.31881cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.48214cm</Width>
+                  <Width>2.2241cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.83215cm</Width>
+                  <Width>1.57411cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.18214cm</Width>
+                  <Width>0.9241cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.78214cm</Width>
+                  <Width>1.5241cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.78213cm</Width>
+                  <Width>2.52409cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>5.32758cm</Width>
+                  <Width>6.8296cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.88214cm</Width>
+                  <Width>1.6241cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.78214cm</Width>
+                  <Width>1.5241cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.53818cm</Width>
+                  <Width>1.28014cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.88214cm</Width>
+                  <Width>1.6241cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.88214cm</Width>
+                  <Width>1.6241cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.63215cm</Width>
+                  <Width>1.37411cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.42301cm</Height>
+                  <Height>0.50239cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -656,7 +656,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Parameters!LocCode_WhseActivHeaderCaption.Value</Value>
+                                  <Value>=Parameters!No1_WhseActivHeaderCaption.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -690,7 +690,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!LocCode_WhseActivHeader.Value</Value>
+                                  <Value>=Fields!No1_WhseActivHeader.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                   </Style>
@@ -725,7 +725,7 @@
                                   <Value>=Fields!ORBEndocdePutAwayTagVarGbl.Value</Value>
                                   <Style>
                                     <FontFamily>IDAutomationC39S</FontFamily>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>12pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -913,7 +913,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Parameters!No1_WhseActivHeaderCaption.Value</Value>
+                                  <Value>=Parameters!LocCode_WhseActivHeaderCaption.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -947,7 +947,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!No1_WhseActivHeader.Value</Value>
+                                  <Value>=Fields!LocCode_WhseActivHeader.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                   </Style>
@@ -1192,7 +1192,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value />
+                                  <Value EvaluationMode="Constant" />
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -2095,21 +2095,21 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
-            <Left>0.09842in</Left>
-            <Height>3.30503cm</Height>
-            <Width>27.90144cm</Width>
+            <Left>0.04908in</Left>
+            <Height>3.38441cm</Height>
+            <Width>26.04894cm</Width>
             <Style />
           </Tablix>
           <Tablix Name="Tablix1">
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>28.13284cm</Width>
+                  <Width>26.7698cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>2.36771cm</Height>
+                  <Height>2.35049cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -2128,31 +2128,31 @@
                                     <Width>2.29437cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>4.677cm</Width>
+                                    <Width>8.64392cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>1.6547cm</Width>
+                                    <Width>0.07938cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>1.65185cm</Width>
+                                    <Width>1.24861cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>2.9893cm</Width>
+                                    <Width>0.07938cm</Width>
+                                  </TablixColumn>
+                                  <TablixColumn>
+                                    <Width>2.54722cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>2.11708cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>2.11708cm</Width>
+                                    <Width>1.54472cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>1.64083cm</Width>
+                                    <Width>1.76007cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>1.75379cm</Width>
-                                  </TablixColumn>
-                                  <TablixColumn>
-                                    <Width>1.69982cm</Width>
+                                    <Width>1.20145cm</Width>
                                   </TablixColumn>
                                 </TablixColumns>
                                 <TablixRows>
@@ -2666,7 +2666,6 @@
                                                     <Value>=Fields!ORBEncodedItemNoVarGbl.Value</Value>
                                                     <Style>
                                                       <FontFamily>IDAutomationC39S</FontFamily>
-                                                      <FontSize>9pt</FontSize>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -2953,9 +2952,17 @@
                                   <TablixMember />
                                   <TablixMember />
                                   <TablixMember />
+                                  <TablixMember>
+                                    <Visibility>
+                                      <Hidden>true</Hidden>
+                                    </Visibility>
+                                  </TablixMember>
                                   <TablixMember />
-                                  <TablixMember />
-                                  <TablixMember />
+                                  <TablixMember>
+                                    <Visibility>
+                                      <Hidden>true</Hidden>
+                                    </Visibility>
+                                  </TablixMember>
                                   <TablixMember />
                                   <TablixMember />
                                   <TablixMember />
@@ -2981,7 +2988,7 @@
                               <Top>0.37041cm</Top>
                               <Left>0.12533cm</Left>
                               <Height>1.7027cm</Height>
-                              <Width>27.72411cm</Width>
+                              <Width>26.64449cm</Width>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -3022,10 +3029,10 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
-            <Top>3.4642cm</Top>
-            <Left>0cm</Left>
-            <Height>2.36771cm</Height>
-            <Width>28.13284cm</Width>
+            <Top>3.48142cm</Top>
+            <Left>0.12466cm</Left>
+            <Height>2.35049cm</Height>
+            <Width>26.7698cm</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -3034,10 +3041,10 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>16.26324cm</Height>
+        <Height>6.79116cm</Height>
         <Style />
       </Body>
-      <Width>28.68847cm</Width>
+      <Width>26.95301cm</Width>
       <Page>
         <PageHeader>
           <Height>1.692cm</Height>
@@ -3095,22 +3102,24 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=First(Fields!CurrReportPAGENOCaption.Value, "DataSet_Result")</Value>
+                      <Value>=First(Fields!CurrReportPAGENOCaption.Value, "DataSet_Result") &amp; Cstr(Globals!PageNumber)</Value>
                       <Style>
                         <FontSize>8pt</FontSize>
                       </Style>
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
                 </Paragraph>
               </Paragraphs>
               <Top>0.846cm</Top>
-              <Left>23.86666cm</Left>
-              <Height>0.423cm</Height>
-              <Width>1.05556cm</Width>
+              <Left>21.67662cm</Left>
+              <Height>0.45827cm</Height>
+              <Width>2.90451cm</Width>
               <ZIndex>2</ZIndex>
               <Style>
-                <VerticalAlign>Middle</VerticalAlign>
+                <VerticalAlign>Top</VerticalAlign>
               </Style>
             </Textbox>
             <Textbox Name="TIME1">
@@ -3132,12 +3141,13 @@
                 </Paragraph>
               </Paragraphs>
               <Top>0.423cm</Top>
-              <Left>23.87222cm</Left>
+              <Left>21.14926cm</Left>
               <Height>0.423cm</Height>
-              <Width>1.5cm</Width>
+              <Width>3.43187cm</Width>
               <ZIndex>3</ZIndex>
               <Style>
-                <VerticalAlign>Middle</VerticalAlign>
+                <VerticalAlign>Top</VerticalAlign>
+                <PaddingBottom>0.1pt</PaddingBottom>
               </Style>
             </Textbox>
             <Textbox Name="ExecutionTimeTextBox">
@@ -3158,12 +3168,13 @@
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Left>22.22222cm</Left>
+              <Left>19.45699cm</Left>
               <Height>0.423cm</Height>
-              <Width>3.15cm</Width>
+              <Width>5.08187cm</Width>
               <ZIndex>4</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
+                <PaddingBottom>0.1pt</PaddingBottom>
               </Style>
             </Textbox>
             <Textbox Name="UserIdTextBox">
@@ -3184,13 +3195,14 @@
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>1.269cm</Top>
-              <Left>20.12222cm</Left>
-              <Height>0.423cm</Height>
-              <Width>5.25cm</Width>
+              <Top>1.30427cm</Top>
+              <Left>17.84926cm</Left>
+              <Height>0.38773cm</Height>
+              <Width>6.73187cm</Width>
               <ZIndex>5</ZIndex>
               <Style>
-                <VerticalAlign>Middle</VerticalAlign>
+                <VerticalAlign>Top</VerticalAlign>
+                <PaddingTop>0.1pt</PaddingTop>
               </Style>
             </Textbox>
             <Textbox Name="PageNumberTextBox">
@@ -3199,24 +3211,24 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Globals!PageNumber</Value>
+                      <Value EvaluationMode="Constant" />
                       <Style>
                         <FontSize>8pt</FontSize>
                       </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>
-                    <TextAlign>Right</TextAlign>
+                    <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
               <Top>0.846cm</Top>
-              <Left>24.92222cm</Left>
-              <Height>0.423cm</Height>
-              <Width>0.45cm</Width>
+              <Left>24.5124cm</Left>
+              <Height>0.49356cm</Height>
+              <Width>0.02646cm</Width>
               <ZIndex>6</ZIndex>
               <Style>
-                <VerticalAlign>Middle</VerticalAlign>
+                <VerticalAlign>Top</VerticalAlign>
               </Style>
             </Textbox>
           </ReportItems>
