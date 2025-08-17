@@ -33,6 +33,11 @@ table 52617 "ORB LIFT ERP Setup"
         {
             Caption = 'JobQueue Error Notification Email';
         }
+        field(8; "Inventory Pick Posting Batch"; Code[10])
+        {
+            Caption = 'Inventory Pick Posting Batch';
+            TableRelation = "Item Journal Batch".Name;
+        }
     }
     keys
     {

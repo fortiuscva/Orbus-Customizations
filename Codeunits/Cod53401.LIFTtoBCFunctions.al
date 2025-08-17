@@ -37,6 +37,16 @@ codeunit 53401 "ORB LIFTtoBC Functions"
             Report.RunModal(Report::"ORB Post LIFT Transactions", true, false, SalesHeaderLcl);
     end;
 
+    procedure PostLIFTInventoryTransactionsInventoryPick(SalesHeaderRec: Record "Sales Header")
+    var
+        SalesHeaderLcl: Record "Sales Header";
+    begin
+        SalesHeaderLcl.SetRange("Document Type", SalesHeaderRec."Document Type");
+        SalesHeaderLcl.SetRange("No.", SalesHeaderRec."No.");
+        if SalesHeaderLcl.FindFirst() then
+            Report.RunModal(Report::"ORB Post LIFT InvPick Trans.", true, false, SalesHeaderLcl);
+    end;
+
     procedure OpenWhseTransactions(SalesHeaderRecLcl: Record "Sales Header")
     var
         WhseTransaByIdQry: Query "ORB LIFT Whse. Trans. By Id";
