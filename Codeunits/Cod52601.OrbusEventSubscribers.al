@@ -631,13 +631,6 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         WarehouseJournalLine."ORB LIFT Order Line ID" := ItemJournalLine."ORB LIFT Order Line ID";
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Whse.-Act.-Post (Yes/No)", OnBeforeConfirmPost, '', false, false)]
-    local procedure "Whse.-Act.-Post (Yes/No)_OnBeforeConfirmPost"(var WhseActivLine: Record "Warehouse Activity Line"; var HideDialog: Boolean; var Selection: Integer; var DefaultOption: Integer; var IsHandled: Boolean; var PrintDoc: Boolean)
-    begin
-        DefaultOption := 1;
-    end;
-
-
     [EventSubscriber(ObjectType::Report, report::"Whse.-Shipment - Create Pick", OnBeforeSortWhseActivHeaders, '', false, false)]
 
     local procedure OnBeforeSortWhseActivHeaders(var WhseActivHeader: Record "Warehouse Activity Header"; FirstActivityNo: Code[20]; LastActivityNo: Code[20]; var HideNothingToHandleError: Boolean)
@@ -786,14 +779,6 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
     begin
         //if SalesHeader."Document Type" = SalesHeader."Document Type"::Order then
         //OrbusFunctionsCUGbl.AutomaticShipToAddressValidation(SalesHeader);
-    end;
-
-
-
-    [EventSubscriber(ObjectType::Table, Database::"Sales Header", 'OnAfterModifyEvent', '', true, true)]
-    local procedure OnAfterModifySalesHeader(var Rec: Record "Sales Header"; var xRec: Record "Sales Header"; RunTrigger: Boolean)
-    begin
-        OrbusSingleInstanceCUGbl.SetShipToAddressFields(Rec."Ship-to Name", Rec."Ship-to Address", Rec."Ship-to Address 2", Rec."Ship-to City", Rec."Ship-to County", Rec."Ship-to Country/Region Code", Rec."Ship-to Post Code", Rec."Ship-to Contact");
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Whse.-Act.-Post (Yes/No)", OnBeforeConfirmPost, '', false, false)]
