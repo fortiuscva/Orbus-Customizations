@@ -520,6 +520,10 @@ codeunit 52610 "ORB LIFT Integration"
         EntryTypeVarLcl: Text;
         JnlTemplateName: Code[10];
         JnlBatchName: Code[10];
+        LocationCodeVarLcl: Code[20];
+        BinCodeVarLcl: Code[20];
+        LocationCodeBlankErr: Label 'Location Code is blank for Document No. %1, Item No. %2.';
+        BinCodeBlankErr: Label 'Bin Code is blank for Document No. %1, Item No. %2 and Location Code %3.';
     begin
         LIFTERPSetup.Get();
         LIFTERPSetup.TestField("Inv. Pick Post. Jnl. Template");
@@ -527,6 +531,16 @@ codeunit 52610 "ORB LIFT Integration"
 
         JnlTemplateName := LIFTERPSetup."Inv. Pick Post. Jnl. Template";
         JnlBatchName := LIFTERPSetup."Inv. Pick Post. Jnl. Batch";
+
+        JsonOrderToken := jsonOrderObject.AsToken();
+        LocationCodeVarLcl := GetValueAsCode(JsonOrderToken, 'LOCATION_CODE');
+        BinCodeVarLcl := GetValueAsCode(JsonOrderToken, 'BIN_CODE');
+
+        if LocationCodeVarLcl = '' then
+            Error(StrSubstNo(LocationCodeBlankErr, ItemJournalLine."Document No.", ItemJournalLine."Item No."));
+
+        if BinCodeVarLcl = '' then
+            Error(StrSubstNo(BinCodeBlankErr, ItemJournalLine."Document No.", ItemJournalLine."Item No.", ItemJournalLine."Location Code"));
 
         Clear(EntryNo);
         ItemJournalLine.Reset();
@@ -537,7 +551,6 @@ codeunit 52610 "ORB LIFT Integration"
         else
             EntryNo := 10000;
 
-        JsonOrderToken := jsonOrderObject.AsToken();
         ItemJournalLine.Init();
         ItemJournalLine."Journal Template Name" := JnlTemplateName;
         ItemJournalLine."Journal Batch Name" := JnlBatchName;
@@ -552,8 +565,8 @@ codeunit 52610 "ORB LIFT Integration"
             ItemJournalLine.Validate("Entry Type", ItemJournalLine."Entry Type"::"Positive Adjmt.");
         ItemJournalLine.Validate("Document No.", GetValueAsText(JsonOrderToken, 'DOCUMENT_NUMBER'));
         ItemJournalLine.Validate("Item No.", GetValueAsText(JsonOrderToken, 'MATERIAL_BARCODE'));
-        ItemJournalLine.Validate("Location Code", GetValueAsCode(JsonOrderToken, 'LOCATION_CODE'));
-        ItemJournalLine.Validate("Bin Code", 'WR-LIFT');
+        ItemJournalLine.Validate("Location Code", LocationCodeVarLcl);
+        ItemJournalLine.Validate("Bin Code", BinCodeVarLcl);
         ItemJournalLine.Validate("Unit of Measure Code", GetValueAsCode(JsonOrderToken, 'UNIT_OF_MEASURE'));
         ItemJournalLine.Validate(Quantity, Abs(GetValueAsDecimal(JsonOrderToken, 'QUANTITY')));
         //ItemJournalLine.Validate("Unit Cost", GetValueAsDecimal(JsonOrderToken, 'UNIT_COST'));
