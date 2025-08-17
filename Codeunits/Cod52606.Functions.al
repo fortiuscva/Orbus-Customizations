@@ -554,36 +554,7 @@ codeunit 52606 "ORB Functions"
             until ReportSelectionWarehouse.Next() = 0;
     end;
 
-    procedure CreateInvtPutAwayPick(SalesHeader: Record "Sales Header")
-    var
-        WhseRequest: Record "Warehouse Request";
-        CreateInvtPutawayPickMvmt: Report "Create Invt Put-away/Pick/Mvmt";
-    begin
-        if SalesHeader."Document Type" = SalesHeader."Document Type"::Order then
-            if not SalesHeader.IsApprovedForPosting() then
-                exit;
 
-        SalesHeader.TestField(Status, SalesHeader.Status::Released);
-
-        WhseRequest.Reset();
-        WhseRequest.SetCurrentKey("Source Document", "Source No.");
-        case SalesHeader."Document Type" of
-            SalesHeader."Document Type"::Order:
-                begin
-                    if SalesHeader."Shipping Advice" = SalesHeader."Shipping Advice"::Complete then
-                        SalesHeader.CheckShippingAdvice();
-                    WhseRequest.SetRange("Source Document", WhseRequest."Source Document"::"Sales Order");
-                end;
-            SalesHeader."Document Type"::"Return Order":
-                WhseRequest.SetRange("Source Document", WhseRequest."Source Document"::"Sales Return Order");
-        end;
-        WhseRequest.SetRange("Source No.", SalesHeader."No.");
-        if not WhseRequest.IsEmpty() then begin
-            CreateInvtPutawayPickMvmt.InitializeRequest(false, true, false, false, false);
-            CreateInvtPutawayPickMvmt.SetTableView(WhseRequest);
-            CreateInvtPutawayPickMvmt.Run();
-        end;
-    end;
 
     var
         ReportSelectionWarehouse: Record "Report Selection Warehouse";
