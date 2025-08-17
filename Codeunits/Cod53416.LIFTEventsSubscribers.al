@@ -18,7 +18,22 @@ codeunit 53416 "ORB LIFT Events & Subscribers"
         WarehouseEntry."Unit of Measure Code" := WarehouseJournalLine."Unit of Measure Code";
         WarehouseEntry."Qty. per Unit of Measure" := WarehouseJournalLine."Qty. per Unit of Measure";
     end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Whse.-Activity-Register", OnBeforeWhseJnlRegisterLine, '', false, false)]
+    local procedure "Whse.-Activity-Register_OnBeforeWhseJnlRegisterLine"(var WarehouseJournalLine: Record "Warehouse Journal Line"; WarehouseActivityLine: Record "Warehouse Activity Line")
+    begin
+        WarehouseJournalLine.Quantity := WarehouseActivityLine."Qty. to Handle";
+        WarehouseJournalLine."Qty. (Absolute)" := WarehouseJournalLine.Quantity;
+        WarehouseJournalLine."Unit of Measure Code" := WarehouseActivityLine."Unit of Measure Code";
+        WarehouseJournalLine."Qty. per Unit of Measure" := WarehouseActivityLine."Qty. per Unit of Measure";
+        WarehouseJournalLine."Qty. Rounding Precision" := WarehouseActivityLine."Qty. Rounding Precision";
+        WarehouseJournalLine."Qty. Rounding Precision (Base)" := WarehouseActivityLine."Qty. Rounding Precision (Base)";
+    end;
     //These subscribers are required to post warehouse entries in the unit of measure as entered on item journal lines.. End
+
+
+
+
 
 
 
