@@ -252,12 +252,11 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 OrbusFunctions.RestrictZeroTransactionAmountforCreditCardPayment(rec);
             end;
         }
-        /*
         addafter("Release & Pick")
         {
             action("ORB Release & Inventory Pick")
             {
-                Caption = 'Release & Pick';
+                Caption = 'Release & Pick(Inventory Picks)';
                 ApplicationArea = all;
                 Image = CreateWarehousePick;
 
@@ -297,7 +296,6 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
             {
             }
         }
-        */
         addafter("S&hipments")
         {
             action("ORB Sales Header Additional Fields")
