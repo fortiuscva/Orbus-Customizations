@@ -23,6 +23,7 @@ codeunit 53416 "ORB LIFT Events & Subscribers"
     local procedure "Whse.-Activity-Register_OnBeforeWhseJnlRegisterLine"(var WarehouseJournalLine: Record "Warehouse Journal Line"; WarehouseActivityLine: Record "Warehouse Activity Line")
     begin
         WarehouseJournalLine.Quantity := WarehouseActivityLine."Qty. to Handle";
+        WarehouseJournalLine."Qty. (Absolute)" := WarehouseJournalLine.Quantity;
         WarehouseJournalLine."Unit of Measure Code" := WarehouseActivityLine."Unit of Measure Code";
         WarehouseJournalLine."Qty. per Unit of Measure" := WarehouseActivityLine."Qty. per Unit of Measure";
         WarehouseJournalLine."Qty. Rounding Precision" := WarehouseActivityLine."Qty. Rounding Precision";
