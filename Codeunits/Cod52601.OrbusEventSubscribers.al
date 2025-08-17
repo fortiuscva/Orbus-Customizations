@@ -790,21 +790,18 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
 
 
 
-    // [EventSubscriber(ObjectType::Codeunit, Codeunit::"DSHIP Event Publisher", OnBeforeAddressValidation, '', false, false)]
-    // local procedure "DSHIP Event Publisher_OnBeforeAddressValidation"(addressSource: Variant; var isManual: Boolean; var isHandled: Boolean; var isCorrectionAccepted: Boolean)
-    // var
-    //     SalesHeader: Record "Sales Header";
-    //     RecRef: RecordRef;
-    // begin
-    //     if addressSource.IsRecord then begin
-    //         RecRef := addressSource;
-    //         if RecRef.Number = Database::"Sales Header" then begin
-    //             SalesHeader := addressSource;
-    //             if SalesHeader."Ship-to Country/Region Code" <> 'US' then
-    //                 isHandled := true;
-    //         end;
-    //     end;
-    // end;
+    [EventSubscriber(ObjectType::Table, Database::"Sales Header", 'OnAfterModifyEvent', '', true, true)]
+    local procedure OnAfterModifySalesHeader(var Rec: Record "Sales Header"; var xRec: Record "Sales Header"; RunTrigger: Boolean)
+    begin
+        OrbusSingleInstanceCUGbl.SetShipToAddressFields(Rec."Ship-to Name", Rec."Ship-to Address", Rec."Ship-to Address 2", Rec."Ship-to City", Rec."Ship-to County", Rec."Ship-to Country/Region Code", Rec."Ship-to Post Code", Rec."Ship-to Contact");
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Whse.-Act.-Post (Yes/No)", OnBeforeConfirmPost, '', false, false)]
+    local procedure "Whse.-Act.-Post (Yes/No)_OnBeforeConfirmPost"(var WhseActivLine: Record "Warehouse Activity Line"; var HideDialog: Boolean; var Selection: Integer; var DefaultOption: Integer; var IsHandled: Boolean; var PrintDoc: Boolean)
+    begin
+        if WhseActivLine."Activity Type" = WhseActivLine."Activity Type"::"Invt. Pick" then
+            DefaultOption := 1;
+    end;
 
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
