@@ -1,6 +1,7 @@
 reportextension 52606 "ORB Inventory Packing Slip" extends "Picking List"
 {
-    RDLCLayout = './Reports/Layouts/OrbusPickingList_Mod.rdl';
+    //RDLCLayout = './Reports/Layouts/OrbusPickingList_Mod.rdl'= OrbusPickingList_ModifiedList;
+
     dataset
     {
         add("Warehouse Activity Header")
@@ -34,10 +35,20 @@ reportextension 52606 "ORB Inventory Packing Slip" extends "Picking List"
 
         }
     }
+
+    rendering
+    {
+        layout(OrbusPickingList_ModifiedList)
+
+        {
+            Type = RDLC;
+            LayoutFile = './Reports/Layouts/OrbusPickingList_ModifiedList.rdl';
+
+        }
+    }
     var
         CustomerSupportVarGbl: CODE[20];
         MustHaveDateVarGbl: Date;
-
 
 
 }
