@@ -72,12 +72,15 @@ codeunit 52614 "ORB Create Inventory Pick"
                 WhseRequest.SetRange("Source Document", WhseRequest."Source Document"::"Sales Return Order");
         end;
         WhseRequest.SetRange("Source No.", SalesHeader."No.");
-        // if not WhseRequest.IsEmpty() then begin
-        CreateInvtPutawayPickMvmt.InitializeRequest(false, true, false, false, false);
-        CreateInvtPutawayPickMvmt.SuppressMessages(SuppressMessagesGbl);
-        CreateInvtPutawayPickMvmt.SetTableView(WhseRequest);
-        CreateInvtPutawayPickMvmt.UseRequestPage(UseRequestPageGbl);
-        CreateInvtPutawayPickMvmt.Run();
+        if not WhseRequest.IsEmpty() then begin
+            Commit();
+            Clear(CreateInvtPutawayPickMvmt);
+            CreateInvtPutawayPickMvmt.InitializeRequest(false, true, false, false, false);
+            CreateInvtPutawayPickMvmt.SuppressMessages(SuppressMessagesGbl);
+            CreateInvtPutawayPickMvmt.SetTableView(WhseRequest);
+            CreateInvtPutawayPickMvmt.UseRequestPage(UseRequestPageGbl);
+            CreateInvtPutawayPickMvmt.RunModal();
+        end;
 
         // Comparing Inventory Picks between temporary table and standard table
         WarehouseActivityHeader.Reset();
