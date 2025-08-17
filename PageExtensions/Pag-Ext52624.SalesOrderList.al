@@ -150,7 +150,7 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
         }
         modify("Release & Pick")
         {
-
+            Visible = false;
             trigger OnBeforeAction()
             var
                 SalesHeaderRecLcl: Record "Sales Header";
@@ -163,6 +163,43 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
                     Until SalesHeaderRecLcl.Next() = 0;
 
             end;
+        }
+        addlast(Action12)
+        {
+            action("ORB Release & Inventory Pick")
+            {
+                Caption = 'Release & Create Inv. Pick';
+                ApplicationArea = all;
+                Promoted = true;
+                PromotedCategory = Category6;
+                Image = CreateWarehousePick;
+
+                trigger OnAction()
+                var
+                    SalesHeaderRecLcl: Record "Sales Header";
+                    EFTTransactionRecLcl: Record "EFT Transaction -CL-";
+                    PaymentMethodLbl: label 'CREDITCARD';
+                    NoValidCreditCardErrorLbl: Label 'No Valid Credit Card Authorization Charged, Please Authorize Valid Credit Card to Release Sales Order.';
+                begin
+                    CurrPage.SetSelectionFilter(SalesHeaderRecLcl);
+                    SalesHeaderRecLcl.MarkedOnly(true);
+                    IF SalesHeaderRecLcl.FindSet() then
+                        repeat
+                            OrbusFunctions.RestrictZeroTransactionAmountforCreditCardPayment(SalesHeaderRecLcl);
+                        Until SalesHeaderRecLcl.Next() = 0;
+
+                    if (Rec."Shipping Agent Code" = '') and (Rec."Shipping Agent Service Code" = '') then Error('Shipping Agent Code and Shipping Agent Service have a value of "blank". Both fields need a value other than "blank"');
+                    if (Rec."Shipping Agent Code" = '') then Error('Shipping Agent Code cannot have a value of "blank"');
+                    if Rec."Shipping Agent Service Code" = '' then Error('Shipping Agent Service Code cannot have a value of "blank"');
+                    CurrPage.SetSelectionFilter(SalesHeaderRecLcl);
+                    SalesHeaderRecLcl.MarkedOnly(true);
+                    IF SalesHeaderRecLcl.FindSet() then
+                        repeat
+                            if not ORBCreateInventoryPick.Run(SalesHeaderRecLcl) then;
+                        Until SalesHeaderRecLcl.Next() = 0;
+                    CurrPage.Update();
+                end;
+            }
         }
         addfirst(processing)
         {
@@ -299,5 +336,6 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
     var
         OrbusFunctions: Codeunit "ORB Functions";
         LiftFunctions: Codeunit "ORB LIFT Functions";
+        ORBCreateInventoryPick: Codeunit "ORB Create Inventory Pick";
         IsLIFTERPFunctionEnabled: Boolean;
 }
