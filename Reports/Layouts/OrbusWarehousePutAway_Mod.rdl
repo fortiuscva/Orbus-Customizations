@@ -206,7 +206,7 @@
                   <Width>2.52409cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>6.8296cm</Width>
+                  <Width>7.06557cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>1.6241cm</Width>
@@ -229,7 +229,7 @@
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.50239cm</Height>
+                  <Height>0.53389cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -276,7 +276,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.42301cm</Height>
+                  <Height>0.37513cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -645,7 +645,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.58176cm</Height>
+                  <Height>0.66617cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -725,7 +725,7 @@
                                   <Value>=Fields!ORBEndocdePutAwayTagVarGbl.Value</Value>
                                   <Style>
                                     <FontFamily>IDAutomationC39S</FontFamily>
-                                    <FontSize>12pt</FontSize>
+                                    <FontSize>13pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -902,7 +902,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.42301cm</Height>
+                  <Height>0.48097cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -1156,7 +1156,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.42301cm</Height>
+                  <Height>0.37513cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -1525,7 +1525,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.42301cm</Height>
+                  <Height>0.48097cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -1775,7 +1775,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.60822cm</Height>
+                  <Height>0.56034cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -2096,8 +2096,8 @@
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
             <Left>0.04908in</Left>
-            <Height>3.38441cm</Height>
-            <Width>26.04894cm</Width>
+            <Height>3.4726cm</Height>
+            <Width>26.28491cm</Width>
             <Style />
           </Tablix>
           <Tablix Name="Tablix1">
@@ -2988,7 +2988,7 @@
                               <Top>0.37041cm</Top>
                               <Left>0.12533cm</Left>
                               <Height>1.7027cm</Height>
-                              <Width>26.33455cm</Width>
+                              <Width>26.33456cm</Width>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -3067,6 +3067,7 @@
                   <Style />
                 </Paragraph>
               </Paragraphs>
+              <Left>0.06797in</Left>
               <Height>0.423cm</Height>
               <Width>7.5cm</Width>
               <Style>
@@ -3089,6 +3090,7 @@
                 </Paragraph>
               </Paragraphs>
               <Top>0.423cm</Top>
+              <Left>0.06797in</Left>
               <Height>0.423cm</Height>
               <Width>7.5cm</Width>
               <ZIndex>1</ZIndex>
