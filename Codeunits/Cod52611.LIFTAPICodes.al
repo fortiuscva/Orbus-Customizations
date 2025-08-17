@@ -56,6 +56,14 @@ codeunit 52611 "ORB LIFT API Codes"
             APICode := LIFTAPICodesRecGbl.Code;
     end;
 
+    procedure GetItemJournalAPICode() APICode: Code[20]
+    begin
+        Clear(LIFTAPICodesRecGbl);
+        if LIFTAPICodesRecGbl.GET('ITEMJOURNALS') then
+            APICode := LIFTAPICodesRecGbl.Code;
+    end;
+
+
     var
         LIFTAPICodesRecGbl: Record "ORB LIFT API Codes";
 

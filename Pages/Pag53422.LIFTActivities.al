@@ -16,10 +16,23 @@ page 53422 "ORB LIFT Activities"
                     Caption = 'Post Inventory Transactions';
                     DrillDown = true;
                     ShowCaption = false;
+                    Visible = false;
 
                     trigger OnDrillDown()
                     begin
                         LIFTBCFunctionsCU.PostLIFTInventoryTransactions(Rec);
+                    end;
+                }
+                field("Post Inv. Transactions (Inv. Pick)"; DummyText1)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Post Inv. Transactions (Inv. Pick)';
+                    DrillDown = true;
+                    ShowCaption = false;
+
+                    trigger OnDrillDown()
+                    begin
+                        LIFTBCFunctionsCU.PostLIFTInventoryTransactionsInventoryPick(Rec);
                     end;
                 }
             }
@@ -74,6 +87,7 @@ page 53422 "ORB LIFT Activities"
         IntegrationLog: Record "ORB LIFT Integration Data Log";
         LIFTBCFunctionsCU: Codeunit "ORB LIFTtoBC Functions";
         DummyText: Label 'Post Inventory Transactions';
+        DummyText1: Label 'Post Inventory Transactions (Inventory Pick)';
 
     local procedure GetWhseCount(): Integer
     begin
