@@ -33,9 +33,9 @@ codeunit 52614 "ORB Create Inventory Pick"
         WhseRequest.SetRange("Source No.", SalesHeader."No.");
         if not WhseRequest.IsEmpty() then begin
             CreateInvtPutawayPickMvmt.InitializeRequest(false, true, false, false, false);
-            CreateInvtPutawayPickMvmt.SuppressMessages(true);
+            CreateInvtPutawayPickMvmt.SuppressMessages(SuppressMessagesGbl);
             CreateInvtPutawayPickMvmt.SetTableView(WhseRequest);
-            CreateInvtPutawayPickMvmt.UseRequestPage(false);
+            CreateInvtPutawayPickMvmt.UseRequestPage(UseRequestPageGbl);
             CreateInvtPutawayPickMvmt.Run();
 
             SalesHeader.get(SalesHeader."Document Type", SalesHeader."No.");
@@ -43,4 +43,18 @@ codeunit 52614 "ORB Create Inventory Pick"
             SalesHeader.Modify();
         end;
     end;
+
+    procedure SetValuesToShowMessagesOrRequestPage(SuppressMessagesPar: Boolean; UseRequestPagePar: Boolean)
+    begin
+        Clear(SuppressMessagesGbl);
+        Clear(UseRequestPageGbl);
+        SuppressMessagesGbl := false;
+        UseRequestPageGbl := false;
+        SuppressMessagesGbl := SuppressMessagesPar;
+        UseRequestPageGbl := UseRequestPagePar;
+    end;
+
+    var
+        SuppressMessagesGbl: Boolean;
+        UseRequestPageGbl: Boolean;
 }

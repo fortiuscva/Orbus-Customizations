@@ -288,6 +288,10 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                     SalesHeaderRecLcl.MarkedOnly(true);
                     IF SalesHeaderRecLcl.FindSet() then
                         repeat
+                            if GuiAllowed then
+                                ORBCreateInventoryPick.SetValuesToShowMessagesOrRequestPage(false, true)
+                            else
+                                ORBCreateInventoryPick.SetValuesToShowMessagesOrRequestPage(true, false);
                             if not ORBCreateInventoryPick.Run(SalesHeaderRecLcl) then;
                         Until SalesHeaderRecLcl.Next() = 0;
                     CurrPage.Update();
