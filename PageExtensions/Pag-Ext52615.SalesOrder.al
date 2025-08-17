@@ -272,13 +272,17 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                     IF SalesHeaderRecLcl.FindSet() then
                         repeat
                             OrbusFunctions.RestrictZeroTransactionAmountforCreditCardPayment(SalesHeaderRecLcl);
-
-                            if (SalesHeaderRecLcl."Shipping Agent Code" = '') and (SalesHeaderRecLcl."Shipping Agent Service Code" = '') then
-                                Error('Shipping Agent Code and Shipping Agent Service have a value of "blank". Both fields need a value other than "blank"');
-                            if (SalesHeaderRecLcl."Shipping Agent Code" = '') then
-                                Error('Shipping Agent Code cannot have a value of "blank"');
-                            if SalesHeaderRecLcl."Shipping Agent Service Code" = '' then
-                                Error('Shipping Agent Service Code cannot have a value of "blank"');
+                            /*
+                                if (SalesHeaderRecLcl."Shipping Agent Code" = '') and (SalesHeaderRecLcl."Shipping Agent Service Code" = '') then
+                                    Error('Shipping Agent Code and Shipping Agent Service have a value of "blank". Both fields need a value other than "blank"');
+                                if (SalesHeaderRecLcl."Shipping Agent Code" = '') then
+                                    Error('Shipping Agent Code cannot have a value of "blank"');
+                                if SalesHeaderRecLcl."Shipping Agent Service Code" = '' then
+                                    Error('Shipping Agent Service Code cannot have a value of "blank"');
+                            */
+                            OrbusFunctions.CheckForShippingAgentCode(SalesHeaderRecLcl);
+                            OrbusFunctions.CheckForShippingCollect(SalesHeaderRecLcl);
+                            OrbusFunctions.CheckForSenderReceiverPaymentType(SalesHeaderRecLcl);
                         Until SalesHeaderRecLcl.Next() = 0;
                     CurrPage.SetSelectionFilter(SalesHeaderRecLcl);
                     SalesHeaderRecLcl.MarkedOnly(true);
