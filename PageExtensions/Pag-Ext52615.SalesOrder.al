@@ -203,6 +203,7 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
         }
         modify("Release & Pick")
         {
+            Visible = false;
             trigger OnBeforeAction()
             var
                 EFTTransactionRecLcl: Record "EFT Transaction -CL-";
@@ -250,6 +251,31 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
             begin
                 OrbusFunctions.RestrictZeroTransactionAmountforCreditCardPayment(rec);
             end;
+        }
+        addafter("Release & Pick")
+        {
+            action("Release & Inventory Pick")
+            {
+                Caption = 'Release & Pick';
+                ApplicationArea = all;
+
+                trigger OnAction()
+                var
+                    EFTTransactionRecLcl: Record "EFT Transaction -CL-";
+                    PaymentMethodLbl: label 'CREDITCARD';
+                    NoValidCreditCardErrorLbl: Label 'No Valid Credit Card Authorization Charged, Please Authorize Valid Credit Card to Release Sales Order.';
+                begin
+                    OrbusFunctions.RestrictZeroTransactionAmountforCreditCardPayment(rec);
+                    Rec.PerformManualRelease();
+                    OrbusFunctions.CreateInvtPutAwayPick(Rec);
+                end;
+            }
+        }
+        addafter("Release & Pick_Promoted")
+        {
+            actionref("Release & Inventory Pick_Promoted"; "Release & Inventory Pick")
+            {
+            }
         }
         addafter("S&hipments")
         {
