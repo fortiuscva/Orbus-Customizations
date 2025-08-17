@@ -164,11 +164,11 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
 
             end;
         }
-        addafter("Release & Pick")
+        addlast(Action12)
         {
             action("ORB Release & Inventory Pick")
             {
-                Caption = 'Release & Pick';
+                Caption = 'Release & Create Inv. Pick';
                 ApplicationArea = all;
                 Promoted = true;
                 PromotedCategory = Category5;
