@@ -395,18 +395,23 @@ codeunit 52610 "ORB LIFT Integration"
         ItemJnlEntryType: Enum "Item Ledger Entry Type";
         LocationCodeVarLcl: Code[20];
         BinCodeVarLcl: Code[20];
+        WhseDocNoVarLcl: Code[20];
+        ItemNoVarLcl: Code[20];
         LocationCodeBlankErr: Label 'Location Code is blank for Document No. %1, Item No. %2.';
         BinCodeBlankErr: Label 'Bin Code is blank for Document No. %1, Item No. %2 and Location Code %3.';
     begin
         JsonOrderToken := jsonOrderObject.AsToken();
+        WhseDocNoVarLcl := GetValueAsCode(JsonOrderToken, 'DOCUMENT_NUMBER');
+        ItemNoVarLcl := GetValueAsCode(JsonOrderToken, 'MATERIAL_BARCODE');
         LocationCodeVarLcl := GetValueAsCode(JsonOrderToken, 'LOCATION_CODE');
         BinCodeVarLcl := GetValueAsCode(JsonOrderToken, 'BIN_CODE');
 
+
         if LocationCodeVarLcl = '' then
-            Error(StrSubstNo(LocationCodeBlankErr, WarehouseJournalLine."Whse. Document No.", WarehouseJournalLine."Item No."));
+            Error(StrSubstNo(LocationCodeBlankErr, WhseDocNoVarLcl, ItemNoVarLcl));
 
         if BinCodeVarLcl = '' then
-            Error(StrSubstNo(BinCodeBlankErr, WarehouseJournalLine."Whse. Document No.", WarehouseJournalLine."Item No.", WarehouseJournalLine."Location Code"));
+            Error(StrSubstNo(BinCodeBlankErr, WhseDocNoVarLcl, ItemNoVarLcl, LocationCodeVarLcl));
 
         Clear(EntryNo);
         WarehouseJournalLine.Reset();
@@ -521,6 +526,8 @@ codeunit 52610 "ORB LIFT Integration"
         JnlBatchName: Code[10];
         LocationCodeVarLcl: Code[20];
         BinCodeVarLcl: Code[20];
+        DocumentNoVarLcl: Code[20];
+        ItemNoVarLcl: Code[20];
         LocationCodeBlankErr: Label 'Location Code is blank for Document No. %1, Item No. %2.';
         BinCodeBlankErr: Label 'Bin Code is blank for Document No. %1, Item No. %2 and Location Code %3.';
     begin
@@ -532,14 +539,17 @@ codeunit 52610 "ORB LIFT Integration"
         JnlBatchName := LIFTERPSetup."Inv. Pick Post. Jnl. Batch";
 
         JsonOrderToken := jsonOrderObject.AsToken();
+        DocumentNoVarLcl := GetValueAsCode(JsonOrderToken, 'DOCUMENT_NUMBER');
+        ItemNoVarLcl := GetValueAsCode(JsonOrderToken, 'MATERIAL_BARCODE');
         LocationCodeVarLcl := GetValueAsCode(JsonOrderToken, 'LOCATION_CODE');
         BinCodeVarLcl := GetValueAsCode(JsonOrderToken, 'BIN_CODE');
 
+
         if LocationCodeVarLcl = '' then
-            Error(StrSubstNo(LocationCodeBlankErr, ItemJournalLine."Document No.", ItemJournalLine."Item No."));
+            Error(StrSubstNo(LocationCodeBlankErr, DocumentNoVarLcl, ItemNoVarLcl));
 
         if BinCodeVarLcl = '' then
-            Error(StrSubstNo(BinCodeBlankErr, ItemJournalLine."Document No.", ItemJournalLine."Item No.", ItemJournalLine."Location Code"));
+            Error(StrSubstNo(BinCodeBlankErr, DocumentNoVarLcl, ItemNoVarLcl, LocationCodeVarLcl));
 
         Clear(EntryNo);
         ItemJournalLine.Reset();
