@@ -72,6 +72,11 @@ page 52631 "ORB LIFT Integration Data Log"
                     ApplicationArea = all;
                     ToolTip = 'Specifies the value of the Location Code field.', Comment = '%';
                 }
+                field("Bin Code"; Rec."Bin Code")
+                {
+                    ApplicationArea = all;
+                    ToolTip = 'Specifies the value of the Bin Code field.', Comment = '%';
+                }
                 field("Transaction ID"; Rec."Transaction ID")
                 {
                     ApplicationArea = all;
