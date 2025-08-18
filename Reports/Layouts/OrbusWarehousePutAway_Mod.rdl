@@ -11,172 +11,6 @@
       <rd:DataSourceID>d5cfc493-c18a-497d-896b-bd6936e879c8</rd:DataSourceID>
     </DataSource>
   </DataSources>
-  <DataSets>
-    <DataSet Name="DataSet_Result">
-      <Query>
-        <DataSourceName>DataSource</DataSourceName>
-        <CommandText />
-      </Query>
-      <Fields>
-        <Field Name="No_WhseActivHeader">
-          <DataField>No_WhseActivHeader</DataField>
-        </Field>
-        <Field Name="CompanyName">
-          <DataField>CompanyName</DataField>
-        </Field>
-        <Field Name="TodayFormatted">
-          <DataField>TodayFormatted</DataField>
-        </Field>
-        <Field Name="Time">
-          <DataField>Time</DataField>
-        </Field>
-        <Field Name="SumUpLines">
-          <DataField>SumUpLines</DataField>
-        </Field>
-        <Field Name="ShowLotSN">
-          <DataField>ShowLotSN</DataField>
-        </Field>
-        <Field Name="InvtPutAway">
-          <DataField>InvtPutAway</DataField>
-        </Field>
-        <Field Name="BinMandatory">
-          <DataField>BinMandatory</DataField>
-        </Field>
-        <Field Name="DirPutAwayAndPick">
-          <DataField>DirPutAwayAndPick</DataField>
-        </Field>
-        <Field Name="PutAwayFilter">
-          <DataField>PutAwayFilter</DataField>
-        </Field>
-        <Field Name="TblCptnPutAwayFilter">
-          <DataField>TblCptnPutAwayFilter</DataField>
-        </Field>
-        <Field Name="No1_WhseActivHeader">
-          <DataField>No1_WhseActivHeader</DataField>
-        </Field>
-        <Field Name="LocCode_WhseActivHeader">
-          <DataField>LocCode_WhseActivHeader</DataField>
-        </Field>
-        <Field Name="AssgndUID_WhseActivHeader">
-          <DataField>AssgndUID_WhseActivHeader</DataField>
-        </Field>
-        <Field Name="SortingMthd_WhseActivHeader">
-          <DataField>SortingMthd_WhseActivHeader</DataField>
-        </Field>
-        <Field Name="SrcDoc_WhseActivHeader">
-          <DataField>SrcDoc_WhseActivHeader</DataField>
-        </Field>
-        <Field Name="CurrReportPAGENOCaption">
-          <DataField>CurrReportPAGENOCaption</DataField>
-        </Field>
-        <Field Name="PutawayListCaption">
-          <DataField>PutawayListCaption</DataField>
-        </Field>
-        <Field Name="WhseActLineDueDateCaption">
-          <DataField>WhseActLineDueDateCaption</DataField>
-        </Field>
-        <Field Name="QtyHandledCaption">
-          <DataField>QtyHandledCaption</DataField>
-        </Field>
-        <Field Name="SrcNo_WhseActivLine">
-          <DataField>SrcNo_WhseActivLine</DataField>
-        </Field>
-        <Field Name="SrcDoc_WhseActivLine">
-          <DataField>SrcDoc_WhseActivLine</DataField>
-        </Field>
-        <Field Name="ShelfNo_WhseActivLine">
-          <DataField>ShelfNo_WhseActivLine</DataField>
-        </Field>
-        <Field Name="ItemNo1_WhseActivLine">
-          <DataField>ItemNo1_WhseActivLine</DataField>
-        </Field>
-        <Field Name="Desc_WhseActivLine">
-          <DataField>Desc_WhseActivLine</DataField>
-        </Field>
-        <Field Name="CrsDocInfo_WhseActivLine">
-          <DataField>CrsDocInfo_WhseActivLine</DataField>
-        </Field>
-        <Field Name="UOMCode_WhseActivLine">
-          <DataField>UOMCode_WhseActivLine</DataField>
-        </Field>
-        <Field Name="DueDate_WhseActivLine">
-          <DataField>DueDate_WhseActivLine</DataField>
-        </Field>
-        <Field Name="QtyToHndl_WhseActivLine">
-          <DataField>QtyToHndl_WhseActivLine</DataField>
-        </Field>
-        <Field Name="QtyToHndl_WhseActivLineFormat">
-          <DataField>QtyToHndl_WhseActivLineFormat</DataField>
-        </Field>
-        <Field Name="QtyBase_WhseActivLine">
-          <DataField>QtyBase_WhseActivLine</DataField>
-        </Field>
-        <Field Name="QtyBase_WhseActivLineFormat">
-          <DataField>QtyBase_WhseActivLineFormat</DataField>
-        </Field>
-        <Field Name="CrossDockMark">
-          <DataField>CrossDockMark</DataField>
-        </Field>
-        <Field Name="VariantCode_WhseActivLine">
-          <DataField>VariantCode_WhseActivLine</DataField>
-        </Field>
-        <Field Name="ZoneCode_WhseActivLine">
-          <DataField>ZoneCode_WhseActivLine</DataField>
-        </Field>
-        <Field Name="BinCode_WhseActivLine">
-          <DataField>BinCode_WhseActivLine</DataField>
-        </Field>
-        <Field Name="ActionType_WhseActivLine">
-          <DataField>ActionType_WhseActivLine</DataField>
-        </Field>
-        <Field Name="LotNo1_WhseActivLine">
-          <DataField>LotNo1_WhseActivLine</DataField>
-        </Field>
-        <Field Name="SerialNo_WhseActivLine">
-          <DataField>SerialNo_WhseActivLine</DataField>
-        </Field>
-        <Field Name="LineNo1_WhseActivLine">
-          <DataField>LineNo1_WhseActivLine</DataField>
-        </Field>
-        <Field Name="BinRanking_WhseActivLine">
-          <DataField>BinRanking_WhseActivLine</DataField>
-        </Field>
-        <Field Name="EmptyStringCaption">
-          <DataField>EmptyStringCaption</DataField>
-        </Field>
-        <Field Name="LotNo_WhseActivLine">
-          <DataField>LotNo_WhseActivLine</DataField>
-        </Field>
-        <Field Name="SerialNo2_WhseActivLine">
-          <DataField>SerialNo2_WhseActivLine</DataField>
-        </Field>
-        <Field Name="QtyBase2_WhseActivLine">
-          <DataField>QtyBase2_WhseActivLine</DataField>
-        </Field>
-        <Field Name="QtyBase2_WhseActivLineFormat">
-          <DataField>QtyBase2_WhseActivLineFormat</DataField>
-        </Field>
-        <Field Name="QtyToHndl2_WhseActivLine">
-          <DataField>QtyToHndl2_WhseActivLine</DataField>
-        </Field>
-        <Field Name="QtyToHndl2_WhseActivLineFormat">
-          <DataField>QtyToHndl2_WhseActivLineFormat</DataField>
-        </Field>
-        <Field Name="LineNo_WhseActivLine">
-          <DataField>LineNo_WhseActivLine</DataField>
-        </Field>
-        <Field Name="ORBEndocdePutAwayTagVarGbl">
-          <DataField>ORBEndocdePutAwayTagVarGbl</DataField>
-        </Field>
-        <Field Name="ORBEncodedItemNoVarGbl">
-          <DataField>ORBEncodedItemNoVarGbl</DataField>
-        </Field>
-        <Field Name="EncodedSourceNo">
-          <DataField>EncodedSourceNo</DataField>
-        </Field>
-      </Fields>
-    </DataSet>
-  </DataSets>
   <ReportSections>
     <ReportSection>
       <Body>
@@ -3563,4 +3397,170 @@ End Function
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>c9cdb135-3134-4625-a7a9-42288af6e819</rd:ReportID>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="No_WhseActivHeader">
+          <DataField>No_WhseActivHeader</DataField>
+        </Field>
+        <Field Name="CompanyName">
+          <DataField>CompanyName</DataField>
+        </Field>
+        <Field Name="TodayFormatted">
+          <DataField>TodayFormatted</DataField>
+        </Field>
+        <Field Name="Time">
+          <DataField>Time</DataField>
+        </Field>
+        <Field Name="SumUpLines">
+          <DataField>SumUpLines</DataField>
+        </Field>
+        <Field Name="ShowLotSN">
+          <DataField>ShowLotSN</DataField>
+        </Field>
+        <Field Name="InvtPutAway">
+          <DataField>InvtPutAway</DataField>
+        </Field>
+        <Field Name="BinMandatory">
+          <DataField>BinMandatory</DataField>
+        </Field>
+        <Field Name="DirPutAwayAndPick">
+          <DataField>DirPutAwayAndPick</DataField>
+        </Field>
+        <Field Name="PutAwayFilter">
+          <DataField>PutAwayFilter</DataField>
+        </Field>
+        <Field Name="TblCptnPutAwayFilter">
+          <DataField>TblCptnPutAwayFilter</DataField>
+        </Field>
+        <Field Name="No1_WhseActivHeader">
+          <DataField>No1_WhseActivHeader</DataField>
+        </Field>
+        <Field Name="LocCode_WhseActivHeader">
+          <DataField>LocCode_WhseActivHeader</DataField>
+        </Field>
+        <Field Name="AssgndUID_WhseActivHeader">
+          <DataField>AssgndUID_WhseActivHeader</DataField>
+        </Field>
+        <Field Name="SortingMthd_WhseActivHeader">
+          <DataField>SortingMthd_WhseActivHeader</DataField>
+        </Field>
+        <Field Name="SrcDoc_WhseActivHeader">
+          <DataField>SrcDoc_WhseActivHeader</DataField>
+        </Field>
+        <Field Name="CurrReportPAGENOCaption">
+          <DataField>CurrReportPAGENOCaption</DataField>
+        </Field>
+        <Field Name="PutawayListCaption">
+          <DataField>PutawayListCaption</DataField>
+        </Field>
+        <Field Name="WhseActLineDueDateCaption">
+          <DataField>WhseActLineDueDateCaption</DataField>
+        </Field>
+        <Field Name="QtyHandledCaption">
+          <DataField>QtyHandledCaption</DataField>
+        </Field>
+        <Field Name="SrcNo_WhseActivLine">
+          <DataField>SrcNo_WhseActivLine</DataField>
+        </Field>
+        <Field Name="SrcDoc_WhseActivLine">
+          <DataField>SrcDoc_WhseActivLine</DataField>
+        </Field>
+        <Field Name="ShelfNo_WhseActivLine">
+          <DataField>ShelfNo_WhseActivLine</DataField>
+        </Field>
+        <Field Name="ItemNo1_WhseActivLine">
+          <DataField>ItemNo1_WhseActivLine</DataField>
+        </Field>
+        <Field Name="Desc_WhseActivLine">
+          <DataField>Desc_WhseActivLine</DataField>
+        </Field>
+        <Field Name="CrsDocInfo_WhseActivLine">
+          <DataField>CrsDocInfo_WhseActivLine</DataField>
+        </Field>
+        <Field Name="UOMCode_WhseActivLine">
+          <DataField>UOMCode_WhseActivLine</DataField>
+        </Field>
+        <Field Name="DueDate_WhseActivLine">
+          <DataField>DueDate_WhseActivLine</DataField>
+        </Field>
+        <Field Name="QtyToHndl_WhseActivLine">
+          <DataField>QtyToHndl_WhseActivLine</DataField>
+        </Field>
+        <Field Name="QtyToHndl_WhseActivLineFormat">
+          <DataField>QtyToHndl_WhseActivLineFormat</DataField>
+        </Field>
+        <Field Name="QtyBase_WhseActivLine">
+          <DataField>QtyBase_WhseActivLine</DataField>
+        </Field>
+        <Field Name="QtyBase_WhseActivLineFormat">
+          <DataField>QtyBase_WhseActivLineFormat</DataField>
+        </Field>
+        <Field Name="CrossDockMark">
+          <DataField>CrossDockMark</DataField>
+        </Field>
+        <Field Name="VariantCode_WhseActivLine">
+          <DataField>VariantCode_WhseActivLine</DataField>
+        </Field>
+        <Field Name="ZoneCode_WhseActivLine">
+          <DataField>ZoneCode_WhseActivLine</DataField>
+        </Field>
+        <Field Name="BinCode_WhseActivLine">
+          <DataField>BinCode_WhseActivLine</DataField>
+        </Field>
+        <Field Name="ActionType_WhseActivLine">
+          <DataField>ActionType_WhseActivLine</DataField>
+        </Field>
+        <Field Name="LotNo1_WhseActivLine">
+          <DataField>LotNo1_WhseActivLine</DataField>
+        </Field>
+        <Field Name="SerialNo_WhseActivLine">
+          <DataField>SerialNo_WhseActivLine</DataField>
+        </Field>
+        <Field Name="LineNo1_WhseActivLine">
+          <DataField>LineNo1_WhseActivLine</DataField>
+        </Field>
+        <Field Name="BinRanking_WhseActivLine">
+          <DataField>BinRanking_WhseActivLine</DataField>
+        </Field>
+        <Field Name="EmptyStringCaption">
+          <DataField>EmptyStringCaption</DataField>
+        </Field>
+        <Field Name="LotNo_WhseActivLine">
+          <DataField>LotNo_WhseActivLine</DataField>
+        </Field>
+        <Field Name="SerialNo2_WhseActivLine">
+          <DataField>SerialNo2_WhseActivLine</DataField>
+        </Field>
+        <Field Name="QtyBase2_WhseActivLine">
+          <DataField>QtyBase2_WhseActivLine</DataField>
+        </Field>
+        <Field Name="QtyBase2_WhseActivLineFormat">
+          <DataField>QtyBase2_WhseActivLineFormat</DataField>
+        </Field>
+        <Field Name="QtyToHndl2_WhseActivLine">
+          <DataField>QtyToHndl2_WhseActivLine</DataField>
+        </Field>
+        <Field Name="QtyToHndl2_WhseActivLineFormat">
+          <DataField>QtyToHndl2_WhseActivLineFormat</DataField>
+        </Field>
+        <Field Name="LineNo_WhseActivLine">
+          <DataField>LineNo_WhseActivLine</DataField>
+        </Field>
+        <Field Name="ORBEndocdePutAwayTagVarGbl">
+          <DataField>ORBEndocdePutAwayTagVarGbl</DataField>
+        </Field>
+        <Field Name="ORBEncodedItemNoVarGbl">
+          <DataField>ORBEncodedItemNoVarGbl</DataField>
+        </Field>
+        <Field Name="EncodedSourceNo">
+          <DataField>EncodedSourceNo</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
 </Report>
