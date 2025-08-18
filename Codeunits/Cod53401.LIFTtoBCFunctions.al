@@ -84,7 +84,7 @@ codeunit 53401 "ORB LIFTtoBC Functions"
         LiftIntegrationDataLogLcl: Record "ORB LIFT Integration Data Log";
     begin
         LiftIntegrationDataLogLcl.Reset();
-        LiftIntegrationDataLogLcl.SetRange("Source Type", 7311);
+        LiftIntegrationDataLogLcl.SetFilter("Source Type", '%1|%2', Database::"Warehouse Journal Line", Database::"Item Journal Line");
         LiftIntegrationDataLogLcl.SetRange("Source No.", SalesOrderNumber);
         Page.RunModal(Page::"ORB LIFT Inv. Transactions Log", LiftIntegrationDataLogLcl);
     end;
