@@ -408,6 +408,7 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 {
                     ApplicationArea = All;
                     Caption = 'Get LIFT Inventory Transaction for this Order';
+                    Visible = false;
                     trigger OnAction()
                     var
                         LIFTERPSetup: Record "ORB LIFT ERP Setup";
