@@ -17,7 +17,7 @@ codeunit 52608 "ORB Batch Post SO from JQ"
                 SalesLineLcl.SetRange("Document No.", SalesHeaderLcl."No.");
                 if SalesLineLcl.FindSet() then begin
                     repeat
-                        if (SalesLineLcl.Type = SalesLineLcl.Type::Resource) and (SalesLineLcl."No." = 'RES0000018') and (SalesLineLcl."Outstanding Quantity" <> 0) then
+                        if (SalesLineLcl.Type = SalesLineLcl.Type::Resource) and (SalesLineLcl."No." = 'RES0000018') and (SalesLineLcl."Outstanding Quantity" > 0) then
                             SalesLineLcl.Validate("Qty. to Ship", SalesLineLcl."Outstanding Quantity")
                         else begin
                             if SalesLineLcl."Qty. to Ship" <> 0 then
