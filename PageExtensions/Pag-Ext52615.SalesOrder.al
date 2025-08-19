@@ -404,6 +404,23 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                         Codeunit.Run(Codeunit::"ORB LIFT Register Whse. Jnl.", rec);
                     end;
                 }
+                action("ORB Get Lift Inventory Transactions for this Order")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Get LIFT Inventory Transaction for this Order';
+                    trigger OnAction()
+                    var
+                        LIFTERPSetup: Record "ORB LIFT ERP Setup";
+                        LIFTIntegrationDataLogRec: Record "ORB LIFT Integration Data Log";
+                        LIFTIntegration: Codeunit "ORB LIFT Integration";
+                        LIFTAPICodes: Codeunit "ORB LIFT API Codes";
+                    begin
+                        LIFTERPSetup.Get();
+                        LIFTIntegration.ParseDataByOrder(
+                            LIFTERPSetup."Inventory Journal API" + '&p2=' + Format(Rec."No."), LIFTAPICodes.GetItemJournalAPICode())
+                    end;
+                }
+
                 action("ORB Run LIFT Warehouse Adjustments")
                 {
                     ApplicationArea = All;
