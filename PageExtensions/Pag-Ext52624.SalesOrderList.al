@@ -30,7 +30,16 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
                 ApplicationArea = all;
                 ToolTip = 'Specifies the field Freight Line value';
             }
-
+            field("ORB Inv. Pick No."; Rec."ORB Inv. Pick No.")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Inv. Pick No. field.', Comment = '%';
+            }
+            field("ORB Posted Inv. Pick No."; Rec."ORB Posted Inv. Pick No.")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Posted Inv. Pick No. field.', Comment = '%';
+            }
         }
         addlast(Control1)
         {
@@ -323,6 +332,11 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
         clear(IsLIFTERPFunctionEnabled);
         if LiftFunctions.IsLIFTERPSetupEnabled() and (LiftFunctions.IsGetSalesOrdersAllowed()) then
             IsLIFTERPFunctionEnabled := true;
+    end;
+
+    trigger OnAfterGetRecord()
+    begin
+        rec.CalcFields("ORB Inv. Pick No.", "ORB Posted Inv. Pick No.");
     end;
 
     var

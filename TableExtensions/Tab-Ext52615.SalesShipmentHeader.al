@@ -52,6 +52,8 @@ tableextension 52615 "ORB Sales Shipment Header" extends "Sales Shipment Header"
         {
             Caption = 'Ship-to Contact Name (API)';
         }
+        //field(52658; "ORB Inv. Pick No."; Code[20]) Used on Sales header
+        //field(52659; "ORB Posted Inv. Pick No."; Code[20]) Used on Sales header
 
     }
 }

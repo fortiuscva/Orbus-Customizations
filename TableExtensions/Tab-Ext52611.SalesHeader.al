@@ -217,6 +217,21 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             DataClassification = CustomerContent;
             Editable = false;
         }
+        field(52658; "ORB Inv. Pick No."; Code[20])
+        {
+            Caption = 'Inv. Pick No.';
+            FieldClass = FlowField;
+            CalcFormula = lookup("Warehouse Activity Line"."No." where("Source No." = field("No.")));
+            Editable = false;
+        }
+        field(52659; "ORB Posted Inv. Pick No."; Code[20])
+        {
+            Caption = 'Posted Inv. Pick No.';
+            FieldClass = FlowField;
+            CalcFormula = lookup("Posted Invt. Pick Line"."No." where("Source No." = field("No.")));
+            Editable = false;
+        }
+
         modify("Sell-to Customer No.")
         {
             trigger OnAfterValidate()
