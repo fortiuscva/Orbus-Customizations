@@ -70,6 +70,8 @@ tableextension 52616 "ORB Sales Cr.Memo Header" extends "Sales Cr.Memo Header"
             DataClassification = CustomerContent;
             Editable = false;
         }
+        //field(52658; "ORB Inv. Pick No."; Code[20]) Used on Sales header
+        //field(52659; "ORB Posted Inv. Pick No."; Code[20]) Used on Sales header
 
 
     }
