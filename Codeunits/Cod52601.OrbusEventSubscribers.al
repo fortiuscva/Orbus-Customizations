@@ -830,6 +830,14 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         end;
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Whse.-Activity-Post", OnBeforeCheckLines, '', false, false)]
+    local procedure "Whse.-Activity-Post_OnBeforeCheckLines"(var WhseActivityHeader: Record "Warehouse Activity Header")
+    begin
+        if WhseActivityHeader.Type = WhseActivityHeader.Type::"Invt. Pick" then
+            WhseActivityHeader."Posting Date" := WorkDate();
+    end;
+
+
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
         OrbusFunctionsCUGbl: Codeunit "ORB Functions";
