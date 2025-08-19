@@ -221,7 +221,7 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         {
             Caption = 'Inv. Pick No.';
             FieldClass = FlowField;
-            CalcFormula = lookup("Warehouse Activity Line"."No." where("Source No." = field("No.")));
+            CalcFormula = lookup("Warehouse Activity Line"."No." where("Source No." = field("No."), "Activity Type" = filter("Invt. Pick")));
             Editable = false;
         }
         field(52659; "ORB Posted Inv. Pick No."; Code[20])
