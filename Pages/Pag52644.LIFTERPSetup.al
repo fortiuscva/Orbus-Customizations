@@ -63,6 +63,10 @@ page 52644 "ORB LIFT ERP Setup"
                         ApplicationArea = All;
                         ToolTip = 'Specifies the value of the Inv. Pick Posting Jnl. Template Name field.', Comment = '%';
                     }
+                    field("Inv. Pick Pst. Jnl. Batch(Ord)"; Rec."Inv. Pick Pst. Jnl. Batch(Ord)")
+                    {
+                        ToolTip = 'Specifies the value of the Inv. Pick Posting Jnl. Batch Name (Order) field.', Comment = '%';
+                    }
                 }
             }
 
