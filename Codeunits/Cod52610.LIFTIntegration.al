@@ -9,6 +9,17 @@ codeunit 52610 "ORB LIFT Integration"
         end;
     end;
 
+    procedure ParseDataByOrder(APIURLPar: Text[1024]; APICodePar: code[20])
+    var
+        JsonResponse: text;
+    begin
+        if GetRequest(APIURLPar, APICodePar, JsonResponse) then begin
+            SetParseDataByOrder := true;
+            ProcessRequest(APICodePar, JsonResponse);
+            SetParseDataByOrder := false;
+        end;
+    end;
+
     procedure GetRequest(APIURLPar: text[1024]; APICodePar: code[20]; var ResponseTextPar: Text): Boolean
     var
         httpClient: HttpClient;
@@ -537,15 +548,19 @@ codeunit 52610 "ORB LIFT Integration"
         LIFTERPSetup.TestField("Inv. Pick Post. Jnl. Template");
         LIFTERPSetup.TestField("Inv. Pick Post. Jnl. Batch");
 
+        if SetParseDataByOrder then
+            LIFTERPSetup.TestField("Inv. Pick Pst. Jnl. Batch(Ord)");
+
         JnlTemplateName := LIFTERPSetup."Inv. Pick Post. Jnl. Template";
         JnlBatchName := LIFTERPSetup."Inv. Pick Post. Jnl. Batch";
+        if SetParseDataByOrder then
+            JnlBatchName := LIFTERPSetup."Inv. Pick Pst. Jnl. Batch(Ord)";
 
         JsonOrderToken := jsonOrderObject.AsToken();
         DocumentNoVarLcl := GetValueAsCode(JsonOrderToken, 'DOCUMENT_NUMBER');
         ItemNoVarLcl := GetValueAsCode(JsonOrderToken, 'MATERIAL_BARCODE');
         LocationCodeVarLcl := GetValueAsCode(JsonOrderToken, 'LOCATION_CODE');
         BinCodeVarLcl := GetValueAsCode(JsonOrderToken, 'BIN_CODE');
-
 
         if LocationCodeVarLcl = '' then
             Error(StrSubstNo(LocationCodeBlankErr, DocumentNoVarLcl, ItemNoVarLcl));
@@ -593,5 +608,9 @@ codeunit 52610 "ORB LIFT Integration"
                              ItemJournalLine.Quantity, ItemJournalLine."Unit of Measure Code", ItemJournalLine."Posting Date", ItemJournalLine."Location Code", ItemJournalLine."Bin Code", ItemJournalLine."Entry Type");
 
     end;
+
+
+    var
+        SetParseDataByOrder: Boolean;
 
 }
