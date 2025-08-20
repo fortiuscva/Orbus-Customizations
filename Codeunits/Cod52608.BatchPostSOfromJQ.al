@@ -27,7 +27,7 @@ codeunit 52608 "ORB Batch Post SO from JQ"
                 end;
             until SalesHeaderLcl.Next() = 0;
         end;
-        BatchPostSalesOrdersCULcl.InitializeRequest(true, true, Today(), Today(), false, false, false, false);
+        BatchPostSalesOrdersCULcl.InitializeRequest(true, true, Today(), Today(), true, false, false, false);
         BatchPostSalesOrdersCULcl.UseRequestPage(false);
         OrbusSingleInstanceCUGbl.SetShippedNotInvoiced(true);
         BatchPostSalesOrdersCULcl.Run();
