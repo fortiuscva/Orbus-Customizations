@@ -1,7 +1,7 @@
 report 52619 "ORB Posted Invt. Pick Report"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './Reports/Layouts/OrbusPickingList_ModifiedList.rdl';
+    RDLCLayout = './Reports/Layouts/OrbusPostedInvtPick.rdl';
     Caption = 'Posted Invt. Pick';
 
 
