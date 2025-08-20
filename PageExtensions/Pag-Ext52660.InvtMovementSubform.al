@@ -1,5 +1,17 @@
 pageextension 52660 "ORB Invt. Movement Subform" extends "Invt. Movement Subform"
 {
+    layout
+    {
+        addbefore("Bin Code")
+        {
+            field("ORB Zone Code"; Rec."Zone Code")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the zone code where the bin on this line is located.';
+                Visible = false;
+            }
+        }
+    }
     actions
     {
         addlast("F&unctions")
