@@ -804,7 +804,7 @@ report 52619 "ORB Posted Invt. Pick Report"
         BarcodeFontProviderInterface.ValidateInput(BarcodeString, BarcodeSymbology);
         BarcodeFontProviderInterface.ValidateInput(BarcodeString2, BarcodeSymbology);
         // if "Warehouse Activity Header".Type <> "Warehouse Activity Header".Type::"Invt. Pick" then
-        BarcodeFontProviderInterface.ValidateInput(BarcodeString3, BarcodeSymbology);
+        //BarcodeFontProviderInterface.ValidateInput(BarcodeString3, BarcodeSymbology);
         EncodedWareShipmentHeaderNo := BarcodeFontProviderInterface.EncodeFont(BarcodeString, BarcodeSymbology);
         EncodedSourceDocNo := BarcodeFontProviderInterface.EncodeFont(BarcodeString2, BarcodeSymbology);
         WarehouseShipmentNoBarcode := BarcodeFontProviderInterface.EncodeFont(BarcodeString3, BarcodeSymbology);
