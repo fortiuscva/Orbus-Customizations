@@ -331,9 +331,9 @@ report 52619 "ORB Posted Invt. Pick Report"
                         Clear(TempWhseActivLine);
                     end;
                 }
-                dataitem(Line; "Sales Line")
+                dataitem(Line; "Sales shipment Line")
                 {
-                    DataItemLinkReference = "Warehouse Activity Line";
+                    DataItemLinkReference = "Warehouse Activity Header";
                     DataItemLink = "Document No." = field("Source No.");
 
                     column(No_; "No.")
@@ -364,7 +364,7 @@ report 52619 "ORB Posted Invt. Pick Report"
                                 CurrReport.Skip()
                             else begin
                                 SalesCommentLine.Reset();
-                                SalesCommentLine.SetRange("Document Type", SalesCommentLine."Document Type"::Order);
+                                SalesCommentLine.SetRange("Document Type", SalesCommentLine."Document Type"::Shipment);
                                 SalesCommentLine.SetRange("No.", Line."Document No.");
                                 SalesCommentLine.SetRange("Document Line No.", Line."Line No.");
                                 if SalesCommentLine.FindSet() then
@@ -584,8 +584,8 @@ report 52619 "ORB Posted Invt. Pick Report"
                 GetCurrentDateandTime();
                 GetAssemblyItems();
 
-                if not IsReportInPreviewMode() then
-                    CODEUNIT.Run(CODEUNIT::"Whse.-Printed", "Warehouse Activity Header");
+                // if not IsReportInPreviewMode() then
+                //     CODEUNIT.Run(CODEUNIT::"Whse.-Printed", "Warehouse Activity Header");
 
                 SalesHeaderRecLcl.reset;
                 Clear(CustomerSupportVarGbl);
