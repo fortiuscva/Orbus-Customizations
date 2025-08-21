@@ -598,7 +598,6 @@ report 52619 "ORB Posted Invt. Pick Report"
                     MustHaveDateVarGbl := SalesHeaderRecLcl."In-Hands Date";
                 end;
             end;
-            end;
         }
     }
 
