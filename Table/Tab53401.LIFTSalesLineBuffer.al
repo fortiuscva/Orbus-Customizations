@@ -19,7 +19,7 @@ table 53401 "ORB LIFT Sales Line Buffer"
         field(3; "Document No."; Code[20])
         {
             Caption = 'Document No.';
-            TableRelation = "Sales Header"."No." where("Document Type" = field("Document Type"));
+            TableRelation = "ORB LIFT Sales Order Buffer"."No." where("Document Type" = field("Document Type"));
         }
         field(4; "Line No."; Integer)
         {
