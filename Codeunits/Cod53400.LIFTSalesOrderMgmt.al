@@ -19,6 +19,8 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
     var
         DShipPackOptions: Record "DSHIP Package Options";
         SalesInvoiceHeader: Record "Sales Invoice Header";
+        PostedSalesOrderError: Label 'Sales Order %1 does not exist. It might have been Posted as there is a Posted Sales Invoice %2 for this Order No.';
+        CancelledSalesOrderError: Label 'Sales Order %1 does not exist. It might have been Deleted in BC as it is a Cancelled Sales Order from LIFT ERP';
     begin
         Clear(OrderStatusReopen);
         OrderStatusReopen := false;
@@ -42,9 +44,9 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             SalesInvoiceHeader.Reset();
             SalesInvoiceHeader.SetRange("Order No.", LIFTSalesOrderBuffer."No.");
             if SalesInvoiceHeader.FindFirst() then
-                Error('Sales Order does not exist. It might have been Posted as there is a Posted Sales Invoice for this Order No.')
+                Error(StrSubstNo(PostedSalesOrderError, LIFTSalesOrderBuffer."No.", SalesInvoiceHeader."No."))
             else
-                Error('Sales Order does not exist. It might have been deleted in BC as it is a Cancelled Sales Order from LIFT ERP');
+                Error(StrSubstNo(CancelledSalesOrderError, LIFTSalesOrderBuffer."No."));
         end;
     end;
 
