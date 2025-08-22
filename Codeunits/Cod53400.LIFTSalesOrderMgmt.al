@@ -18,6 +18,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
     procedure PropagateOnSalesHeaderModify(var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer")
     var
         DShipPackOptions: Record "DSHIP Package Options";
+        SalesInvoiceHeader: Record "Sales Invoice Header";
     begin
         Clear(OrderStatusReopen);
         OrderStatusReopen := false;
@@ -32,11 +33,19 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             end;
             ArchiveManagement.ArchiveSalesDocument(SalesHeader);
             UpdateSalesHeader(LIFTSalesOrderBuffer, false);
+            DShipPackOptions.RetrievePackageOptions(Enum::"DSHIP Document Type"::"Sales Order", LIFTSalesOrderBuffer."No.", '');
+            UpdateDShipPackageOptions(DShipPackOptions, LIFTSalesOrderBuffer);
+            if OrderStatusReopen then
+                ReleaseSalesOrder(SalesHeader);
+        end
+        else begin
+            SalesInvoiceHeader.Reset();
+            SalesInvoiceHeader.SetRange("Order No.", LIFTSalesOrderBuffer."No.");
+            if SalesInvoiceHeader.FindFirst() then
+                Error('Sales Order does not exist. It might have been Posted as there is a Posted Sales Invoice for this Order No.')
+            else
+                Error('Sales Order does not exist. It might have been deleted in BC as it is a Cancelled Sales Order from LIFT ERP');
         end;
-        DShipPackOptions.RetrievePackageOptions(Enum::"DSHIP Document Type"::"Sales Order", LIFTSalesOrderBuffer."No.", '');
-        UpdateDShipPackageOptions(DShipPackOptions, LIFTSalesOrderBuffer);
-        if OrderStatusReopen then
-            ReleaseSalesOrder(SalesHeader);
     end;
 
     local procedure UpdateSalesHeader(var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer"; CreateSO: Boolean)
