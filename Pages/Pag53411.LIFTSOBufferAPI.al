@@ -237,6 +237,10 @@ page 53411 "ORB LIFT SO Buffer API"
                 {
                     Caption = 'LIFT PRODUCTION_NOTE';
                 }
+                field(liftCancellationStatus; Rec."ORB LIFT Cancellation Status")
+                {
+                    Caption = 'LIFT Cancellation Status';
+                }
             }
         }
     }
