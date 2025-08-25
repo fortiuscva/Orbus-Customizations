@@ -3,6 +3,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
     procedure PropagateOnSalesHeaderInsert(var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer")
     var
         DShipPackOptions: Record "DSHIP Package Options";
+        SalesHeaderRecLcl: Record "Sales Header";
     begin
         if not SalesHeader.Get(LIFTSalesOrderBuffer."Document Type", LIFTSalesOrderBuffer."No.") then begin
             SalesHeader.Init();
@@ -18,9 +19,11 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
     procedure PropagateOnSalesHeaderModify(var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer")
     var
         DShipPackOptions: Record "DSHIP Package Options";
+        SalesShipmentHeader: Record "Sales Shipment Header";
         SalesInvoiceHeader: Record "Sales Invoice Header";
-        PostedSalesOrderError: Label 'Sales Order %1 does not exist. It might have been Posted as there is a Posted Sales Invoice %2 for this Order No.';
-        CancelledSalesOrderError: Label 'Sales Order %1 does not exist. It might have been Deleted in BC as it is a Cancelled Sales Order from LIFT ERP';
+        PostedSalesOrderError: Label 'Sales Order %1 is already Invoiced. And the Posted Sales Invoice is %2';
+        ShippedOrderError: Label 'Sales Order %1 is already Shipped. And the Posted Sales Shipment is %2';
+        CancelledSalesOrderError: Label 'Sales Order %1 is already cancelled';
     begin
         Clear(OrderStatusReopen);
         OrderStatusReopen := false;
@@ -29,6 +32,12 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         SalesHeader.SetRange("No.", LIFTSalesOrderBuffer."No.");
         if SalesHeader.FindFirst() then begin
             //if SalesHeader.Get(LIFTSalesOrderBuffer."Document Type", LIFTSalesOrderBuffer."No.") then begin
+            if SalesHeader."Completely Shipped" then begin
+                SalesShipmentHeader.Reset();
+                SalesShipmentHeader.SetRange("Order No.", LIFTSalesOrderBuffer."No.");
+                if SalesShipmentHeader.FindFirst() then
+                    Error(StrSubstNo(ShippedOrderError, LIFTSalesOrderBuffer."No.", SalesShipmentHeader."No."));
+            end;
             if SalesHeader.Status = SalesHeader.Status::Released then begin
                 ReOpenSalesOrder(SalesHeader);
                 OrderStatusReopen := true;
