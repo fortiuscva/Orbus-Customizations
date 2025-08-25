@@ -21,9 +21,9 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         DShipPackOptions: Record "DSHIP Package Options";
         SalesShipmentHeader: Record "Sales Shipment Header";
         SalesInvoiceHeader: Record "Sales Invoice Header";
-        PostedSalesOrderError: Label 'Sales Order %1 is already Invoiced. And the Posted Sales Invoice is %2';
-        ShippedOrderError: Label 'Sales Order %1 is already Shipped. And the Posted Sales Shipment is %2';
-        CancelledSalesOrderError: Label 'Sales Order %1 is already cancelled';
+        PostedSalesOrderError: Label 'Sales Order %1 is already Invoiced. And the Posted Sales Invoice is %2.';
+        ShippedOrderError: Label 'Sales Order %1 is already Shipped. And the Posted Sales Shipment is %2.';
+        CancelledSalesOrderError: Label 'Sales Order %1 is already cancelled.';
     begin
         Clear(OrderStatusReopen);
         OrderStatusReopen := false;
