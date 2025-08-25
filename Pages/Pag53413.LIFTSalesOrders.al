@@ -129,6 +129,10 @@ page 53413 "ORB LIFT Sales Orders"
                 {
                     ToolTip = 'Specifies the value of the LIFT PRODUCTION_NOTE field.', Comment = '%';
                 }
+                field("ORB LIFT Cancellation Status"; Rec."ORB LIFT Cancellation Status")
+                {
+                    ToolTip = 'Specifies the value of the LIFT Cancellation Status field.', Comment = '%';
+                }
             }
         }
     }
