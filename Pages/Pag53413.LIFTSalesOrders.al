@@ -133,6 +133,19 @@ page 53413 "ORB LIFT Sales Orders"
                 {
                     ToolTip = 'Specifies the value of the LIFT Cancellation Status field.', Comment = '%';
                 }
+                field("ORB LIFT Total Lines Count"; Rec."ORB LIFT Total Lines Count")
+                {
+                    ToolTip = 'Specifies the value of the LIFT Total Lines Count.', Comment = '%';
+                }
+                field("ORB LIFT Comment Lines Count"; Rec."ORB LIFT Comment Lines Count")
+                {
+                    ToolTip = 'Specifies the value of the LIFT Commment Lines Count.', Comment = '%';
+                }
+                field("ORB LIFT Item Lines Count"; Rec."ORB LIFT Item Lines Count")
+                {
+                    ToolTip = 'Specifies the value of the LIFT Item Lines Count.', Comment = '%';
+                }
+
             }
         }
     }
