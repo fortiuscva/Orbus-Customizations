@@ -241,6 +241,18 @@ page 53411 "ORB LIFT SO Buffer API"
                 {
                     Caption = 'LIFT Cancellation Status';
                 }
+                field(liftTotalLinesCount; Rec."ORB LIFT Total Lines Count")
+                {
+                    Caption = 'LIFT Total Lines Count';
+                }
+                field(liftCommentLinesCount; Rec."ORB LIFT Comment Lines Count")
+                {
+                    Caption = 'LIFT Comment Lines Count';
+                }
+                field(liftItemLinesCount; Rec."ORB LIFT Item Lines Count")
+                {
+                    Caption = 'LIFT Item Lines Count';
+                }
             }
         }
     }

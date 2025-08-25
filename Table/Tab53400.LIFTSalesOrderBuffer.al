@@ -294,6 +294,21 @@ table 53400 "ORB LIFT Sales Order Buffer"
             Caption = 'LIFT Cancellation Status';
             DataClassification = CustomerContent;
         }
+        field(55124; "ORB LIFT Total Lines Count"; Integer)
+        {
+            Caption = 'LIFT Total Lines Count';
+            DataClassification = CustomerContent;
+        }
+        field(55125; "ORB LIFT Comment Lines Count"; Integer)
+        {
+            Caption = 'LIFT Comment Lines Count';
+            DataClassification = CustomerContent;
+        }
+        field(55126; "ORB LIFT Item Lines Count"; Integer)
+        {
+            Caption = 'LIFT Item Lines Count';
+            DataClassification = CustomerContent;
+        }
     }
     keys
     {
