@@ -34,26 +34,17 @@ codeunit 53416 "ORB LIFT Events & Subscribers"
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Whse.-Activity-Post", OnAfterCreateWhseJnlLine, '', false, false)]
     local procedure "Whse.-Activity-Post_OnAfterCreateWhseJnlLine"(var WarehouseJournalLine: Record "Warehouse Journal Line"; WarehouseActivityLine: Record "Warehouse Activity Line"; SourceCodeSetup: Record "Source Code Setup")
     begin
-        if WarehouseActivityLine."Action Type" = WarehouseActivityLine."Action Type"::Take then begin
-            WarehouseJournalLine."Entry Type" := WarehouseJournalLine."Entry Type"::"Negative Adjmt.";
-            WarehouseJournalLine."From Bin Code" := WarehouseActivityLine."Bin Code";
-            WarehouseJournalLine."From Zone Code" := WarehouseActivityLine."Zone Code";
-            WarehouseJournalLine.Quantity := WarehouseActivityLine.Quantity;
-            WarehouseJournalLine."Qty. (Base)" := WarehouseActivityLine."Qty. to Handle (Base)";
-        end else begin
-            WarehouseJournalLine."Entry Type" := WarehouseJournalLine."Entry Type"::"Positive Adjmt.";
-            WarehouseJournalLine."To Bin Code" := WarehouseActivityLine."Bin Code";
-            WarehouseJournalLine."To Zone Code" := WarehouseActivityLine."Zone Code";
-            WarehouseJournalLine.Quantity := -WarehouseActivityLine.Quantity;
-            WarehouseJournalLine."Qty. (Base)" := -WarehouseActivityLine."Qty. to Handle (Base)";
+        if WarehouseActivityLine."Activity Type" = WarehouseActivityLine."Activity Type"::"Invt. Pick" then begin
+            if WarehouseActivityLine."Action Type" = WarehouseActivityLine."Action Type"::Take then begin
+                WarehouseJournalLine.Quantity := WarehouseActivityLine."Qty. to Handle";
+            end else begin
+                WarehouseJournalLine.Quantity := -WarehouseActivityLine."Qty. to Handle";
+            end;
+            WarehouseJournalLine."Qty. (Absolute)" := WarehouseActivityLine."Qty. to Handle";
+            WarehouseJournalLine."Unit of Measure Code" := WarehouseActivityLine."Unit of Measure Code";
+            WarehouseJournalLine."Qty. per Unit of Measure" := WarehouseActivityLine."Qty. per Unit of Measure";
         end;
-        WarehouseJournalLine."Qty. (Absolute)" := WarehouseActivityLine."Qty. to Handle";
-        WarehouseJournalLine."Qty. (Absolute, Base)" := WarehouseActivityLine."Qty. to Handle (Base)";
-        WarehouseJournalLine."Unit of Measure Code" := WarehouseActivityLine."Unit of Measure Code";
-        WarehouseJournalLine."Qty. per Unit of Measure" := WarehouseActivityLine."Qty. per Unit of Measure";
     end;
-
-
 
 
 
