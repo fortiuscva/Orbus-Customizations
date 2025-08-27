@@ -34,6 +34,17 @@ pageextension 52624 "ORB Sales Order List" extends "Sales Order List"
             {
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the Inv. Pick No. field.', Comment = '%';
+
+                trigger OnDrillDown()
+                var
+                    WarehouseActivityHeaderRec: Record "Warehouse Activity Header";
+                begin
+                    WarehouseActivityHeaderRec.Reset();
+                    WarehouseActivityHeaderRec.SetRange(Type, WarehouseActivityHeaderRec.Type::"Invt. Pick");
+                    WarehouseActivityHeaderRec.SetRange("No.", rec."ORB Inv. Pick No.");
+                    if WarehouseActivityHeaderRec.FindFirst() then
+                        Page.RunModal(Page::"Inventory Pick", WarehouseActivityHeaderRec);
+                end;
             }
             field("ORB Posted Inv. Pick No."; Rec."ORB Posted Inv. Pick No.")
             {
