@@ -10,6 +10,7 @@ codeunit 52608 "ORB Batch Post SO from JQ"
         SalesHeaderLcl.Reset();
         SalesHeaderLcl.SetRange("Document Type", SalesHeaderLcl."Document Type"::Order);
         SalesHeaderLcl.SetRange("Shipped Not Invoiced", true);
+        SalesHeaderLcl.SetFilter("Package Tracking No.", '<>%1', '');
         if SalesHeaderLcl.FindSet() then begin
             repeat
                 SalesLineLcl.Reset();
