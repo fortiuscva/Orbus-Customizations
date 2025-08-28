@@ -32,12 +32,14 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         SalesHeader.SetRange("No.", LIFTSalesOrderBuffer."No.");
         if SalesHeader.FindFirst() then begin
             //if SalesHeader.Get(LIFTSalesOrderBuffer."Document Type", LIFTSalesOrderBuffer."No.") then begin
-            if SalesHeader."Completely Shipped" then begin
-                SalesShipmentHeader.Reset();
-                SalesShipmentHeader.SetRange("Order No.", LIFTSalesOrderBuffer."No.");
-                if SalesShipmentHeader.FindFirst() then
-                    Error(StrSubstNo(ShippedOrderError, LIFTSalesOrderBuffer."No.", SalesShipmentHeader."No."));
-            end;
+            /*
+                if SalesHeader."Completely Shipped" then begin
+                    SalesShipmentHeader.Reset();
+                    SalesShipmentHeader.SetRange("Order No.", LIFTSalesOrderBuffer."No.");
+                    if SalesShipmentHeader.FindFirst() then
+                        Error(StrSubstNo(ShippedOrderError, LIFTSalesOrderBuffer."No.", SalesShipmentHeader."No."));
+                end;
+            */
             if SalesHeader.Status = SalesHeader.Status::Released then begin
                 ReOpenSalesOrder(SalesHeader);
                 OrderStatusReopen := true;
