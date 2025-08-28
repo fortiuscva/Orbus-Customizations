@@ -303,6 +303,16 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         DShipPackOptions.Validate("Payment Country Code", '');
     end;
 
+    procedure PropagateOnSalesOrderDelete(var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer")
+    begin
+        SalesHeader.Reset();
+        SalesHeader.SetRange("Document Type", LIFTSalesOrderBuffer."Document Type");
+        SalesHeader.SetRange("No.", LIFTSalesOrderBuffer."No.");
+        if SalesHeader.FindLast() then
+            // ArchiveManagement.ArchiveSalesDocument(SalesHeader);
+            SalesHeader.Delete(true);
+    end;
+
     var
         SalesHeader: Record "Sales Header";
         SalesLine: Record "Sales Line";

@@ -252,8 +252,10 @@ page 53411 "ORB LIFT SO Buffer API"
 
     trigger OnModifyRecord(): Boolean
     begin
-
-        LIFTSalesOrderMgmt.PropagateOnSalesHeaderModify(Rec);
+        if Rec."ORB LIFT Cancellation Status" = -1 then
+            LIFTSalesOrderMgmt.PropagateOnSalesOrderDelete(Rec)
+        else
+            LIFTSalesOrderMgmt.PropagateOnSalesHeaderModify(Rec);
     end;
 
 
