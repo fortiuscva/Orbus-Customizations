@@ -23,7 +23,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         SalesInvoiceHeader: Record "Sales Invoice Header";
         PostedSalesOrderError: Label 'Sales Order %1 is already Invoiced. And the Posted Sales Invoice is %2.';
         ShippedOrderError: Label 'Sales Order %1 is already Shipped. And the Posted Sales Shipment is %2.';
-        CancelledSalesOrderError: Label 'Sales Order %1 is already cancelled.';
+    // CancelledSalesOrderError: Label 'Sales Order %1 is already cancelled.';
     begin
         Clear(OrderStatusReopen);
         OrderStatusReopen := false;
@@ -55,9 +55,9 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             SalesInvoiceHeader.Reset();
             SalesInvoiceHeader.SetRange("Order No.", LIFTSalesOrderBuffer."No.");
             if SalesInvoiceHeader.FindFirst() then
-                Error(StrSubstNo(PostedSalesOrderError, LIFTSalesOrderBuffer."No.", SalesInvoiceHeader."No."))
-            else
-                Error(StrSubstNo(CancelledSalesOrderError, LIFTSalesOrderBuffer."No."));
+                Error(StrSubstNo(PostedSalesOrderError, LIFTSalesOrderBuffer."No.", SalesInvoiceHeader."No."));
+            // else
+            //     Error(StrSubstNo(CancelledSalesOrderError, LIFTSalesOrderBuffer."No."));
         end;
     end;
 
