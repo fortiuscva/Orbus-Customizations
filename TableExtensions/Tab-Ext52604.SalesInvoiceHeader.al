@@ -98,13 +98,15 @@ tableextension 52604 "ORB Sales Invoice Header" extends "Sales Invoice Header"
         }
         //field(52633 ; used on sales header.
         //field(52634 ; used on sales header.
-
+        field(52653; "ORB Ship-to Contact Name (API)"; text[100])
+        {
+            Caption = 'Ship-to Contact Name (API)';
+            DataClassification = CustomerContent;
+        }
         field(52654; "ORB Your Reference(CS)"; Text[41])
         {
-
             Caption = 'Your Reference(CS)';
             DataClassification = ToBeClassified;
-
         }
         field(52656; "ORB Customer Support"; Code[20])
         {
