@@ -46,6 +46,20 @@ codeunit 53416 "ORB LIFT Events & Subscribers"
         end;
     end;
 
+    [EventSubscriber(ObjectType::Table, Database::"Bin Content", OnBeforeCalcQtyAvailToTake, '', false, false)]
+    local procedure "Bin Content_OnBeforeCalcQtyAvailToTake"(var BinContent: Record "Bin Content"; ExcludeQtyBase: Decimal; var QtyAvailToTake: Decimal; var IsHandled: Boolean)
+    begin
+        if BinContent.ReadIsolation() <> IsolationLevel::UpdLock then
+            BinContent.ReadIsolation(IsolationLevel::ReadCommitted);
+
+        BinContent.CalcFields("Quantity (Base)", "Negative Adjmt. Qty. (Base)", "Pick Quantity (Base)", "ATO Components Pick Qty (Base)");
+        QtyAvailToTake :=
+          BinContent."Quantity (Base)" -
+          ((BinContent."Pick Quantity (Base)" + BinContent."ATO Components Pick Qty (Base)") - ExcludeQtyBase + BinContent."Negative Adjmt. Qty. (Base)");
+
+        IsHandled := true;
+    end;
+
 
 
 
