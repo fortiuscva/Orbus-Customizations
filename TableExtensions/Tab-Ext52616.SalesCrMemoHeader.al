@@ -47,11 +47,13 @@ tableextension 52616 "ORB Sales Cr.Memo Header" extends "Sales Cr.Memo Header"
         }
         //field(52633 ; used on sales header.
         //field(52634 ; used on sales header.
-
-
+        field(52653; "ORB Ship-to Contact Name (API)"; text[100])
+        {
+            Caption = 'Ship-to Contact Name (API)';
+            DataClassification = CustomerContent;
+        }
         field(52654; "ORB Your Reference(CS)"; Text[41])
         {
-
             Caption = 'Your Reference(CS)';
             DataClassification = ToBeClassified;
         }
