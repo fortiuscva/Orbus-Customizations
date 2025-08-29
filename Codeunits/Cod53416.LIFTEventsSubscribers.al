@@ -52,6 +52,7 @@ codeunit 53416 "ORB LIFT Events & Subscribers"
         if BinContent.ReadIsolation() <> IsolationLevel::UpdLock then
             BinContent.ReadIsolation(IsolationLevel::ReadCommitted);
 
+        BinContent.SetRange("Unit of Measure Filter", BinContent."Unit of Measure Code");
         BinContent.CalcFields("Quantity (Base)", "Negative Adjmt. Qty. (Base)", "Pick Quantity (Base)", "ATO Components Pick Qty (Base)");
         QtyAvailToTake :=
           BinContent."Quantity (Base)" -
