@@ -529,11 +529,16 @@ codeunit 52605 "ORB IWX Inventory Count Mgmt"
 
                     lrecCountSheet."Prod. Order No." := codProdOrder;
                     lrecCountSheet."Auto Generated" := true;
-                    if recLocation."Directed Put-away and Pick" then begin
-                        lrecCountSheet."Unit of Measure Code" := ltrecBinContent."Unit of Measure Code";
-                        lrecCountSheet."Qty. per Unit of Measure" := ltrecBinContent."Qty. per Unit of Measure";
-                    end;//if directed pick
+                    //if recLocation."Directed Put-away and Pick" then begin
+                    lrecCountSheet."Unit of Measure Code" := ltrecBinContent."Unit of Measure Code";
+                    lrecCountSheet."Qty. per Unit of Measure" := ltrecBinContent."Qty. per Unit of Measure";
+                    //end;//if directed pick
                     lrecCountSheet.calcDifference();
+                    if lqBinContentByDate.Quantity < 0 then begin
+                        lrecCountSheet.Validate("Expected Quantity", 0);
+                        lrecCountSheet.Validate("Difference Qty.", 0);
+                        lrecCountSheet.Validate("Difference Amount", 0);
+                    end;
                     lrecCountSheet.Insert();
                 end; //if insert
 
