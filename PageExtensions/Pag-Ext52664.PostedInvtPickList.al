@@ -18,6 +18,10 @@ pageextension 52664 "ORB Posted Invt. Pick List" extends "Posted Invt. Pick List
                     Page.RunModal(Page::"Sales Order", SalesHeaderLcl);
                 end;
             }
+            field("ORB Order No."; Rec."ORB Order No.")
+            {
+                ApplicationArea = all;
+            }
         }
     }
     actions
