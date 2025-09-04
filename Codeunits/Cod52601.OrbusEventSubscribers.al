@@ -840,7 +840,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Whse.-Activity-Post", OnAfterPostedInvtPickHeaderInsert, '', false, false)]
     local procedure "Whse.-Activity-Post_OnAfterPostedInvtPickHeaderInsert"(var PostedInvtPickHeader: Record "Posted Invt. Pick Header"; WarehouseActivityHeader: Record "Warehouse Activity Header")
     begin
-        if WarehouseActivityHeader.Get(PostedInvtPickHeader."Invt Pick No.") then
+        if WarehouseActivityHeader.Get(WarehouseActivityHeader.Type::"Invt. Pick", PostedInvtPickHeader."Invt Pick No.") then
             if WarehouseActivityHeader."Source Document" = WarehouseActivityHeader."Source Document"::"Sales Order" then begin
                 PostedInvtPickHeader."ORB Order No." := WarehouseActivityHeader."Source No.";
                 PostedInvtPickHeader.Modify();
