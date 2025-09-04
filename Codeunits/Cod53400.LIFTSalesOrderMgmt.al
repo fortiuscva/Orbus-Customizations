@@ -205,6 +205,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             if ItemRecLcl.get(LIFTSalesLineBuffer."No.") then begin
                 SalesLine.Description := ItemRecLcl.Description;
                 SalesLine."Description 2" := ItemRecLcl."Description 2";
+                SalesLine."ORB LIFT Line ID" := LIFTSalesLineBuffer."LIFT Line ID";
             end;
         end else begin
             SalesLine.Validate(Type, SalesLine.Type::Item);
@@ -312,9 +313,13 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         SalesHeader.Reset();
         SalesHeader.SetRange("Document Type", LIFTSalesOrderBuffer."Document Type");
         SalesHeader.SetRange("No.", LIFTSalesOrderBuffer."No.");
-        if SalesHeader.FindLast() then
+        if SalesHeader.FindLast() then begin
+            SalesHeader.Validate("ORB Order Cancelled", true);
+            SalesHeader.Validate("External Document No.", LIFTSalesOrderBuffer."External Document No.");
+            SalesHeader.Modify();
             // ArchiveManagement.ArchiveSalesDocument(SalesHeader);
-            SalesHeader.Delete(true)
+            SalesHeader.Delete(true);
+        end
         else
             Error(StrSubstNo(CancelledSalesOrderError, LIFTSalesOrderBuffer."No."));
     end;
