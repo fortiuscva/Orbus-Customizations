@@ -8,7 +8,6 @@ report 52620 "ORB Update Historic Entries"
     {
         dataitem(PostedInvtPickHeader; "Posted Invt. Pick Header")
         {
-            RequestFilterFields = "No.";
             DataItemTableView = sorting("No.");
 
             trigger OnAfterGetRecord()
@@ -20,8 +19,8 @@ report 52620 "ORB Update Historic Entries"
                     PostedInvtPickLine.SetRange("Source Document", PostedInvtPickLine."Source Document"::"Sales Order");
 
                     if PostedInvtPickLine.FindFirst() then begin
-                        "ORB Order No." := PostedInvtPickLine."Source No.";
-                        PostedInvtPickLine.Modify();
+                        PostedInvtPickHeader."ORB Order No." := PostedInvtPickLine."Source No.";
+                        PostedInvtPickHeader.Modify();
                         UpdatedCount += 1;
                     end;
                 end;
