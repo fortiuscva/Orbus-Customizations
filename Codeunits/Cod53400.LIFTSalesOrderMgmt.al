@@ -203,6 +203,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             if ItemRecLcl.get(LIFTSalesLineBuffer."No.") then begin
                 SalesLine.Description := ItemRecLcl.Description;
                 SalesLine."Description 2" := ItemRecLcl."Description 2";
+                SalesLine."ORB LIFT Line ID" := LIFTSalesLineBuffer."LIFT Line ID";
             end;
         end else begin
             SalesLine.Validate(Type, SalesLine.Type::Item);
