@@ -4,23 +4,18 @@ pageextension 52664 "ORB Posted Invt. Pick List" extends "Posted Invt. Pick List
     {
         addafter("Posting Date")
         {
-            field("ORB Sales Order No."; Rec."ORB Sales Order No.")
+            field("ORB Order No."; Rec."ORB Order No.")
             {
                 ApplicationArea = all;
-                ToolTip = 'Specifies the value of the Sales Order No. field.', Comment = '%';
                 trigger OnDrillDown()
                 var
                     SalesHeaderLcl: Record "Sales Header";
                 begin
                     SalesHeaderLcl.Reset();
                     SalesHeaderLcl.SetRange("Document Type", SalesHeaderLcl."Document Type"::Order);
-                    SalesHeaderLcl.SetRange("No.", Rec."ORB Sales Order No.");
+                    SalesHeaderLcl.SetRange("No.", Rec."ORB Order No.");
                     Page.RunModal(Page::"Sales Order", SalesHeaderLcl);
                 end;
-            }
-            field("ORB Order No."; Rec."ORB Order No.")
-            {
-                ApplicationArea = all;
             }
         }
     }
@@ -48,8 +43,4 @@ pageextension 52664 "ORB Posted Invt. Pick List" extends "Posted Invt. Pick List
             }
         }
     }
-    trigger OnAfterGetRecord()
-    begin
-        Rec.CalcFields("ORB Sales Order No.");
-    end;
 }
