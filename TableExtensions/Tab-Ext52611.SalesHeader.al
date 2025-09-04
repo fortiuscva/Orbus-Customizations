@@ -231,6 +231,11 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             CalcFormula = lookup("Posted Invt. Pick Line"."No." where("Source No." = field("No.")));
             Editable = false;
         }
+        field(52660; "ORB Order Cancelled"; Boolean)
+        {
+            Caption = 'Is LIFT Order Cancelled';
+            DataClassification = CustomerContent;
+        }
 
         modify("Sell-to Customer No.")
         {
