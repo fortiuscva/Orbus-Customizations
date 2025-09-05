@@ -715,8 +715,10 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
 
         UserPickZone.SetRange("User ID", UserId);
         UserPickZone.SetRange("Location Code", WarehouseActivityLine."Location Code");
-        if not UserPickZone.FindLast() then
+        if not UserPickZone.FindLast() then begin
+            OrbusSingleInstanceCUGbl.SetBinContentExistAfter(true);
             exit;
+        end;
 
         Zone.SetRange(Code, UserPickZone."Zone Code");
         Zone.SetRange("Location Code", WarehouseActivityLine."Location Code");
