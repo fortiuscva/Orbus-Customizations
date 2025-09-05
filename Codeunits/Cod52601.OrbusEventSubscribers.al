@@ -331,8 +331,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         SalesHeader: Record "Sales Header";
         OrbusFunctions: Codeunit "ORB Functions";
     begin
-        if (docType = docType::"Warehouse Shipment")
-        then begin
+        if (docType = docType::"Warehouse Shipment") or (docType = docType::"Sales Order") then begin
             shipmentheader.Get(docNo);
             shipmentLine.SetRange("No.", shipmentheader."No.");
             //if shipmentheader."Shipping Agent Code" <> 'TRUCKING' then
