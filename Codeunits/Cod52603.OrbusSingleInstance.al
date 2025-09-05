@@ -280,6 +280,26 @@ codeunit 52603 "ORB Orbus Single Instance"
         exit(ShipToContactGbl);
     end;
 
+    procedure SetBinContentExistBefore(ExistBeforeFilterPar: Boolean)
+    begin
+        ExistBeforeFilter := ExistBeforeFilterPar;
+    end;
+
+    procedure GetBinContentExistBefore(): Boolean
+    begin
+        exit(ExistBeforeFilter);
+    end;
+
+    procedure SetBinContentExistAfter(ExistAfterFilterPar: Boolean)
+    begin
+        ExistAfterFilter := ExistAfterFilterPar;
+    end;
+
+    procedure GetBinContentExistAfter(): Boolean
+    begin
+        exit(ExistAfterFilter);
+    end;
+
     var
         ShowDialogLookupProfileVarGbl: Boolean;
         ShowDialogSendEmailToCustVarGbl: Boolean;
@@ -313,5 +333,7 @@ codeunit 52603 "ORB Orbus Single Instance"
         ShipToCountryRegionCodeGbl: Code[10];
         ShipToPostCodeGbl: Code[20];
         ShipToContactGbl: Text[100];
+        ExistBeforeFilter: Boolean;
+        ExistAfterFilter: Boolean;
 
 }
