@@ -687,11 +687,18 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Inventory Pick/Movement", OnBeforeFindFromBinContent, '', false, false)]
     local procedure "Create Inventory Pick/Movement_OnBeforeFindFromBinContent"(var FromBinContent: Record "Bin Content"; var WarehouseActivityLine: Record "Warehouse Activity Line"; FromBinCode: Code[20]; BinCode: Code[20]; IsInvtMovement: Boolean; IsBlankInvtMovement: Boolean; DefaultBin: Boolean; WhseItemTrackingSetup: Record "Item Tracking Setup" temporary; var WarehouseActivityHeader: Record "Warehouse Activity Header"; var WarehouseRequest: Record "Warehouse Request")
     var
+        BinContentRecLcl: Record "Bin Content";
         UserPickZone: Record "ORB User Pick Zone";
         Zone: Record Zone;
+        ExistAfterFilter: Boolean;
     begin
         if not OrbusSetup.Get() or not OrbusSetup."Enable User Pick Zone" then
             exit;
+
+        BinContentRecLcl.Reset();
+        BinContentRecLcl.CopyFilters(FromBinContent);
+        if not BinContentRecLcl.IsEmpty() then
+            OrbusSingleInstanceCUGbl.SetBinContentExistBefore(true);
 
         if WarehouseActivityLine."Source Type" = DATABASE::"Production Order" then
             exit;
@@ -716,10 +723,36 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         if not Zone.FindFirst() then
             Error('Zone "%1" assigned to user "%2" does not exist in the Warehouse Zone table.', UserPickZone."Zone Code", UserId);
 
+        Clear(ExistAfterFilter);
+        BinContentRecLcl.Reset();
+        BinContentRecLcl.CopyFilters(FromBinContent);
         if FromBinContent.GetFilter("Bin Code") <> '' then
-            FromBinContent.SetRange("Bin Code");
+            BinContentRecLcl.SetRange("Bin Code");
 
-        FromBinContent.SetRange("Zone Code", UserPickZone."Zone Code");
+        BinContentRecLcl.SetRange("Zone Code", UserPickZone."Zone Code");
+        if not BinContentRecLcl.IsEmpty() then begin
+            ExistAfterFilter := true;
+            OrbusSingleInstanceCUGbl.SetBinContentExistAfter(true);
+        end;
+
+        if ExistAfterFilter then begin
+            if FromBinContent.GetFilter("Bin Code") <> '' then
+                FromBinContent.SetRange("Bin Code");
+
+            FromBinContent.SetRange("Zone Code", UserPickZone."Zone Code");
+        end;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Inventory Pick/Movement", OnBeforeNewWhseActivLineInsert, '', false, false)]
+    local procedure "Create Inventory Pick/Movement_OnBeforeNewWhseActivLineInsert"(var WarehouseActivityLine: Record "Warehouse Activity Line"; WarehouseActivityHeader: Record "Warehouse Activity Header")
+    begin
+        if not OrbusSetup.Get() or not OrbusSetup."Enable User Pick Zone" then
+            exit;
+
+        if OrbusSingleInstanceCUGbl.GetBinContentExistBefore() and not OrbusSingleInstanceCUGbl.GetBinContentExistAfter() then begin
+            WarehouseActivityLine."Bin Code" := '';
+            WarehouseActivityLine."Zone Code" := '';
+        end;
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Pick", OnBeforeGetBinContent, '', false, false)]
