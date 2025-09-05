@@ -120,6 +120,8 @@ report 52617 "Purchase Order Inventory Tag"
                                         if Page.RunModal(Page::"Whse. Receipt Lines",WarehouseReceiptRecLcl) = Action::LookupOK then begin
                                             QuantityVarGbl := WarehouseReceiptRecLcl.Quantity;
                                             ItemNoVarGbl := WarehouseReceiptRecLcl."Item No.";
+                                            If WarehouseReceiptRecLcl."Variant Code" <>'' then
+                                                ItemVariantVarGbl := WarehouseReceiptRecLcl."Variant Code";
                                         end;
                                     end;
                                end;
