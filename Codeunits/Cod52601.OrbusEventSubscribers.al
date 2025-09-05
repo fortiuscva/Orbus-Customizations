@@ -753,6 +753,9 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             WarehouseActivityLine."Bin Code" := '';
             WarehouseActivityLine."Zone Code" := '';
         end;
+
+        OrbusSingleInstanceCUGbl.SetBinContentExistBefore(false);
+        OrbusSingleInstanceCUGbl.SetBinContentExistAfter(false);
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Pick", OnBeforeGetBinContent, '', false, false)]
