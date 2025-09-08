@@ -307,6 +307,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
     procedure PropagateOnSalesOrderDelete(var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer")
     var
         CancelledSalesOrderError: Label 'Sales Order %1 is already cancelled';
+        SalesHeaderArchiveLcl: Record "Sales Header Archive";
     begin
         SalesHeader.Reset();
         SalesHeader.SetRange("Document Type", LIFTSalesOrderBuffer."Document Type");
@@ -318,8 +319,12 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             // ArchiveManagement.ArchiveSalesDocument(SalesHeader);
             SalesHeader.Delete(true);
         end
-        else
-            Error(StrSubstNo(CancelledSalesOrderError, LIFTSalesOrderBuffer."No."));
+        else begin
+            SalesHeaderArchiveLcl.Reset();
+            SalesHeaderArchiveLcl.SetRange("No.", LIFTSalesOrderBuffer."No.");
+            if SalesHeaderArchiveLcl.FindLast() then
+                Error(StrSubstNo(CancelledSalesOrderError, LIFTSalesOrderBuffer."No."));
+        end;
     end;
 
     var
