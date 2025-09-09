@@ -209,6 +209,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             if ItemRecLcl.get(LIFTSalesLineBuffer."No.") then begin
                 SalesLine.Description := ItemRecLcl.Description;
                 SalesLine."Description 2" := ItemRecLcl."Description 2";
+                SalesLine."ORB LIFT Line ID" := LIFTSalesLineBuffer."LIFT Line ID";
             end;
         end else begin
             SalesLine.Validate(Type, SalesLine.Type::Item);
@@ -307,6 +308,29 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         DShipPackOptions.Validate("Payment Postal Code", '');
         DShipPackOptions.Validate("Payment Province", '');
         DShipPackOptions.Validate("Payment Country Code", '');
+    end;
+
+    procedure PropagateOnSalesOrderDelete(var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer")
+    var
+        CancelledSalesOrderError: Label 'Sales Order %1 is already cancelled';
+        SalesHeaderArchiveLcl: Record "Sales Header Archive";
+    begin
+        SalesHeader.Reset();
+        SalesHeader.SetRange("Document Type", LIFTSalesOrderBuffer."Document Type");
+        SalesHeader.SetRange("No.", LIFTSalesOrderBuffer."No.");
+        if SalesHeader.FindLast() then begin
+            SalesHeader.Validate("ORB Order Cancelled", true);
+            SalesHeader.Validate("External Document No.", LIFTSalesOrderBuffer."External Document No.");
+            SalesHeader.Modify();
+            // ArchiveManagement.ArchiveSalesDocument(SalesHeader);
+            SalesHeader.Delete(true);
+        end
+        else begin
+            SalesHeaderArchiveLcl.Reset();
+            SalesHeaderArchiveLcl.SetRange("No.", LIFTSalesOrderBuffer."No.");
+            if SalesHeaderArchiveLcl.FindLast() then
+                Error(StrSubstNo(CancelledSalesOrderError, LIFTSalesOrderBuffer."No."));
+        end;
     end;
 
     var

@@ -67,6 +67,10 @@ tableextension 52617 "ORB Sales Header Archive" extends "Sales Header Archive"
         }
         //field(52658; "ORB Inv. Pick No."; Code[20]) Used on Sales header
         //field(52659; "ORB Posted Inv. Pick No."; Code[20]) Used on Sales header
-
+        field(52660; "ORB Order Cancelled"; Boolean)
+        {
+            Caption = 'Is LIFT Order Cancelled';
+            DataClassification = CustomerContent;
+        }
     }
 }
