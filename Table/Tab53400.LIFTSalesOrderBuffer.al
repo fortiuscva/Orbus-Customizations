@@ -289,6 +289,11 @@ table 53400 "ORB LIFT Sales Order Buffer"
         {
             DataClassification = ToBeClassified;
         }
+        field(55123; "ORB LIFT Cancellation Status"; Integer)
+        {
+            Caption = 'LIFT Cancellation Status';
+            DataClassification = CustomerContent;
+        }
     }
     keys
     {

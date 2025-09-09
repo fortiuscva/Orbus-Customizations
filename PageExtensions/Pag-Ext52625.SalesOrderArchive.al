@@ -9,6 +9,11 @@ pageextension 52625 "ORB Sales Order Archive" extends "Sales Order Archive"
                 ApplicationArea = all;
                 ToolTip = 'Specifies the user who resolved escalated issue';
             }
+            field("ORB Order Cancelled"; Rec."ORB Order Cancelled")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Specifies the user whether the LIFT Order is Cancelled or not';
+            }
         }
 
         addfirst(factboxes)
