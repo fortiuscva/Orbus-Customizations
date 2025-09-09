@@ -3,6 +3,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
     procedure PropagateOnSalesHeaderInsert(var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer")
     var
         DShipPackOptions: Record "DSHIP Package Options";
+        SalesHeaderRecLcl: Record "Sales Header";
     begin
         if not SalesHeader.Get(LIFTSalesOrderBuffer."Document Type", LIFTSalesOrderBuffer."No.") then begin
             SalesHeader.Init();
@@ -18,6 +19,12 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
     procedure PropagateOnSalesHeaderModify(var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer")
     var
         DShipPackOptions: Record "DSHIP Package Options";
+        SalesShipmentHeader: Record "Sales Shipment Header";
+        SalesInvoiceHeader: Record "Sales Invoice Header";
+        SalesHeaderArchive: Record "Sales Header Archive";
+        PostedSalesOrderError: Label 'Sales Order %1 is already Invoiced. And the Posted Sales Invoice is %2.';
+        ShippedOrderError: Label 'Sales Order %1 is already Shipped. And the Posted Sales Shipment is %2.';
+        CancelledSalesOrderError: Label 'Sales Order %1 is already cancelled.';
     begin
         Clear(OrderStatusReopen);
         OrderStatusReopen := false;
@@ -26,17 +33,37 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         SalesHeader.SetRange("No.", LIFTSalesOrderBuffer."No.");
         if SalesHeader.FindFirst() then begin
             //if SalesHeader.Get(LIFTSalesOrderBuffer."Document Type", LIFTSalesOrderBuffer."No.") then begin
+            /*
+                if SalesHeader."Completely Shipped" then begin
+                    SalesShipmentHeader.Reset();
+                    SalesShipmentHeader.SetRange("Order No.", LIFTSalesOrderBuffer."No.");
+                    if SalesShipmentHeader.FindFirst() then
+                        Error(StrSubstNo(ShippedOrderError, LIFTSalesOrderBuffer."No.", SalesShipmentHeader."No."));
+                end;
+            */
             if SalesHeader.Status = SalesHeader.Status::Released then begin
                 ReOpenSalesOrder(SalesHeader);
                 OrderStatusReopen := true;
             end;
             ArchiveManagement.ArchiveSalesDocument(SalesHeader);
             UpdateSalesHeader(LIFTSalesOrderBuffer, false);
+            DShipPackOptions.RetrievePackageOptions(Enum::"DSHIP Document Type"::"Sales Order", LIFTSalesOrderBuffer."No.", '');
+            UpdateDShipPackageOptions(DShipPackOptions, LIFTSalesOrderBuffer);
+            if OrderStatusReopen then
+                ReleaseSalesOrder(SalesHeader);
+        end
+        else begin
+            SalesInvoiceHeader.Reset();
+            SalesInvoiceHeader.SetRange("Order No.", LIFTSalesOrderBuffer."No.");
+            if SalesInvoiceHeader.FindFirst() then
+                Error(StrSubstNo(PostedSalesOrderError, LIFTSalesOrderBuffer."No.", SalesInvoiceHeader."No."))
+            else begin
+                SalesHeaderArchive.Reset();
+                SalesHeaderArchive.SetRange("No.", LIFTSalesOrderBuffer."No.");
+                if SalesHeaderArchive.FindLast() then
+                    Error(StrSubstNo(CancelledSalesOrderError, LIFTSalesOrderBuffer."No."));
+            end;
         end;
-        DShipPackOptions.RetrievePackageOptions(Enum::"DSHIP Document Type"::"Sales Order", LIFTSalesOrderBuffer."No.", '');
-        UpdateDShipPackageOptions(DShipPackOptions, LIFTSalesOrderBuffer);
-        if OrderStatusReopen then
-            ReleaseSalesOrder(SalesHeader);
     end;
 
     local procedure UpdateSalesHeader(var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer"; CreateSO: Boolean)
