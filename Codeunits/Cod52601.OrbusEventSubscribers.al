@@ -318,8 +318,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         SalesHeader: Record "Sales Header";
         OrbusFunctions: Codeunit "ORB Functions";
     begin
-        if (docType = docType::"Warehouse Shipment")
-        then begin
+        if (docType = docType::"Warehouse Shipment") then begin
             shipmentheader.Get(docNo);
             shipmentLine.SetRange("No.", shipmentheader."No.");
             //if shipmentheader."Shipping Agent Code" <> 'TRUCKING' then
@@ -328,7 +327,11 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
 
             SalesHeader.Get(SalesHeader."Document Type"::Order, shipmentLine."Source No.");
             OrbusFunctions.CreateSalesLine(SalesHeader, shipmentLine);
-        end;
+        end else
+            if (docType = docType::"Sales Order") then begin
+                SalesHeader.Get(SalesHeader."Document Type"::Order, docNo);
+                OrbusFunctions.CreateSalesLine(SalesHeader, shipmentLine);
+            end;
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"DSHIP Event Publisher", OnAfterProcessMultipleCommands, '', false, false)]
