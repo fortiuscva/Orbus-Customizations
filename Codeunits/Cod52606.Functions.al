@@ -278,6 +278,7 @@ codeunit 52606 "ORB Functions"
         salesType: Option " ",Customer,"Customer Price Group","All Customers",Campaign;
         LineNo: Integer;
         TotalUnitPrice: Decimal;
+        GeneralLedgerSetup: Record "General Ledger Setup";
     begin
         SalesHeader.CalcFields("ORB DS Payment Type");
         SalesSetup.Get();
@@ -309,7 +310,8 @@ codeunit 52606 "ORB Functions"
         salesline.Validate("Unit Cost", SingleInstance.GetFrieghtPrice());
         //ldRateToReturn * (lrecDShipRatePrice."Markup %" / 100 + 1);
         TotalUnitPrice := (SingleInstance.GetHandlingPrice() + SingleInstance.GetFrieghtPrice()) * (DSHIPFreightPrice."Markup %" / 100 + 1);
-        salesline.Validate("Unit Price", TotalUnitPrice);
+        GeneralLedgerSetup.Get();
+        salesline.Validate("Unit Price", Round(TotalUnitPrice, GeneralLedgerSetup."Unit-Amount Rounding Precision"));
         salesline.Insert();
     end;
 
