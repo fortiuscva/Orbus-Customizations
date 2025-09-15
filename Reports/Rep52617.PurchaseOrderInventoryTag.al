@@ -124,13 +124,14 @@ report 52617 "Purchase Order Inventory Tag"
                                             WarehouseReceiptLineNoVarGbl := WarehouseReceiptRecLcl."Line No.";
                                             If WarehouseReceiptRecLcl."Variant Code" <>'' then
                                                 ItemVariantVarGbl := WarehouseReceiptRecLcl."Variant Code";
-                                        end else begin
+                                        end
+                                     end else begin
                                             if  NotonDocumentVarGbl then begin
                                                 if Page.RunModal(Page::"Item List",ItemRecGbl) = Action::LookupOK then
                                                   ItemNoVarGbl :=  ItemRecGbl."No.";
                                             end;
                                         end;
-                                    end; 
+                                    
                                end;
                                trigger OnValidate()
                                 var
@@ -164,7 +165,7 @@ report 52617 "Purchase Order Inventory Tag"
                             begin
                                 if NotonDocumentVarGbl then begin
                                     ItemVariantRecGbl.reset;
-                                    ItemVariantRecGbl.SetRange("Item No.",ItemVariantVarGbl);
+                                    ItemVariantRecGbl.SetRange("Item No.",ItemNoVarGbl);
                                     if Page.RunModal(Page::"Item Variants",ItemVariantRecGbl) = Action::LookupOK then
                                         ItemVariantVarGbl := ItemVariantRecGbl.Code
                                 end;
