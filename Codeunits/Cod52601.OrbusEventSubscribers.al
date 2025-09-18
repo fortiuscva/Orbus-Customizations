@@ -567,6 +567,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         if OrbusSingleInstanceCUGbl.GetShippedNotInvoiced() then begin
             SalesHeader.SetRange("Document Type", SalesHeader."Document Type"::Order);
             SalesHeader.SetRange("Shipped Not Invoiced", true);
+            SalesHeader.SetFilter("Package Tracking No.", '<>%1', '');
         end;
     end;
 
