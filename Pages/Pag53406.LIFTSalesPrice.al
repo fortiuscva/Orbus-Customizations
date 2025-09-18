@@ -10,6 +10,7 @@ page 53406 "ORB LIFT Sales Price"
     EntitySetName = 'LIFTSalesPrice';
     PageType = API;
     SourceTable = "Sales Price";
+    SourceTableView = where("Sales Type" = filter("Customer Price Group"));
 
     layout
     {
@@ -17,29 +18,53 @@ page 53406 "ORB LIFT Sales Price"
         {
             repeater(General)
             {
-                field(itemNo; Rec."Item No.")
+                field(salesType; SalesTypeText)
                 {
-                    Caption = 'Item No.';
+                    Caption = 'Sales Type';
                 }
                 field(salesCode; Rec."Sales Code")
                 {
                     Caption = 'Sales Code';
                 }
-                field(currencyCode; Rec."Currency Code")
+                field(itemNo; Rec."Item No.")
                 {
-                    Caption = 'Currency Code';
+                    Caption = 'Item No.';
                 }
-                field(startingDate; Rec."Starting Date")
+                field(unitOfMeasureCode; Rec."Unit of Measure Code")
                 {
-                    Caption = 'Starting Date';
+                    Caption = 'Unit of Measure Code';
+                }
+                field(minimumQuantity; Rec."Minimum Quantity")
+                {
+                    Caption = 'Minimum Quantity';
                 }
                 field(unitPrice; Rec."Unit Price")
                 {
                     Caption = 'Unit Price';
                 }
+                field(startingDate; Rec."Starting Date")
+                {
+                    Caption = 'Starting Date';
+                }
+                field(endingDate; Rec."Ending Date")
+                {
+                    Caption = 'Ending Date';
+                }
+                field(currencyCode; Rec."Currency Code")
+                {
+                    Caption = 'Currency Code';
+                }
+                field(variantCode; Rec."Variant Code")
+                {
+                    Caption = 'Variant Code';
+                }
                 field(priceIncludesVAT; Rec."Price Includes VAT")
                 {
                     Caption = 'Price Includes VAT';
+                }
+                field(allowLineDisc; Rec."Allow Line Disc.")
+                {
+                    Caption = 'Allow Line Disc.';
                 }
                 field(allowInvoiceDisc; Rec."Allow Invoice Disc.")
                 {
@@ -49,35 +74,27 @@ page 53406 "ORB LIFT Sales Price"
                 {
                     Caption = 'VAT Bus. Posting Gr. (Price)';
                 }
-                field(salesType; Rec."Sales Type")
-                {
-                    Caption = 'Sales Type';
-                }
-                field(minimumQuantity; Rec."Minimum Quantity")
-                {
-                    Caption = 'Minimum Quantity';
-                }
-                field(endingDate; Rec."Ending Date")
-                {
-                    Caption = 'Ending Date';
-                }
                 field(coupledToDataverse; Rec."Coupled to Dataverse")
                 {
                     Caption = 'Coupled to Dynamics 365 Sales';
                 }
-                field(unitOfMeasureCode; Rec."Unit of Measure Code")
+                field(systemCreatedAt; Rec.SystemCreatedAt)
                 {
-                    Caption = 'Unit of Measure Code';
+                    Caption = 'SystemCreatedAt';
                 }
-                field(variantCode; Rec."Variant Code")
+                field(systemModifiedAt; Rec.SystemModifiedAt)
                 {
-                    Caption = 'Variant Code';
+                    Caption = 'SystemModifiedAt';
                 }
-                field(allowLineDisc; Rec."Allow Line Disc.")
-                {
-                    Caption = 'Allow Line Disc.';
-                }
+
             }
         }
     }
+    trigger OnAfterGetRecord()
+    begin
+        SalesTypeText := Format(Rec."Sales Type");
+    end;
+
+    var
+        SalesTypeText: Text;
 }
