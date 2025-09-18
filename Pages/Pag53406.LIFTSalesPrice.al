@@ -18,7 +18,7 @@ page 53406 "ORB LIFT Sales Price"
         {
             repeater(General)
             {
-                field(salesType; SalesTypeText)
+                field(salesType; Rec."Sales Type")
                 {
                     Caption = 'Sales Type';
                 }
@@ -90,6 +90,7 @@ page 53406 "ORB LIFT Sales Price"
             }
         }
     }
+    /*
     trigger OnAfterGetRecord()
     begin
         SalesTypeText := Format(Rec."Sales Type");
@@ -97,4 +98,5 @@ page 53406 "ORB LIFT Sales Price"
 
     var
         SalesTypeText: Text;
+    */
 }
