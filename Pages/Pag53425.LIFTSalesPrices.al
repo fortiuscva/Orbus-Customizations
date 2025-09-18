@@ -1,4 +1,4 @@
-page 53425 "LIFT Sales Prices"
+page 53425 "ORB LIFT Sales Prices"
 {
     APIGroup = 'Orbus';
     APIPublisher = 'Orbus';
@@ -10,14 +10,15 @@ page 53425 "LIFT Sales Prices"
     EntitySetName = 'LIFTSalesPrices';
     PageType = API;
     SourceTable = "Sales Price";
-    
+    SourceTableView = where("Sales Type" = filter("Customer Price Group"));
+
     layout
     {
         area(Content)
         {
             repeater(General)
             {
-                field(salesType; Rec."Sales Type")
+                field(salesType; SalesTypeText)
                 {
                     Caption = 'Sales Type';
                 }
@@ -88,4 +89,11 @@ page 53425 "LIFT Sales Prices"
             }
         }
     }
+    trigger OnAfterGetRecord()
+    begin
+        SalesTypeText := Format(Rec."Sales Type");
+    end;
+
+    var
+        SalesTypeText: Text;
 }
