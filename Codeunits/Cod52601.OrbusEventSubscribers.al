@@ -732,6 +732,9 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             BinContentRecLcl.SetRange("Bin Code");
 
         BinContentRecLcl.SetRange("Zone Code", UserPickZone."Zone Code");
+        BinContentRecLcl.SetFilter("Bin Type Code", '%1|%2|%3', '', 'PICK', 'PUT');
+        BinContentRecLcl.SetFilter("Bin Code", '<>%1', '*IN');
+
         if not BinContentRecLcl.IsEmpty() then begin
             ExistAfterFilter := true;
             OrbusSingleInstanceCUGbl.SetBinContentExistAfter(true);
@@ -742,6 +745,8 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
                 FromBinContent.SetRange("Bin Code");
 
             FromBinContent.SetRange("Zone Code", UserPickZone."Zone Code");
+            FromBinContent.SetFilter("Bin Type Code", '%1|%2|%3', '', 'PICK', 'PUT');
+            FromBinContent.SetFilter("Bin Code", '<>%1', '*IN');
         end;
     end;
 
@@ -786,6 +791,8 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             Error('Zone "%1" assigned to user "%2" does not exist in the Warehouse Zone table.', UserPickZone."Zone Code", UserId);
 
         BinContent.SetRange("Zone Code", UserPickZone."Zone Code");
+        BinContent.SetFilter("Bin Type Code", '%1|%2|%3', '', 'PICK', 'PUT');
+        BinContent.SetFilter("Bin Code", '<>%1', '*IN');
 
         OrbusSingleInstanceCUGbl.SetWarehousePickLocationCode('');
     end;
