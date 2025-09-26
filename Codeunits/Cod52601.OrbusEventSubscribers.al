@@ -717,6 +717,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         UserPickZone.SetRange("Location Code", WarehouseActivityLine."Location Code");
         if not UserPickZone.FindLast() then begin
             OrbusSingleInstanceCUGbl.SetBinContentExistAfter(true);
+            FromBinContent.SetFilter("Bin Type Code", '%1|%2', '', 'PICK/PUT');
             exit;
         end;
 
