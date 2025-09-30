@@ -77,6 +77,9 @@ table 53401 "ORB LIFT Sales Line Buffer"
         field(5402; "Variant Code"; Code[10])
         {
             Caption = 'Variant Code';
+            TableRelation = if (Type = const(Item), "Document Type" = filter(<> "Credit Memo" & <> "Return Order")) "Item Variant".Code where("Item No." = field("No."), Blocked = const(false), "Sales Blocked" = const(false))
+            else
+            if (Type = const(Item), "Document Type" = filter("Credit Memo" | "Return Order")) "Item Variant".Code where("Item No." = field("No."), Blocked = const(false));
         }
         field(5407; "Unit of Measure Code"; Code[10])
         {
