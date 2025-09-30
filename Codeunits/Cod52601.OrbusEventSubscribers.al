@@ -809,6 +809,54 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             end;
     end;
 
+    [EventSubscriber(ObjectType::Table, Database::"Item Ledger Entry", 'OnBeforeInsertEvent', '', false, false)]
+    local procedure ILE_OnBeforeInsert(var Rec: Record "Item Ledger Entry"; RunTrigger: Boolean)
+    begin
+        if (rec."Document No." = '') and (rec."Location Code" = '') and (Rec.Quantity > 0) then
+            Error('Invalid Transaction, Please contact your admin. (kanch.kumar@orbus.com;uma.rao@orbus.com;samn@orbus.com;shivateja@panaceasofttech.com)');
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Global Triggers", 'GetDatabaseTableTriggerSetup', '', false, false)]
+    local procedure GetDatabaseTableTriggerSetup(TableId: Integer; var OnDatabaseInsert: Boolean; var OnDatabaseModify: Boolean; var OnDatabaseDelete: Boolean)
+    begin
+        if TableId = Database::"item ledger entry" then begin
+            OnDatabaseInsert := true;
+            OnDatabaseModify := true;
+        end;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::GlobalTriggerManagement, OnAfterOnDatabaseInsert, '', false, false)]
+    local procedure GlobalTriggerManagement_OnAfterOnDatabaseInsert(RecRef: RecordRef)
+    begin
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"GlobalTriggerManagement", 'OnBeforeOnDatabaseInsert', '', false, false)]
+    local procedure GlobalTriggerManagement_OnBeforeOnDatabaseInsert(RecRef: RecordRef; var IsHandled: Boolean)
+    var
+        TableID: Integer;
+    begin
+        TableID := RecRef.Number;
+        if TableID = Database::"item Ledger Entry" then begin
+            if (Format(RecRef.Field(6).Value) = '') and (Format(RecRef.Field(8).Value) = '') then begin
+                Error('Invalid Transaction, Please contact your admin. (kanch.kumar@orbus.com;uma.rao@orbus.com;samn@orbus.com;shivateja@panaceasofttech.com)');
+                IsHandled := true;
+            end;
+        end;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::GlobalTriggerManagement, OnBeforeOnDatabaseModify, '', false, false)]
+    local procedure GlobalTriggerManagement_OnBeforeOnDatabaseModify(RecRef: RecordRef; var IsHandled: Boolean)
+    var
+        TableID: Integer;
+    begin
+        TableID := RecRef.Number;
+        if TableID = Database::"item Ledger Entry" then begin
+            if (Format(RecRef.Field(6).Value) = '') and (Format(RecRef.Field(8).Value) = '') then begin
+                Error('Invalid Transaction, Please contact your admin. (kanch.kumar@orbus.com;uma.rao@orbus.com;samn@orbus.com;shivateja@panaceasofttech.com)');
+                IsHandled := true;
+            end;
+        end;
+    end;
 
 
     var
