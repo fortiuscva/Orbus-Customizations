@@ -40,6 +40,10 @@ page 53414 "ORB LIFT Sales Lines"
                 {
                     ToolTip = 'Specifies the value of the Quantity field.', Comment = '%';
                 }
+                field("Variant Code"; Rec."Variant Code")
+                {
+                    ToolTip = 'Specifies the value of the Variant Code field.', Comment = '%';
+                }
                 field("Unit Price"; Rec."Unit Price")
                 {
                     ToolTip = 'Specifies the value of the Unit Price field.', Comment = '%';
