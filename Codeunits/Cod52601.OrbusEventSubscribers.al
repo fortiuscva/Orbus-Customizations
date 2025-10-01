@@ -699,6 +699,12 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         if not OrbusSetup.Get() or not OrbusSetup."Enable User Pick Zone" then
             exit;
 
+        UserPickZone.SetRange("User ID", UserId);
+        UserPickZone.SetRange("Location Code", WarehouseActivityLine."Location Code");
+        UserPickZone.SetFilter("Zone Code", '<>%1', '');
+        if not UserPickZone.FindLast() then
+            exit;
+
         BinContentRecLcl.Reset();
         BinContentRecLcl.CopyFilters(FromBinContent);
         if not BinContentRecLcl.IsEmpty() then
