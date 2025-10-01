@@ -953,6 +953,18 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         end;
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Whse. Jnl.-Register Line", OnUpdateDefaultBinContentOnBeforeBinContent2Modify, '', false, false)]
+    local procedure "Whse. Jnl.-Register Line_OnUpdateDefaultBinContentOnBeforeBinContent2Modify"(var BinContent: Record "Bin Content")
+    begin
+        BinContent.Default := false;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Whse. Jnl.-Register Line", OnBeforeBinContentInsert, '', false, false)]
+    local procedure "Whse. Jnl.-Register Line_OnBeforeBinContentInsert"(var BinContent: Record "Bin Content"; WarehouseEntry: Record "Warehouse Entry"; Bin: Record Bin)
+    begin
+        BinContent.Default := false;
+        BinContent.Fixed := false;
+    end;
 
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
