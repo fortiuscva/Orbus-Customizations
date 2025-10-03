@@ -695,11 +695,6 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         if not OrbusSetup.Get() or not OrbusSetup."Enable User Pick Zone" then
             exit;
 
-        UserPickZone.SetRange("User ID", UserId);
-        UserPickZone.SetRange("Location Code", WarehouseActivityLine."Location Code");
-        UserPickZone.SetFilter("Zone Code", '<>%1', '');
-        if not UserPickZone.FindLast() then
-            exit;
 
         BinContentRecLcl.Reset();
         BinContentRecLcl.CopyFilters(FromBinContent);
@@ -764,10 +759,12 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         if not OrbusSetup.Get() or not OrbusSetup."Enable User Pick Zone" then
             exit;
 
-        if OrbusSingleInstanceCUGbl.GetBinContentExistBefore() and not OrbusSingleInstanceCUGbl.GetBinContentExistAfter() then begin
-            WarehouseActivityLine."Bin Code" := '';
-            WarehouseActivityLine."Zone Code" := '';
-        end;
+        if (WarehouseActivityLine."Activity Type" = WarehouseActivityLine."Activity Type"::"Invt. Pick") or
+                 (WarehouseActivityLine."Activity Type" = WarehouseActivityLine."Activity Type"::Pick) then
+            if OrbusSingleInstanceCUGbl.GetBinContentExistBefore() and not OrbusSingleInstanceCUGbl.GetBinContentExistAfter() then begin
+                WarehouseActivityLine."Bin Code" := '';
+                WarehouseActivityLine."Zone Code" := '';
+            end;
 
         OrbusSingleInstanceCUGbl.SetBinContentExistBefore(false);
         OrbusSingleInstanceCUGbl.SetBinContentExistAfter(false);
