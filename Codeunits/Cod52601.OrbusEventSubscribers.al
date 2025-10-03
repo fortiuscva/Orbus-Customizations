@@ -94,45 +94,46 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             Result := OrbusSingleInstanceCUGbl.GetOnBeforeCheckShowProfileSelectionMethodResult();
         end;
     end;
+    // To make sure always Ship-to Contact on the Sales Order header was put on the Label, as advised by Dynamic Ship 10-04-2025
+    /*
+        [EventSubscriber(ObjectType::Codeunit, Codeunit::"DSHIP Event Publisher", OnAfterSetAddress, '', false, false)]
+        local procedure OnAfterSetAddress(addressSource: RecordRef; var addressBuffer: Record "DSHIP Address Buffer" temporary; var isValidationRequired: Boolean; var isHandled: Boolean);
+        var
+            SalesHeaderRecLcl: Record "Sales Header";
+            WarehouseShipmentHeaderRecLcl: Record "Warehouse Shipment Header";
+            WarehouseShipmentLineRecLcl: Record "Warehouse Shipment Line";
+            BillToCustomerRecLcl: Record Customer;
+        begin
+            if SalesHeaderRecLcl.get(addressSource.RecordId) then begin
+                if (addressBuffer."Address Type" = addressBuffer."Address Type"::Destination) or (addressBuffer."Address Type" = addressBuffer."Address Type"::Buffer) then begin
+                    //if SalesHeaderRecLcl."Ship-to Contact" <> '' then
+                    addressBuffer.Name := SalesHeaderRecLcl."Ship-to Contact";
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"DSHIP Event Publisher", OnAfterSetAddress, '', false, false)]
-    local procedure OnAfterSetAddress(addressSource: RecordRef; var addressBuffer: Record "DSHIP Address Buffer" temporary; var isValidationRequired: Boolean; var isHandled: Boolean);
-    var
-        SalesHeaderRecLcl: Record "Sales Header";
-        WarehouseShipmentHeaderRecLcl: Record "Warehouse Shipment Header";
-        WarehouseShipmentLineRecLcl: Record "Warehouse Shipment Line";
-        BillToCustomerRecLcl: Record Customer;
-    begin
-        if SalesHeaderRecLcl.get(addressSource.RecordId) then begin
-            if (addressBuffer."Address Type" = addressBuffer."Address Type"::Destination) or (addressBuffer."Address Type" = addressBuffer."Address Type"::Buffer) then begin
-                //if SalesHeaderRecLcl."Ship-to Contact" <> '' then
-                addressBuffer.Name := SalesHeaderRecLcl."Ship-to Contact";
+                    //Update Bill To Customer Phone No.
+                    if BillToCustomerRecLcl.get(SalesHeaderRecLcl."Bill-to Customer No.") then
+                        addressBuffer."Phone No." := BillToCustomerRecLcl."Phone No.";
+                end;
+            end else begin
 
-                //Update Bill To Customer Phone No.
-                if BillToCustomerRecLcl.get(SalesHeaderRecLcl."Bill-to Customer No.") then
-                    addressBuffer."Phone No." := BillToCustomerRecLcl."Phone No.";
-            end;
-        end else begin
+                if WarehouseShipmentHeaderRecLcl.get(addressSource.RecordId) then begin
+                    WarehouseShipmentLineRecLcl.Reset();
+                    WarehouseShipmentLineRecLcl.SetRange("No.", WarehouseShipmentHeaderRecLcl."No.");
+                    if WarehouseShipmentLineRecLcl.FindFirst() then begin
+                        if SalesHeaderRecLcl.get(SalesHeaderRecLcl."Document Type"::Order, WarehouseShipmentLineRecLcl."Source No.") then begin
+                            if (addressBuffer."Address Type" = addressBuffer."Address Type"::Destination) or (addressBuffer."Address Type" = addressBuffer."Address Type"::Buffer) then begin
+                                //if SalesHeaderRecLcl."Ship-to Contact" <> '' then
+                                addressBuffer.Name := SalesHeaderRecLcl."Ship-to Contact";
 
-            if WarehouseShipmentHeaderRecLcl.get(addressSource.RecordId) then begin
-                WarehouseShipmentLineRecLcl.Reset();
-                WarehouseShipmentLineRecLcl.SetRange("No.", WarehouseShipmentHeaderRecLcl."No.");
-                if WarehouseShipmentLineRecLcl.FindFirst() then begin
-                    if SalesHeaderRecLcl.get(SalesHeaderRecLcl."Document Type"::Order, WarehouseShipmentLineRecLcl."Source No.") then begin
-                        if (addressBuffer."Address Type" = addressBuffer."Address Type"::Destination) or (addressBuffer."Address Type" = addressBuffer."Address Type"::Buffer) then begin
-                            //if SalesHeaderRecLcl."Ship-to Contact" <> '' then
-                            addressBuffer.Name := SalesHeaderRecLcl."Ship-to Contact";
-
-                            //Update Bill To Customer Phone No.
-                            if BillToCustomerRecLcl.get(SalesHeaderRecLcl."Bill-to Customer No.") then
-                                addressBuffer."Phone No." := BillToCustomerRecLcl."Phone No.";
+                                //Update Bill To Customer Phone No.
+                                if BillToCustomerRecLcl.get(SalesHeaderRecLcl."Bill-to Customer No.") then
+                                    addressBuffer."Phone No." := BillToCustomerRecLcl."Phone No.";
+                            end;
                         end;
                     end;
                 end;
             end;
         end;
-    end;
-
+    */
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post Prepayments", OnBeforeSalesInvHeaderInsert, '', false, false)]
     local procedure Cod442_OnBeforeSalesInvHeaderInsert(var SalesInvHeader: Record "Sales Invoice Header"; SalesHeader: Record "Sales Header"; CommitIsSuppressed: Boolean; GenJnlDocNo: Code[20]);
     begin
