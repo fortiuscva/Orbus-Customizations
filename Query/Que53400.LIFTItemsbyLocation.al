@@ -12,6 +12,7 @@ query 53400 "ORB LIFT Items by Location"
     {
         dataitem(ItemLedgerEntry; "Item Ledger Entry")
         {
+            DataItemTableFilter = "Variant Code" = const('');
             column(ItemNo; "Item No.") { }
             column(Remaining_Quantity; "Remaining Quantity") { Method = Sum; }
             column(ItemLedgerEntry_LocationCode; "Location Code")

@@ -12,6 +12,7 @@ query 53402 "ORB LIFT Item Variants by Loc"
     {
         dataitem(ItemLedgerEntry; "Item Ledger Entry")
         {
+            DataItemTableFilter = "Variant Code" = filter(<> '');
             column(ItemNo; "Item No.") { }
             column(Variant_Code; "Variant Code") { }
             column(Remaining_Quantity; "Remaining Quantity") { Method = Sum; }
