@@ -78,6 +78,10 @@ page 53406 "ORB LIFT Sales Price"
                 {
                     Caption = 'Coupled to Dynamics 365 Sales';
                 }
+                field(toBeExported; Rec."ORB To Be Exported")
+                {
+                    Caption = 'To Be Exported';
+                }
                 field(systemCreatedAt; Rec.SystemCreatedAt)
                 {
                     Caption = 'SystemCreatedAt';
