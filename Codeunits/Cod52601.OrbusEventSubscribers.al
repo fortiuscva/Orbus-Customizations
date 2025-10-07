@@ -953,6 +953,12 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         end;
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Whse. Jnl.-Register Line", OnUpdateDefaultBinContentOnBeforeBinContentModify, '', false, false)]
+    local procedure "Whse. Jnl.-Register Line_OnUpdateDefaultBinContentOnBeforeBinContentModify"(var BinContent: Record "Bin Content")
+    begin
+        BinContent.Default := true;
+    end;
+
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Whse. Jnl.-Register Line", OnUpdateDefaultBinContentOnBeforeBinContent2Modify, '', false, false)]
     local procedure "Whse. Jnl.-Register Line_OnUpdateDefaultBinContentOnBeforeBinContent2Modify"(var BinContent: Record "Bin Content")
     begin
