@@ -8,4 +8,10 @@ tableextension 53402 "ORB LIFT Sales Price" extends "Sales Price"
             DataClassification = CustomerContent;
         }
     }
+    keys
+    {
+        key(Key4; "Starting Date", "Ending Date")
+        {
+        }
+    }
 }
