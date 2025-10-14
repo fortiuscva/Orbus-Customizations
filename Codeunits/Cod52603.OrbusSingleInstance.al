@@ -230,6 +230,78 @@ codeunit 52603 "ORB Orbus Single Instance"
         exit(CampaignNoGbl);
     end;
 
+    procedure SetShipToAddressFields(ShipToNamePar: Text[100]; ShipToAddressPar: Text[100]; ShipToAddress2Par: Text[50]; ShipToCityPar: Text[30]; ShipToStatePar: Text[30]; ShipToCountryRegionPar: Code[10]; ShipToPostCodePar: Code[20]; ShipToContactPar: Text[100])
+    begin
+        ShipToNameGbl := ShipToNamePar;
+        ShipToAddressGbl := ShipToAddressPar;
+        ShipToAddress2Gbl := ShipToAddress2Par;
+        ShipToCityGbl := ShipToCityPar;
+        ShipToStateGbl := ShipToStatePar;
+        ShipToCountryRegionCodeGbl := ShipToCountryRegionPar;
+        ShipToPostCodeGbl := ShipToPostCodePar;
+        ShipToContactGbl := ShipToContactPar;
+    end;
+
+    procedure GetShipToName(): Text[100]
+    begin
+        exit(ShipToNameGbl);
+    end;
+
+    procedure GetShipToAddress(): Text[100]
+    begin
+        exit(ShipToAddressGbl);
+    end;
+
+    procedure GetShipToAddress2(): Text[50]
+    begin
+        exit(ShipToAddress2Gbl);
+    end;
+
+    procedure GetShipToCity(): Text[30]
+    begin
+        exit(ShipToCityGbl);
+    end;
+
+    procedure GetShipToState(): Text[30]
+    begin
+        exit(ShipToStateGbl);
+    end;
+
+    procedure GetShipToCountryRegionCode(): Code[10]
+    begin
+        exit(ShipToCountryRegionCodeGbl);
+    end;
+
+    procedure GetShipToPostCode(): Code[20]
+    begin
+        exit(ShipToPostCodeGbl);
+    end;
+
+    procedure GetShipToContact(): Text[100]
+    begin
+        exit(ShipToContactGbl);
+    end;
+
+    procedure SetBinContentExistBefore(ExistBeforeFilterPar: Boolean)
+    begin
+        ExistBeforeFilter := ExistBeforeFilterPar;
+    end;
+
+    procedure GetBinContentExistBefore(): Boolean
+    begin
+        exit(ExistBeforeFilter);
+    end;
+
+    procedure SetBinContentExistAfter(ExistAfterFilterPar: Boolean)
+    begin
+        ExistAfterFilter := ExistAfterFilterPar;
+    end;
+
+    procedure GetBinContentExistAfter(): Boolean
+    begin
+        exit(ExistAfterFilter);
+    end;
+
     var
         ShowDialogLookupProfileVarGbl: Boolean;
         ShowDialogSendEmailToCustVarGbl: Boolean;
@@ -255,4 +327,15 @@ codeunit 52603 "ORB Orbus Single Instance"
         SuppressItemJnlConfirm: Boolean;
         StopOnError: Boolean;
         CampaignNoGbl: Code[20];
+        ShipToNameGbl: Text[100];
+        ShipToAddressGbl: Text[100];
+        ShipToAddress2Gbl: Text[50];
+        ShipToCityGbl: Text[30];
+        ShipToStateGbl: Text[30];
+        ShipToCountryRegionCodeGbl: Code[10];
+        ShipToPostCodeGbl: Code[20];
+        ShipToContactGbl: Text[100];
+        ExistBeforeFilter: Boolean;
+        ExistAfterFilter: Boolean;
+
 }
