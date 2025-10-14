@@ -1,6 +1,8 @@
 table 53407 "ORB LIFT Sales Price"
 {
     Caption = 'ORB LIFT Sales Price';
+    LookupPageId = "ORB LIFT Sales Price List";
+    DrillDownPageId = "ORB LIFT Sales Price List";
     DataClassification = ToBeClassified;
 
     fields
