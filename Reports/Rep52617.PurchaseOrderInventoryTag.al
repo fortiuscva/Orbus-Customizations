@@ -47,18 +47,29 @@ report 52617 "Purchase Order Inventory Tag"
             BarcodeSymbology: Enum "Barcode Symbology";
             BarcodeFontProvider: Interface "Barcode Font Provider";
             BarcodeText:Text;
+            ItemReferenceRecLcl : Record "Item Reference";
+            CrossRefMissingErrorLbl : Label 'Item CrossReference does not exist for Item:%1 and Variant:%2';
             begin
                 clear(BarcodeText);
                 clear( EncodedTextVarGbl);
                 BarcodeFontProvider := Enum::"Barcode Font Provider"::IDAutomation1D;
                 BarcodeSymbology := Enum::"Barcode Symbology"::"Code39";
-               if (ItemNoVarGbl <> '') then begin
+               if (ItemNoVarGbl <> '') and (ItemVariantVarGbl = '') then begin
                         BarcodeText := ItemNoVarGbl ;
                         BarcodeFontProvider.ValidateInput(BarcodeText ,BarcodeSymbology );
                         EncodedTextVarGbl := BarcodeFontProvider.EncodeFont(BarcodeText, BarcodeSymbology );
-                End
+               end else if (ItemNoVarGbl <> '') and (ItemVariantVarGbl <> '') and (not NotonDocumentVarGbl) then begin
+                        ItemReferenceRecLcl.Setrange("Item No.", ItemNoVarGbl);
+                        ItemReferenceRecLcl.Setrange("Variant Code",ItemVariantVarGbl);
+                        ItemReferenceRecLcl.SetRange("Reference Type",ItemReferenceRecLcl."Reference Type"::"Bar Code");
+                        If  ItemReferenceRecLcl.findfirst then begin
+                            BarcodeText := ItemReferenceRecLcl."Reference No.";
+                            BarcodeFontProvider.ValidateInput(BarcodeText ,BarcodeSymbology );
+                            EncodedTextVarGbl := BarcodeFontProvider.EncodeFont(BarcodeText, BarcodeSymbology );
+                        end else
+                            Error(CrossRefMissingErrorLbl,ItemNoVarGbl,ItemVariantVarGbl);
+               end;
             end;
-            
             trigger OnPreDataItem()
             var
             NoValidEntryErrorLbl:Label 'Please check your Tag entries';
