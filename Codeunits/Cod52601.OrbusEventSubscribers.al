@@ -682,7 +682,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         end;
 
         Zone.SetRange(Code, UserPickZone."Zone Code");
-        Zone.SetRange("Location Code", FromBinContent."Location Code");
+        Zone.SetRange("Location Code", WarehouseActivityLine."Location Code");
         if not Zone.FindFirst() then
             Error('Zone "%1" assigned to user "%2" does not exist in the Warehouse Zone table.', UserPickZone."Zone Code", UserId);
 
