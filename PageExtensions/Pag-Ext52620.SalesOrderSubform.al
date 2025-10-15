@@ -11,6 +11,11 @@ pageextension 52620 "ORB Sales Order Subform" extends "Sales Order Subform"
                 ToolTip = 'Specifies the value of the Magento Artwork Job ID field.';
                 Editable = false;
             }
+            field("ORB LIFT Step No."; Rec."ORB LIFT Step No.")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the LIFT Step No. field.', Comment = '%';
+            }
         }
         addafter("Line Discount %")
         {
