@@ -15,6 +15,7 @@ pageextension 52620 "ORB Sales Order Subform" extends "Sales Order Subform"
             {
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the LIFT Step No. field.', Comment = '%';
+                Editable = false;
             }
         }
         addafter("Line Discount %")
