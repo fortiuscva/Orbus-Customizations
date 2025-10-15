@@ -47,18 +47,29 @@ report 52617 "Purchase Order Inventory Tag"
             BarcodeSymbology: Enum "Barcode Symbology";
             BarcodeFontProvider: Interface "Barcode Font Provider";
             BarcodeText:Text;
+            ItemReferenceRecLcl : Record "Item Reference";
+            CrossRefMissingErrorLbl : Label 'Item CrossReference not setup for Item: %1 and Variant: %2, Call Purchasing';
             begin
                 clear(BarcodeText);
                 clear( EncodedTextVarGbl);
                 BarcodeFontProvider := Enum::"Barcode Font Provider"::IDAutomation1D;
                 BarcodeSymbology := Enum::"Barcode Symbology"::"Code39";
-               if (ItemNoVarGbl <> '') then begin
+               if (ItemNoVarGbl <> '') and (ItemVariantVarGbl = '') then begin
                         BarcodeText := ItemNoVarGbl ;
                         BarcodeFontProvider.ValidateInput(BarcodeText ,BarcodeSymbology );
                         EncodedTextVarGbl := BarcodeFontProvider.EncodeFont(BarcodeText, BarcodeSymbology );
-                End
+               end else if (ItemNoVarGbl <> '') and (ItemVariantVarGbl <> '')  then begin
+                        ItemReferenceRecLcl.Setrange("Item No.", ItemNoVarGbl);
+                        ItemReferenceRecLcl.Setrange("Variant Code",ItemVariantVarGbl);
+                        ItemReferenceRecLcl.SetRange("Reference Type",ItemReferenceRecLcl."Reference Type"::"Bar Code");
+                        If  ItemReferenceRecLcl.findfirst then begin
+                            BarcodeText := ItemReferenceRecLcl."Reference No.";
+                            BarcodeFontProvider.ValidateInput(BarcodeText ,BarcodeSymbology );
+                            EncodedTextVarGbl := BarcodeFontProvider.EncodeFont(BarcodeText, BarcodeSymbology );
+                        end else
+                            Error(CrossRefMissingErrorLbl,ItemNoVarGbl,ItemVariantVarGbl);
+               end;
             end;
-            
             trigger OnPreDataItem()
             var
             NoValidEntryErrorLbl:Label 'Please check your Tag entries';
@@ -90,6 +101,7 @@ report 52617 "Purchase Order Inventory Tag"
                                 var
                                     WareHouseReceiptHeaderRecLcl: Record "Warehouse Receipt Header";
                                 begin
+                                    clear(WarehouseReceiptLineNoVarGbl);
                                     if not NotonDocumentVarGbl then begin
                                         If Page.RunModal(Page::"Warehouse Receipts",WareHouseReceiptHeaderRecLcl) = Action::LookupOK then
                                         WareHouseReceiptNoVarGbl := WareHouseReceiptHeaderRecLcl."No.";
@@ -109,24 +121,38 @@ report 52617 "Purchase Order Inventory Tag"
                                         if Page.RunModal(Page::"Whse. Receipt Lines",WarehouseReceiptRecLcl) = Action::LookupOK then begin
                                             QuantityVarGbl := WarehouseReceiptRecLcl.Quantity;
                                             ItemNoVarGbl := WarehouseReceiptRecLcl."Item No.";
+                                            WarehouseReceiptLineNoVarGbl := WarehouseReceiptRecLcl."Line No.";
+                                            If WarehouseReceiptRecLcl."Variant Code" <>'' then
+                                                ItemVariantVarGbl := WarehouseReceiptRecLcl."Variant Code";
+                                        end
+                                     end else begin
+                                            if  NotonDocumentVarGbl then begin
+                                                if Page.RunModal(Page::"Item List",ItemRecGbl) = Action::LookupOK then
+                                                  ItemNoVarGbl :=  ItemRecGbl."No.";
+                                            end;
                                         end;
-                                    end;
+                                    
                                end;
-
                                trigger OnValidate()
                                 var
-                                WarehouseReceiptLineRecLcl : Record "Warehouse Receipt Line";
-                                InValidItemErrorLbl : Label 'Check your Item No';
+                                    InValidItemErrorLbl : Label 'Check your Item No';
+                                    ItemRecLcl : Record Item;
+                                    ErrorInvalidItemLbl: Label 'Item %1 does not exist in BC';
                                 begin
                                     if not NotonDocumentVarGbl then begin
-                                        WarehouseReceiptLineRecLcl .reset;
-                                        WarehouseReceiptLineRecLcl .SetRange("No.",WareHouseReceiptNoVarGbl);
-                                        WarehouseReceiptLineRecLcl.SetRange("Item No.",ItemNoVarGbl);
-                                        If not WarehouseReceiptLineRecLcl.FindFirst() then begin
+                                        WarehouseReceiptLineRecGbl .reset;
+                                        WarehouseReceiptLineRecGbl .SetRange("No.",WareHouseReceiptNoVarGbl);
+                                        WarehouseReceiptLineRecGbl.SetRange("Item No.",ItemNoVarGbl);
+                                        If not WarehouseReceiptLineRecGbl.FindFirst() then begin
                                             QuantityVarGbl := 0;
                                             Error(InValidItemErrorLbl);
                                         end;
-                                    end; 
+                                    end else begin
+                                        ItemRecLcl.Reset();
+                                        ItemRecLcl.SetRange("No.",ItemNoVarGbl);
+                                        IF not ItemRecLcl.FindFirst() then
+                                            Error(ErrorInvalidItemLbl,ItemNoVarGbl);
+                                    end;
                                 end;
                          }
                          field(ItemVariantVarGbl;ItemVariantVarGbl)
@@ -134,6 +160,33 @@ report 52617 "Purchase Order Inventory Tag"
                             Caption = 'Item Variant';
                             ApplicationArea = All;
                             ToolTip = 'Item Variant';
+                            
+                            trigger OnLookup(var Text: Text): Boolean
+                            begin
+                                if NotonDocumentVarGbl then begin
+                                    ItemVariantRecGbl.reset;
+                                    ItemVariantRecGbl.SetRange("Item No.",ItemNoVarGbl);
+                                    if Page.RunModal(Page::"Item Variants",ItemVariantRecGbl) = Action::LookupOK then
+                                        ItemVariantVarGbl := ItemVariantRecGbl.Code
+                                end;
+                            end;
+                            trigger OnValidate()
+                            begin
+                                if NotonDocumentVarGbl then begin
+                                    ItemVariantRecGbl.reset;
+                                    ItemVariantRecGbl.SetRange("Item No.",ItemNoVarGbl);
+                                    if not ItemVariantRecGbl.FindFirst() then 
+                                        Error(ErrorInvalidItemLbl,ItemVariantVarGbl);
+                                end else begin
+                                        WarehouseReceiptLineRecGbl .reset;
+                                        WarehouseReceiptLineRecGbl .SetRange("No.",WareHouseReceiptNoVarGbl);
+                                        WarehouseReceiptLineRecGbl.SetRange("Item No.",ItemNoVarGbl);
+                                        WarehouseReceiptLineRecGbl.SetRange("Line No.",WarehouseReceiptLineNoVarGbl);
+                                        WarehouseReceiptLineRecGbl.SetRange("Variant Code",ItemVariantVarGbl);
+                                        if  not WarehouseReceiptLineRecGbl.FindFirst() then
+                                            Error(ErrorInvalidItemLbl,ItemVariantVarGbl);
+                                end;
+                            end;
                          }
                         field(QuantityVarGbl;QuantityVarGbl)
                         {
@@ -151,8 +204,7 @@ report 52617 "Purchase Order Inventory Tag"
                                 ApplicationArea = All;
                             }
                         }
-
-                        
+                  
                 }
             }
     }
@@ -180,7 +232,12 @@ report 52617 "Purchase Order Inventory Tag"
         ItemNoVarGbl: Code[20];
         ItemVariantVarGbl: Code[10];
         PurchaseOrderNumberVarGbl: Code[200];
-        NotonDocumentVarGbl:Boolean;     
+        NotonDocumentVarGbl:Boolean; 
+        ItemRecGbl : Record Item;
+        ItemVariantRecGbl : Record "Item Variant";
+        ErrorInvalidItemLbl: Label 'Item Variant %1 is invalid';   
+        WarehouseReceiptLineNoVarGbl: Integer; 
+        WarehouseReceiptLineRecGbl : Record "Warehouse Receipt Line";
     }
 
     
