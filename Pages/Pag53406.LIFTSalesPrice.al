@@ -38,6 +38,10 @@ page 53406 "ORB LIFT Sales Price"
                 {
                     Caption = 'Minimum Quantity';
                 }
+                field(maximumQuantity; Rec."ORB LIFT Maximum Quantity")
+                {
+                    Caption = 'Maximum Quantity';
+                }
                 field(unitPrice; Rec."Unit Price")
                 {
                     Caption = 'Unit Price';
