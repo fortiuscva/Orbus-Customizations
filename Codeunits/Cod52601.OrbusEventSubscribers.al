@@ -964,6 +964,54 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         BinContent.Fixed := false;
     end;
 
+    [EventSubscriber(ObjectType::Table, Database::"Report Selection Warehouse", 'OnBeforePrintDocument', '', true, true)]
+    local procedure HandlePrintDocument(
+     TempReportSelectionWarehouse: Record "Report Selection Warehouse" temporary;
+     ShowRequestPage: Boolean;
+     RecVarToPrint: Variant;
+     var IsHandled: Boolean)
+    var
+        WhseActHeader: Record "Warehouse Activity Header";
+        LocationRec: Record Location;
+        PrinterSelection: Record "Printer Selection";
+        PrinterName: Text[250];
+        ReportID: Integer;
+        RecRef: RecordRef;
+    begin
+        if GuiAllowed() then begin
+            ReportID := TempReportSelectionWarehouse."Report ID";
+
+            if ReportID <> Report::"Pick Instruction" then
+                exit;
+
+            if RecVarToPrint.IsRecord then begin
+                WhseActHeader := RecVarToPrint;
+            end else if RecVarToPrint.IsRecordRef then begin
+                RecRef := RecVarToPrint;
+                if RecRef.Number = DATABASE::"Warehouse Activity Header" then
+                    RecRef.GetTable(WhseActHeader)
+                else
+                    exit;
+            end else
+                exit;
+
+            if not WhseActHeader.IsEmpty then begin
+                if LocationRec.Get(WhseActHeader."Location Code") and (LocationRec."ORB Pick Report Printer" <> '') then
+                    PrinterName := LocationRec."ORB Pick Report Printer";
+            end;
+
+            if (PrinterName = '') and PrinterSelection.Get(UserId(), ReportID) then
+                PrinterName := PrinterSelection."Printer Name";
+
+            if PrinterName = '' then
+                exit;
+
+            Report.Print(ReportID, PrinterName, RecVarToPrint);
+
+            IsHandled := true;
+        end;
+    end;
+
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
         OrbusFunctionsCUGbl: Codeunit "ORB Functions";
