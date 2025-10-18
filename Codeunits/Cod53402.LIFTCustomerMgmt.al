@@ -35,6 +35,8 @@ codeunit 53402 "ORB LIFT Customer Mgmt"
             Customer.Validate("Customer Posting Group", LIFTCustomer."Customer Posting Group");
         Customer.Validate("Currency Code", LIFTCustomer."Currency Code");
         Customer.Validate("Customer Price Group", LIFTCustomer."Customer Price Group");
+        Customer.Validate("Customer Disc. Group", LIFTCustomer."Customer Disc. Group");
+        Customer.Validate("Payment Terms Id", LIFTCustomer."Payment Terms Id");
         Customer.Validate("Payment Terms Code", LIFTCustomer."Payment Terms Code");
         if (LIFTCustomer."Salesperson Code" <> '') then
             Customer.Validate("Salesperson Code", LIFTCustomer."Salesperson Code");
@@ -57,23 +59,21 @@ codeunit 53402 "ORB LIFT Customer Mgmt"
             Customer.Validate(Needs_Approval, Customer.Needs_Approval::noNeedsApproval)
         else
             Customer.Validate(Needs_Approval, Customer.Needs_Approval::yesNeedsApproval);
-        // Customer.Validate("Magento ID", LIFTCustomer."Magento ID");
+        Customer.Validate("Magento ID", LIFTCustomer."Magento ID");
         // Customer.Validate(ORBAPPAssociationsName, LIFTCustomer.ORBAPPAssociationsName);
         // Customer.Validate("ORB Regional Sales Executive", LIFTCustomer."ORB Regional Sales Executive");
         if (LIFTCustomer."ORB Customer Support" <> '') then
             Customer.Validate("ORB Customer Support", LIFTCustomer."ORB Customer Support");
-        // Customer.Validate("ORB Business Development", LIFTCustomer."ORB Business Development");
-        /*
-            Customer.Validate("ORB LIFT Customer", LIFTCustomer."ORB LIFT Customer");
-            Customer.Validate("First Invoice Date", LIFTCustomer."First Invoice Date");
-            Customer.Validate("Magento Contact No.", LIFTCustomer."Magento Contact No.");
-            Customer.Validate("Magento Contact Name", LIFTCustomer."Magento Contact Name");
-            Customer.Validate("Magento Contact Email", LIFTCustomer."Magento Contact Email");
-            Customer.Validate("Last Invoice Date", LIFTCustomer."Last Invoice Date");
-            Customer.Validate("Needs Magento ID", LIFTCustomer."Needs Magento ID");
-            Customer.Validate("Last Visit Date", LIFTCustomer."Last Visit Date");
-            Customer.Validate(International, LIFTCustomer.International);
-        */
+        Customer.Validate("ORB Business Development", LIFTCustomer."ORB Business Development");
+        // Customer.Validate("ORB LIFT Customer", LIFTCustomer."ORB LIFT Customer");
+        // Customer.Validate("First Invoice Date", LIFTCustomer."First Invoice Date");
+        Customer.Validate("Magento Contact No.", LIFTCustomer."Magento Contact No.");
+        Customer.Validate("Magento Contact Name", LIFTCustomer."Magento Contact Name");
+        Customer.Validate("Magento Contact Email", LIFTCustomer."Magento Contact Email");
+        // Customer.Validate("Last Invoice Date", LIFTCustomer."Last Invoice Date");
+        Customer.Validate("Needs Magento ID", LIFTCustomer."Needs Magento ID");
+        // Customer.Validate("Last Visit Date", LIFTCustomer."Last Visit Date");
+        // Customer.Validate(International, LIFTCustomer.International);
         if CreateCustomer then
             Customer.Validate("Shortcut Dimension 5 Code", LIFTCustomer.Channel);
         Customer.Validate("Shortcut Dimension 6 Code", LIFTCustomer.Industry);

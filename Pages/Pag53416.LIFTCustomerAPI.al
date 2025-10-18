@@ -73,6 +73,10 @@ page 53416 "ORB LIFT Customer API"
                 {
                     Caption = 'Salesperson Code';
                 }
+                field(customerDiscGroup; Rec."Customer Disc. Group")
+                {
+                    Caption = 'Customer Disc. Group';
+                }
                 field(countryRegionCode; Rec."Country/Region Code")
                 {
                     Caption = 'Country/Region Code';
@@ -184,6 +188,10 @@ page 53416 "ORB LIFT Customer API"
                 field(customerType; Rec.CustomerType)
                 {
                     Caption = 'CustomerType';
+                }
+                field(paymentTermsId; Rec."Payment Terms Id")
+                {
+                    Caption = 'Payment Terms Id';
                 }
             }
         }
