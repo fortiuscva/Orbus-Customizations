@@ -36,7 +36,7 @@ codeunit 52618 "ORB Auto SO Release & Pick"
                         end else
                             IsValid := false;
 
-                        if SalesLine."Shortcut Dimension 1 Code" <> '01' then
+                        if SalesLine."Shortcut Dimension 2 Code" <> '01' then
                             IsValid := false;
 
                     until (SalesLine.Next() = 0) or (not IsValid);
