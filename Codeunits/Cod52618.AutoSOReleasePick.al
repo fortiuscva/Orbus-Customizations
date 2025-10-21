@@ -50,6 +50,7 @@ codeunit 52618 "ORB Auto SO Release & Pick"
 
 
 
+
         SalesHeaderRecLcl.Reset();
         SalesHeaderRecLcl.SetRange("Order Status", SalesHeaderRecLcl."Order Status"::"ReadyforPick/Release");
         IF SalesHeaderRecLcl.FindSet() then
