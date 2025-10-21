@@ -17,8 +17,8 @@ codeunit 52618 "ORB Auto SO Release & Pick"
     begin
 
         SalesHeaderRecLcl.Reset();
-        SalesHeaderRecLcl.SetRange("Order Status", SalesHeaderRecLcl."Order Status"::Draft);
-
+        SalesHeaderRecLcl.SetFilter("Order Status", '<%1', SalesHeaderRecLcl."Order Status"::"ReadyforPick/Release");
+        SalesHeaderRecLcl.SetFilter("Shipment Date", '<=%1', Today());
         if SalesHeaderRecLcl.FindSet() then
             repeat
                 SalesLine.Reset();
