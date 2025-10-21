@@ -189,6 +189,10 @@ page 52608 "ORB Customer API"
                 {
                     Caption = 'Gen. Bus. Posting Group';
                 }
+                field(invoiceEmail; InvoiceEmail)
+                {
+                    Caption = 'Send Invoice Email';
+                }
                 field(orbAutoSendEmail; Rec."ORB Auto Send Email")
                 {
                     Caption = 'Auto Send Email';
@@ -200,6 +204,22 @@ page 52608 "ORB Customer API"
             }
         }
     }
+    trigger OnAfterGetRecord()
+    var
+        CustomReportSelectionRecLcl: Record "Custom Report Selection";
+    begin
+        InvoiceEmail := '';
+        CustomReportSelectionRecLcl.Reset();
+        CustomReportSelectionRecLcl.SetRange("Source Type", Database::Customer);
+        CustomReportSelectionRecLcl.SetRange("Source No.", Rec."No.");
+        CustomReportSelectionRecLcl.SetRange(Usage, CustomReportSelectionRecLcl.Usage::"S.Invoice");
+        CustomReportSelectionRecLcl.SetFilter("Send To Email", '<>%1', '');
+        if CustomReportSelectionRecLcl.FindLast() then
+            InvoiceEmail := CustomReportSelectionRecLcl."Send To Email";
+    end;
+
+    var
+        InvoiceEmail: Text[200];
     /*
     trigger OnAfterGetRecord()
     var
