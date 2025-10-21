@@ -12,7 +12,6 @@ codeunit 52618 "ORB Auto SO Release & Pick"
         SalesHeaderRecLcl: Record "Sales Header";
         ORBCreateInventoryPick: Codeunit "ORB Create Inventory Pick";
         SalesLine: Record "Sales Line";
-        SingleInstanceCU: Codeunit "ORB Orbus Single Instance";
         ItemRec: Record Item;
         IsValid: Boolean;
     begin
@@ -50,7 +49,7 @@ codeunit 52618 "ORB Auto SO Release & Pick"
             until SalesHeaderRecLcl.Next() = 0;
 
 
-        SingleInstanceCU.SetAutoPickPrint(true);
+
 
         SalesHeaderRecLcl.Reset();
         SalesHeaderRecLcl.SetRange("Order Status", SalesHeaderRecLcl."Order Status"::"ReadyforPick/Release");
@@ -58,7 +57,5 @@ codeunit 52618 "ORB Auto SO Release & Pick"
             repeat
                 if not ORBCreateInventoryPick.Run(SalesHeaderRecLcl) then;
             Until SalesHeaderRecLcl.Next() = 0;
-
-        SingleInstanceCU.SetAutoPickPrint(false);
     end;
 }
