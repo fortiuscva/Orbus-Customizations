@@ -17,32 +17,37 @@ codeunit 52618 "ORB Auto SO Release & Pick"
     begin
 
         SalesHeaderRecLcl.Reset();
+        SalesHeaderRecLcl.SetRange("Order Status", SalesHeaderRecLcl."Order Status"::Draft);
+
         if SalesHeaderRecLcl.FindSet() then
             repeat
+                SalesLine.Reset();
                 SalesLine.SetRange("Document Type", SalesHeaderRecLcl."Document Type");
                 SalesLine.SetRange("Document No.", SalesHeaderRecLcl."No.");
-                if SalesLine.findset() then begin
-                    IsValid := true;
+                SalesLine.SetRange(Type, SalesLine.Type::Item);
+
+                IsValid := true;
+
+                if SalesLine.FindSet() then
                     repeat
-                        if SalesLine.Type = SalesLine.Type::Item then begin
-                            if not ItemRec.Get(SalesLine."No.") and (ItemRec."Replenishment System" <> ItemRec."Replenishment System"::Purchase) then begin
+                        if ItemRec.Get(SalesLine."No.") then begin
+                            if ItemRec."Replenishment System" <> ItemRec."Replenishment System"::Purchase then
                                 IsValid := false;
-                                exit;
-                            end;
+                        end else
+                            IsValid := false;
 
-                            if SalesLine."Shortcut Dimension 1 Code" <> '01' then begin
-                                IsValid := false;
-                                exit;
-                            end;
-                        end;
-                    until SalesLine.Next() = 0;
+                        if SalesLine."Shortcut Dimension 1 Code" <> '01' then
+                            IsValid := false;
 
-                    if IsValid then begin
-                        SalesHeaderRecLcl."Order Status" := SalesHeaderRecLcl."Order Status"::"ReadyforPick/Release";
-                        SalesHeaderRecLcl.Modify();
-                    end;
+                    until (SalesLine.Next() = 0) or (not IsValid);
+
+                if IsValid then begin
+                    SalesHeaderRecLcl."Order Status" := SalesHeaderRecLcl."Order Status"::"ReadyforPick/Release";
+                    SalesHeaderRecLcl.Modify();
                 end;
+
             until SalesHeaderRecLcl.Next() = 0;
+
 
 
         SalesHeaderRecLcl.Reset();
