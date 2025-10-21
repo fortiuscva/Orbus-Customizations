@@ -177,6 +177,26 @@ page 52608 "ORB Customer API"
                 {
                     Caption = 'Blocked';
                 }
+                field(channelCode; Rec."Shortcut Dimension 5 Code")
+                {
+                    Caption = 'Channel Code';
+                }
+                field(customerPostingGroup; Rec."Customer Posting Group")
+                {
+                    Caption = 'Customer Posting Group';
+                }
+                field(genBusPostingGroup; Rec."Gen. Bus. Posting Group")
+                {
+                    Caption = 'Gen. Bus. Posting Group';
+                }
+                field(orbAutoSendEmail; Rec."ORB Auto Send Email")
+                {
+                    Caption = 'Auto Send Email';
+                }
+                field(documentSendingProfile; Rec."Document Sending Profile")
+                {
+                    Caption = 'Document Sending Profile';
+                }
             }
         }
     }
