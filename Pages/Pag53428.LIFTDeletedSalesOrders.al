@@ -25,10 +25,35 @@ page 53428 "ORB LIFT Deleted Sales Orders"
                 {
                     ToolTip = 'Specifies the value of the Line No. field.', Comment = '%';
                 }
+                field("LIFT Line No."; Rec."LIFT Line No.")
+                {
+
+                }
                 field("Exported to LIFT"; Rec."Exported to LIFT")
                 {
                     ToolTip = 'Specifies the value of the Exported to LIFT field.', Comment = '%';
                 }
+                field("API Result"; Rec."API Result")
+                {
+
+                }
+            }
+        }
+    }
+
+    actions
+    {
+        area(Processing)
+        {
+            action("Send to LIFT")
+            {
+                ApplicationArea = all;
+                trigger OnAction()
+                var
+                    LIFTUpdateSOCU: Codeunit "ORB LIFT Update SO Status";
+                begin
+                    LIFTUpdateSOCU.IntegrateSOShipAndInvoiceStatus();
+                end;
             }
         }
     }
