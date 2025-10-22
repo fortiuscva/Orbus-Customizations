@@ -1007,6 +1007,25 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         IsHandled := true;
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnBeforeSalesLineDeleteAll, '', false, false)]
+    local procedure "Sales-Post_OnBeforeSalesLineDeleteAll"(var SalesLine: Record "Sales Line"; CommitIsSuppressed: Boolean; var SalesHeader: Record "Sales Header")
+    var
+        SalesLineRecLcl: Record "Sales Line";
+        DeletedSalesOrdersRecLcl: Record "ORB LIFT Deleted Sales Orders";
+    begin
+        SalesLineRecLcl.Reset();
+        SalesLineRecLcl.CopyFilters(SalesLine);
+        SalesLineRecLcl.SetRange("Document Type", SalesLineRecLcl."Document Type"::Order);
+        if SalesLineRecLcl.FindSet() then
+            repeat
+                DeletedSalesOrdersRecLcl.Init();
+                DeletedSalesOrdersRecLcl."Document Type" := SalesLineRecLcl."Document Type";
+                DeletedSalesOrdersRecLcl."Document No." := SalesLineRecLcl."Document No.";
+                DeletedSalesOrdersRecLcl."Line No." := SalesLineRecLcl."Line No.";
+                DeletedSalesOrdersRecLcl.Insert();
+            until SalesLineRecLcl.Next() = 0;
+    end;
+
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
         OrbusFunctionsCUGbl: Codeunit "ORB Functions";
