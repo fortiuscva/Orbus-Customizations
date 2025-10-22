@@ -17,9 +17,17 @@ table 53409 "ORB LIFT Deleted Sales Orders"
         {
             Caption = 'Line No.';
         }
-        field(4; "Exported to LIFT"; Boolean)
+        field(4; "LIFT Line No."; Decimal)
+        {
+            Caption = 'Line No.';
+        }
+        field(5; "Exported to LIFT"; Boolean)
         {
             Caption = 'Exported to LIFT';
+        }
+        field(6; "API Result"; text[2024])
+        {
+            Caption = 'API Result';
         }
     }
     keys

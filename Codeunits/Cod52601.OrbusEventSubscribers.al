@@ -1022,6 +1022,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
                 DeletedSalesOrdersRecLcl."Document Type" := SalesLineRecLcl."Document Type";
                 DeletedSalesOrdersRecLcl."Document No." := SalesLineRecLcl."Document No.";
                 DeletedSalesOrdersRecLcl."Line No." := SalesLineRecLcl."Line No.";
+                DeletedSalesOrdersRecLcl."LIFT Line No." := SalesLineRecLcl."ORB LIFT Line ID";
                 DeletedSalesOrdersRecLcl.Insert();
             until SalesLineRecLcl.Next() = 0;
     end;
