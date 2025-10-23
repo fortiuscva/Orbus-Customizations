@@ -1,6 +1,5 @@
 codeunit 53417 "ORB LIFT Update SO Status"
 {
-
     trigger OnRun()
     begin
         IntegrateSOShipAndInvoiceStatus();
@@ -11,7 +10,42 @@ codeunit 53417 "ORB LIFT Update SO Status"
         DeletedSalesOrdersRecLcl: Record "ORB LIFT Deleted Sales Orders";
         LIFTERPSetupRecLcl: Record "ORB LIFT ERP Setup";
         EnvironmentInfoCU: Codeunit "Environment Information";
-        Base64Convert: Codeunit "Base64 Convert";
+        SalesHeaderRecLcl: Record "Sales Header";
+    begin
+        LIFTERPSetupRecLcl.Get();
+
+        // Update Shipped Status
+        DeletedSalesOrdersRecLcl.Reset();
+        DeletedSalesOrdersRecLcl.SetRange("Shipped Send to LIFT", false);
+        if DeletedSalesOrdersRecLcl.FindSet() then
+            repeat
+                if SendSOStatusUpdate(DeletedSalesOrdersRecLcl, EnvironmentInfoCU.IsSandbox(),
+                    LIFTERPSetupRecLcl."SO Status API - QA", LIFTERPSetupRecLcl."SO Status API - Production",
+                    LIFTERPSetupRecLcl."API Username", LIFTERPSetupRecLcl."API Password") then begin
+                    DeletedSalesOrdersRecLcl."Shipped Send to LIFT" := true;
+                end;
+                DeletedSalesOrdersRecLcl.Modify();
+            until DeletedSalesOrdersRecLcl.Next() = 0;
+
+        // Update Invoice Status
+        DeletedSalesOrdersRecLcl.Reset();
+        DeletedSalesOrdersRecLcl.SetRange("Invoice Send to LIFT", false);
+        if DeletedSalesOrdersRecLcl.FindSet() then
+            repeat
+                if not SalesHeaderRecLcl.Get(DeletedSalesOrdersRecLcl."Document Type", DeletedSalesOrdersRecLcl."Document No.") then begin
+
+                    if SendSOStatusUpdate(DeletedSalesOrdersRecLcl, EnvironmentInfoCU.IsSandbox(),
+                        LIFTERPSetupRecLcl."SO Status API - QA", LIFTERPSetupRecLcl."SO Status API - Production",
+                        LIFTERPSetupRecLcl."API Username", LIFTERPSetupRecLcl."API Password") then begin
+                        DeletedSalesOrdersRecLcl."Invoice Send to LIFT" := true;
+                    end;
+                    DeletedSalesOrdersRecLcl.Modify();
+                end;
+            until DeletedSalesOrdersRecLcl.Next() = 0;
+    end;
+
+    procedure SendSOStatusUpdate(var DeletedSalesOrdersRecLcl: Record "ORB LIFT Deleted Sales Orders"; IsSandbox: Boolean; UrlQA: Text; UrlProd: Text; Username: Text; Password: Text): Boolean
+    var
         Client: HttpClient;
         Request: HttpRequestMessage;
         Response: HttpResponseMessage;
@@ -20,40 +54,26 @@ codeunit 53417 "ORB LIFT Update SO Status"
         ResultText: Text;
         AuthHeader: Text;
         Credentials: Text;
+        Base64Convert: Codeunit "Base64 Convert";
     begin
-        LIFTERPSetupRecLcl.Get();
+        if IsSandbox then
+            Url := StrSubstNo(UrlQA + 'order_number=%1&line_number=%2', DeletedSalesOrdersRecLcl."Document No.", Format(DeletedSalesOrdersRecLcl."LIFT Line No."))
+        else
+            Url := StrSubstNo(UrlProd + 'order_number=%1&line_number=%2', DeletedSalesOrdersRecLcl."Document No.", Format(DeletedSalesOrdersRecLcl."LIFT Line No."));
 
-        DeletedSalesOrdersRecLcl.Reset();
-        DeletedSalesOrdersRecLcl.SetRange("Exported to LIFT", false);
+        Credentials := Username + ':' + Password;
+        AuthHeader := 'Basic ' + Base64Convert.ToBase64(Credentials);
 
-        if DeletedSalesOrdersRecLcl.FindSet() then
-            repeat
-                if EnvironmentInfoCU.IsSandbox() then
-                    Url := StrSubstNo(LIFTERPSetupRecLcl."SO Status API - QA" +
-                        'order_number=%1&line_number=%2', DeletedSalesOrdersRecLcl."Document No.", Format(DeletedSalesOrdersRecLcl."LIFT Line No."))
-                else
-                    Url := StrSubstNo(LIFTERPSetupRecLcl."SO Status API - Production" +
-                        'order_number=%1&line_number=%2', DeletedSalesOrdersRecLcl."Document No.", Format(DeletedSalesOrdersRecLcl."LIFT Line No."));
+        Request.Method := 'PUT';
+        Request.SetRequestUri(Url);
+        Request.GetHeaders(Headers);
+        Headers.Add('Authorization', AuthHeader);
 
-                Credentials := LIFTERPSetupRecLcl."API Username" + ':' + LIFTERPSetupRecLcl."API Password";
-                AuthHeader := 'Basic ' + Base64Convert.ToBase64(Credentials);
+        Client.Send(Request, Response);
+        Response.Content.ReadAs(ResultText);
 
-                Request.Method := 'PUT';
-                Request.SetRequestUri(Url);
-                Request.GetHeaders(Headers);
-                Headers.Add('Authorization', AuthHeader);
+        DeletedSalesOrdersRecLcl."API Result" := CopyStr(ResultText, 1, 1024);
 
-                Client.Send(Request, Response);
-                Response.Content.ReadAs(ResultText);
-
-                if Response.HttpStatusCode = 200 then
-                    DeletedSalesOrdersRecLcl."Exported to LIFT" := true;
-
-                DeletedSalesOrdersRecLcl."API Result" := CopyStr(ResultText, 1, 1024);
-                DeletedSalesOrdersRecLcl.Modify();
-
-            until DeletedSalesOrdersRecLcl.Next() = 0;
+        exit(Response.HttpStatusCode = 200);
     end;
-
 }
-
