@@ -21,13 +21,17 @@ table 53409 "ORB LIFT Deleted Sales Orders"
         {
             Caption = 'Line No.';
         }
-        field(5; "Exported to LIFT"; Boolean)
+        field(5; "Shipped Send to LIFT"; Boolean)
         {
-            Caption = 'Exported to LIFT';
+            Caption = 'Shipped Send to LIFT';
         }
         field(6; "API Result"; text[2024])
         {
             Caption = 'API Result';
+        }
+        field(7; "Invoice Send to LIFT"; Boolean)
+        {
+            Caption = 'Invoice Send to LIFT';
         }
     }
     keys
