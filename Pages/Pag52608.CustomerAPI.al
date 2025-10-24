@@ -209,10 +209,7 @@ page 52608 "ORB Customer API"
         CustomReportSelectionRecLcl: Record "Custom Report Selection";
     begin
         InvoiceEmail := '';
-        CustomReportSelectionRecLcl.Reset();
-        CustomReportSelectionRecLcl.SetRange("Source Type", Database::Customer);
-        CustomReportSelectionRecLcl.SetRange("Source No.", Rec."No.");
-        CustomReportSelectionRecLcl.SetRange(Usage, CustomReportSelectionRecLcl.Usage::"S.Invoice");
+        SetFiltersForCustomReporSelection(CustomReportSelectionRecLcl);
         CustomReportSelectionRecLcl.SetFilter("Send To Email", '<>%1', '');
         if CustomReportSelectionRecLcl.FindLast() then
             InvoiceEmail := CustomReportSelectionRecLcl."Send To Email";
@@ -220,37 +217,32 @@ page 52608 "ORB Customer API"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     var
-        CustomReportSelection: Record "Custom Report Selection";
-        CustomReportSelection2: Record "Custom Report Selection";
-        CustomReportSelection3: Record "Custom Report Selection";
+        FromCustomReportSelection, ToCustomReportSelection : Record "Custom Report Selection";
         SequenceLcl: Integer;
     begin
         SequenceLcl := 0;
-        if CustomReportSelection.FindLast() then
-            SequenceLcl := CustomReportSelection.Sequence + 1
+        if FromCustomReportSelection.FindLast() then
+            SequenceLcl := FromCustomReportSelection.Sequence + 1
         else
             SequenceLcl := 1;
 
         if Rec."ORB Auto Send Email" then begin
-            CustomReportSelection2.Reset();
-            CustomReportSelection2.SetRange("Source Type", Database::Customer);
-            CustomReportSelection2.SetRange("Source No.", Rec."No.");
-            CustomReportSelection2.SetRange(Usage, CustomReportSelection.Usage::"S.Invoice");
-            if not CustomReportSelection2.FindFirst() then begin
-                CustomReportSelection3.Init();
-                CustomReportSelection3."Source Type" := Database::Customer;
-                CustomReportSelection3."Source No." := Rec."No.";
-                CustomReportSelection3.Usage := CustomReportSelection3.Usage::"S.Invoice";
-                CustomReportSelection3.Sequence := SequenceLcl;
-                CustomReportSelection3.Insert(true);
-                CustomReportSelection3.Validate("Report ID", 1306);
-                CustomReportSelection3.Validate("Custom Report Layout Code", '1306-000002');
-                CustomReportSelection3.Validate("Send To Email", InvoiceEmail);
-                CustomReportSelection3.Validate("Use for Email Attachment", true);
-                CustomReportSelection3.Validate("Use for Email Body", true);
-                CustomReportSelection3.Validate("Email Body Layout Code", '1306-000002');
-                CustomReportSelection3.Validate("Use Email from Contact", false);
-                CustomReportSelection3.Modify(true);
+            SetFiltersForCustomReporSelection(FromCustomReportSelection);
+            if not FromCustomReportSelection.FindFirst() then begin
+                ToCustomReportSelection.Init();
+                ToCustomReportSelection."Source Type" := Database::Customer;
+                ToCustomReportSelection."Source No." := Rec."No.";
+                ToCustomReportSelection.Usage := ToCustomReportSelection.Usage::"S.Invoice";
+                ToCustomReportSelection.Sequence := SequenceLcl;
+                ToCustomReportSelection.Insert(true);
+                ToCustomReportSelection.Validate("Report ID", 1306);
+                ToCustomReportSelection.Validate("Custom Report Layout Code", '1306-000002');
+                ToCustomReportSelection.Validate("Send To Email", InvoiceEmail);
+                ToCustomReportSelection.Validate("Use for Email Attachment", true);
+                ToCustomReportSelection.Validate("Use for Email Body", true);
+                ToCustomReportSelection.Validate("Email Body Layout Code", '1306-000002');
+                ToCustomReportSelection.Validate("Use Email from Contact", false);
+                ToCustomReportSelection.Modify(true);
             end;
         end
     end;
@@ -259,14 +251,21 @@ page 52608 "ORB Customer API"
     var
         CustomReportSelectionLcl: Record "Custom Report Selection";
     begin
-        CustomReportSelectionLcl.Reset();
-        CustomReportSelectionLcl.SetRange("Source Type", Database::Customer);
-        CustomReportSelectionLcl.SetRange("Source No.", Rec."No.");
-        CustomReportSelectionLcl.SetRange(Usage, CustomReportSelectionLcl.Usage::"S.Invoice");
+        SetFiltersForCustomReporSelection(CustomReportSelectionLcl);
         if CustomReportSelectionLcl.FindLast() then begin
-            CustomReportSelectionLcl."Send To Email" := InvoiceEmail;
-            CustomReportSelectionLcl.Modify(true);
+            if CustomReportSelectionLcl."Send To Email" <> InvoiceEmail then begin
+                CustomReportSelectionLcl."Send To Email" := InvoiceEmail;
+                CustomReportSelectionLcl.Modify(true);
+            end;
         end;
+    end;
+
+    local procedure SetFiltersForCustomReporSelection(var CustomReportSelectionPar: Record "Custom Report Selection")
+    begin
+        CustomReportSelectionPar.Reset();
+        CustomReportSelectionPar.SetRange("Source Type", Database::Customer);
+        CustomReportSelectionPar.SetRange("Source No.", Rec."No.");
+        CustomReportSelectionPar.SetRange(Usage, CustomReportSelectionPar.Usage::"S.Invoice");
     end;
 
     var
