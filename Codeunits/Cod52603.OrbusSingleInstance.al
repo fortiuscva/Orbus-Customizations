@@ -308,6 +308,8 @@ codeunit 52603 "ORB Orbus Single Instance"
     procedure GetModifyByCustomerV2API(): Boolean
     begin
         exit(ModifyCRS);
+    end;
+
     procedure SetAutoPickPrint(AutoPickPrintpar: Boolean)
     begin
         AutoPickPrint := AutoPickPrintpar;
