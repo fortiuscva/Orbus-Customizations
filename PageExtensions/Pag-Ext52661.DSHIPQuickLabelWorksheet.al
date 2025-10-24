@@ -21,7 +21,6 @@ pageextension 52661 "DSHIP Quick Label Worksheet" extends "DSHIP Quick Label Wor
         }
     }
 
-    /*
     internal procedure SetOrderBuffer(currentOrder: Record "Sales Header")
     var
         DshipQuickLabel: Page "DSHIP Quick Label Worksheet";
@@ -43,5 +42,4 @@ pageextension 52661 "DSHIP Quick Label Worksheet" extends "DSHIP Quick Label Wor
 
     var
         SingleInstanceCU: Codeunit "ORB Orbus Single Instance";
-    */
 }
