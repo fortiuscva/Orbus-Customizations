@@ -95,45 +95,44 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         end;
     end;
     // To make sure always Ship-to Contact on the Sales Order header was put on the Label, as advised by Dynamic Ship 10-04-2025
-    /*
-        [EventSubscriber(ObjectType::Codeunit, Codeunit::"DSHIP Event Publisher", OnAfterSetAddress, '', false, false)]
-        local procedure OnAfterSetAddress(addressSource: RecordRef; var addressBuffer: Record "DSHIP Address Buffer" temporary; var isValidationRequired: Boolean; var isHandled: Boolean);
-        var
-            SalesHeaderRecLcl: Record "Sales Header";
-            WarehouseShipmentHeaderRecLcl: Record "Warehouse Shipment Header";
-            WarehouseShipmentLineRecLcl: Record "Warehouse Shipment Line";
-            BillToCustomerRecLcl: Record Customer;
-        begin
-            if SalesHeaderRecLcl.get(addressSource.RecordId) then begin
-                if (addressBuffer."Address Type" = addressBuffer."Address Type"::Destination) or (addressBuffer."Address Type" = addressBuffer."Address Type"::Buffer) then begin
-                    //if SalesHeaderRecLcl."Ship-to Contact" <> '' then
-                    addressBuffer.Name := SalesHeaderRecLcl."Ship-to Contact";
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"DSHIP Event Publisher", OnAfterSetAddress, '', false, false)]
+    local procedure OnAfterSetAddress(addressSource: RecordRef; var addressBuffer: Record "DSHIP Address Buffer" temporary; var isValidationRequired: Boolean; var isHandled: Boolean);
+    var
+        SalesHeaderRecLcl: Record "Sales Header";
+        WarehouseShipmentHeaderRecLcl: Record "Warehouse Shipment Header";
+        WarehouseShipmentLineRecLcl: Record "Warehouse Shipment Line";
+        BillToCustomerRecLcl: Record Customer;
+    begin
+        if SalesHeaderRecLcl.get(addressSource.RecordId) then begin
+            if (addressBuffer."Address Type" = addressBuffer."Address Type"::Destination) or (addressBuffer."Address Type" = addressBuffer."Address Type"::Buffer) then begin
+                //if SalesHeaderRecLcl."Ship-to Contact" <> '' then
+                addressBuffer.Name := SalesHeaderRecLcl."Ship-to Contact";
 
-                    //Update Bill To Customer Phone No.
-                    if BillToCustomerRecLcl.get(SalesHeaderRecLcl."Bill-to Customer No.") then
-                        addressBuffer."Phone No." := BillToCustomerRecLcl."Phone No.";
-                end;
-            end else begin
+                //Update Bill To Customer Phone No.
+                if BillToCustomerRecLcl.get(SalesHeaderRecLcl."Bill-to Customer No.") then
+                    addressBuffer."Phone No." := BillToCustomerRecLcl."Phone No.";
+            end;
+        end else begin
 
-                if WarehouseShipmentHeaderRecLcl.get(addressSource.RecordId) then begin
-                    WarehouseShipmentLineRecLcl.Reset();
-                    WarehouseShipmentLineRecLcl.SetRange("No.", WarehouseShipmentHeaderRecLcl."No.");
-                    if WarehouseShipmentLineRecLcl.FindFirst() then begin
-                        if SalesHeaderRecLcl.get(SalesHeaderRecLcl."Document Type"::Order, WarehouseShipmentLineRecLcl."Source No.") then begin
-                            if (addressBuffer."Address Type" = addressBuffer."Address Type"::Destination) or (addressBuffer."Address Type" = addressBuffer."Address Type"::Buffer) then begin
-                                //if SalesHeaderRecLcl."Ship-to Contact" <> '' then
-                                addressBuffer.Name := SalesHeaderRecLcl."Ship-to Contact";
+            if WarehouseShipmentHeaderRecLcl.get(addressSource.RecordId) then begin
+                WarehouseShipmentLineRecLcl.Reset();
+                WarehouseShipmentLineRecLcl.SetRange("No.", WarehouseShipmentHeaderRecLcl."No.");
+                if WarehouseShipmentLineRecLcl.FindFirst() then begin
+                    if SalesHeaderRecLcl.get(SalesHeaderRecLcl."Document Type"::Order, WarehouseShipmentLineRecLcl."Source No.") then begin
+                        if (addressBuffer."Address Type" = addressBuffer."Address Type"::Destination) or (addressBuffer."Address Type" = addressBuffer."Address Type"::Buffer) then begin
+                            //if SalesHeaderRecLcl."Ship-to Contact" <> '' then
+                            addressBuffer.Name := SalesHeaderRecLcl."Ship-to Contact";
 
-                                //Update Bill To Customer Phone No.
-                                if BillToCustomerRecLcl.get(SalesHeaderRecLcl."Bill-to Customer No.") then
-                                    addressBuffer."Phone No." := BillToCustomerRecLcl."Phone No.";
-                            end;
+                            //Update Bill To Customer Phone No.
+                            if BillToCustomerRecLcl.get(SalesHeaderRecLcl."Bill-to Customer No.") then
+                                addressBuffer."Phone No." := BillToCustomerRecLcl."Phone No.";
                         end;
                     end;
                 end;
             end;
         end;
-    */
+    end;
+
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post Prepayments", OnBeforeSalesInvHeaderInsert, '', false, false)]
     local procedure Cod442_OnBeforeSalesInvHeaderInsert(var SalesInvHeader: Record "Sales Invoice Header"; SalesHeader: Record "Sales Header"; CommitIsSuppressed: Boolean; GenJnlDocNo: Code[20]);
     begin
@@ -978,38 +977,81 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         ReportID: Integer;
         RecRef: RecordRef;
     begin
-        if GuiAllowed() then begin
-            ReportID := TempReportSelectionWarehouse."Report ID";
+        ReportID := TempReportSelectionWarehouse."Report ID";
 
-            if ReportID <> Report::"Pick Instruction" then
+        if ReportID <> Report::"Picking List" then
+            exit;
+
+        if RecVarToPrint.IsRecord then begin
+            WhseActHeader := RecVarToPrint;
+        end else if RecVarToPrint.IsRecordRef then begin
+            RecRef := RecVarToPrint;
+            if RecRef.Number = DATABASE::"Warehouse Activity Header" then
+                RecRef.GetTable(WhseActHeader)
+            else
                 exit;
+        end else
+            exit;
 
-            if RecVarToPrint.IsRecord then begin
-                WhseActHeader := RecVarToPrint;
-            end else if RecVarToPrint.IsRecordRef then begin
-                RecRef := RecVarToPrint;
-                if RecRef.Number = DATABASE::"Warehouse Activity Header" then
-                    RecRef.GetTable(WhseActHeader)
-                else
-                    exit;
-            end else
-                exit;
+        if WhseActHeader.Findfirst() then begin
+            if LocationRec.Get(WhseActHeader."Location Code") and (LocationRec."ORB Pick Report Printer" <> '') then
+                PrinterName := LocationRec."ORB Pick Report Printer";
+        end;
 
-            if not WhseActHeader.IsEmpty then begin
-                if LocationRec.Get(WhseActHeader."Location Code") and (LocationRec."ORB Pick Report Printer" <> '') then
-                    PrinterName := LocationRec."ORB Pick Report Printer";
+        if OrbusSingleInstanceCUGbl.GetAutoPickPrint() and (PrinterName <> '') then begin
+            if not PrinterSelection.Get(UserId(), ReportId) then begin
+                PrinterSelection.Init();
+                PrinterSelection."User ID" := UserId();
+                PrinterSelection."Report ID" := ReportId;
+                PrinterSelection."Printer Name" := PrinterName;
+                PrinterSelection.Insert(true);
+            end else begin
+                PrinterSelection."Printer Name" := PrinterName;
+                PrinterSelection.Modify(true);
             end;
 
-            if (PrinterName = '') and PrinterSelection.Get(UserId(), ReportID) then
-                PrinterName := PrinterSelection."Printer Name";
+            Report.Run(ReportID, false, true, RecVarToPrint);
+        end else
+            Report.Run(TempReportSelectionWarehouse."Report ID", ShowRequestPage, false, RecVarToPrint);
 
-            if PrinterName = '' then
-                exit;
+        IsHandled := true;
+    end;
 
-            Report.Print(ReportID, PrinterName, RecVarToPrint);
+    // [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnBeforeSalesLineDeleteAll, '', false, false)]
+    // local procedure "Sales-Post_OnBeforeSalesLineDeleteAll"(var SalesLine: Record "Sales Line"; CommitIsSuppressed: Boolean; var SalesHeader: Record "Sales Header")
+    // var
+    //     SalesLineRecLcl: Record "Sales Line";
+    //     DeletedSalesOrdersRecLcl: Record "ORB LIFT Deleted Sales Orders";
+    // begin
+    //     SalesLineRecLcl.Reset();
+    //     SalesLineRecLcl.CopyFilters(SalesLine);
+    //     SalesLineRecLcl.SetRange("Document Type", SalesLineRecLcl."Document Type"::Order);
+    //     if SalesLineRecLcl.FindSet() then
+    //         repeat
+    //             DeletedSalesOrdersRecLcl.Init();
+    //             DeletedSalesOrdersRecLcl."Document Type" := SalesLineRecLcl."Document Type";
+    //             DeletedSalesOrdersRecLcl."Document No." := SalesLineRecLcl."Document No.";
+    //             DeletedSalesOrdersRecLcl."Line No." := SalesLineRecLcl."Line No.";
+    //             DeletedSalesOrdersRecLcl."LIFT Line No." := SalesLineRecLcl."ORB LIFT Line ID";
+    //             DeletedSalesOrdersRecLcl.Insert();
+    //         until SalesLineRecLcl.Next() = 0;
+    // end;
 
-            IsHandled := true;
+    [EventSubscriber(ObjectType::Table, Database::"Sales Line", OnAfterInitOutstandingQty, '', false, false)]
+    local procedure "Sales Line_OnAfterInitOutstandingQty"(var SalesLine: Record "Sales Line")
+    var
+        DeletedSalesOrdersRecLcl: Record "ORB LIFT Deleted Sales Orders";
+    begin
+        if (SalesLine."Document Type" = SalesLine."Document Type"::Order) and (SalesLine.Type = SalesLine.Type::Item) and
+        (SalesLine."Outstanding Quantity" = 0) then begin
+            DeletedSalesOrdersRecLcl.Init();
+            DeletedSalesOrdersRecLcl."Document Type" := SalesLine."Document Type";
+            DeletedSalesOrdersRecLcl."Document No." := SalesLine."Document No.";
+            DeletedSalesOrdersRecLcl."Line No." := SalesLine."Line No.";
+            DeletedSalesOrdersRecLcl."LIFT Line No." := SalesLine."ORB LIFT Line ID";
+            DeletedSalesOrdersRecLcl.Insert();
         end;
+
     end;
 
     var

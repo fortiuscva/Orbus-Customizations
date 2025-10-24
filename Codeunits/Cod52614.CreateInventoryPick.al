@@ -16,6 +16,8 @@ codeunit 52614 "ORB Create Inventory Pick"
         SalesLineLcl: Record "Sales Line";
         ReleaseSalesDocument: Codeunit "Release Sales Document";
     begin
+        SingleInstanceCU.SetAutoPickPrint(true);
+
         IsOrderReleased := false;
         // Default "Qty. to Ship" with Outstanding Quantity for the Non-Blank Type Sales Order Lines
         SalesLineLcl.Reset();
@@ -112,6 +114,7 @@ codeunit 52614 "ORB Create Inventory Pick"
                 */
             end;
         end;
+        SingleInstanceCU.SetAutoPickPrint(false);
     end;
 
     procedure SetValuesToShowMessagesOrRequestPage(SuppressMessagesPar: Boolean; UseRequestPagePar: Boolean)
@@ -125,6 +128,7 @@ codeunit 52614 "ORB Create Inventory Pick"
     end;
 
     var
+        SingleInstanceCU: Codeunit "ORB Orbus Single Instance";
         SuppressMessagesGbl: Boolean;
         UseRequestPageGbl: Boolean;
         IsInventoryPickCreated: Boolean;

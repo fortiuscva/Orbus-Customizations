@@ -4,7 +4,6 @@ pageextension 52661 "DSHIP Quick Label Worksheet" extends "DSHIP Quick Label Wor
     // Commenting this to Test Address Validation Setups as per DSHIP(Matthew's Suggestion), 10-03-2025
     actions
     {
-        /*
         modify(GetLabel)
         {
 
@@ -20,10 +19,8 @@ pageextension 52661 "DSHIP Quick Label Worksheet" extends "DSHIP Quick Label Wor
                 end;
             end;
         }
-        */
     }
 
-    /*
     internal procedure SetOrderBuffer(currentOrder: Record "Sales Header")
     var
         DshipQuickLabel: Page "DSHIP Quick Label Worksheet";
@@ -45,5 +42,4 @@ pageextension 52661 "DSHIP Quick Label Worksheet" extends "DSHIP Quick Label Wor
 
     var
         SingleInstanceCU: Codeunit "ORB Orbus Single Instance";
-    */
 }
