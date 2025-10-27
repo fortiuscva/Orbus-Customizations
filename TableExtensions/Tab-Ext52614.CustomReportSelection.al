@@ -4,7 +4,7 @@ tableextension 52614 "ORB Custom Report Selection" extends "Custom Report Select
     var
         CannotChangesDocumentLayoutLbl: Label 'You cannot change when Send email is enabled';
     begin
-        if not ORBSingleInstance.GetModifyByCustomerV2API() then begin
+        if not ORBSingleInstance.GetByCustomerV2API() then begin
             if rec."Source Type" = Database::Customer then begin
                 if CustomerRecGbl.get(rec."Source No.") then
                     if CustomerRecGbl."ORB Auto Send Email" then
