@@ -220,55 +220,61 @@ page 52608 "ORB Customer API"
     end;
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
-    var
-        FromCustomReportSelection, ToCustomReportSelection : Record "Custom Report Selection";
-        SequenceLcl: Integer;
     begin
-        SequenceLcl := 0;
-        if FromCustomReportSelection.FindLast() then
-            SequenceLcl := FromCustomReportSelection.Sequence + 1
-        else
-            SequenceLcl := 1;
-
+        ORBSingleInstance.SetByCustomerV2API(true); // To Suppress the Validations written at Field "ORB Auto Send Email" OnValidate()
         if Rec."ORB Auto Send Email" then begin
+            if InvoiceEmail = '' then
+                Error(StrSubstNo(EmailBlankErrorLbl, Rec."No."));
             SetFiltersForCustomReporSelection(FromCustomReportSelection);
-            if not FromCustomReportSelection.FindFirst() then begin
-                ToCustomReportSelection.Init();
-                ToCustomReportSelection."Source Type" := Database::Customer;
-                ToCustomReportSelection."Source No." := Rec."No.";
-                ToCustomReportSelection.Usage := ToCustomReportSelection.Usage::"S.Invoice";
-                ToCustomReportSelection.Sequence := SequenceLcl;
-                ToCustomReportSelection.Insert(true);
-                ToCustomReportSelection.Validate("Report ID", 1306);
-                ToCustomReportSelection.Validate("Custom Report Layout Code", '1306-000002');
-                ToCustomReportSelection.Validate("Send To Email", InvoiceEmail);
-                ToCustomReportSelection.Validate("Use for Email Attachment", true);
-                ToCustomReportSelection.Validate("Use for Email Body", true);
-                ToCustomReportSelection.Validate("Email Body Layout Code", '1306-000002');
-                ToCustomReportSelection.Validate("Use Email from Contact", false);
-
-                // To Suppress the validation logic written in trigger OnModify() within the table extension Custom Report Selection
-                ORBSingleInstance.SetModifyByCustomerV2API(true);
-                ToCustomReportSelection.Modify(true);
-                ORBSingleInstance.SetModifyByCustomerV2API(false);
-            end;
-        end
+            if not FromCustomReportSelection.FindFirst() then
+                CreateDocumentLayout();
+        end;
+        ORBSingleInstance.SetByCustomerV2API(false);
     end;
 
     trigger OnModifyRecord(): Boolean
     var
-        CustomReportSelectionLcl: Record "Custom Report Selection";
+        IsCRSRecModified: Boolean;
     begin
-        SetFiltersForCustomReporSelection(CustomReportSelectionLcl);
-        if CustomReportSelectionLcl.FindLast() then begin
-            if CustomReportSelectionLcl."Send To Email" <> InvoiceEmail then begin
-                CustomReportSelectionLcl."Send To Email" := InvoiceEmail;
-
-                // To Suppress the validation logic written in trigger OnModify() within the table extension Custom Report Selection
-                ORBSingleInstance.SetModifyByCustomerV2API(true);
-                CustomReportSelectionLcl.Modify(true);
-                ORBSingleInstance.SetModifyByCustomerV2API(false);
-            end;
+        IsCRSRecModified := false;
+        if Rec."ORB Auto Send Email" then begin
+            if InvoiceEmail = '' then
+                Error(StrSubstNo(EmailBlankErrorLbl, Rec."No."));
+            SetFiltersForCustomReporSelection(FromCustomReportSelection);
+            if FromCustomReportSelection.FindLast() then begin
+                if FromCustomReportSelection."Report ID" = 0 then begin
+                    FromCustomReportSelection."Report ID" := 1306;
+                    IsCRSRecModified := true;
+                end;
+                if FromCustomReportSelection."Custom Report Layout Code" = '' then begin
+                    FromCustomReportSelection."Custom Report Layout Code" := '1306-000002';
+                    IsCRSRecModified := true;
+                end;
+                if FromCustomReportSelection."Send To Email" <> InvoiceEmail then begin
+                    FromCustomReportSelection."Send To Email" := InvoiceEmail;
+                    IsCRSRecModified := true;
+                end;
+                if FromCustomReportSelection."Use for Email Attachment" = false then begin
+                    FromCustomReportSelection."Use for Email Attachment" := true;
+                    IsCRSRecModified := true;
+                end;
+                if FromCustomReportSelection."Use for Email Body" = false then begin
+                    FromCustomReportSelection."Use for Email Body" := true;
+                    IsCRSRecModified := true;
+                end;
+                if FromCustomReportSelection."Email Body Layout Code" = '' then begin
+                    FromCustomReportSelection."Email Body Layout Code" := '1306-000002';
+                    IsCRSRecModified := true;
+                end;
+                if IsCRSRecModified then begin
+                    // To Suppress the validation logic written in trigger OnModify() within the table extension Custom Report Selection
+                    ORBSingleInstance.SetByCustomerV2API(true);
+                    FromCustomReportSelection.Modify(true);
+                    ORBSingleInstance.SetByCustomerV2API(false);
+                end;
+            end
+            else
+                CreateDocumentLayout();
         end;
     end;
 
@@ -280,9 +286,38 @@ page 52608 "ORB Customer API"
         CustomReportSelectionPar.SetRange(Usage, CustomReportSelectionPar.Usage::"S.Invoice");
     end;
 
+    local procedure CreateDocumentLayout()
+    var
+        CustomReportSelectionRecLcl: Record "Custom Report Selection";
+    begin
+        Sequence := 0;
+        if CustomReportSelectionRecLcl.FindLast() then
+            Sequence := CustomReportSelectionRecLcl.Sequence + 1
+        else
+            Sequence := 1;
+
+        ToCustomReportSelection.Init();
+        ToCustomReportSelection."Source Type" := Database::Customer;
+        ToCustomReportSelection."Source No." := Rec."No.";
+        ToCustomReportSelection.Usage := ToCustomReportSelection.Usage::"S.Invoice";
+        ToCustomReportSelection.Sequence := Sequence;
+        ToCustomReportSelection.Insert(true);
+        ToCustomReportSelection.Validate("Report ID", 1306);
+        ToCustomReportSelection.Validate("Custom Report Layout Code", '1306-000002');
+        ToCustomReportSelection.Validate("Send To Email", InvoiceEmail);
+        ToCustomReportSelection.Validate("Use for Email Attachment", true);
+        ToCustomReportSelection.Validate("Use for Email Body", true);
+        ToCustomReportSelection.Validate("Email Body Layout Code", '1306-000002');
+        ToCustomReportSelection.Validate("Use Email from Contact", false);
+        ToCustomReportSelection.Modify(true);
+    end;
+
     var
         InvoiceEmail: Text[200];
         ORBSingleInstance: Codeunit "ORB Orbus Single Instance";
+        EmailBlankErrorLbl: Label 'Invoice email cannot be blank if auto send email is true for the customer %1';
+        FromCustomReportSelection, ToCustomReportSelection : Record "Custom Report Selection";
+        Sequence: Integer;
     /*
     trigger OnAfterGetRecord()
     var
