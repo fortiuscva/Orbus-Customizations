@@ -1054,6 +1054,15 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
 
     end;
 
+    [EventSubscriber(ObjectType::Table, Database::"Prod. Order Routing Line", 'OnAfterCopyFromRoutingLine', '', true, true)]
+    local procedure OnAfterCopyFromRoutingLine(var ProdOrderRoutingLine: Record "Prod. Order Routing Line"; RoutingLine: Record "Routing Line")
+    var
+        WorkCenterGroupRecLcl: Record "Work Center Group";
+    begin
+        if WorkCenterGroupRecLcl.get(ProdOrderRoutingLine."Work Center Group Code") then
+            ProdOrderRoutingLine."ORB Fast Solutions" := WorkCenterGroupRecLcl."ORB Fast Solutions";
+    end;
+
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
         OrbusFunctionsCUGbl: Codeunit "ORB Functions";
