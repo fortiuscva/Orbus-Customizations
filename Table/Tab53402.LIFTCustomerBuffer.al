@@ -170,6 +170,16 @@ table 53402 "ORB LIFT Customer Buffer"
             Caption = 'TermsStatus';
             DataClassification = CustomerContent;
         }
+        field(50125; "UPS Account Number"; Code[20])
+        {
+            Caption = 'UPS Account Number';
+            DataClassification = CustomerContent;
+        }
+        field(50126; "FedEx Account Number"; Code[20])
+        {
+            Caption = 'FedEx Account Number';
+            DataClassification = ToBeClassified;
+        }
         field(50127; "Magento ID"; Code[20])
         {
             Caption = 'Magento ID';

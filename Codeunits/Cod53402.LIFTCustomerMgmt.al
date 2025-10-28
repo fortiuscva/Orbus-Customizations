@@ -59,6 +59,8 @@ codeunit 53402 "ORB LIFT Customer Mgmt"
             Customer.Validate(Needs_Approval, Customer.Needs_Approval::noNeedsApproval)
         else
             Customer.Validate(Needs_Approval, Customer.Needs_Approval::yesNeedsApproval);
+        Customer.Validate("UPS Account Number", LIFTCustomer."UPS Account Number");
+        Customer.Validate("FedEx Account Number", LIFTCustomer."FedEx Account Number");
         Customer.Validate("Magento ID", LIFTCustomer."Magento ID");
         // Customer.Validate(ORBAPPAssociationsName, LIFTCustomer.ORBAPPAssociationsName);
         // Customer.Validate("ORB Regional Sales Executive", LIFTCustomer."ORB Regional Sales Executive");
