@@ -285,7 +285,6 @@ page 52608 "ORB Customer API"
         ToCustomReportSelection."Source No." := Rec."No.";
         ToCustomReportSelection.Usage := ToCustomReportSelection.Usage::"S.Invoice";
         ToCustomReportSelection.Sequence := Sequence;
-        ToCustomReportSelection.Insert(true);
         ToCustomReportSelection.Validate("Report ID", 1306);
         ToCustomReportSelection.Validate("Custom Report Layout Code", '1306-000002');
         ToCustomReportSelection.Validate("Send To Email", InvoiceEmail);
@@ -293,7 +292,7 @@ page 52608 "ORB Customer API"
         ToCustomReportSelection.Validate("Use for Email Body", true);
         ToCustomReportSelection.Validate("Email Body Layout Code", '1306-000002');
         ToCustomReportSelection.Validate("Use Email from Contact", false);
-        ToCustomReportSelection.Modify(true);
+        ToCustomReportSelection.Insert(true);
     end;
 
     local procedure UpdateCustomReportSelection(var CustomReportSelectionPar2: Record "Custom Report Selection"): Boolean
