@@ -219,8 +219,6 @@ page 52608 "ORB Customer API"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        ORBSingleInstance.SetByCustomerV2API(true); // To Suppress the Validations written at "ORB Auto Send Email" Field OnValidate()
-
         if not Rec."ORB Auto Send Email" then
             exit;
 
@@ -229,8 +227,6 @@ page 52608 "ORB Customer API"
         SetFiltersForCustomReportSelection(FromCustomReportSelection);
         if not FromCustomReportSelection.FindFirst() then
             CreateDocumentLayout();
-
-        ORBSingleInstance.SetByCustomerV2API(false);
     end;
 
     trigger OnModifyRecord(): Boolean
@@ -244,12 +240,8 @@ page 52608 "ORB Customer API"
         if not FromCustomReportSelection.FindFirst() then
             CreateDocumentLayout()
 
-        else if UpdateCustomReportSelection(FromCustomReportSelection) then begin
-            // To Suppress the validation logic written in trigger OnModify() within the table extension Custom Report Selection
-            ORBSingleInstance.SetByCustomerV2API(true);
+        else if UpdateCustomReportSelection(FromCustomReportSelection) then
             FromCustomReportSelection.Modify(true);
-            ORBSingleInstance.SetByCustomerV2API(false);
-        end;
     end;
 
     local procedure EnsureInvoiceEmailExists()
@@ -317,7 +309,6 @@ page 52608 "ORB Customer API"
 
     var
         InvoiceEmail: Text[200];
-        ORBSingleInstance: Codeunit "ORB Orbus Single Instance";
         FromCustomReportSelection: Record "Custom Report Selection";
     /*
     trigger OnAfterGetRecord()

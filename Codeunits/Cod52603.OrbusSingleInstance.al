@@ -300,16 +300,6 @@ codeunit 52603 "ORB Orbus Single Instance"
         exit(ExistAfterFilter);
     end;
 
-    procedure SetByCustomerV2API(SuppressCustomValidationsPar: Boolean)
-    begin
-        SuppressCustomValidations := SuppressCustomValidationsPar;
-    end;
-
-    procedure GetByCustomerV2API(): Boolean
-    begin
-        exit(SuppressCustomValidations);
-    end;
-
     procedure SetAutoPickPrint(AutoPickPrintpar: Boolean)
     begin
         AutoPickPrint := AutoPickPrintpar;
@@ -355,7 +345,6 @@ codeunit 52603 "ORB Orbus Single Instance"
         ShipToContactGbl: Text[100];
         ExistBeforeFilter: Boolean;
         ExistAfterFilter: Boolean;
-        SuppressCustomValidations: Boolean;
         AutoPickPrint: Boolean;
 
 }
