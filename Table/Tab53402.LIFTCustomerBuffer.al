@@ -269,6 +269,11 @@ table 53402 "ORB LIFT Customer Buffer"
             Caption = 'CustomerType';
             DataClassification = CustomerContent;
         }
+        field(60313; TPSADescription; Text[100])
+        {
+            Caption = 'Third Party Shipping Account Description';
+            DataClassification = CustomerContent;
+        }
     }
     keys
     {
