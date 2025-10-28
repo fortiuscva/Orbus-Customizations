@@ -262,21 +262,23 @@ page 52608 "ORB Customer API"
 
     local procedure CreateDocumentLayout()
     var
-        Sequence: Integer;
+        SequenceLcl: Integer;
         CustomReportSelectionRecLcl: Record "Custom Report Selection";
         ToCustomReportSelection: Record "Custom Report Selection";
     begin
-        Sequence := 0;
+        SequenceLcl := 0;
+        // CustomReportSelectionRecLcl.Reset();
+        CustomReportSelectionRecLcl.SetCurrentKey(Sequence);
         if CustomReportSelectionRecLcl.FindLast() then
-            Sequence := CustomReportSelectionRecLcl.Sequence + 1
+            SequenceLcl := CustomReportSelectionRecLcl.Sequence + 1
         else
-            Sequence := 1;
+            SequenceLcl := 1;
 
         ToCustomReportSelection.Init();
         ToCustomReportSelection."Source Type" := Database::Customer;
         ToCustomReportSelection."Source No." := Rec."No.";
         ToCustomReportSelection.Usage := ToCustomReportSelection.Usage::"S.Invoice";
-        ToCustomReportSelection.Sequence := Sequence;
+        ToCustomReportSelection.Sequence := SequenceLcl;
         ToCustomReportSelection.Validate("Report ID", 1306);
         ToCustomReportSelection.Validate("Custom Report Layout Code", '1306-000002');
         ToCustomReportSelection.Validate("Send To Email", InvoiceEmail);
