@@ -111,6 +111,8 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
                 //Update Bill To Customer Phone No.
                 if BillToCustomerRecLcl.get(SalesHeaderRecLcl."Bill-to Customer No.") then
                     addressBuffer."Phone No." := BillToCustomerRecLcl."Phone No.";
+
+                isHandled := true;
             end;
         end else begin
 
@@ -126,6 +128,8 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
                             //Update Bill To Customer Phone No.
                             if BillToCustomerRecLcl.get(SalesHeaderRecLcl."Bill-to Customer No.") then
                                 addressBuffer."Phone No." := BillToCustomerRecLcl."Phone No.";
+
+                            isHandled := true;
                         end;
                     end;
                 end;
