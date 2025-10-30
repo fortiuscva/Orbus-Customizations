@@ -956,7 +956,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
                 PrinterName := LocationRec."ORB Pick Report Printer";
         end;
 
-        if not GuiAllowed and (PrinterName <> '') then
+        if OrbusSingleInstanceCUGbl.GetAutoPickPrint() and (PrinterName <> '') then
             Report.Print(ReportID, PrinterName, RecVarToPrint)
         else
             Report.Run(TempReportSelectionWarehouse."Report ID", ShowRequestPage, false, RecVarToPrint);
