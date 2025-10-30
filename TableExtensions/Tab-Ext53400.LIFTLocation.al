@@ -6,8 +6,7 @@ tableextension 53400 "ORB LIFT Location" extends Location
         {
             Caption = 'Pick Report Printer';
             DataClassification = CustomerContent;
-            TableRelation = "Printer Selection"."Printer Name";
-            ValidateTableRelation = false;
+            TableRelation = Printer.ID;
         }
         field(53400; "ORB Location Id"; Integer)
         {
