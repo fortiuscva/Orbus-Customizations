@@ -75,7 +75,7 @@ codeunit 52614 "ORB Create Inventory Pick"
         if not WhseRequest.IsEmpty() then begin
             Commit();
             Clear(CreateInvtPutawayPickMvmt);
-            CreateInvtPutawayPickMvmt.InitializeRequest(false, true, false, false, false);
+            CreateInvtPutawayPickMvmt.InitializeRequest(false, true, false, true, false);
             CreateInvtPutawayPickMvmt.SuppressMessages(SuppressMessagesGbl);
             CreateInvtPutawayPickMvmt.SetTableView(WhseRequest);
             CreateInvtPutawayPickMvmt.UseRequestPage(UseRequestPageGbl);
