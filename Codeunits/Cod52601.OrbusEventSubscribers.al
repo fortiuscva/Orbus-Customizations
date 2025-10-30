@@ -921,6 +921,49 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         BinContent.Fixed := false;
     end;
 
+    [EventSubscriber(ObjectType::Table, Database::"Report Selection Warehouse", 'OnBeforePrintDocument', '', true, true)]
+    local procedure HandlePrintDocument(
+     TempReportSelectionWarehouse: Record "Report Selection Warehouse" temporary;
+     ShowRequestPage: Boolean;
+     RecVarToPrint: Variant;
+     var IsHandled: Boolean)
+    var
+        WhseActHeader: Record "Warehouse Activity Header";
+        LocationRec: Record Location;
+        PrinterSelection: Record "Printer Selection";
+        PrinterName: Text[250];
+        ReportID: Integer;
+        RecRef: RecordRef;
+    begin
+        ReportID := TempReportSelectionWarehouse."Report ID";
+
+        if ReportID <> Report::"Picking List" then
+            exit;
+
+        if RecVarToPrint.IsRecord then begin
+            WhseActHeader := RecVarToPrint;
+        end else if RecVarToPrint.IsRecordRef then begin
+            RecRef := RecVarToPrint;
+            if RecRef.Number = DATABASE::"Warehouse Activity Header" then
+                RecRef.GetTable(WhseActHeader)
+            else
+                exit;
+        end else
+            exit;
+
+        if WhseActHeader.Findfirst() then begin
+            if LocationRec.Get(WhseActHeader."Location Code") and (LocationRec."ORB Pick Report Printer" <> '') then
+                PrinterName := LocationRec."ORB Pick Report Printer";
+        end;
+
+        if OrbusSingleInstanceCUGbl.GetAutoPickPrint() and (PrinterName <> '') then
+            Report.Print(ReportID, PrinterName, RecVarToPrint)
+        else
+            Report.Run(TempReportSelectionWarehouse."Report ID", ShowRequestPage, false, RecVarToPrint);
+
+        IsHandled := true;
+    end;
+
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
         SOPla: page "Sales Order Planning";
