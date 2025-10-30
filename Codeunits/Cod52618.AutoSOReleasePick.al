@@ -16,37 +16,37 @@ codeunit 52618 "ORB Auto SO Release & Pick"
         IsValid: Boolean;
     begin
 
-        // SalesHeaderRecLcl.Reset();
-        // SalesHeaderRecLcl.SetFilter("Order Status", '<%1', SalesHeaderRecLcl."Order Status"::"ReadyforPick/Release");
-        // SalesHeaderRecLcl.SetFilter("Shipment Date", '<=%1', Today());
-        // if SalesHeaderRecLcl.FindSet() then
-        //     repeat
-        //         SalesLine.Reset();
-        //         SalesLine.SetRange("Document Type", SalesHeaderRecLcl."Document Type");
-        //         SalesLine.SetRange("Document No.", SalesHeaderRecLcl."No.");
-        //         SalesLine.SetRange(Type, SalesLine.Type::Item);
+        SalesHeaderRecLcl.Reset();
+        SalesHeaderRecLcl.SetFilter("Order Status", '<%1', SalesHeaderRecLcl."Order Status"::"ReadyforPick/Release");
+        SalesHeaderRecLcl.SetFilter("Shipment Date", '<=%1', Today());
+        if SalesHeaderRecLcl.FindSet() then
+            repeat
+                SalesLine.Reset();
+                SalesLine.SetRange("Document Type", SalesHeaderRecLcl."Document Type");
+                SalesLine.SetRange("Document No.", SalesHeaderRecLcl."No.");
+                SalesLine.SetRange(Type, SalesLine.Type::Item);
 
-        //         IsValid := true;
+                IsValid := true;
 
-        //         if SalesLine.FindSet() then
-        //             repeat
-        //                 if ItemRec.Get(SalesLine."No.") then begin
-        //                     if ItemRec."Replenishment System" <> ItemRec."Replenishment System"::Purchase then
-        //                         IsValid := false;
-        //                 end else
-        //                     IsValid := false;
+                if SalesLine.FindSet() then
+                    repeat
+                        if ItemRec.Get(SalesLine."No.") then begin
+                            if ItemRec."Replenishment System" <> ItemRec."Replenishment System"::Purchase then
+                                IsValid := false;
+                        end else
+                            IsValid := false;
 
-        //                 if SalesLine."Shortcut Dimension 2 Code" <> '01' then
-        //                     IsValid := false;
+                        if SalesLine."Shortcut Dimension 2 Code" <> '01' then
+                            IsValid := false;
 
-        //             until (SalesLine.Next() = 0) or (not IsValid);
+                    until (SalesLine.Next() = 0) or (not IsValid);
 
-        //         if IsValid then begin
-        //             SalesHeaderRecLcl."Order Status" := SalesHeaderRecLcl."Order Status"::"ReadyforPick/Release";
-        //             SalesHeaderRecLcl.Modify();
-        //         end;
+                if IsValid then begin
+                    SalesHeaderRecLcl."Order Status" := SalesHeaderRecLcl."Order Status"::"ReadyforPick/Release";
+                    SalesHeaderRecLcl.Modify();
+                end;
 
-        //     until SalesHeaderRecLcl.Next() = 0;
+            until SalesHeaderRecLcl.Next() = 0;
 
 
 
