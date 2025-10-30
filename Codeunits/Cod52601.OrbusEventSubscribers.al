@@ -935,38 +935,33 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         ReportID: Integer;
         RecRef: RecordRef;
     begin
-        if GuiAllowed() then begin
-            ReportID := TempReportSelectionWarehouse."Report ID";
+        ReportID := TempReportSelectionWarehouse."Report ID";
 
-            if ReportID <> Report::"Pick Instruction" then
+        if ReportID <> Report::"Pick Instruction" then
+            exit;
+
+        if RecVarToPrint.IsRecord then begin
+            WhseActHeader := RecVarToPrint;
+        end else if RecVarToPrint.IsRecordRef then begin
+            RecRef := RecVarToPrint;
+            if RecRef.Number = DATABASE::"Warehouse Activity Header" then
+                RecRef.GetTable(WhseActHeader)
+            else
                 exit;
+        end else
+            exit;
 
-            if RecVarToPrint.IsRecord then begin
-                WhseActHeader := RecVarToPrint;
-            end else if RecVarToPrint.IsRecordRef then begin
-                RecRef := RecVarToPrint;
-                if RecRef.Number = DATABASE::"Warehouse Activity Header" then
-                    RecRef.GetTable(WhseActHeader)
-                else
-                    exit;
-            end else
-                exit;
-
-            if not WhseActHeader.IsEmpty then begin
-                if LocationRec.Get(WhseActHeader."Location Code") and (LocationRec."ORB Pick Report Printer" <> '') then
-                    PrinterName := LocationRec."ORB Pick Report Printer";
-            end;
-
-            if (PrinterName = '') and PrinterSelection.Get(UserId(), ReportID) then
-                PrinterName := PrinterSelection."Printer Name";
-
-            if PrinterName = '' then
-                exit;
-
-            Report.Print(ReportID, PrinterName, RecVarToPrint);
-
-            IsHandled := true;
+        if not WhseActHeader.IsEmpty then begin
+            if LocationRec.Get(WhseActHeader."Location Code") and (LocationRec."ORB Pick Report Printer" <> '') then
+                PrinterName := LocationRec."ORB Pick Report Printer";
         end;
+
+        if not GuiAllowed and (PrinterName <> '') then
+            Report.Print(ReportID, PrinterName, RecVarToPrint)
+        else
+            Report.Run(TempReportSelectionWarehouse."Report ID", ShowRequestPage, false, RecVarToPrint);
+
+        IsHandled := true;
     end;
 
     var
