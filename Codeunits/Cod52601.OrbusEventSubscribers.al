@@ -937,7 +937,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
     begin
         ReportID := TempReportSelectionWarehouse."Report ID";
 
-        if ReportID <> Report::"Pick Instruction" then
+        if ReportID <> Report::"Picking List" then
             exit;
 
         if RecVarToPrint.IsRecord then begin
