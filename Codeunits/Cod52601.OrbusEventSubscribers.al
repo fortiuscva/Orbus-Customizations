@@ -956,9 +956,20 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
                 PrinterName := LocationRec."ORB Pick Report Printer";
         end;
 
-        if OrbusSingleInstanceCUGbl.GetAutoPickPrint() and (PrinterName <> '') then
-            Report.Print(ReportID, PrinterName, RecVarToPrint)
-        else
+        if OrbusSingleInstanceCUGbl.GetAutoPickPrint() and (PrinterName <> '') then begin
+            if not PrinterSelection.Get(UserId(), ReportId) then begin
+                PrinterSelection.Init();
+                PrinterSelection."User ID" := UserId();
+                PrinterSelection."Report ID" := ReportId;
+                PrinterSelection."Printer Name" := PrinterName;
+                PrinterSelection.Insert(true);
+            end else begin
+                PrinterSelection."Printer Name" := PrinterName;
+                PrinterSelection.Modify(true);
+            end;
+
+            Report.Run(ReportID, false, true, RecVarToPrint);
+        end else
             Report.Run(TempReportSelectionWarehouse."Report ID", ShowRequestPage, false, RecVarToPrint);
 
         IsHandled := true;
