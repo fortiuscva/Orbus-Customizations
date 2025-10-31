@@ -6,6 +6,7 @@ tableextension 53404 "ORB LIFT Ship-to Address" extends "Ship-to Address"
         {
             Caption = 'Active Status';
             DataClassification = ToBeClassified;
+            Editable = false;
         }
     }
 }

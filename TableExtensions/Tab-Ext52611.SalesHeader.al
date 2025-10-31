@@ -252,13 +252,16 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         modify("Ship-to Code")
         {
             trigger OnAfterValidate()
+            var
+                ShipToRec: Record "Ship-to Address";
             begin
                 if not OrbusSetup.Get() or not OrbusSetup."Enable Auto Address Validation" then
                     exit;
                 if not ModifyShipToAddressFields() then
                     Error('Reopen the Sales Order to modify Ship-to Code');
 
-
+                if ShipToRec.Get("Sell-to Customer No.", "Ship-to Code") then
+                    ShipToRec.TestField("ORB Active Status", ShipToRec."ORB Active Status"::Active);
             end;
         }
         modify("Ship-to Name")
@@ -351,6 +354,18 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
                 if not ModifyShipToAddressFields() then
                     Error('Reopen the Sales Order to modify Ship-to Contact');
             end;
+        }
+        modify("Sell-to Contact")
+        {
+
+            trigger OnAfterValidate()
+            var
+                ContactRec: Record Contact;
+            begin
+                if ContactRec.Get("Sell-to Contact No.") then
+                    ContactRec.TestField("ORB Active Status", ContactRec."ORB Active Status"::Active);
+            end;
+
         }
     }
 

@@ -49,6 +49,10 @@ codeunit 53405 "ORB LIFT Contact Mgmt"
         Contact.Validate("First Name", LIFTContact."First Name");
         Contact.Validate(Surname, LIFTContact."Last Name");
         Contact.Validate(Type, LIFTContact.Type);
+
+        if LIFTContact.Active = 'I' then
+            Contact."ORB Active Status" := Contact."ORB Active Status"::InActive;
+
         // Contact.Validate("Company Name", LIFTContact."Customer Name");
         // Contact.Validate("Contact Business Relation", Contact."Contact Business Relation"::Customer);
         if LIFTContact.Type = LIFTContact.Type::Person then begin
