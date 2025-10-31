@@ -353,19 +353,33 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
                     exit;
                 if not ModifyShipToAddressFields() then
                     Error('Reopen the Sales Order to modify Ship-to Contact');
+
             end;
         }
-        modify("Sell-to Contact")
+        modify("Sell-to Contact No.")
         {
 
             trigger OnAfterValidate()
-            var
-                ContactRec: Record Contact;
             begin
-                if ContactRec.Get("Sell-to Contact No.") then
-                    ContactRec.TestField("ORB Active Status", ContactRec."ORB Active Status"::Active);
+                CheckContactActiveStatus("Sell-to Contact No.");
             end;
 
+        }
+        modify("Sell-To Contact No. (Custom)")
+        {
+
+            trigger OnAfterValidate()
+            begin
+                CheckContactActiveStatus("Sell-To Contact No. (Custom)");
+            end;
+
+        }
+        modify("Bill-to Contact No.")
+        {
+            trigger OnAfterValidate()
+            begin
+                CheckContactActiveStatus("Bill-to Contact No.");
+            end;
         }
     }
 
@@ -446,6 +460,13 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             exit(false);
     end;
 
+    local procedure CheckContactActiveStatus(ContactNoPar: Code[20])
+    var
+        ContactRec: Record Contact;
+    begin
+        if ContactRec.Get(ContactNoPar) then
+            ContactRec.TestField("ORB Active Status", ContactRec."ORB Active Status"::Active);
+    end;
 
 
 
