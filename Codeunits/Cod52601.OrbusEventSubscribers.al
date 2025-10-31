@@ -951,10 +951,8 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         end else
             exit;
 
-        if WhseActHeader.Findfirst() then begin
-            if LocationRec.Get(WhseActHeader."Location Code") and (LocationRec."ORB Pick Report Printer" <> '') then
-                PrinterName := LocationRec."ORB Pick Report Printer";
-        end;
+        if LocationRec.Get(WhseActHeader."Location Code") and (LocationRec."ORB Pick Report Printer" <> '') then
+            PrinterName := LocationRec."ORB Pick Report Printer";
 
         if OrbusSingleInstanceCUGbl.GetAutoPickPrint() and (PrinterName <> '') then begin
             if not PrinterSelection.Get(UserId(), ReportId) then begin
