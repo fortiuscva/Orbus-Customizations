@@ -14,6 +14,7 @@ tableextension 52626 "ORB Contact" extends Contact
         {
             Caption = 'Active Status';
             DataClassification = ToBeClassified;
+            Editable = false;
         }
     }
     local procedure CheckDuplicateEmailContact()
