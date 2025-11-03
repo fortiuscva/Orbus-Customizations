@@ -300,6 +300,8 @@ page 52608 "ORB Customer API"
         end;
         if not CustomReportSelectionPar2."Use for Email Attachment" then begin
             CustomReportSelectionPar2.Validate("Use for Email Attachment", true);
+            CustomReportSelectionPar2.Validate("Custom Report Layout Code", '1306-000002');
+            CustomReportSelectionPar2.Validate("Email Body Layout Code", '1306-000002');
             IsModified := true;
         end;
         if not CustomReportSelectionPar2."Use for Email Body" then begin
