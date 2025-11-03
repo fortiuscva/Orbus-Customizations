@@ -88,6 +88,15 @@ page 52644 "ORB LIFT ERP Setup"
                     }
                 }
             }
+            group("Price Integration")
+            {
+                Caption = 'Price Integration';
+                field("Price Last Sync DateTime"; Rec."Price Last Sync DateTime")
+                {
+                    Caption = 'Sales Price Last Sync DateTime';
+                    ToolTip = 'Specifies the value of the Sales Price Last Sync DateTime field.', Comment = '%';
+                }
+            }
 
         }
     }
