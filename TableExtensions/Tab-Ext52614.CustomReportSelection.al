@@ -4,10 +4,12 @@ tableextension 52614 "ORB Custom Report Selection" extends "Custom Report Select
     var
         CannotChangesDocumentLayoutLbl: Label 'You cannot change when Send email is enabled';
     begin
-        if rec."Source Type" = Database::Customer then begin
-            if CustomerRecGbl.get(rec."Source No.") then
-                if CustomerRecGbl."ORB Auto Send Email" then
-                    Error(CannotChangesDocumentLayoutLbl);
+        if GuiAllowed then begin
+            if rec."Source Type" = Database::Customer then begin
+                if CustomerRecGbl.get(rec."Source No.") then
+                    if CustomerRecGbl."ORB Auto Send Email" then
+                        Error(CannotChangesDocumentLayoutLbl);
+            end;
         end;
     end;
 
@@ -25,4 +27,5 @@ tableextension 52614 "ORB Custom Report Selection" extends "Custom Report Select
 
     var
         CustomerRecGbl: Record Customer;
+        ORBSingleInstance: Codeunit "ORB Orbus Single Instance";
 }

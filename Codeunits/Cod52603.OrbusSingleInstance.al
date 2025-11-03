@@ -300,6 +300,16 @@ codeunit 52603 "ORB Orbus Single Instance"
         exit(ExistAfterFilter);
     end;
 
+    procedure SetAutoPickPrint(AutoPickPrintpar: Boolean)
+    begin
+        AutoPickPrint := AutoPickPrintpar;
+    end;
+
+    procedure GetAutoPickPrint(): Boolean
+    begin
+        exit(AutoPickPrint);
+    end;
+
     var
         ShowDialogLookupProfileVarGbl: Boolean;
         ShowDialogSendEmailToCustVarGbl: Boolean;
@@ -335,5 +345,6 @@ codeunit 52603 "ORB Orbus Single Instance"
         ShipToContactGbl: Text[100];
         ExistBeforeFilter: Boolean;
         ExistAfterFilter: Boolean;
+        AutoPickPrint: Boolean;
 
 }

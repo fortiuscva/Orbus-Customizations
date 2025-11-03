@@ -55,6 +55,23 @@ table 52617 "ORB LIFT ERP Setup"
             Caption = 'Sales Price Last Sync DateTime';
             DataClassification = CustomerContent;
         }
+        field(20; "SO Status API - QA"; Text[1024])
+        {
+            Caption = 'SO Status API - QA';
+        }
+        field(21; "SO Status API - Production"; Text[1024])
+        {
+            Caption = 'SO Status API - Production';
+        }
+        field(22; "API Username"; Text[1024])
+        {
+            Caption = 'API Username';
+        }
+        field(23; "API Password"; Text[1024])
+        {
+            Caption = 'API Password';
+            ExtendedDatatype = Masked;
+        }
     }
     keys
     {

@@ -69,6 +69,10 @@ page 53418 "ORB LIFT Ship-To Address API"
                 {
                     Caption = 'E-Mail';
                 }
+                field(active; Rec.Active)
+                {
+                    ApplicationArea = all;
+                }
             }
         }
     }

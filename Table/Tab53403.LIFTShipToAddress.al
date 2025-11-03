@@ -81,6 +81,11 @@ table 53403 "ORB LIFT Ship-To Address"
             ExtendedDatatype = EMail;
             DataClassification = CustomerContent;
         }
+        field(105; Active; Text[1])
+        {
+            Caption = 'Active';
+            DataClassification = CustomerContent;
+        }
     }
     keys
     {
