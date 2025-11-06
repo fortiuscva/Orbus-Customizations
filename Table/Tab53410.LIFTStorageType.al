@@ -1,6 +1,7 @@
 table 53410 "ORB LIFT Storage Type"
 {
-    Caption = 'ORB LIFT Storage Type';
+    Caption = 'LIFT Storage Types';
+    LookupPageId = "ORB LIFT Storage Type List";
     DataClassification = CustomerContent;
 
     fields
@@ -13,7 +14,7 @@ table 53410 "ORB LIFT Storage Type"
         {
             Caption = 'Name';
         }
-        field(3; "Type"; Text[80])
+        field(3; Type; Text[80])
         {
             Caption = 'Type';
         }
@@ -39,6 +40,16 @@ table 53410 "ORB LIFT Storage Type"
         key(PK; "Storage Type ID")
         {
             Clustered = true;
+        }
+        key(Key2; SystemModifiedAt)
+        {
+        }
+    }
+    fieldgroups
+    {
+        fieldgroup(LIFTStorageType; "Storage Type ID", Name)
+        {
+
         }
     }
 }

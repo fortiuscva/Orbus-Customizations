@@ -27,8 +27,13 @@ pageextension 52651 "ORB Item Card" extends "Item Card"
             }
             field("ORB Stroage Type Id"; Rec."ORB Stroage Type Id")
             {
-                Caption = 'Stroage Type Id';
+                Caption = 'Storage Type Id';
                 ApplicationArea = All;
+            }
+            field("ORB Storage Type Name"; Rec."ORB Storage Type Name")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Storage Type Name field.', Comment = '%';
             }
         }
     }
