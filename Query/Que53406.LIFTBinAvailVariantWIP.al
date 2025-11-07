@@ -32,15 +32,6 @@ query 53406 "ORB LIFT BinAvail Variant WIP"
                     DataItemLink = "No." = BinContent."Item No.";
                     column(ItemMaterial_Id; "ORB Material Id") { }
 
-                    dataitem(Location; Location)
-                    {
-                        DataItemLink = Code = BinContent."Location Code";
-                        DataItemTableFilter = "ORB Location Id" = filter(<> 0);
-                        column(LocationCode; Code) { }
-                        column(Location_Id; "ORB Location Id")
-                        { }
-                    }
-
                 }
             }
 
