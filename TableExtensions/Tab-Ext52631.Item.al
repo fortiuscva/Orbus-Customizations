@@ -14,12 +14,17 @@ tableextension 52631 "ORB Item" extends Item
         }
         field(53400; "ORB Material Id"; Integer)
         {
-            Caption = 'Material Id';
+            Caption = 'Material ID';
+            TableRelation = "ORB LIFT Material";
             DataClassification = ToBeClassified;
+            trigger OnValidate()
+            begin
+                CalcFields("ORB Material Name");
+            end;
         }
         field(53401; "ORB Stroage Type Id"; Integer)
         {
-            Caption = 'Storage Type Id';
+            Caption = 'Storage Type ID';
             TableRelation = "ORB LIFT Storage Type";
             DataClassification = ToBeClassified;
             trigger OnValidate()
@@ -32,6 +37,13 @@ tableextension 52631 "ORB Item" extends Item
             Caption = 'Storage Type Name';
             FieldClass = FlowField;
             CalcFormula = lookup("ORB LIFT Storage Type".Name where("Storage Type Id" = field("ORB Stroage Type Id")));
+            Editable = false;
+        }
+        field(53403; "ORB Material Name"; Text[100])
+        {
+            Caption = 'Material Name';
+            FieldClass = FlowField;
+            CalcFormula = lookup("ORB LIFT Material"."Material Name" where("Material Id" = field("ORB Material Id")));
             Editable = false;
         }
     }
