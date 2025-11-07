@@ -25,6 +25,11 @@ pageextension 52651 "ORB Item Card" extends "Item Card"
                 Caption = 'Material Id';
                 ApplicationArea = All;
             }
+            field("ORB Material Name"; Rec."ORB Material Name")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Material Name field.', Comment = '%';
+            }
             field("ORB Stroage Type Id"; Rec."ORB Stroage Type Id")
             {
                 Caption = 'Storage Type Id';
