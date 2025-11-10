@@ -5,8 +5,8 @@ query 53405 "ORB LIFT BinAvail Non-WIP"
     APIPublisher = 'Orbus';
     APIGroup = 'Orbus';
     APIVersion = 'v2.0';
-    EntityName = 'LIFTBinAvailNonWIP';
-    EntitySetName = 'LIFTBinAvailNonWIP';
+    EntityName = 'LiftBinAvailNonWip';
+    EntitySetName = 'LiftBinAvailNonWips';
 
     elements
     {
@@ -24,15 +24,13 @@ query 53405 "ORB LIFT BinAvail Non-WIP"
             {
                 DataItemLink = "No." = BinContent."Item No.";
                 column(Material_Id; "ORB Material Id") { }
-                column(ORB_Stroage_Type_Id; "ORB Stroage Type Id") { }
+                column(Storage_Type_Id; "ORB Stroage Type Id") { }
 
                 dataitem(Location; Location)
                 {
                     DataItemLink = Code = BinContent."Location Code";
                     DataItemTableFilter = "ORB Location Id" = filter(<> 0);
-                    column(LocationCode; Code) { }
-                    column(Location_Id; "ORB Location Id")
-                    { }
+                    column(Location_Id; "ORB Location Id") { }
                 }
             }
         }
