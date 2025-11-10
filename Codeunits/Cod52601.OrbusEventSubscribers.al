@@ -1069,6 +1069,12 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             ProdOrderRoutingLine."ORB Fast Solutions" := WorkCenterGroupRecLcl."ORB Fast Solutions";
     end;
 
+    [EventSubscriber(ObjectType::Page, Page::"Sales Order Planning", OnBeforeCreateProdOrder, '', false, false)]
+    local procedure "Sales Order Planning_OnBeforeCreateProdOrder"(var SalesPlanningLine: Record "Sales Planning Line"; var NewStatus: Enum "Production Order Status"; var NewOrderType: Option; var ShowCreateOrderForm: Boolean; var IsHandled: Boolean)
+    begin
+        NewOrderType := 1;
+    end;
+
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
         OrbusFunctionsCUGbl: Codeunit "ORB Functions";
