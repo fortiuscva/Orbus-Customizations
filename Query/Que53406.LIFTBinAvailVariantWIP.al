@@ -5,8 +5,8 @@ query 53406 "ORB LIFT BinAvail Variant WIP"
     APIPublisher = 'Orbus';
     APIGroup = 'Orbus';
     APIVersion = 'v2.0';
-    EntityName = 'LIFTBinAvailVariantWIP';
-    EntitySetName = 'LIFTBinAvailVariantWIP';
+    EntityName = 'BinAvailVariantWip';
+    EntitySetName = 'BinAvailVariantWips';
 
     elements
     {
@@ -17,13 +17,19 @@ query 53406 "ORB LIFT BinAvail Variant WIP"
                 "Bin Code" = filter('LIFT*');
 
             column(Item_No; "Item No.") { }
+            column(Variant_Code; "Variant Code") { }
             column(Location_Code; "Location Code") { }
             column(Quantity; Quantity) { Method = Sum; }
 
             dataitem(Item_Variant; "Item Variant")
             {
-                DataItemLink = Code = BinContent."Variant Code", "Item No." = BinContent."Item No.";
-                DataItemTableFilter = "ORB Material Id" = filter(<> 0), "ORB Storage Type Id" = filter(<> 0);
+                DataItemLink =
+                    Code = BinContent."Variant Code",
+                    "Item No." = BinContent."Item No.";
+                DataItemTableFilter =
+                    "ORB Material Id" = filter(<> 0),
+                    "ORB Storage Type Id" = filter(<> 0);
+
                 column(Material_Id; "ORB Material Id") { }
                 column(Storage_Type_Id; "ORB Storage Type Id") { }
 
@@ -34,7 +40,6 @@ query 53406 "ORB LIFT BinAvail Variant WIP"
 
                 }
             }
-
         }
     }
 }
