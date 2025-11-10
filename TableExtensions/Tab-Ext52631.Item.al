@@ -46,6 +46,18 @@ tableextension 52631 "ORB Item" extends Item
             CalcFormula = lookup("ORB LIFT Material"."Material Name" where("Material Id" = field("ORB Material Id")));
             Editable = false;
         }
+        field(53404; "ORB Do Not Integrate"; Boolean)
+        {
+            Caption = 'Do Not Integrate';
+            DataClassification = CustomerContent;
+        }
+        field(53405; "ORB Has Active Variants"; Boolean)
+        {
+            Caption = 'Has Active Variants';
+            FieldClass = FlowField;
+            CalcFormula = exist("Item Variant" where("Item No." = field("No."), Blocked = const(false)));
+            Editable = false;
+        }
     }
 
 }

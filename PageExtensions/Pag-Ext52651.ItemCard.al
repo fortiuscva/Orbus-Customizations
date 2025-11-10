@@ -40,6 +40,16 @@ pageextension 52651 "ORB Item Card" extends "Item Card"
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the Storage Type Name field.', Comment = '%';
             }
+            field("ORB Do Not Integrate"; Rec."ORB Do Not Integrate")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Do Not Integrate field.', Comment = '%';
+            }
+            field("ORB Has Active Variants"; Rec."ORB Has Active Variants")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Has Active Variants field.', Comment = '%';
+            }
         }
     }
 }
