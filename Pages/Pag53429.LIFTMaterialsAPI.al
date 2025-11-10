@@ -10,7 +10,7 @@ page 53429 "ORB LIFT Materials API"
     EntitySetName = 'LIFTMaterialsAPI';
     PageType = API;
     SourceTable = Item;
-    SourceTableView = where("No." = filter('GVNL-ACV-FLATMX-98'));
+    // SourceTableView = where("No." = filter('GVNL-ACV-FLATMX-98'));
     layout
     {
         area(Content)
