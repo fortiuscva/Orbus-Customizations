@@ -9,23 +9,28 @@ query 53408 "ORB LIFT Item Variants"
 
     elements
     {
-        dataitem(itemVariant; "Item Variant")
+        dataitem(item; "Item")
         {
-            column("code"; "Code") { }
-            column(itemNo; "Item No.") { }
-            column(itemVariantDescription; Description) { }
-            column(itemVariantMaterialId; "ORB Material Id") { }
-            column(itemVariantStorageTypeId; "ORB Storage Type Id") { }
-            dataitem(Item; Item)
+            DataItemTableFilter = Blocked = const(false),
+                                  "ORB Has Active Variants" = const(true),
+                                  "ORB Stroage Type Id" = const(35884),
+                                  "ORB Do Not Integrate" = const(true);
+            column("no"; "No.") { }
+            column(shortDescription; "Short Description") { }
+            column(itemDescription; Description) { }
+            column(longDescription; "Long Description") { }
+            column(unitCost; "Unit Cost") { }
+            column(itemMaterialId; "ORB Material Id") { }
+            column(itemStorageTypeId; "ORB Stroage Type Id") { }
+            dataitem(itemVariant; "Item Variant")
             {
-                DataItemLink = "No." = ItemVariant."Item No.";
-                column(no; "No.") { }
-                column(shortDescription; "Short Description") { }
-                column(itemDescription; Description) { }
-                column(longDescription; "Long Description") { }
-                column(unitCost; "Unit Cost") { }
-                column(itemMaterialId; "ORB Material Id") { }
-                column(itemStorageTypeId; "ORB Stroage Type Id") { }
+                DataItemLink = "Item No." = Item."No.";
+                DataItemTableFilter = Blocked = const(false);
+                column(itemNo; "Item No.") { }
+                column(code; Code) { }
+                column(itemVariantDescription; Description) { }
+                column(itemVariantMaterialId; "ORB Material Id") { }
+                column(itemVariantStorageTypeId; "ORB Storage Type Id") { }
             }
         }
     }
