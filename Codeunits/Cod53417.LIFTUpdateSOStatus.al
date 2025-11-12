@@ -11,6 +11,7 @@ codeunit 53417 "ORB LIFT Update SO Status"
         LIFTERPSetupRecLcl: Record "ORB LIFT ERP Setup";
         EnvironmentInfoCU: Codeunit "Environment Information";
         SalesHeaderRecLcl: Record "Sales Header";
+        SalesInvHdrRecLcl: Record "Sales Invoice Header";
     begin
         LIFTERPSetupRecLcl.Get();
 
@@ -34,12 +35,16 @@ codeunit 53417 "ORB LIFT Update SO Status"
             repeat
                 if not SalesHeaderRecLcl.Get(DeletedSalesOrdersRecLcl."Document Type", DeletedSalesOrdersRecLcl."Document No.") then begin
 
-                    if SendSOStatusUpdate(DeletedSalesOrdersRecLcl, EnvironmentInfoCU.IsSandbox(),
-                        LIFTERPSetupRecLcl."SO Status API - QA", LIFTERPSetupRecLcl."SO Status API - Production",
-                        LIFTERPSetupRecLcl."API Username", LIFTERPSetupRecLcl."API Password") then begin
-                        DeletedSalesOrdersRecLcl."Invoice Send to LIFT" := true;
+                    SalesInvHdrRecLcl.Reset();
+                    SalesInvHdrRecLcl.SetRange("Order No.", DeletedSalesOrdersRecLcl."Document No.");
+                    if SalesInvHdrRecLcl.FindFirst() then begin
+                        if SendSOStatusUpdate(DeletedSalesOrdersRecLcl, EnvironmentInfoCU.IsSandbox(),
+                            LIFTERPSetupRecLcl."SO Status API - QA", LIFTERPSetupRecLcl."SO Status API - Production",
+                            LIFTERPSetupRecLcl."API Username", LIFTERPSetupRecLcl."API Password") then begin
+                            DeletedSalesOrdersRecLcl."Invoice Send to LIFT" := true;
+                        end;
+                        DeletedSalesOrdersRecLcl.Modify();
                     end;
-                    DeletedSalesOrdersRecLcl.Modify();
                 end;
             until DeletedSalesOrdersRecLcl.Next() = 0;
     end;
