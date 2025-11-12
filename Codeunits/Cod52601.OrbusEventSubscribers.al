@@ -988,8 +988,10 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             exit;
 
         OrbusSetup.get();
-        if not OrbusSetup."Enable Auto Print Pick" then
+        if not OrbusSetup."Enable Auto Print Pick" then begin
+            IsHandled := true;
             exit;
+        end;
 
         if RecVarToPrint.IsRecord then begin
             WhseActHeader := RecVarToPrint;
