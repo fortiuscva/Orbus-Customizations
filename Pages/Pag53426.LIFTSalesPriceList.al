@@ -32,6 +32,10 @@ page 53426 "ORB LIFT Sales Price List"
                 {
                     ToolTip = 'Specifies the value of the Minimum Quantity field.', Comment = '%';
                 }
+                field("Maximum Quantity"; Rec."ORB LIFT Maximum Quantity")
+                {
+                    ToolTip = 'Specifies the value of the Maximum Quantity field.', Comment = '%';
+                }
                 field("Unit Price"; Rec."Unit Price")
                 {
                     ToolTip = 'Specifies the value of the Unit Price field.', Comment = '%';

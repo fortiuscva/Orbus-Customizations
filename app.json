@@ -2,7 +2,7 @@
   "id": "30815d47-8f7f-430a-b516-aaf2e1cfb1d4",
   "name": "Orbus Customizations",
   "publisher": "Adcirrus ERP",
-  "version": "23.0.0.436",
+  "version": "23.0.0.437",
   "brief": "",
   "description": "",
   "privacyStatement": "",
@@ -82,6 +82,12 @@
       "name": "BC_Release&Pick",
       "version": "1.0.0.1",
       "publisher": "Impact Networking"
+    },
+    {
+      "id": "f1731958-49e1-425c-a5a5-11fd8f39b59e",
+      "name": "Orbus_LongDescription",
+      "version": "1.0.0.11",
+      "publisher": "KP"
     }
   ],
   "screenshots": [],

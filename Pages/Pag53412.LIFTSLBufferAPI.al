@@ -85,6 +85,10 @@ page 53412 "ORB LIFT SL Buffer API"
                 {
                     Caption = 'Variant Code';
                 }
+                field(orbLIFTStepNo; Rec."ORB LIFT Step No.")
+                {
+                    Caption = 'LIFT Step No.';
+                }
                 field(unitOfMeasureCode; Rec."Unit of Measure Code")
                 {
                     Caption = 'Unit of Measure Code';

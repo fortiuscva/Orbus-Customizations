@@ -61,9 +61,6 @@ codeunit 53416 "ORB LIFT Events & Subscribers"
     //     IsHandled := true;
     // end;
 
-
-
-
     var
         UOMMgt: Codeunit "Unit of Measure Management";
 

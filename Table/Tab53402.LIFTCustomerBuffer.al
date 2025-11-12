@@ -83,6 +83,12 @@ table 53402 "ORB LIFT Customer Buffer"
             TableRelation = "Salesperson/Purchaser" where(Blocked = const(false));
             DataClassification = CustomerContent;
         }
+        field(34; "Customer Disc. Group"; Code[20])
+        {
+            Caption = 'Customer Disc. Group';
+            TableRelation = "Customer Discount Group";
+            DataClassification = CustomerContent;
+        }
         field(35; "Country/Region Code"; Code[10])
         {
             Caption = 'Country/Region Code';
@@ -144,6 +150,16 @@ table 53402 "ORB LIFT Customer Buffer"
                 UpdateCurrencyCode();
             end;
         }
+        field(8002; "Payment Terms Id"; Guid)
+        {
+            Caption = 'Payment Terms Id';
+            TableRelation = "Payment Terms".SystemId;
+
+            trigger OnValidate()
+            begin
+                UpdatePaymentTermsCode();
+            end;
+        }
         field(9005; "Contact ID"; Guid)
         {
             Caption = 'Contact ID';
@@ -153,6 +169,16 @@ table 53402 "ORB LIFT Customer Buffer"
         {
             Caption = 'TermsStatus';
             DataClassification = CustomerContent;
+        }
+        field(50125; "UPS Account Number"; Code[20])
+        {
+            Caption = 'UPS Account Number';
+            DataClassification = CustomerContent;
+        }
+        field(50126; "FedEx Account Number"; Code[20])
+        {
+            Caption = 'FedEx Account Number';
+            DataClassification = ToBeClassified;
         }
         field(50127; "Magento ID"; Code[20])
         {
@@ -243,6 +269,11 @@ table 53402 "ORB LIFT Customer Buffer"
             Caption = 'CustomerType';
             DataClassification = CustomerContent;
         }
+        field(60313; TPSADescription; Text[100])
+        {
+            Caption = 'Third Party Shipping Account Description';
+            DataClassification = CustomerContent;
+        }
     }
     keys
     {
@@ -274,5 +305,16 @@ table 53402 "ORB LIFT Customer Buffer"
             Currency.GetBySystemId("Currency Id");
 
         Validate("Currency Code", Currency.Code);
+    end;
+
+    local procedure UpdatePaymentTermsCode()
+    var
+        PaymentTerms: Record "Payment Terms";
+    begin
+        PaymentTerms.SetLoadFields(Code);
+        if not IsNullGuid("Payment Terms Id") then
+            PaymentTerms.GetBySystemId("Payment Terms Id");
+
+        Validate("Payment Terms Code", PaymentTerms.Code);
     end;
 }
