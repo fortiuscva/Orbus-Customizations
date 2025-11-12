@@ -1,0 +1,24 @@
+report 53408 "LIFT SO Order Status Update"
+{
+    Caption = 'LIFT SO Order Status Update';
+    ProcessingOnly = true;
+
+    dataset
+    {
+        dataitem(SalesHeader; "Sales Header")
+        {
+            RequestFilterFields = "Document Type", "No.";
+
+            trigger OnAfterGetRecord()
+            begin
+                if not Codeunit.Run(Codeunit::"ORB LIFT Auto SO Release&Pick", SalesHeader) then;
+            end;
+
+            trigger OnPreDataItem()
+            begin
+                SetFilter("Order Status", '<%1', SalesHeader."Order Status"::"ReadyforPick/Release");
+                SetFilter("Shipment Date", '>=%1', Today());
+            end;
+        }
+    }
+}
