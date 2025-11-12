@@ -18,6 +18,10 @@ page 52656 "ORB Orbus Setup"
                 {
                     ToolTip = 'Specifies the value of the Enable User Pick Zone field.', Comment = '%';
                 }
+                field("Enable Auto Print Pick"; Rec."Enable Auto Print Pick")
+                {
+                    ApplicationArea = all;
+                }
             }
             group("Address Validation")
             {
