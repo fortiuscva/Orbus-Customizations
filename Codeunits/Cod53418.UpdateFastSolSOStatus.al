@@ -1,15 +1,17 @@
 codeunit 53418 "ORB Update Fast Sol. SO Status"
 {
+    TableNo = "Production Order";
+
     trigger OnRun()
     begin
-        IntegrateSOFastSolutionStatus();
+        IntegrateSOFastSolutionStatus(Rec);
     end;
 
-    procedure IntegrateSOFastSolutionStatus()
+    procedure IntegrateSOFastSolutionStatus(var ProductionOrderRec: Record "Production Order")
     var
         LIFTERPSetupRecLcl: Record "ORB LIFT ERP Setup";
         EnvironmentInfoCU: Codeunit "Environment Information";
-        ProductionOrderRecLcl: Record "Production Order";
+
         ProdOrderLineRecLcl: Record "Prod. Order Line";
         ProdRoutingLineRecLcl: Record "Prod. Order Routing Line";
         SalesHdrRecLcl: Record "Sales Header";
@@ -22,69 +24,62 @@ codeunit 53418 "ORB Update Fast Sol. SO Status"
         LIFTERPSetupRecLcl.Get();
         IsSandbox := EnvironmentInfoCU.IsSandbox();
 
-        ProductionOrderRecLcl.Reset();
-        ProductionOrderRecLcl.SetRange("Source Type", ProductionOrderRecLcl."Source Type"::"Sales Header");
-        ProductionOrderRecLcl.SetRange("ORB Fast Solutions Sent", false);
-        if ProductionOrderRecLcl.FindSet() then
+        AllLinesValid := true;
+        AllAPIsSuccess := true;
+
+        ProdOrderLineRecLcl.Reset();
+        ProdOrderLineRecLcl.SetRange("Prod. Order No.", ProductionOrderRec."No.");
+        if ProdOrderLineRecLcl.FindSet() then
             repeat
-                AllLinesValid := true;
-                AllAPIsSuccess := true;
+                AllRoutingsValid := true;
 
-                ProdOrderLineRecLcl.Reset();
-                ProdOrderLineRecLcl.SetRange("Prod. Order No.", ProductionOrderRecLcl."No.");
-                if ProdOrderLineRecLcl.FindSet() then
+                ProdRoutingLineRecLcl.Reset();
+                ProdRoutingLineRecLcl.SetRange(Status, ProdOrderLineRecLcl.Status);
+                ProdRoutingLineRecLcl.SetRange("Prod. Order No.", ProdOrderLineRecLcl."Prod. Order No.");
+                ProdRoutingLineRecLcl.SetRange("Routing Reference No.", ProdOrderLineRecLcl."Line No.");
+                ProdRoutingLineRecLcl.SetRange("Routing No.", ProdOrderLineRecLcl."Routing No.");
+                ProdRoutingLineRecLcl.SetRange("ORB Fast Solutions", false);
+
+                if ProdRoutingLineRecLcl.FindSet() then
                     repeat
-                        AllRoutingsValid := true;
+                        if ProdRoutingLineRecLcl."Input Quantity" > ProdRoutingLineRecLcl."SFI Finished Quantity" then begin
+                            AllRoutingsValid := false;
+                            break;
+                        end;
+                    until ProdRoutingLineRecLcl.Next() = 0;
 
-                        ProdRoutingLineRecLcl.Reset();
-                        ProdRoutingLineRecLcl.SetRange(Status, ProdOrderLineRecLcl.Status);
-                        ProdRoutingLineRecLcl.SetRange("Prod. Order No.", ProdOrderLineRecLcl."Prod. Order No.");
-                        ProdRoutingLineRecLcl.SetRange("Routing Reference No.", ProdOrderLineRecLcl."Line No.");
-                        ProdRoutingLineRecLcl.SetRange("Routing No.", ProdOrderLineRecLcl."Routing No.");
-                        ProdRoutingLineRecLcl.SetRange("ORB Fast Solutions", false);
+                if not AllRoutingsValid then
+                    AllLinesValid := false;
 
-                        if ProdRoutingLineRecLcl.FindSet() then
-                            repeat
-                                if ProdRoutingLineRecLcl."Input Quantity" > ProdRoutingLineRecLcl."SFI Finished Quantity" then begin
-                                    AllRoutingsValid := false;
-                                    break;
-                                end;
-                            until ProdRoutingLineRecLcl.Next() = 0;
+            until ProdOrderLineRecLcl.Next() = 0;
 
-                        if not AllRoutingsValid then
-                            AllLinesValid := false;
+        if AllLinesValid then begin
+            ProdOrderLineRecLcl.Reset();
+            ProdOrderLineRecLcl.SetRange("Prod. Order No.", ProductionOrderRec."No.");
+            ProdOrderLineRecLcl.SetFilter("ORB Sales Order No.", '<>%1', '');
 
-                    until ProdOrderLineRecLcl.Next() = 0;
+            if ProdOrderLineRecLcl.FindSet() then
+                repeat
+                    if SalesHdrRecLcl.get(SalesHdrRecLcl."Document Type", ProdOrderLineRecLcl."ORB Sales Order No.") and SalesHdrRecLcl."ORB Lift Order" then begin
+                        if not SendSOStatusUpdateForProdLine(
+                            ProdOrderLineRecLcl,
+                            IsSandbox,
+                            LIFTERPSetupRecLcl."SO Status API - QA",
+                            LIFTERPSetupRecLcl."SO Status API - Production",
+                            LIFTERPSetupRecLcl."API Username",
+                            LIFTERPSetupRecLcl."API Password")
+                        then
+                            AllAPIsSuccess := false;
+                    end else
+                        AllAPIsSuccess := false;
 
-                if AllLinesValid then begin
-                    ProdOrderLineRecLcl.Reset();
-                    ProdOrderLineRecLcl.SetRange("Prod. Order No.", ProductionOrderRecLcl."No.");
-                    ProdOrderLineRecLcl.SetFilter("ORB Sales Order No.", '<>%1', '');
+                until ProdOrderLineRecLcl.Next() = 0;
 
-                    if ProdOrderLineRecLcl.FindSet() then
-                        repeat
-                            if SalesHdrRecLcl.get(SalesHdrRecLcl."Document Type", ProdOrderLineRecLcl."ORB Sales Order No.") and SalesHdrRecLcl."ORB Lift Order" then begin
-                                if not SendSOStatusUpdateForProdLine(
-                                    ProdOrderLineRecLcl,
-                                    IsSandbox,
-                                    LIFTERPSetupRecLcl."SO Status API - QA",
-                                    LIFTERPSetupRecLcl."SO Status API - Production",
-                                    LIFTERPSetupRecLcl."API Username",
-                                    LIFTERPSetupRecLcl."API Password")
-                                then
-                                    AllAPIsSuccess := false;
-                            end else
-                                AllAPIsSuccess := false;
-
-                        until ProdOrderLineRecLcl.Next() = 0;
-
-                    if AllAPIsSuccess then begin
-                        ProductionOrderRecLcl."ORB Fast Solutions Sent" := true;
-                        ProductionOrderRecLcl.Modify();
-                    end;
-                end;
-
-            until ProductionOrderRecLcl.Next() = 0;
+            if AllAPIsSuccess then begin
+                ProductionOrderRec."ORB Fast Solutions Sent" := true;
+                ProductionOrderRec.Modify();
+            end;
+        end;
     end;
 
     procedure SendSOStatusUpdateForProdLine(
