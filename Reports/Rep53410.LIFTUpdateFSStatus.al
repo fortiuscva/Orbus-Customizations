@@ -3,6 +3,8 @@ report 53410 "ORB LIFT Update FS Status"
     ApplicationArea = All;
     Caption = 'LIFT Update FS Status';
     UsageCategory = ReportsAndAnalysis;
+    ProcessingOnly = true;
+
     dataset
     {
         dataitem(ProductionOrder; "Production Order")
