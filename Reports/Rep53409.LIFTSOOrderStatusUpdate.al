@@ -2,6 +2,8 @@ report 53409 "LIFT SO Order Status Update"
 {
     Caption = 'LIFT SO Order Status Update';
     ProcessingOnly = true;
+    ApplicationArea = all;
+    UsageCategory = ReportsAndAnalysis;
 
     dataset
     {
