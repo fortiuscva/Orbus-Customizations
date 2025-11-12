@@ -131,6 +131,7 @@ tableextension 52621 "ORB Sales Line" extends "Sales Line"
             Caption = 'LIFT Step No.';
             Editable = false;
             TableRelation = "ORB LIFT Subway Map Steps";
+            ValidateTableRelation = false;
             DataClassification = CustomerContent;
         }
     }
