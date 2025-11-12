@@ -1,12 +1,10 @@
 codeunit 52618 "ORB LIFT Auto SO Release&Pick"
 {
-
     TableNo = "Sales Header";
-
 
     trigger OnRun()
     begin
-        AutoReleaseAndPick(rec);
+        AutoReleaseAndPick(Rec);
     end;
 
     procedure AutoReleaseAndPick(var SalesHeaderPar: Record "Sales Header")
@@ -37,8 +35,10 @@ codeunit 52618 "ORB LIFT Auto SO Release&Pick"
             until (SalesLine.Next() = 0) or (not IsValid);
 
         if IsValid then begin
-            SalesHeaderPar."Order Status" := SalesHeaderPar."Order Status"::"ReadyforPick/Release";
-            SalesHeaderPar.Modify();
+            SalesHeaderPar.Validate("Order Status", SalesHeaderPar."Order Status"::"ReadyforPick/Release");
+            SalesHeaderPar.Modify(true);
+            Commit();
+            // Run pick creation
             if not ORBCreateInventoryPick.Run(SalesHeaderPar) then;
         end;
     end;
