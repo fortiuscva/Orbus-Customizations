@@ -25,10 +25,30 @@ pageextension 52651 "ORB Item Card" extends "Item Card"
                 Caption = 'Material Id';
                 ApplicationArea = All;
             }
+            field("ORB Material Name"; Rec."ORB Material Name")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Material Name field.', Comment = '%';
+            }
             field("ORB Stroage Type Id"; Rec."ORB Stroage Type Id")
             {
-                Caption = 'Stroage Type Id';
+                Caption = 'Storage Type Id';
                 ApplicationArea = All;
+            }
+            field("ORB Storage Type Name"; Rec."ORB Storage Type Name")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Storage Type Name field.', Comment = '%';
+            }
+            field("ORB Do Not Integrate"; Rec."ORB Do Not Integrate")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Do Not Integrate field.', Comment = '%';
+            }
+            field("ORB Has Active Variants"; Rec."ORB Has Active Variants")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Has Active Variants field.', Comment = '%';
             }
         }
     }

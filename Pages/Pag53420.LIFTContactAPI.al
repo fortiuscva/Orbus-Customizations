@@ -57,6 +57,10 @@ page 53420 "ORB LIFT Contact API"
                 {
                     Caption = 'Mobile Phone No.';
                 }
+                field(active; Rec.Active)
+                {
+                    Caption = 'Active';
+                }
             }
         }
     }

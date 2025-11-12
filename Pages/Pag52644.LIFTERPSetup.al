@@ -46,6 +46,25 @@ page 52644 "ORB LIFT ERP Setup"
                     ToolTip = 'Specifies the value of the Job Queue Error Notification Email Field', Comment = '%';
                 }
             }
+            group("Sales Order Status to LIFT")
+            {
+                field("API Username"; Rec."API Username")
+                {
+                    ApplicationArea = all;
+                }
+                field("API Password"; Rec."API Password")
+                {
+                    ApplicationArea = all;
+                }
+                field("SO Status API - QA"; Rec."SO Status API - QA")
+                {
+                    ApplicationArea = all;
+                }
+                field("SO Status API - Production"; Rec."SO Status API - Production")
+                {
+                    ApplicationArea = all;
+                }
+            }
             group(Posting)
             {
                 Caption = 'Posting';
@@ -67,6 +86,15 @@ page 52644 "ORB LIFT ERP Setup"
                     {
                         ToolTip = 'Specifies the value of the Inv. Pick Posting Jnl. Batch Name (Order) field.', Comment = '%';
                     }
+                }
+            }
+            group("Price Integration")
+            {
+                Caption = 'Price Integration';
+                field("Price Last Sync DateTime"; Rec."Price Last Sync DateTime")
+                {
+                    Caption = 'Sales Price Last Sync DateTime';
+                    ToolTip = 'Specifies the value of the Sales Price Last Sync DateTime field.', Comment = '%';
                 }
             }
 
