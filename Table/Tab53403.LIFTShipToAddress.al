@@ -86,6 +86,10 @@ table 53403 "ORB LIFT Ship-To Address"
             Caption = 'Active';
             DataClassification = CustomerContent;
         }
+        field(109; "Tax Liable"; Boolean)
+        {
+            Caption = 'Tax Liable';
+        }
     }
     keys
     {
