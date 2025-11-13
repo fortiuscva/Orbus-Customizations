@@ -30,7 +30,7 @@ query 53403 "ORB LIFT Materials Query API"
             column(unitCost; "Unit Cost") { }
             // column(departmentDimension; "Department Dimension") { }
             // column(divisionDimension; "Division Dimension") { }
-            // column(productLineDimension; "Product Line Dimension") { }
+            column(productLineDimension; "Product Line Dimension") { }
             // column(materialDimension; "Material Dimension") { }
             column(systemCreatedAt; SystemCreatedAt) { }
             column(systemModifiedAt; SystemModifiedAt) { }
