@@ -47,6 +47,22 @@ codeunit 53417 "ORB LIFT Update SO Status"
                     end;
                 end;
             until DeletedSalesOrdersRecLcl.Next() = 0;
+
+        // Update Step 18 Status
+        DeletedSalesOrdersRecLcl.Reset();
+        DeletedSalesOrdersRecLcl.SetRange("Invoice Send to LIFT", true);
+        DeletedSalesOrdersRecLcl.SetRange("Shipped Send to LIFT", true);
+        DeletedSalesOrdersRecLcl.SetRange("Step 18 Completed", false);
+        if DeletedSalesOrdersRecLcl.FindSet() then
+            repeat
+
+                if SendSOStatusStep18Update(DeletedSalesOrdersRecLcl, EnvironmentInfoCU.IsSandbox(),
+                    LIFTERPSetupRecLcl."SO Status API - QA", LIFTERPSetupRecLcl."SO Status API - Production",
+                    LIFTERPSetupRecLcl."API Username", LIFTERPSetupRecLcl."API Password") then begin
+                    DeletedSalesOrdersRecLcl."Step 18 Completed" := true;
+                end;
+                DeletedSalesOrdersRecLcl.Modify();
+            until DeletedSalesOrdersRecLcl.Next() = 0;
     end;
 
     procedure SendSOStatusUpdate(var DeletedSalesOrdersRecLcl: Record "ORB LIFT Deleted Sales Orders"; IsSandbox: Boolean; UrlQA: Text; UrlProd: Text; Username: Text; Password: Text): Boolean
@@ -65,6 +81,39 @@ codeunit 53417 "ORB LIFT Update SO Status"
             Url := StrSubstNo(UrlQA + 'order_number=%1&line_number=%2', DeletedSalesOrdersRecLcl."Document No.", Format(DeletedSalesOrdersRecLcl."LIFT Line No."))
         else
             Url := StrSubstNo(UrlProd + 'order_number=%1&line_number=%2', DeletedSalesOrdersRecLcl."Document No.", Format(DeletedSalesOrdersRecLcl."LIFT Line No."));
+
+        Credentials := Username + ':' + Password;
+        AuthHeader := 'Basic ' + Base64Convert.ToBase64(Credentials);
+
+        Request.Method := 'PUT';
+        Request.SetRequestUri(Url);
+        Request.GetHeaders(Headers);
+        Headers.Add('Authorization', AuthHeader);
+
+        Client.Send(Request, Response);
+        Response.Content.ReadAs(ResultText);
+
+        DeletedSalesOrdersRecLcl."API Result" := CopyStr(ResultText, 1, 1024);
+
+        exit(Response.HttpStatusCode = 200);
+    end;
+
+    procedure SendSOStatusStep18Update(var DeletedSalesOrdersRecLcl: Record "ORB LIFT Deleted Sales Orders"; IsSandbox: Boolean; UrlQA: Text; UrlProd: Text; Username: Text; Password: Text): Boolean
+    var
+        Client: HttpClient;
+        Request: HttpRequestMessage;
+        Response: HttpResponseMessage;
+        Headers: HttpHeaders;
+        Url: Text;
+        ResultText: Text;
+        AuthHeader: Text;
+        Credentials: Text;
+        Base64Convert: Codeunit "Base64 Convert";
+    begin
+        if IsSandbox then
+            Url := StrSubstNo(UrlQA + 'order_number=%1&line_number=%2,step_number=18', DeletedSalesOrdersRecLcl."Document No.", Format(DeletedSalesOrdersRecLcl."LIFT Line No."))
+        else
+            Url := StrSubstNo(UrlProd + 'order_number=%1&line_number=%2,step_number=18', DeletedSalesOrdersRecLcl."Document No.", Format(DeletedSalesOrdersRecLcl."LIFT Line No."));
 
         Credentials := Username + ':' + Password;
         AuthHeader := 'Basic ' + Base64Convert.ToBase64(Credentials);
