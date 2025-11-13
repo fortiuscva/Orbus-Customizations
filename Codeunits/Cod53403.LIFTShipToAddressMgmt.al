@@ -40,7 +40,8 @@ codeunit 53403 "ORB LIFT Ship-To Address Mgmt"
         if LIFTShipToAddress.Active = 'I' then
             ShipToAddress."ORB Active Status" := ShipToAddress."ORB Active Status"::InActive;
 
-        ShipToAddress.Validate("Tax Liable", LIFTShipToAddress."Tax Liable");
+        if CreateShipToAddress then
+            ShipToAddress.Validate("Tax Liable", LIFTShipToAddress."Tax Liable");
     end;
 
     var
