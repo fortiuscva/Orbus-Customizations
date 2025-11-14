@@ -87,6 +87,12 @@ codeunit 53402 "ORB LIFT Customer Mgmt"
         Customer.Validate("Shortcut Dimension 6 Code", LIFTCustomer.Industry);
         if CreateCustomer then
             Customer.Validate("Tax Area Code", 'AVATAX');
+        if CreateCustomer then begin
+            if LIFTCustomer."Shipping Advice" = 'Complete' then
+                Customer.Validate("Shipping Advice", Customer."Shipping Advice"::Complete)
+            else if LIFTCustomer."Shipping Advice" = 'Partial' then
+                Customer.Validate("Shipping Advice", Customer."Shipping Advice"::Partial);
+        end;
     end;
 
     var
