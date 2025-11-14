@@ -21,7 +21,7 @@ query 53402 "ORB LIFT Item Variants by Loc"
             dataitem(Item_Variant; "Item Variant")
             {
                 DataItemLink = Code = ItemLedgerEntry."Variant Code", "Item No." = ItemLedgerEntry."Item No.";
-                DataItemTableFilter = "ORB Material Id" = filter(<> 0), "ORB Storage Type Id" = filter(<> 0);
+                DataItemTableFilter = /*"ORB Material Id" = filter(<> 0),*/ "ORB Storage Type Id" = filter(<> 0);
                 column(Material_Id; "ORB Material Id") { }
                 column(Storage_Type_Id; "ORB Storage Type Id") { }
 

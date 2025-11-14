@@ -12,9 +12,8 @@ query 53408 "ORB LIFT Item Variants"
         dataitem(item; "Item")
         {
             DataItemTableFilter = Blocked = const(false),
-                                  "ORB Has Active Variants" = const(true),
                                   "ORB Stroage Type Id" = const(35884),
-                                  "ORB Do Not Integrate" = const(true);
+                                  "ORB Do Not Integrate" = const(false);
             column("no"; "No.") { }
             column(shortDescription; "Short Description") { }
             column(itemDescription; Description) { }
