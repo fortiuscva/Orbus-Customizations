@@ -59,6 +59,14 @@ tableextension 52631 "ORB Item" extends Item
             // CalcFormula = exist("Item Variant" where("Item No." = field("No."), Blocked = const(false)));
             // Editable = false;
         }
+        modify("Department Dimension")
+        {
+            trigger OnAfterValidate()
+            begin
+                if "Department Dimension" = '01' then
+                    Rec.Validate("ORB Stroage Type Id", 35884);
+            end;
+        }
     }
 
 }
