@@ -65,10 +65,19 @@ tableextension 52631 "ORB Item" extends Item
         {
             trigger OnAfterValidate()
             begin
-                if "Department Dimension" = '01' then
-                    Rec.Validate("ORB Stroage Type Id", 35884);
+                if "Department Dimension" <> xRec."Department Dimension" then begin
+                    if "Department Dimension" = '01' then
+                        Rec.Validate("ORB Stroage Type Id", 35884)
+                    else
+                        Rec.Validate("ORB Stroage Type Id", 0)
+                end;
             end;
         }
     }
+
+    trigger OnInsert()
+    begin
+        "ORB Do Not Integrate" := true;
+    end;
 
 }
