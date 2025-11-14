@@ -56,7 +56,125 @@ pageextension 52627 "ORB Customer List" extends "Customer List"
                 Editable = false;
                 ToolTip = 'Key/National Account Manager refers to SalesPerson';
                 Caption = 'Key/National Account Manager';
-
+            }
+            field("ORB Payment Terms Code"; Rec."Payment Terms Code")
+            {
+                Caption = 'Payment Terms Code';
+                ApplicationArea = All;
+                Editable = false;
+                ToolTip = 'Specifies the value of the Payment Terms Code field.', Comment = '%';
+            }
+            field("ORB Tax Liable"; Rec."Tax Liable")
+            {
+                Caption = 'Tax Liable';
+                ApplicationArea = All;
+                Editable = false;
+                ToolTip = 'Specifies the value of the Tax Liable field.', Comment = '%';
+            }
+            field("ORB Needs_Approval"; Rec.Needs_Approval)
+            {
+                Caption = 'Needs Approval';
+                ApplicationArea = All;
+                Editable = false;
+                ToolTip = 'Specifies the value of the Needs Approval field.', Comment = '%';
+            }
+            field("ORB UPS Account Number"; Rec."UPS Account Number")
+            {
+                Caption = 'UPS Account Number';
+                ApplicationArea = All;
+                Editable = false;
+                ToolTip = 'Specifies the value of the UPS Account Number field.', Comment = '%';
+            }
+            field("ORB FedEx Account Number"; Rec."FedEx Account Number")
+            {
+                Caption = 'FedEx Account Number';
+                ApplicationArea = All;
+                Editable = false;
+                ToolTip = 'Specifies the value of the FedEx Account Number field.', Comment = '%';
+            }
+            field("ORB Channel Code"; Rec."Shortcut Dimension 5 Code")
+            {
+                Caption = 'Channel Code';
+                ApplicationArea = All;
+                Editable = false;
+                ToolTip = 'Specifies the value of the Channel Code field.', Comment = '%';
+            }
+            field("ORB Customer Posting Group"; Rec."Customer Posting Group")
+            {
+                Caption = 'Customer Posting Group';
+                ApplicationArea = All;
+                Editable = false;
+                ToolTip = 'Specifies the value of the Customer Posting Group field.', Comment = '%';
+            }
+            field("ORB Gen. Bus. Posting Group"; Rec."Gen. Bus. Posting Group")
+            {
+                Caption = 'Gen. Bus. Posting Group';
+                ApplicationArea = All;
+                Editable = false;
+                ToolTip = 'Specifies the value of the Gen. Bus. Posting Group field.', Comment = '%';
+            }
+            field("ORB Auto Send Email"; Rec."ORB Auto Send Email")
+            {
+                Caption = 'Auto Send Email';
+                ApplicationArea = All;
+                Editable = false;
+                ToolTip = 'Specifies Auto Send Email from JQ for the customer';
+            }
+            field("ORB First Invoice Date"; Rec."First Invoice Date")
+            {
+                Caption = 'First Invoice Date';
+                ApplicationArea = All;
+                Editable = false;
+                ToolTip = 'First Invoice Date';
+            }
+            field("ORB Needs Magento ID"; Rec."Needs Magento ID")
+            {
+                Caption = 'Needs Magento ID';
+                ApplicationArea = All;
+                Editable = false;
+                ToolTip = 'Specifies the value of the Needs Magento ID field.', Comment = '%';
+            }
+            field("ORB Magento ID"; Rec."Magento ID")
+            {
+                Caption = 'Magento ID';
+                ApplicationArea = All;
+                Editable = false;
+                ToolTip = 'Specifies the value of the Magento ID field.', Comment = '%';
+            }
+            field("ORB Magento Contact No."; Rec."Magento Contact No.")
+            {
+                Caption = 'Magento Contact No.';
+                ApplicationArea = All;
+                Editable = false;
+                ToolTip = 'Specifies the value of the Magento Contact No. field.', Comment = '%';
+            }
+            field("ORB Magento Contact Name"; Rec."Magento Contact Name")
+            {
+                Caption = 'Magento Contact Name';
+                ApplicationArea = All;
+                Editable = false;
+                ToolTip = 'Specifies the value of the Magento Contact Name field.', Comment = '%';
+            }
+            field("ORB Magento Contact Email"; Rec."Magento Contact Email")
+            {
+                Caption = 'Magento Contact Email';
+                ApplicationArea = All;
+                Editable = false;
+                ToolTip = 'Specifies the value of the Magento Contact Email field.', Comment = '%';
+            }
+            field("ORB Last Invoice Date"; Rec."Last Invoice Date")
+            {
+                Caption = 'Last Invoice Date';
+                ApplicationArea = All;
+                Editable = false;
+                ToolTip = 'Last Invoice Date';
+            }
+            field("ORB Document Sending Profile"; Rec."Document Sending Profile")
+            {
+                Caption = 'Document Sending Profile';
+                ApplicationArea = All;
+                Editable = false;
+                ToolTip = 'Specifies the value of the Document Sending Profile field.', Comment = '%';
             }
         }
         addafter("Sales (LCY)")
