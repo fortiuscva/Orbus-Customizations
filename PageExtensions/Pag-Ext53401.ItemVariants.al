@@ -4,15 +4,20 @@ pageextension 53401 "ORB Item Variants" extends "Item Variants"
     {
         addlast(Control1)
         {
+            field("ORB Department Dimension"; Rec."ORB Department Dimension")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Department Dimension field.', Comment = '%';
+            }
             field("ORB Material Id"; Rec."ORB Material Id")
             {
                 ApplicationArea = all;
             }
-            field("ORB Material Name"; Rec."ORB Material Name")
-            {
-                ApplicationArea = All;
-                ToolTip = 'Specifies the value of the Material Name field.', Comment = '%';
-            }
+            // field("ORB Material Name"; Rec."ORB Material Name")
+            // {
+            //     ApplicationArea = All;
+            //     ToolTip = 'Specifies the value of the Material Name field.', Comment = '%';
+            // }
             field("ORB Storage Type Id"; Rec."ORB Storage Type Id")
             {
                 ApplicationArea = all;

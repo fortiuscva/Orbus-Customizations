@@ -17,6 +17,7 @@ tableextension 52631 "ORB Item" extends Item
             Caption = 'Material ID';
             TableRelation = "ORB LIFT Material";
             DataClassification = ToBeClassified;
+            ValidateTableRelation = false;
             trigger OnValidate()
             begin
                 CalcFields("ORB Material Name");
@@ -49,16 +50,17 @@ tableextension 52631 "ORB Item" extends Item
         field(53404; "ORB Do Not Integrate"; Boolean)
         {
             Caption = 'Do Not Integrate';
+            InitValue = true;
             DataClassification = CustomerContent;
         }
-        field(53405; "ORB Has Active Variants"; Boolean)
-        {
-            Caption = 'Has Active Variants';
-            DataClassification = CustomerContent;
-            // FieldClass = FlowField;
-            // CalcFormula = exist("Item Variant" where("Item No." = field("No."), Blocked = const(false)));
-            // Editable = false;
-        }
+        // field(53405; "ORB Has Active Variants"; Boolean)
+        // {
+        //     Caption = 'Has Active Variants';
+        //     DataClassification = CustomerContent;
+        //     // FieldClass = FlowField;
+        //     // CalcFormula = exist("Item Variant" where("Item No." = field("No."), Blocked = const(false)));
+        //     // Editable = false;
+        // }
         modify("Department Dimension")
         {
             trigger OnAfterValidate()
