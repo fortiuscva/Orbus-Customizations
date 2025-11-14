@@ -13,8 +13,8 @@ query 53403 "ORB LIFT Materials Query API"
         dataitem(item; Item)
         {
             DataItemTableFilter = Blocked = const(false),
+                                  "Department Dimension" = filter('01'),
                                   "ORB Has Active Variants" = const(false),
-                                  "ORB Stroage Type Id" = const(35884),
                                   "ORB Do Not Integrate" = const(true);
             column(no; "No.") { }
             column(description; Description) { }
@@ -28,7 +28,7 @@ query 53403 "ORB LIFT Materials Query API"
             column(baseUnitOfMeasure; "Base Unit of Measure") { }
             // column(itemCategoryCode; "Item Category Code") { }
             column(unitCost; "Unit Cost") { }
-            // column(departmentDimension; "Department Dimension") { }
+            column(departmentDimension; "Department Dimension") { }
             // column(divisionDimension; "Division Dimension") { }
             column(productLineDimension; "Product Line Dimension") { }
             // column(materialDimension; "Material Dimension") { }
