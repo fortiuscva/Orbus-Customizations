@@ -82,10 +82,6 @@ page 52659 "ORB Ship To Address"
                 {
                     Caption = 'Location Code';
                 }
-                field(orbActiveStatus; Rec."ORB Active Status")
-                {
-                    Caption = 'Active Status';
-                }
                 field(phoneNo; Rec."Phone No.")
                 {
                     Caption = 'Phone No.';
