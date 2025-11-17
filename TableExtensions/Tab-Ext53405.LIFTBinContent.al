@@ -44,5 +44,12 @@ tableextension 53405 "ORB LIFT Bin Content" extends "Bin Content"
             FieldClass = FlowField;
             Editable = false;
         }
+        field(53406; "ORB Qty Conversion"; Decimal)
+        {
+            Caption = 'Qty Conversion';
+            CalcFormula = lookup("Item Unit of Measure"."Qty. per Unit of Measure" where("Item No." = field("Item No."), Code = const('YD')));
+            FieldClass = FlowField;
+            Editable = false;
+        }
     }
 }
