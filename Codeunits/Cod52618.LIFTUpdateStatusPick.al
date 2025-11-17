@@ -13,6 +13,7 @@ codeunit 52618 "ORB LIFT Update Status & Pick"
         ItemRec: Record Item;
         WhseActHeader: Record "Warehouse Activity Header";
         ORBCreateInventoryPick: Codeunit "ORB Create Inventory Pick";
+        ProductionOrderRec: Record "Production Order";
         HardWareSourced: Boolean;
         GraphicsHardwareSourced: Boolean;
         GraphicsHardwareProduction: Boolean;
@@ -102,24 +103,32 @@ codeunit 52618 "ORB LIFT Update Status & Pick"
         end;
 
         if HardWareSourced then begin
-            WhseActHeader.Reset();
-            WhseActHeader.SetRange("Source Document", WhseActHeader."Source Document"::"Sales Order");
-            WhseActHeader.SetRange("Source No.", '<>%1', '');
-            if not WhseActHeader.FindFirst() then begin
-                SalesHeaderPar.Validate("Order Status", SalesHeaderPar."Order Status"::"ReadyforPick/Release");
-                SalesHeaderPar.Modify(true);
-                Commit();
-                // Run pick creation
-                if not ORBCreateInventoryPick.Run(SalesHeaderPar) then;
+            if SalesHeaderPar."Shipment Date" <= Today then begin
+                WhseActHeader.Reset();
+                WhseActHeader.SetRange("Source Document", WhseActHeader."Source Document"::"Sales Order");
+                WhseActHeader.SetRange("Source No.", '<>%1', '');
+                if not WhseActHeader.FindFirst() then begin
+                    SalesHeaderPar.Validate("Order Status", SalesHeaderPar."Order Status"::"ReadyforPick/Release");
+                    SalesHeaderPar.Modify(true);
+                    Commit();
+                    // Run pick creation
+
+                    if not ORBCreateInventoryPick.Run(SalesHeaderPar) then;
+                end;
             end;
         end else if GraphicsHardwareSourced then begin
             SalesHeaderPar.Validate("Order Status", SalesHeaderPar."Order Status"::"AC In Production");
             SalesHeaderPar.Modify(true);
             Commit();
         end else if GraphicsHardwareProduction then begin
-            SalesHeaderPar.Validate("Order Status", SalesHeaderPar."Order Status"::ReadyForProduction);
-            SalesHeaderPar.Modify(true);
-            Commit();
+            ProductionOrderRec.Reset();
+            ProductionOrderRec.SetRange("Source Type", ProductionOrderRec."Source Type"::"Sales Header");
+            ProductionOrderRec.SetRange("Source No.", SalesHeaderPar."No.");
+            if not ProductionOrderRec.FindFirst() then begin
+                SalesHeaderPar.Validate("Order Status", SalesHeaderPar."Order Status"::ReadyForProduction);
+                SalesHeaderPar.Modify(true);
+                Commit();
+            end;
         end;
     end;
 }
