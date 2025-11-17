@@ -53,14 +53,13 @@ tableextension 52631 "ORB Item" extends Item
             InitValue = true;
             DataClassification = CustomerContent;
         }
-        // field(53405; "ORB Has Active Variants"; Boolean)
-        // {
-        //     Caption = 'Has Active Variants';
-        //     DataClassification = CustomerContent;
-        //     // FieldClass = FlowField;
-        //     // CalcFormula = exist("Item Variant" where("Item No." = field("No."), Blocked = const(false)));
-        //     // Editable = false;
-        // }
+        field(53405; "ORB Has Active Variants"; Boolean)
+        {
+            Caption = 'Has Active Variants';
+            FieldClass = FlowField;
+            CalcFormula = exist("Item Variant" where("Item No." = field("No."), Blocked = const(false)));
+            Editable = false;
+        }
         modify("Department Dimension")
         {
             trigger OnAfterValidate()
