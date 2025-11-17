@@ -24,7 +24,6 @@ query 53405 "ORB LIFT BinAvail Item Variant"
             column(Bin_Location_Id; "ORB Bin Location Id") { }
             column(Material_Id; "ORB Item Material Id") { }
             column(Storage_Type_Id; "ORB Item Storage Type Id") { }
-            column(Item_Variant_Material_Id; "ORB Item Variant Material Id") { }
             column(Item_Var__Storage_Type_Id; "ORB Item Var. Storage Type Id") { }
             column(Quantity; "Quantity (Base)") { Method = Sum; }
             column(Qty_Conversion; "ORB Qty Conversion") { }
