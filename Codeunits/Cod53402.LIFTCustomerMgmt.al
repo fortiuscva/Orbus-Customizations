@@ -73,7 +73,7 @@ codeunit 53402 "ORB LIFT Customer Mgmt"
         if (LIFTCustomer."ORB Customer Support" <> '') then
             Customer.Validate("ORB Customer Support", LIFTCustomer."ORB Customer Support");
         Customer.Validate("ORB Business Development", LIFTCustomer."ORB Business Development");
-        // Customer.Validate("ORB LIFT Customer", LIFTCustomer."ORB LIFT Customer");
+        Customer.Validate("ORB LIFT Customer", LIFTCustomer."ORB LIFT Customer");
         // Customer.Validate("First Invoice Date", LIFTCustomer."First Invoice Date");
         Customer.Validate("Magento Contact No.", LIFTCustomer."Magento Contact No.");
         Customer.Validate("Magento Contact Name", LIFTCustomer."Magento Contact Name");
