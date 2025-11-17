@@ -21,7 +21,7 @@ codeunit 52618 "ORB LIFT Update Status & Pick"
         HardWareDept: Boolean;
 
     begin
-        HardWareSourced := true;
+
         GraphicsHardwareSourced := false;
         GraphicsHardwareProduction := false;
 
@@ -29,8 +29,9 @@ codeunit 52618 "ORB LIFT Update Status & Pick"
         SalesLine.SetRange("Document Type", SalesHeaderPar."Document Type");
         SalesLine.SetRange("Document No.", SalesHeaderPar."No.");
         SalesLine.SetRange(Type, SalesLine.Type::Item);
-        SalesLine.SetRange("No.", '<>%1', '');
+        SalesLine.SetFilter("No.", '<>%1', '');
         if SalesLine.FindSet() then begin
+            HardWareSourced := true;
             repeat
                 ItemRec.Get(SalesLine."No.");
                 if ItemRec."Replenishment System" <> ItemRec."Replenishment System"::Purchase then
@@ -52,7 +53,7 @@ codeunit 52618 "ORB LIFT Update Status & Pick"
             SalesLine.SetRange("Document Type", SalesHeaderPar."Document Type");
             SalesLine.SetRange("Document No.", SalesHeaderPar."No.");
             SalesLine.SetRange(Type, SalesLine.Type::Item);
-            SalesLine.SetRange("No.", '<>%1', '');
+            SalesLine.SetFilter("No.", '<>%1', '');
             if SalesLine.FindSet() then begin
                 repeat
                     ItemRec.Get(SalesLine."No.");
@@ -85,7 +86,7 @@ codeunit 52618 "ORB LIFT Update Status & Pick"
             SalesLine.SetRange("Document Type", SalesHeaderPar."Document Type");
             SalesLine.SetRange("Document No.", SalesHeaderPar."No.");
             SalesLine.SetRange(Type, SalesLine.Type::Item);
-            SalesLine.SetRange("No.", '<>%1', '');
+            SalesLine.SetFilter("No.", '<>%1', '');
             if SalesLine.FindSet() then begin
                 repeat
                     ItemRec.Get(SalesLine."No.");
