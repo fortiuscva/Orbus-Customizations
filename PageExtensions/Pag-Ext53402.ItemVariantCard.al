@@ -13,11 +13,11 @@ pageextension 53402 "ORB Item Variant Card" extends "Item Variant Card"
             {
                 ApplicationArea = all;
             }
-            // field("ORB Material Name"; Rec."ORB Material Name")
-            // {
-            //     ApplicationArea = All;
-            //     ToolTip = 'Specifies the value of the Material Name field.', Comment = '%';
-            // }
+            field("ORB Material Name"; Rec."ORB Material Name")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Material Name field.', Comment = '%';
+            }
             field("ORB Storage Type Id"; Rec."ORB Storage Type Id")
             {
                 ApplicationArea = all;
