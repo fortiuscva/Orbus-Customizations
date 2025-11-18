@@ -21,10 +21,6 @@ pageextension 53409 "ORB LIFT Bin Contents" extends "Bin Contents"
             {
                 ApplicationArea = all;
             }
-            field("ORB Item Variant Material Id"; Rec."ORB Item Variant Material Id")
-            {
-                ApplicationArea = all;
-            }
             field("ORB Item Var. Storage Type Id"; Rec."ORB Item Var. Storage Type Id")
             {
                 ApplicationArea = all;
