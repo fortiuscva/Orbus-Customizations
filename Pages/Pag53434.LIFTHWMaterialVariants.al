@@ -10,7 +10,7 @@ page 53434 "ORB LIFT HW Material Variants"
     EntitySetName = 'HardwareMaterialVariantsAPI';
     PageType = API;
     SourceTable = "Item Variant";
-    SourceTableView = where(Blocked = const(false), "ORB Department Dimension" = const('01'), "ORB Material Id" = filter(<> 0), "ORB Storage Type Id" = filter(<> 0), "ORB Do Not Integrate" = const(false));
+    SourceTableView = where(Blocked = const(false), "ORB Department Dimension" = const('01'), "ORB Material Id" = filter(<> 0), "ORB Do Not Integrate" = const(false));
 
 
     layout
