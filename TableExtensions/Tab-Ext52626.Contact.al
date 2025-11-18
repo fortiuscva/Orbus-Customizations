@@ -10,6 +10,11 @@ tableextension 52626 "ORB Contact" extends Contact
                     CheckDuplicateEmailContact();
             end;
         }
+        field(53400; "ORB Active Status"; Enum "LIFT Contact & ShipTo Status")
+        {
+            Caption = 'Active Status';
+            DataClassification = ToBeClassified;
+        }
     }
     local procedure CheckDuplicateEmailContact()
     var

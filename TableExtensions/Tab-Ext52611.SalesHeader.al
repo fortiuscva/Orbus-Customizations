@@ -258,6 +258,8 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
                     exit;
                 if not ModifyShipToAddressFields() then
                     Error('Reopen the Sales Order to modify Ship-to Code');
+
+
             end;
         }
         modify("Ship-to Name")
