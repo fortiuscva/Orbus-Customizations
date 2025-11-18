@@ -4,6 +4,11 @@ pageextension 53401 "ORB Item Variants" extends "Item Variants"
     {
         addlast(Control1)
         {
+            field("ORB Unit Cost"; Rec."ORB Unit Cost")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Unit Cost field.', Comment = '%';
+            }
             field("ORB Department Dimension"; Rec."ORB Department Dimension")
             {
                 ApplicationArea = All;
