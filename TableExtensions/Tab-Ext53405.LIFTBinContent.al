@@ -30,13 +30,6 @@ tableextension 53405 "ORB LIFT Bin Content" extends "Bin Content"
             FieldClass = FlowField;
             Editable = false;
         }
-        field(53404; "ORB Item Variant Material Id"; Integer)
-        {
-            Caption = 'Item Variant Material Id';
-            CalcFormula = lookup("Item Variant"."ORB Material Id" where("Item No." = field("Item No."), Code = field("Variant Code")));
-            FieldClass = FlowField;
-            Editable = false;
-        }
         field(53405; "ORB Item Var. Storage Type Id"; Integer)
         {
             Caption = 'Item Variant Storage Type Id';
