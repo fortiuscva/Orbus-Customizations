@@ -13,7 +13,7 @@ tableextension 52603 "ORB Customer" extends Customer
                 CustomReportLayoutRecLcl: Record "Custom Report Layout";
                 ORBSingleInstance: Codeunit "ORB Orbus Single Instance";
             begin
-                if not ORBSingleInstance.GetByCustomerV2API() and GuiAllowed then begin
+                if GuiAllowed then begin
                     if rec."ORB Auto Send Email" then begin
                         CustomReportSelectionRecLcl.Reset();
                         CustomReportSelectionRecLcl.SetRange("Source Type", Database::Customer);
