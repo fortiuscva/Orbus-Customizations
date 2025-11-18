@@ -185,6 +185,10 @@ page 52608 "ORB Customer API"
                 {
                     Caption = 'Channel Code';
                 }
+                field(industryDimension; Rec."Shortcut Dimension 6 Code")
+                {
+                    Caption = 'Industry Dimension';
+                }
                 field(customerPostingGroup; Rec."Customer Posting Group")
                 {
                     Caption = 'Customer Posting Group';
