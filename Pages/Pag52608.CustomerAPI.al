@@ -97,6 +97,10 @@ page 52608 "ORB Customer API"
                 {
                     Caption = 'magentoContactNo', Locked = true;
                 }
+                field(creditLimitLCY; Rec."Credit Limit (LCY)")
+                {
+                    Caption = 'Credit Limit (LCY)';
+                }
                 field(thisYearSales; Rec."ORB This Year Sales")
                 {
                     Caption = 'This Year Sales Total';
@@ -242,7 +246,11 @@ page 52608 "ORB Customer API"
                 ToCustomReportSelection.Validate("Use for Email Body", true);
                 ToCustomReportSelection.Validate("Email Body Layout Code", '1306-000002');
                 ToCustomReportSelection.Validate("Use Email from Contact", false);
+
+                // To Suppress the validation logic written in trigger OnModify() within the table extension Custom Report Selection
+                ORBSingleInstance.SetModifyByCustomerV2API(true);
                 ToCustomReportSelection.Modify(true);
+                ORBSingleInstance.SetModifyByCustomerV2API(false);
             end;
         end
     end;
@@ -255,7 +263,11 @@ page 52608 "ORB Customer API"
         if CustomReportSelectionLcl.FindLast() then begin
             if CustomReportSelectionLcl."Send To Email" <> InvoiceEmail then begin
                 CustomReportSelectionLcl."Send To Email" := InvoiceEmail;
+
+                // To Suppress the validation logic written in trigger OnModify() within the table extension Custom Report Selection
+                ORBSingleInstance.SetModifyByCustomerV2API(true);
                 CustomReportSelectionLcl.Modify(true);
+                ORBSingleInstance.SetModifyByCustomerV2API(false);
             end;
         end;
     end;
@@ -270,6 +282,7 @@ page 52608 "ORB Customer API"
 
     var
         InvoiceEmail: Text[200];
+        ORBSingleInstance: Codeunit "ORB Orbus Single Instance";
     /*
     trigger OnAfterGetRecord()
     var

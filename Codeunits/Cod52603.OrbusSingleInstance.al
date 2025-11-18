@@ -312,6 +312,16 @@ codeunit 52603 "ORB Orbus Single Instance"
         exit(AutoPickPrint);
     end;
 
+    procedure SetModifyByCustomerV2API(CanModifyCRS: Boolean)
+    begin
+        ModifyCRS := CanModifyCRS;
+    end;
+
+    procedure GetModifyByCustomerV2API(): Boolean
+    begin
+        exit(ModifyCRS);
+    end;
+
     var
         ShowDialogLookupProfileVarGbl: Boolean;
         ShowDialogSendEmailToCustVarGbl: Boolean;
@@ -348,5 +358,6 @@ codeunit 52603 "ORB Orbus Single Instance"
         ExistBeforeFilter: Boolean;
         ExistAfterFilter: Boolean;
         AutoPickPrint: Boolean;
+        ModifyCRS: Boolean;
 
 }
