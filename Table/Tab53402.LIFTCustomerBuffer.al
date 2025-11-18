@@ -140,6 +140,11 @@ table 53402 "ORB LIFT Customer Buffer"
             Caption = 'Tax Exempt';
             DataClassification = CustomerContent;
         }
+        field(5750; "Shipping Advice"; Text[20])
+        {
+            Caption = 'Shipping Advice';
+            DataClassification = CustomerContent;
+        }
         field(8001; "Currency Id"; Guid)
         {
             Caption = 'Currency Id';
