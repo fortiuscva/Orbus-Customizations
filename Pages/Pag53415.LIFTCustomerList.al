@@ -52,6 +52,10 @@ page 53415 "ORB LIFT Customer List"
                 {
                     ToolTip = 'Specifies the value of the Customer Price Group field.', Comment = '%';
                 }
+                field("Customer Disc. Group"; Rec."Customer Disc. Group")
+                {
+                    ToolTip = 'Specifies the value of the Customer Disc. Group field.', Comment = '%';
+                }
                 field("Payment Terms Code"; Rec."Payment Terms Code")
                 {
                     ToolTip = 'Specifies the value of the Payment Terms Code field.', Comment = '%';
@@ -111,6 +115,14 @@ page 53415 "ORB LIFT Customer List"
                 field(TermsStatus; Rec."ORB LIFT TermsStatus")
                 {
                     ToolTip = 'Specifies the value of the Needs_Approval field.', Comment = '%';
+                }
+                field("UPS Account Number"; Rec."UPS Account Number")
+                {
+                    ToolTip = 'Specifies the value of the UPS Account Number field.', Comment = '%';
+                }
+                field("FedEx Account Number"; Rec."FedEx Account Number")
+                {
+                    ToolTip = 'Specifies the value of the FedEx Account Number field.', Comment = '%';
                 }
                 field("Magento ID"; Rec."Magento ID")
                 {
