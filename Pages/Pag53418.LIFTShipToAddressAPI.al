@@ -73,6 +73,10 @@ page 53418 "ORB LIFT Ship-To Address API"
                 {
                     ApplicationArea = all;
                 }
+                field(taxLiable; Rec."Tax Liable")
+                {
+                    Caption = 'Tax Liable';
+                }
             }
         }
     }
