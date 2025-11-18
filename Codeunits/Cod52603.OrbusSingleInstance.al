@@ -302,14 +302,14 @@ codeunit 52603 "ORB Orbus Single Instance"
         exit(ExistAfterFilter);
     end;
 
-    procedure SetModifyByCustomerV2API(CanModifyCRS: Boolean)
+    procedure SetByCustomerV2API(SuppressCustomValidationsPar: Boolean)
     begin
-        ModifyCRS := CanModifyCRS;
+        SuppressCustomValidations := SuppressCustomValidationsPar;
     end;
 
-    procedure GetModifyByCustomerV2API(): Boolean
+    procedure GetByCustomerV2API(): Boolean
     begin
-        exit(ModifyCRS);
+        exit(SuppressCustomValidations);
     end;
 
     procedure SetAutoPickPrint(AutoPickPrintpar: Boolean)
@@ -357,7 +357,7 @@ codeunit 52603 "ORB Orbus Single Instance"
         ShipToContactGbl: Text[100];
         ExistBeforeFilter: Boolean;
         ExistAfterFilter: Boolean;
-        ModifyCRS: Boolean;
+        SuppressCustomValidations: Boolean;
         AutoPickPrint: Boolean;
 
 }
