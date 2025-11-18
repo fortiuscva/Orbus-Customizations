@@ -46,6 +46,13 @@ tableextension 53401 "ORB Item Variant" extends "Item Variant"
             CalcFormula = lookup(Item."Department Dimension" where("No." = field("Item No.")));
             Editable = false;
         }
+        field(53406; "ORB Unit Cost"; Decimal)
+        {
+            Caption = 'Unit Cost';
+            FieldClass = FlowField;
+            CalcFormula = lookup(Item."Unit Cost" where("No." = field("Item No.")));
+            Editable = false;
+        }
     }
     trigger OnInsert()
     var
