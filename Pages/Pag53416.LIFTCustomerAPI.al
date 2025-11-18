@@ -202,6 +202,10 @@ page 53416 "ORB LIFT Customer API"
                 {
                     Caption = 'Payment Terms Id';
                 }
+                field(tpsaDescription; Rec.TPSADescription)
+                {
+                    Caption = 'Third Party Shipping Account Description';
+                }
             }
         }
     }

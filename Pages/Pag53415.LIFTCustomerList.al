@@ -192,6 +192,10 @@ page 53415 "ORB LIFT Customer List"
                 {
                     ToolTip = 'Specifies the value of the CustomerType field.', Comment = '%';
                 }
+                field(TPSADescription; Rec.TPSADescription)
+                {
+                    ToolTip = 'Specifies the value of the Third Party Shipping Account Description field.', Comment = '%';
+                }
             }
         }
     }

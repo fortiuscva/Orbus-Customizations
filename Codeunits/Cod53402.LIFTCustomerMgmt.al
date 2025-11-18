@@ -23,7 +23,10 @@ codeunit 53402 "ORB LIFT Customer Mgmt"
     end;
 
     procedure ValidateCustomerFields(var Customer: Record Customer; var LIFTCustomer: Record "ORB LIFT Customer Buffer"; CreateCustomer: Boolean)
+    var
+        TPSAUpperCaseDesc: Text[100];
     begin
+        TPSAUpperCaseDesc := '';
         Customer.Validate(Name, LIFTCustomer.Name);
         Customer.Validate(Address, LIFTCustomer.Address);
         Customer.Validate(City, LIFTCustomer.City);
@@ -59,8 +62,11 @@ codeunit 53402 "ORB LIFT Customer Mgmt"
             Customer.Validate(Needs_Approval, Customer.Needs_Approval::noNeedsApproval)
         else
             Customer.Validate(Needs_Approval, Customer.Needs_Approval::yesNeedsApproval);
-        Customer.Validate("UPS Account Number", LIFTCustomer."UPS Account Number");
-        Customer.Validate("FedEx Account Number", LIFTCustomer."FedEx Account Number");
+        TPSAUpperCaseDesc := UpperCase(LIFTCustomer.TPSADescription);
+        if TPSAUpperCaseDesc.Contains('UPS') then
+            Customer.Validate("UPS Account Number", LIFTCustomer."UPS Account Number")
+        else if TPSAUpperCaseDesc.Contains('FEDEX') then
+            Customer.Validate("FedEx Account Number", LIFTCustomer."FedEx Account Number");
         Customer.Validate("Magento ID", LIFTCustomer."Magento ID");
         // Customer.Validate(ORBAPPAssociationsName, LIFTCustomer.ORBAPPAssociationsName);
         // Customer.Validate("ORB Regional Sales Executive", LIFTCustomer."ORB Regional Sales Executive");
