@@ -1,14 +1,9 @@
-page 52608 "ORB Customer API"
+page 53429 "ORB Customer API List"
 {
-    APIGroup = 'orbus';
-    APIPublisher = 'orbus';
-    APIVersion = 'v2.0';
     ApplicationArea = All;
-    Caption = 'customerAPI';
+    Caption = 'Customer API List';
     DelayedInsert = true;
-    EntityName = 'customerv2API';
-    EntitySetName = 'customerv2API';
-    PageType = API;
+    PageType = List;
     SourceTable = Customer;
 
     layout
@@ -221,6 +216,7 @@ page 52608 "ORB Customer API"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
+        Message('Customer-OnInsertRecord() Begin');
         ORBSingleInstance.SetByCustomerV2API(true); // To Suppress the Validations written at Field "ORB Auto Send Email" OnValidate()
         if Rec."ORB Auto Send Email" then begin
             if InvoiceEmail = '' then
@@ -230,6 +226,7 @@ page 52608 "ORB Customer API"
                 CreateDocumentLayout();
         end;
         ORBSingleInstance.SetByCustomerV2API(false);
+        Message('Customer-OnInsertRecord() End');
     end;
 
     trigger OnModifyRecord(): Boolean
@@ -251,15 +248,15 @@ page 52608 "ORB Customer API"
                 //     IsCRSRecModified := true;
                 // end;
                 if FromCustomReportSelection."Send To Email" <> InvoiceEmail then begin
-                    FromCustomReportSelection.Validate("Send To Email", InvoiceEmail);
+                    FromCustomReportSelection."Send To Email" := InvoiceEmail;
                     IsCRSRecModified := true;
                 end;
                 if FromCustomReportSelection."Use for Email Attachment" = false then begin
-                    FromCustomReportSelection.Validate("Use for Email Attachment", true);
+                    FromCustomReportSelection."Use for Email Attachment" := true;
                     IsCRSRecModified := true;
                 end;
                 if FromCustomReportSelection."Use for Email Body" = false then begin
-                    FromCustomReportSelection.Validate("Use for Email Body", true);
+                    FromCustomReportSelection."Use for Email Body" := true;
                     IsCRSRecModified := true;
                 end;
                 // if FromCustomReportSelection."Email Body Layout Code" = '' then begin
@@ -336,5 +333,6 @@ page 52608 "ORB Customer API"
         LTMSalesCrMemo: Decimal;
         LifetimeSalesCrMemo: Decimal;
     */
+
 }
 
