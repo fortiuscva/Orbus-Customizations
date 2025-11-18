@@ -100,6 +100,10 @@ page 53415 "ORB LIFT Customer List"
                 {
                     ToolTip = 'Specifies the value of the Tax Liable field.', Comment = '%';
                 }
+                field("Shipping Advice"; Rec."Shipping Advice")
+                {
+                    ToolTip = 'Specifies the value of the Shipping Advice field.', Comment = '%';
+                }
                 field("Currency Code"; Rec."Currency Code")
                 {
                     ToolTip = 'Specifies the value of the Currency Code field.', Comment = '%';
