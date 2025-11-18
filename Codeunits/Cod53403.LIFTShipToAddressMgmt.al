@@ -36,6 +36,9 @@ codeunit 53403 "ORB LIFT Ship-To Address Mgmt"
         ShipToAddress.Validate("Post Code", LIFTShipToAddress."Post Code");
         ShipToAddress.Validate(County, LIFTShipToAddress.County);
         ShipToAddress.Validate("E-Mail", LIFTShipToAddress."E-Mail");
+
+        if LIFTShipToAddress.Active = 'I' then
+            ShipToAddress."ORB Active Status" := ShipToAddress."ORB Active Status"::InActive;
     end;
 
     var

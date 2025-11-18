@@ -53,6 +53,12 @@ table 53406 "ORB LIFT Contact"
             Caption = 'Mobile Phone No.';
             DataClassification = CustomerContent;
         }
+        field(5062; Active; Text[1])
+        {
+            Caption = 'Active';
+            DataClassification = CustomerContent;
+        }
+
     }
     keys
     {
