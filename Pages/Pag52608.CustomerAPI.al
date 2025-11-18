@@ -177,6 +177,10 @@ page 52608 "ORB Customer API"
                 {
                     Caption = 'Blocked';
                 }
+                field(industryDimension; Rec."Shortcut Dimension 6 Code")
+                {
+                    Caption = 'Industry Dimension';
+                }
             }
         }
     }
