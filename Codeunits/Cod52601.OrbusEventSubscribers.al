@@ -81,7 +81,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             Result := OrbusSingleInstanceCUGbl.GetOnBeforeCheckShowProfileSelectionMethodResult();
         end;
     end;
-
+    // To make sure always Ship-to Contact on the Sales Order header was put on the Label, as advised by Dynamic Ship 10-04-2025
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"DSHIP Event Publisher", OnAfterSetAddress, '', false, false)]
     local procedure OnAfterSetAddress(addressSource: RecordRef; var addressBuffer: Record "DSHIP Address Buffer" temporary; var isValidationRequired: Boolean; var isHandled: Boolean);
     var
@@ -98,6 +98,8 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
                 //Update Bill To Customer Phone No.
                 if BillToCustomerRecLcl.get(SalesHeaderRecLcl."Bill-to Customer No.") then
                     addressBuffer."Phone No." := BillToCustomerRecLcl."Phone No.";
+
+                isHandled := true;
             end;
         end else begin
 
@@ -113,6 +115,8 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
                             //Update Bill To Customer Phone No.
                             if BillToCustomerRecLcl.get(SalesHeaderRecLcl."Bill-to Customer No.") then
                                 addressBuffer."Phone No." := BillToCustomerRecLcl."Phone No.";
+
+                            isHandled := true;
                         end;
                     end;
                 end;

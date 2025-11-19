@@ -1,5 +1,7 @@
+
 pageextension 52661 "DSHIP Quick Label Worksheet" extends "DSHIP Quick Label Worksheet"
 {
+    // Commenting this to Test Address Validation Setups as per DSHIP(Matthew's Suggestion), 10-03-2025
     actions
     {
         modify(GetLabel)
