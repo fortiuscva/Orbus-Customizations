@@ -18,7 +18,7 @@ report 53410 "ORB LIFT Update FS Status"
             trigger OnPreDataItem()
             begin
                 SetRange("Source Type", "Source Type"::"Sales Header");
-                SetRange("ORB Fast Solutions Sent", false);
+                SetRange("ORB Fast Solutions Status Sent", false);
             end;
         }
     }
