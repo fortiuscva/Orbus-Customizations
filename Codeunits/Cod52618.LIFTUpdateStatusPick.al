@@ -57,6 +57,8 @@ codeunit 52618 "ORB LIFT Update Status & Pick"
             SalesLine.SetFilter("No.", '<>%1', '');
             if SalesLine.FindSet() then begin
                 repeat
+                    Clear(ProductionItem);
+
                     ItemRec.Get(SalesLine."No.");
                     if ItemRec."Replenishment System" = ItemRec."Replenishment System"::"Prod. Order" then
                         ProductionItem := true;
@@ -90,6 +92,8 @@ codeunit 52618 "ORB LIFT Update Status & Pick"
             SalesLine.SetFilter("No.", '<>%1', '');
             if SalesLine.FindSet() then begin
                 repeat
+                    Clear(ProductionItem);
+
                     ItemRec.Get(SalesLine."No.");
                     if ItemRec."Replenishment System" = ItemRec."Replenishment System"::"Prod. Order" then
                         ProductionItem := true;
