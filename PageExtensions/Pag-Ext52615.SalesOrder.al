@@ -87,6 +87,10 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
                 ApplicationArea = All;
                 ToolTip = 'Specifies your Reference';
             }
+            field("ORB Pick Created"; Rec."ORB Pick Created")
+            {
+                ApplicationArea = all;
+            }
         }
         modify("Payment Terms Code")
         {

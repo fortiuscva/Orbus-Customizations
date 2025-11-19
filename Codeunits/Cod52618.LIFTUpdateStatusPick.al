@@ -103,18 +103,17 @@ codeunit 52618 "ORB LIFT Update Status & Pick"
         end;
 
         if HardWareSourced then begin
-            if SalesHeaderPar."Shipment Date" <= Today then begin
-                WhseActHeader.Reset();
-                WhseActHeader.SetRange("Source Document", WhseActHeader."Source Document"::"Sales Order");
-                WhseActHeader.SetRange("Source No.", '<>%1', '');
-                if not WhseActHeader.FindFirst() then begin
-                    SalesHeaderPar.Validate("Order Status", SalesHeaderPar."Order Status"::"ReadyforPick/Release");
-                    SalesHeaderPar.Modify(true);
-                    Commit();
-                    // Run pick creation
 
+            WhseActHeader.Reset();
+            WhseActHeader.SetRange("Source Document", WhseActHeader."Source Document"::"Sales Order");
+            WhseActHeader.SetRange("Source No.", '<>%1', '');
+            if not WhseActHeader.FindFirst() then begin
+                SalesHeaderPar.Validate("Order Status", SalesHeaderPar."Order Status"::"ReadyforPick/Release");
+                SalesHeaderPar.Modify(true);
+                Commit();
+                // Run pick creation
+                if SalesHeaderPar."Shipment Date" <= Today then
                     if not ORBCreateInventoryPick.Run(SalesHeaderPar) then;
-                end;
             end;
         end else if GraphicsHardwareSourced then begin
             SalesHeaderPar.Validate("Order Status", SalesHeaderPar."Order Status"::"AC In Production");
