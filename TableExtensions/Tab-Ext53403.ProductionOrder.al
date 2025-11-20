@@ -14,5 +14,13 @@ tableextension 53403 "ORB Production Order" extends "Production Order"
             Caption = 'Fast Solutions Status Sent';
             Editable = false;
         }
+
+        field(53402; "ORB LIFT Sales Order"; Boolean)
+        {
+            Caption = 'LIFT Sales Order';
+            FieldClass = FlowField;
+            CalcFormula = Exist("Sales Header" WHERE("ORB Lift Order" = CONST(true), "No." = FIELD("Source No.")));
+            Editable = false;
+        }
     }
 }
