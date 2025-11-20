@@ -11,14 +11,14 @@ codeunit 53408 "ORB LIFT Read Inv.Transactions"
 
         LIFTIntegrationDataLogRec.Reset();
         LIFTIntegrationDataLogRec.SetCurrentKey("Transaction ID");
-        LIFTIntegrationDataLogRec.SetRange("Source Type", Database::"Warehouse Journal Line");
+        LIFTIntegrationDataLogRec.SetRange("Source Type", Database::"Item Journal Line");
 
         if LIFTIntegrationDataLogRec.FindLast() then
             LIFTIntegration.ParseData(
                 LIFTERPSetup."Inventory Journal API" + '&p1=' + Format(LIFTIntegrationDataLogRec."Transaction ID"),
-                LIFTAPICodes.GetInventoryJournalAPICode())
+                LIFTAPICodes.GetItemJournalAPICode())
         else
             LIFTIntegration.ParseData(
-                LIFTERPSetup."Inventory Journal API", LIFTAPICodes.GetInventoryJournalAPICode());
+                LIFTERPSetup."Inventory Journal API", LIFTAPICodes.GetItemJournalAPICode());
     end;
 }
