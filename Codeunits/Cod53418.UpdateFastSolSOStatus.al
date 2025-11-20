@@ -58,7 +58,7 @@ codeunit 53418 "ORB Update Fast Sol. SO Status"
             ProdOrderLineRecLcl.Reset();
             ProdOrderLineRecLcl.SetRange("Prod. Order No.", ProductionOrderRec."No.");
             ProdOrderLineRecLcl.SetFilter("ORB Sales Order No.", '<>%1', '');
-
+            ProdOrderLineRecLcl.SetRange("Planning Level Code", 0);
             if ProdOrderLineRecLcl.FindSet() then
                 repeat
                     if SalesHdrRecLcl.get(SalesHdrRecLcl."Document Type"::Order, ProdOrderLineRecLcl."ORB Sales Order No.") and SalesHdrRecLcl."ORB Lift Order" then begin
