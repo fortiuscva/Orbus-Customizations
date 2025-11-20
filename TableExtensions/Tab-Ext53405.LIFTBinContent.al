@@ -11,7 +11,7 @@ tableextension 53405 "ORB LIFT Bin Content" extends "Bin Content"
         }
         field(53401; "ORB Bin Location Id"; Integer)
         {
-            CalcFormula = lookup(Bin."ORB Bin Location Id" where(Code = field("Bin Code")));
+            CalcFormula = lookup(Bin."ORB Bin Location Id" where(Code = field("Bin Code"), "Location Code" = field("Location Code")));
             FieldClass = FlowField;
             Caption = 'Bin Location Id';
             Editable = false;
@@ -40,7 +40,7 @@ tableextension 53405 "ORB LIFT Bin Content" extends "Bin Content"
         field(53406; "ORB Qty Conversion"; Decimal)
         {
             Caption = 'Qty Conversion';
-            CalcFormula = lookup("Item Unit of Measure"."Qty. per Unit of Measure" where("Item No." = field("Item No."), Code = const('YD')));
+            CalcFormula = lookup("Item Unit of Measure"."Qty. per Unit of Measure" where("Item No." = field("Item No."), Code = const('RL')));
             FieldClass = FlowField;
             Editable = false;
         }
