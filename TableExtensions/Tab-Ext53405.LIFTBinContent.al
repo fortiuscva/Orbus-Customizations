@@ -11,7 +11,7 @@ tableextension 53405 "ORB LIFT Bin Content" extends "Bin Content"
         }
         field(53401; "ORB Bin Location Id"; Integer)
         {
-            CalcFormula = lookup(Bin."ORB Bin Location Id" where(Code = field("Bin Code")));
+            CalcFormula = lookup(Bin."ORB Bin Location Id" where(Code = field("Bin Code"), "Location Code" = field("Location Code")));
             FieldClass = FlowField;
             Caption = 'Bin Location Id';
             Editable = false;
