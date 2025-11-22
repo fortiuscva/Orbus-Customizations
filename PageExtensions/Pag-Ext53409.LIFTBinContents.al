@@ -25,6 +25,10 @@ pageextension 53409 "ORB LIFT Bin Contents" extends "Bin Contents"
             {
                 ApplicationArea = all;
             }
+            field("ORB Qty Conversion"; Rec."ORB Qty Conversion")
+            {
+                ApplicationArea = all;
+            }
         }
     }
 }
