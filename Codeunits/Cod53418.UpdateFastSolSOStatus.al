@@ -12,11 +12,13 @@ codeunit 53418 "ORB Update Fast Sol. SO Status"
         ProductionOrderRecLcl: Record "Production Order";
         ProdOrderLineRecLcl: Record "Prod. Order Line";
         ProdRoutingLineRecLcl: Record "Prod. Order Routing Line";
+        SalesHdrRecLcl: Record "Sales Header";
         AllLinesValid: Boolean;
         AllRoutingsValid: Boolean;
         IsSandbox: Boolean;
         AllAPIsSuccess: Boolean;
     begin
+
         LIFTERPSetupRecLcl.Get();
         IsSandbox := EnvironmentInfoCU.IsSandbox();
 
@@ -61,15 +63,19 @@ codeunit 53418 "ORB Update Fast Sol. SO Status"
 
                     if ProdOrderLineRecLcl.FindSet() then
                         repeat
-                            if not SendSOStatusUpdateForProdLine(
-                                ProdOrderLineRecLcl,
-                                IsSandbox,
-                                LIFTERPSetupRecLcl."SO Status API - QA",
-                                LIFTERPSetupRecLcl."SO Status API - Production",
-                                LIFTERPSetupRecLcl."API Username",
-                                LIFTERPSetupRecLcl."API Password")
-                            then
+                            if SalesHdrRecLcl.get(SalesHdrRecLcl."Document Type", ProdOrderLineRecLcl."ORB Sales Order No.") and SalesHdrRecLcl."ORB Lift Order" then begin
+                                if not SendSOStatusUpdateForProdLine(
+                                    ProdOrderLineRecLcl,
+                                    IsSandbox,
+                                    LIFTERPSetupRecLcl."SO Status API - QA",
+                                    LIFTERPSetupRecLcl."SO Status API - Production",
+                                    LIFTERPSetupRecLcl."API Username",
+                                    LIFTERPSetupRecLcl."API Password")
+                                then
+                                    AllAPIsSuccess := false;
+                            end else
                                 AllAPIsSuccess := false;
+
                         until ProdOrderLineRecLcl.Next() = 0;
 
                     if AllAPIsSuccess then begin
