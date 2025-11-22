@@ -1,32 +1,22 @@
-tableextension 52631 "ORB Item" extends Item
+tableextension 53401 "ORB Item Variant" extends "Item Variant"
 {
     fields
     {
-        field(52600; "ORB Master Qty. Count"; Integer)
-        {
-            Caption = 'Master Quantity Count';
-            DataClassification = ToBeClassified;
-        }
-        field(52601; "ORB Bagging Quantity"; Integer)
-        {
-            Caption = 'Bagging Quantity Count';
-            DataClassification = ToBeClassified;
-        }
         field(53400; "ORB Material Id"; Integer)
         {
-            Caption = 'Material ID';
+            Caption = 'ORB Material Id';
             TableRelation = "ORB LIFT Material";
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             trigger OnValidate()
             begin
                 CalcFields("ORB Material Name");
             end;
         }
-        field(53401; "ORB Stroage Type Id"; Integer)
+        field(53401; "ORB Storage Type Id"; Integer)
         {
-            Caption = 'Storage Type ID';
+            Caption = 'ORB Storage Type Id';
             TableRelation = "ORB LIFT Storage Type";
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             trigger OnValidate()
             begin
                 CalcFields("ORB Storage Type Name");
@@ -36,7 +26,7 @@ tableextension 52631 "ORB Item" extends Item
         {
             Caption = 'Storage Type Name';
             FieldClass = FlowField;
-            CalcFormula = lookup("ORB LIFT Storage Type".Name where("Storage Type Id" = field("ORB Stroage Type Id")));
+            CalcFormula = lookup("ORB LIFT Storage Type".Name where("Storage Type Id" = field("ORB Storage Type Id")));
             Editable = false;
         }
         field(53403; "ORB Material Name"; Text[100])
@@ -51,13 +41,5 @@ tableextension 52631 "ORB Item" extends Item
             Caption = 'Do Not Integrate';
             DataClassification = CustomerContent;
         }
-        field(53405; "ORB Has Active Variants"; Boolean)
-        {
-            Caption = 'Has Active Variants';
-            FieldClass = FlowField;
-            CalcFormula = exist("Item Variant" where("Item No." = field("No."), Blocked = const(false)));
-            Editable = false;
-        }
     }
-
 }
