@@ -33,7 +33,45 @@ codeunit 53418 "ORB Update Fast Sol. SO Status"
                     repeat
                         AllLinesValid := true;
 
+                        ProdOrderLineRecLcl.Reset();
+                        ProdOrderLineRecLcl.SetRange("Prod. Order No.", ProductionOrderRecLcl."No.");
+                        if ProdOrderLineRecLcl.FindSet() then
+                            repeat
+                                IsFastSolutionLine := ProdOrderLineRecLcl."ORB Fast Solutions";
 
+                                if IsFastSolutionLine then begin
+                                    ProdRoutingLineRecLcl.Reset();
+                                    ProdRoutingLineRecLcl.SetRange(Status, ProdOrderLineRecLcl.Status);
+                                    ProdRoutingLineRecLcl.SetRange("Prod. Order No.", ProdOrderLineRecLcl."Prod. Order No.");
+                                    ProdOrderLineRecLcl.SetRange("Routing Reference No.", ProdOrderLineRecLcl."Line No.");
+                                    ProdRoutingLineRecLcl.SetRange("Routing No.", ProdOrderLineRecLcl."Routing No.");
+                                    ProdRoutingLineRecLcl.SetRange("ORB Fast Solutions", true);
+
+                                    if ProdRoutingLineRecLcl.FindFirst() then begin
+                                        ProdPrevRoutingLine.Reset();
+                                        ProdPrevRoutingLine.SetRange(Status, ProdOrderLineRecLcl.Status);
+                                        ProdPrevRoutingLine.SetRange("Prod. Order No.", ProdOrderLineRecLcl."Prod. Order No.");
+                                        ProdPrevRoutingLine.SetRange("Routing Reference No.", ProdOrderLineRecLcl."Line No.");
+                                        ProdPrevRoutingLine.SetRange("Routing No.", ProdOrderLineRecLcl."Routing No.");
+                                        ProdPrevRoutingLine.SetFilter("Operation No.", '<%1', ProdRoutingLineRecLcl."Operation No.");
+
+                                        if ProdPrevRoutingLine.FindLast() then begin
+                                            if ProdPrevRoutingLine."Input Quantity" > ProdOrderLineRecLcl."Finished Quantity" then
+                                                AllLinesValid := false;
+                                        end else
+                                            AllLinesValid := false;
+                                    end;
+                                end else begin
+                                    if ProdOrderLineRecLcl."Quantity" > ProdOrderLineRecLcl."Finished Quantity" then
+                                        AllLinesValid := false;
+                                end;
+
+                            until ProdOrderLineRecLcl.Next() = 0;
+
+                        if AllLinesValid then begin
+
+                            // Send status to LIFT
+                        end;
 
                     until ProductionOrderRecLcl.Next() = 0;
 
