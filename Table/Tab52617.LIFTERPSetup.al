@@ -50,6 +50,14 @@ table 52617 "ORB LIFT ERP Setup"
             Caption = 'Inv. Pick Posting Jnl. Batch Name (Order)';
             TableRelation = "Item Journal Batch".Name WHERE("Journal Template Name" = FIELD("Inv. Pick Post. Jnl. Template"));
         }
+        field(20; "SO Status API - QA"; Text[1024])
+        {
+            Caption = 'SO Status API - QA';
+        }
+        field(21; "SO Status API - Production"; Text[1024])
+        {
+            Caption = 'SO Status API - Production';
+        }
     }
     keys
     {

@@ -46,6 +46,17 @@ page 52644 "ORB LIFT ERP Setup"
                     ToolTip = 'Specifies the value of the Job Queue Error Notification Email Field', Comment = '%';
                 }
             }
+            group("Sales Order Status to LIFT")
+            {
+                field("SO Status API - QA"; Rec."SO Status API - QA")
+                {
+                    ApplicationArea = all;
+                }
+                field("SO Status API - Production"; Rec."SO Status API - Production")
+                {
+                    ApplicationArea = all;
+                }
+            }
             group(Posting)
             {
                 Caption = 'Posting';
