@@ -237,6 +237,11 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             Caption = 'Is LIFT Order Cancelled';
             DataClassification = CustomerContent;
         }
+        field(52665; "ORB Pick Created"; Boolean)
+        {
+            Caption = 'Pick Created';
+            DataClassification = CustomerContent;
+        }
 
         modify("Sell-to Customer No.")
         {
