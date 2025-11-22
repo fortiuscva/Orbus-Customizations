@@ -13,26 +13,16 @@ query 53404 "ORB LIFT BinAvail WIP"
         dataitem(BinContent; "Bin Content")
         {
             DataItemTableFilter =
-                "Variant Code" = filter(''),
-                "Bin Code" = filter('LIFT*');
+                "Variant Code" = filter('');
 
             column(Item_No; "Item No.") { }
             column(Location_Code; "Location Code") { }
+
+            column(Location_Id; "ORB Location Id") { }
+            column(Material_Id; "ORB Item Material Id") { }
+            column(Storage_Type_Id; "ORB Item Storage Type Id") { }
             column(Quantity; Quantity) { Method = Sum; }
 
-            dataitem(Item; Item)
-            {
-                DataItemLink = "No." = BinContent."Item No.";
-                column(Material_Id; "ORB Material Id") { }
-                column(Storage_Type_Id; "ORB Stroage Type Id") { }
-
-                dataitem(Location; Location)
-                {
-                    DataItemLink = Code = BinContent."Location Code";
-                    DataItemTableFilter = "ORB Location Id" = filter(<> 0);
-                    column(Location_Id; "ORB Location Id") { }
-                }
-            }
         }
     }
 }
