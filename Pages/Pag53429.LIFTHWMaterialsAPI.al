@@ -26,18 +26,6 @@ page 53429 "ORB LIFT HW Materials API"
                 {
                     Caption = 'Description';
                 }
-                // field(shortDescription; Rec."Short Description")
-                // {
-                //     Caption = 'Short Description';
-                // }
-                // field(longDescription; Rec."Long Description")
-                // {
-                //     Caption = 'Long Description';
-                // }
-                // field(searchDescription; Rec."Search Description")
-                // {
-                //     Caption = 'Search Description';
-                // }
                 field(materialId; Rec."ORB Material Id")
                 {
                     Caption = 'Material Id';
@@ -54,14 +42,6 @@ page 53429 "ORB LIFT HW Materials API"
                 {
                     Caption = 'Storage Type Name';
                 }
-                // field(blocked; Rec.Blocked)
-                // {
-                //     Caption = 'Blocked';
-                // }
-                // field(type; Rec."Type")
-                // {
-                //     Caption = 'Type';
-                // }
                 field(baseUnitOfMeasure; Rec."Base Unit of Measure")
                 {
                     Caption = 'Base Unit of Measure';
@@ -78,14 +58,6 @@ page 53429 "ORB LIFT HW Materials API"
                 {
                     Caption = 'Unit Cost';
                 }
-                // field(divisionDimension; Rec."Division Dimension")
-                // {
-                //     Caption = 'Division Dimension';
-                // }
-                // field(materialDimension; Rec."Material Dimension")
-                // {
-                //     Caption = 'Material Dimension';
-                // }
                 field(productLineDimension; Rec."Product Line Dimension")
                 {
                     Caption = 'Product Line Dimension';
@@ -94,6 +66,42 @@ page 53429 "ORB LIFT HW Materials API"
                 {
                     Caption = 'Has Active Variants';
                 }
+                field(systemCreatedAt; Rec.SystemCreatedAt)
+                {
+                    Caption = 'SystemCreatedAt';
+                }
+                field(systemModifiedAt; Rec.SystemModifiedAt)
+                {
+                    Caption = 'SystemModifiedAt';
+                }
+                // field(shortDescription; Rec."Short Description")
+                // {
+                //     Caption = 'Short Description';
+                // }
+                // field(longDescription; Rec."Long Description")
+                // {
+                //     Caption = 'Long Description';
+                // }
+                // field(searchDescription; Rec."Search Description")
+                // {
+                //     Caption = 'Search Description';
+                // }
+                // field(blocked; Rec.Blocked)
+                // {
+                //     Caption = 'Blocked';
+                // }
+                // field(type; Rec."Type")
+                // {
+                //     Caption = 'Type';
+                // }
+                // field(divisionDimension; Rec."Division Dimension")
+                // {
+                //     Caption = 'Division Dimension';
+                // }
+                // field(materialDimension; Rec."Material Dimension")
+                // {
+                //     Caption = 'Material Dimension';
+                // }
             }
         }
     }

@@ -31,14 +31,11 @@ page 53434 "ORB LIFT HW Material Variants"
                 {
                     Caption = 'Description';
                 }
-                // field(blocked; Rec.Blocked)
-                // {
-                //     Caption = 'Blocked';
-                // }
-                // field(DepartmentDimension; Rec."ORB Department Dimension")
-                // {
-                //     Caption = 'Department Dimension';
-                // }
+                field(orbUnitCost; Rec."ORB Unit Cost")
+                {
+                    Caption = 'Unit Cost';
+                }
+
                 field(materialId; Rec."ORB Material Id")
                 {
                     Caption = 'ORB Material Id';
@@ -55,10 +52,6 @@ page 53434 "ORB LIFT HW Material Variants"
                 {
                     Caption = 'Storage Type Name';
                 }
-                // field(orbDoNotIntegrate; Rec."ORB Do Not Integrate")
-                // {
-                //     Caption = 'Do Not Integrate';
-                // }
                 field(systemCreatedAt; Rec.SystemCreatedAt)
                 {
                     Caption = 'SystemCreatedAt';
@@ -67,6 +60,18 @@ page 53434 "ORB LIFT HW Material Variants"
                 {
                     Caption = 'SystemModifiedAt';
                 }
+                // field(blocked; Rec.Blocked)
+                // {
+                //     Caption = 'Blocked';
+                // }
+                // field(DepartmentDimension; Rec."ORB Department Dimension")
+                // {
+                //     Caption = 'Department Dimension';
+                // }
+                // field(orbDoNotIntegrate; Rec."ORB Do Not Integrate")
+                // {
+                //     Caption = 'Do Not Integrate';
+                // }
             }
         }
     }
