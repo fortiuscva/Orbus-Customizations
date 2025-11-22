@@ -14,8 +14,7 @@ query 53403 "ORB LIFT Materials Query API"
         {
             DataItemTableFilter = Blocked = const(false),
                                   "Department Dimension" = filter('01'),
-                                  "ORB Has Active Variants" = const(false),
-                                  "ORB Do Not Integrate" = const(true);
+                                  "ORB Do Not Integrate" = const(false);
             column(no; "No.") { }
             column(description; Description) { }
             column(shortDescription; "Short Description") { }

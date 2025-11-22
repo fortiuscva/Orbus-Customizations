@@ -1,7 +1,7 @@
 table 53411 "ORB LIFT Material"
 {
     Caption = 'ORB LIFT Material';
-    LookupPageId = "ORB LIFT Materials";
+    LookupPageId = "ORB LIFT Material List";
     DataClassification = CustomerContent;
 
     fields
