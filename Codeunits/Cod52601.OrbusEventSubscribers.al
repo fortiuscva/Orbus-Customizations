@@ -931,6 +931,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         WhseActHeader: Record "Warehouse Activity Header";
         LocationRec: Record Location;
         PrinterSelection: Record "Printer Selection";
+        OrbusSetup: Record "ORB Orbus Setup";
         PrinterName: Text[250];
         ReportID: Integer;
         RecRef: RecordRef;
@@ -938,6 +939,10 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         ReportID := TempReportSelectionWarehouse."Report ID";
 
         if ReportID <> Report::"Picking List" then
+            exit;
+
+        OrbusSetup.get();
+        if not OrbusSetup."Enable Auto Print Pick" then
             exit;
 
         if RecVarToPrint.IsRecord then begin
