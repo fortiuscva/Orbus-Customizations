@@ -242,6 +242,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             //SalesLine.Validate("Line Discount Amount", (BCLineDiscount + SalesLine."ORB LIFT Discount Amount"));
             SalesLine.Validate("Line Discount Amount", (BCOriginalDiscount + SalesLine."ORB LIFT Discount Amount"));
             SalesLine."ORB LIFT Line ID" := LIFTSalesLineBuffer."LIFT Line ID";
+            SalesLine.Validate("ORB LIFT Step No.", LIFTSalesLineBuffer."ORB LIFT Step No.");
         end
     end;
 
