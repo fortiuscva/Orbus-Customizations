@@ -31,5 +31,12 @@ tableextension 52618 "ORB Sales Shipment Line" extends "Sales Shipment Line"
             Editable = false;
             DataClassification = CustomerContent;
         }
+        field(53402; "ORB LIFT Step No."; Code[10])
+        {
+            Caption = 'LIFT Step No.';
+            Editable = false;
+            TableRelation = "ORB LIFT Subway Map Steps";
+            DataClassification = CustomerContent;
+        }
     }
 }

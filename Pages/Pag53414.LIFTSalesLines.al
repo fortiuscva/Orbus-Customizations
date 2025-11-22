@@ -40,6 +40,10 @@ page 53414 "ORB LIFT Sales Lines"
                 {
                     ToolTip = 'Specifies the value of the Quantity field.', Comment = '%';
                 }
+                field("ORB LIFT Step No."; Rec."ORB LIFT Step No.")
+                {
+                    ToolTip = 'Specifies the value of the LIFT Step No. field.', Comment = '%';
+                }
                 field("Variant Code"; Rec."Variant Code")
                 {
                     ToolTip = 'Specifies the value of the Variant Code field.', Comment = '%';
