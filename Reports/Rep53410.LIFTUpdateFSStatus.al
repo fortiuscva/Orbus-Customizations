@@ -19,6 +19,7 @@ report 53410 "ORB LIFT Update FS Status"
             begin
                 SetRange("Source Type", "Source Type"::"Sales Header");
                 SetRange("ORB Fast Solutions Status Sent", false);
+                SetRange("ORB LIFT Sales Order", true);
             end;
         }
     }

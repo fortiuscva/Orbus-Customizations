@@ -8,6 +8,10 @@ pageextension 52656 "ORB Released Production Order" extends "Released Production
             {
                 ApplicationArea = all;
             }
+            field("ORB LIFT Sales Order"; Rec."ORB LIFT Sales Order")
+            {
+                ApplicationArea = all;
+            }
         }
     }
     actions
