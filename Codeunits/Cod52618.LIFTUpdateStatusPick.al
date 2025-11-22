@@ -112,8 +112,9 @@ codeunit 52618 "ORB LIFT Update Status & Pick"
                 SalesHeaderPar.Modify(true);
                 Commit();
                 // Run pick creation
-                if SalesHeaderPar."Shipment Date" <= Today then
-                    if not ORBCreateInventoryPick.Run(SalesHeaderPar) then;
+                if not SalesHeaderPar."ORB Pick Created" then
+                    if SalesHeaderPar."Shipment Date" <= Today then
+                        if not ORBCreateInventoryPick.Run(SalesHeaderPar) then;
             end;
         end else if GraphicsHardwareSourced then begin
             SalesHeaderPar.Validate("Order Status", SalesHeaderPar."Order Status"::"AC In Production");
