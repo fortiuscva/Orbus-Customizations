@@ -14,7 +14,7 @@ report 53409 "ORB LIFT Update Status & Pick"
             trigger OnPreDataItem()
             begin
                 //SetFilter("Order Status", '<=%1', SalesHeader."Order Status"::"ReadyforPick/Release");
-                SetFilter("Shipment Date", '<=%1', Today());
+                //SetFilter("Shipment Date", '<=%1', Today());
                 SetRange("ORB Lift Order", true);
             end;
 
