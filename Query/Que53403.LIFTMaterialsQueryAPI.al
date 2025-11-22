@@ -12,7 +12,7 @@ query 53403 "ORB LIFT Materials Query API"
     {
         dataitem(item; Item)
         {
-            DataItemTableFilter = "ORB Material Id" = filter('<>0');
+            DataItemTableFilter = "ORB Material Id" = const(0), "ORB Stroage Type Id" = const(35884);
             column(no; "No.")
             {
             }
