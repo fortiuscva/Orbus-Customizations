@@ -109,6 +109,12 @@ table 53401 "ORB LIFT Sales Line Buffer"
         {
             Caption = 'Height';
         }
+        field(53402; "ORB LIFT Step No."; Code[10])
+        {
+            Caption = 'LIFT Step No.';
+            TableRelation = "ORB LIFT Subway Map Steps";
+            DataClassification = CustomerContent;
+        }
         field(60100; "Hardware Price"; Decimal)
         {
             Caption = 'Hardware Price';
