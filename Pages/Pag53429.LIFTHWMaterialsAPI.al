@@ -90,6 +90,10 @@ page 53429 "ORB LIFT HW Materials API"
                 {
                     Caption = 'Product Line Dimension';
                 }
+                field(orbHasActiveVariants; Rec."ORB Has Active Variants")
+                {
+                    Caption = 'Has Active Variants';
+                }
             }
         }
     }
