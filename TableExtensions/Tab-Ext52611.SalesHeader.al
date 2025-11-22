@@ -241,6 +241,7 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
         {
             Caption = 'Pick Created';
             DataClassification = CustomerContent;
+            Editable = false;
         }
 
         modify("Sell-to Customer No.")
