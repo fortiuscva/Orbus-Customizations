@@ -58,6 +58,15 @@ table 52617 "ORB LIFT ERP Setup"
         {
             Caption = 'SO Status API - Production';
         }
+        field(22; "API Username"; Text[1024])
+        {
+            Caption = 'API Username';
+        }
+        field(23; "API Password"; Text[1024])
+        {
+            Caption = 'API Password';
+            ExtendedDatatype = Masked;
+        }
     }
     keys
     {
