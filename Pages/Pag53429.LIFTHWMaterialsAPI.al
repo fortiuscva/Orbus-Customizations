@@ -10,7 +10,7 @@ page 53429 "ORB LIFT HW Materials API"
     EntitySetName = 'HardwareMaterialsAPI';
     PageType = API;
     SourceTable = Item;
-    SourceTableView = where(Blocked = const(false), "Department Dimension" = const('01'), "ORB Material Id" = filter(<> 0), "ORB Stroage Type Id" = filter(<> 0), "ORB Do Not Integrate" = const(false));
+    SourceTableView = where(Blocked = const(false), "Department Dimension" = const('01'), "ORB Material Id" = const(0), "ORB Stroage Type Id" = filter(<> 0), "ORB Do Not Integrate" = const(false));
 
     layout
     {
@@ -73,6 +73,10 @@ page 53429 "ORB LIFT HW Materials API"
                 field(departmentDimension; Rec."Department Dimension")
                 {
                     Caption = 'Department Dimension';
+                }
+                field(unitCost; Rec."Unit Cost")
+                {
+                    Caption = 'Unit Cost';
                 }
                 // field(divisionDimension; Rec."Division Dimension")
                 // {
