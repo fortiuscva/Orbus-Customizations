@@ -77,7 +77,7 @@ codeunit 53418 "ORB Update Fast Sol. SO Status"
                 until ProdOrderLineRecLcl.Next() = 0;
 
             if AllAPIsSuccess then begin
-                ProductionOrderRec."ORB Fast Solutions Sent" := true;
+                ProductionOrderRec."ORB Fast Solutions Status Sent" := true;
                 ProductionOrderRec.Modify();
             end;
         end;
