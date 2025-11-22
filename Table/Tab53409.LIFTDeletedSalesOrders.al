@@ -33,6 +33,10 @@ table 53409 "ORB LIFT Deleted Sales Orders"
         {
             Caption = 'Invoice Send to LIFT';
         }
+        field(8; "Step 18 Completed"; Boolean)
+        {
+            Caption = 'Step 18 Completed';
+        }
     }
     keys
     {
