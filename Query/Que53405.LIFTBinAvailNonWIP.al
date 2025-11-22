@@ -17,6 +17,7 @@ query 53405 "ORB LIFT BinAvail Non-WIP"
                 "Bin Code" = filter(<> 'LIFT*');
 
             column(Item_No; "Item No.") { }
+            column(Location_Code; "Location Code") { }
             column(Quantity; Quantity) { Method = Sum; }
 
             dataitem(Item; Item)
