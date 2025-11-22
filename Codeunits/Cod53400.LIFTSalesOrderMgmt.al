@@ -200,6 +200,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
     procedure ValidateSalesLineFields(var SalesLine: Record "Sales Line"; var LIFTSalesLineBuffer: Record "ORB LIFT Sales Line Buffer")
     var
         ItemRecLcl: Record Item;
+        LIFTSubwayMapSteps: Record "ORB LIFT Subway Map Steps";
     begin
         SalesLine.SuspendStatusCheck(true);
         SalesLine.Validate("Sell-to Customer No.", LIFTSalesLineBuffer."Sell-to Customer No.");
@@ -242,6 +243,13 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             //SalesLine.Validate("Line Discount Amount", (BCLineDiscount + SalesLine."ORB LIFT Discount Amount"));
             SalesLine.Validate("Line Discount Amount", (BCOriginalDiscount + SalesLine."ORB LIFT Discount Amount"));
             SalesLine."ORB LIFT Line ID" := LIFTSalesLineBuffer."LIFT Line ID";
+
+            if not LIFTSubwayMapSteps.Get(LIFTSalesLineBuffer."ORB LIFT Step No.") then begin
+                LIFTSubwayMapSteps.Init();
+                LIFTSubwayMapSteps."No." := LIFTSalesLineBuffer."ORB LIFT Step No.";
+                LIFTSubwayMapSteps.Insert(true);
+            end;
+
             SalesLine.Validate("ORB LIFT Step No.", LIFTSalesLineBuffer."ORB LIFT Step No.");
         end
     end;
