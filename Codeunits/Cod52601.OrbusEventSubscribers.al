@@ -984,8 +984,46 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         IsHandled := true;
     end;
 
+    // [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnBeforeSalesLineDeleteAll, '', false, false)]
+    // local procedure "Sales-Post_OnBeforeSalesLineDeleteAll"(var SalesLine: Record "Sales Line"; CommitIsSuppressed: Boolean; var SalesHeader: Record "Sales Header")
+    // var
+    //     SalesLineRecLcl: Record "Sales Line";
+    //     DeletedSalesOrdersRecLcl: Record "ORB LIFT Deleted Sales Orders";
+    // begin
+    //     SalesLineRecLcl.Reset();
+    //     SalesLineRecLcl.CopyFilters(SalesLine);
+    //     SalesLineRecLcl.SetRange("Document Type", SalesLineRecLcl."Document Type"::Order);
+    //     if SalesLineRecLcl.FindSet() then
+    //         repeat
+    //             DeletedSalesOrdersRecLcl.Init();
+    //             DeletedSalesOrdersRecLcl."Document Type" := SalesLineRecLcl."Document Type";
+    //             DeletedSalesOrdersRecLcl."Document No." := SalesLineRecLcl."Document No.";
+    //             DeletedSalesOrdersRecLcl."Line No." := SalesLineRecLcl."Line No.";
+    //             DeletedSalesOrdersRecLcl."LIFT Line No." := SalesLineRecLcl."ORB LIFT Line ID";
+    //             DeletedSalesOrdersRecLcl.Insert();
+    //         until SalesLineRecLcl.Next() = 0;
+    // end;
 
+    [EventSubscriber(ObjectType::Table, Database::"Sales Line", OnAfterInitOutstandingQty, '', false, false)]
+    local procedure "Sales Line_OnAfterInitOutstandingQty"(var SalesLine: Record "Sales Line")
+    var
+        DeletedSalesOrdersRecLcl: Record "ORB LIFT Deleted Sales Orders";
+        SalesHdrRecLcl: Record "Sales Header";
+    begin
+        if SalesHdrRecLcl.get(SalesHdrRecLcl."Document Type", SalesLine."Document No.") and not SalesHdrRecLcl."ORB Lift Order" then
+            exit;
 
+        if (SalesLine."Document Type" = SalesLine."Document Type"::Order) and (SalesLine.Type = SalesLine.Type::Item) and
+        (SalesLine."Outstanding Quantity" = 0) then begin
+            DeletedSalesOrdersRecLcl.Init();
+            DeletedSalesOrdersRecLcl."Document Type" := SalesLine."Document Type";
+            DeletedSalesOrdersRecLcl."Document No." := SalesLine."Document No.";
+            DeletedSalesOrdersRecLcl."Line No." := SalesLine."Line No.";
+            DeletedSalesOrdersRecLcl."LIFT Line No." := SalesLine."ORB LIFT Line ID";
+            if not DeletedSalesOrdersRecLcl.Insert() then;
+        end;
+
+    end;
 
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
