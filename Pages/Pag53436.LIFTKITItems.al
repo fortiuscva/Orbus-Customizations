@@ -10,7 +10,7 @@ page 53436 "ORB LIFT KIT Items"
     EntitySetName = 'KITItemsAPI';
     PageType = API;
     SourceTable = Item;
-    SourceTableView = where(Blocked = const(false), "Replenishment System" = filter("Replenishment System"::Assembly), "Assembly BOM" = const(true), "ORB Do Not Integrate" = const(false));
+    SourceTableView = where(Blocked = const(false), "Assembly BOM" = const(true), "ORB Do Not Integrate (Sell)" = const(false));
 
     layout
     {
@@ -25,6 +25,10 @@ page 53436 "ORB LIFT KIT Items"
                 field(description; Rec.Description)
                 {
                     Caption = 'Description';
+                }
+                field(productId; Rec."ORB Product Id")
+                {
+                    Caption = 'Product ID';
                 }
                 field(materialId; Rec."ORB Material Id")
                 {
