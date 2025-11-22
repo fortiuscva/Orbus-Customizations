@@ -82,6 +82,12 @@
       "name": "BC_Release&Pick",
       "version": "1.0.0.1",
       "publisher": "Impact Networking"
+    },
+    {
+      "id": "f1731958-49e1-425c-a5a5-11fd8f39b59e",
+      "name": "Orbus_LongDescription",
+      "version": "1.0.0.11",
+      "publisher": "KP"
     }
   ],
   "screenshots": [],
