@@ -111,9 +111,9 @@ codeunit 53417 "ORB LIFT Update SO Status"
         Base64Convert: Codeunit "Base64 Convert";
     begin
         if IsSandbox then
-            Url := StrSubstNo(UrlQA + 'order_number=%1&line_number=%2,step_number=18', DeletedSalesOrdersRecLcl."Document No.", Format(DeletedSalesOrdersRecLcl."LIFT Line No."))
+            Url := StrSubstNo(UrlQA + 'order_number=%1&line_number=%2&step_number=18', DeletedSalesOrdersRecLcl."Document No.", Format(DeletedSalesOrdersRecLcl."LIFT Line No."))
         else
-            Url := StrSubstNo(UrlProd + 'order_number=%1&line_number=%2,step_number=18', DeletedSalesOrdersRecLcl."Document No.", Format(DeletedSalesOrdersRecLcl."LIFT Line No."));
+            Url := StrSubstNo(UrlProd + 'order_number=%1&line_number=%2&step_number=18', DeletedSalesOrdersRecLcl."Document No.", Format(DeletedSalesOrdersRecLcl."LIFT Line No."));
 
         Credentials := Username + ':' + Password;
         AuthHeader := 'Basic ' + Base64Convert.ToBase64(Credentials);
