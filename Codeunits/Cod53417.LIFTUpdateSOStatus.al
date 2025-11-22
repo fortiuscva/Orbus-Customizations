@@ -13,8 +13,8 @@ codeunit 53417 "ORB LIFT Update SO Status"
         EnvironmentInfoCU: Codeunit "Environment Information";
         Base64Convert: Codeunit "Base64 Convert";
         Client: HttpClient;
+        Request: HttpRequestMessage;
         Response: HttpResponseMessage;
-        Content: HttpContent;
         Headers: HttpHeaders;
         Url: Text;
         ResultText: Text;
@@ -30,27 +30,27 @@ codeunit 53417 "ORB LIFT Update SO Status"
             repeat
                 if EnvironmentInfoCU.IsSandbox() then
                     Url := StrSubstNo(LIFTERPSetupRecLcl."SO Status API - QA" +
-                        'order_number=%1&line_number=%2', DeletedSalesOrdersRecLcl."Document No.", Format(DeletedSalesOrdersRecLcl."Line No."))
+                        'order_number=%1&line_number=%2', DeletedSalesOrdersRecLcl."Document No.", Format(DeletedSalesOrdersRecLcl."LIFT Line No."))
                 else
                     Url := StrSubstNo(LIFTERPSetupRecLcl."SO Status API - Production" +
-                        'order_number=%1&line_number=%2', DeletedSalesOrdersRecLcl."Document No.", Format(DeletedSalesOrdersRecLcl."Line No."));
+                        'order_number=%1&line_number=%2', DeletedSalesOrdersRecLcl."Document No.", Format(DeletedSalesOrdersRecLcl."LIFT Line No."));
 
                 Credentials := LIFTERPSetupRecLcl."API Username" + ':' + LIFTERPSetupRecLcl."API Password";
                 AuthHeader := 'Basic ' + Base64Convert.ToBase64(Credentials);
-                Client.DefaultRequestHeaders.Add('Authorization', AuthHeader);
 
-                Content.WriteFrom('');
-                Content.GetHeaders(Headers);
-                Headers.Clear();
-                Headers.Add('Content-Type', 'application/json');
+                Request.Method := 'PUT';
+                Request.SetRequestUri(Url);
+                Request.GetHeaders(Headers);
+                Headers.Add('Authorization', AuthHeader);
 
-                if Client.Put(Url, Content, Response) then begin
-                    Response.Content.ReadAs(ResultText);
+                Client.Send(Request, Response);
+                Response.Content.ReadAs(ResultText);
 
+                if Response.HttpStatusCode = 200 then
                     DeletedSalesOrdersRecLcl."Exported to LIFT" := true;
-                    DeletedSalesOrdersRecLcl."API Result" := CopyStr(ResultText, 1, 1024);
-                    DeletedSalesOrdersRecLcl.Modify();
-                end;
+
+                DeletedSalesOrdersRecLcl."API Result" := CopyStr(ResultText, 1, 1024);
+                DeletedSalesOrdersRecLcl.Modify();
 
             until DeletedSalesOrdersRecLcl.Next() = 0;
     end;
