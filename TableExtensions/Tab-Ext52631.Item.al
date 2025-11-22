@@ -54,9 +54,10 @@ tableextension 52631 "ORB Item" extends Item
         field(53405; "ORB Has Active Variants"; Boolean)
         {
             Caption = 'Has Active Variants';
-            FieldClass = FlowField;
-            CalcFormula = exist("Item Variant" where("Item No." = field("No."), Blocked = const(false)));
-            Editable = false;
+            DataClassification = CustomerContent;
+            // FieldClass = FlowField;
+            // CalcFormula = exist("Item Variant" where("Item No." = field("No."), Blocked = const(false)));
+            // Editable = false;
         }
     }
 
