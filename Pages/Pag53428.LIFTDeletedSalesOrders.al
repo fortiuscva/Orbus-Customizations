@@ -29,9 +29,13 @@ page 53428 "ORB LIFT Deleted Sales Orders"
                 {
 
                 }
-                field("Exported to LIFT"; Rec."Exported to LIFT")
+                field("Shipped Send to LIFT"; Rec."Shipped Send to LIFT")
                 {
-                    ToolTip = 'Specifies the value of the Exported to LIFT field.', Comment = '%';
+                    ToolTip = 'Specifies the value of the Shipped Send to LIFT field.', Comment = '%';
+                }
+                field("Invoice Send to LIFT"; Rec."Invoice Send to LIFT")
+                {
+                    ToolTip = 'Specifies the value of the Invoice Send to LIFT field.', Comment = '%';
                 }
                 field("API Result"; Rec."API Result")
                 {
