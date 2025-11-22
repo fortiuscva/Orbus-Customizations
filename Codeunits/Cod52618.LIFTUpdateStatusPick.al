@@ -17,7 +17,7 @@ codeunit 52618 "ORB LIFT Update Status & Pick"
         GraphicsHardwareSourced: Boolean;
         GraphicsHardwareProduction: Boolean;
         ProductionItem: Boolean;
-        GraphicsDept: array[2] of Boolean;
+        GraphicsDept: Boolean;
         HardWareDept: Boolean;
 
     begin
@@ -42,11 +42,11 @@ codeunit 52618 "ORB LIFT Update Status & Pick"
         end;
 
         //check for Graphics + Hardware Sourced:
-        //If there is at least one item which has have Replenishment System = Production with department Dimension on all sales lines = ‘02’ 
+        //If there is at least one item which has have Replenishment System = Production with department Dimension on any sales line = ‘02’ 
         if not HardWareSourced then begin
             ProductionItem := false;
-            GraphicsDept[1] := false;
-            GraphicsDept[2] := false;
+            HardWareDept := false;
+            GraphicsHardwareSourced := false;
 
             SalesLine.Reset();
             SalesLine.SetRange("Document Type", SalesHeaderPar."Document Type");
@@ -59,23 +59,27 @@ codeunit 52618 "ORB LIFT Update Status & Pick"
                     if ItemRec."Replenishment System" = ItemRec."Replenishment System"::"Prod. Order" then
                         ProductionItem := true;
 
-                    if SalesLine."Shortcut Dimension 2 Code" = '02' then
-                        GraphicsDept[1] := true;
+                    if ProductionItem then
+                        if SalesLine."Shortcut Dimension 2 Code" = '01' then begin
+                            HardWareDept := true;
+                        end;
 
-                    if SalesLine."Shortcut Dimension 2 Code" = '01' then
-                        GraphicsDept[2] := true;
+                    if ProductionItem then
+                        if SalesLine."Shortcut Dimension 2 Code" = '02' then
+                            GraphicsHardwareSourced := true;
 
                 until (SalesLine.Next() = 0);
-                if ProductionItem and GraphicsDept[1] and not GraphicsDept[2] then
-                    GraphicsHardwareSourced := true;
+
+                if GraphicsHardwareSourced and HardWareDept then
+                    GraphicsHardwareSourced := false;
             end;
         end;
 
         //check for Graphics + Hardware Production:
-        //If there is at least one item which has have Replenishment System = Production with Department Dimension on all sales lines = ‘01’. 
+        //If there is at least one item which has have Replenishment System = Production with Department Dimension on any sales line = ‘01’. 
         if (not HardWareSourced) and (not GraphicsHardwareSourced) then begin
             ProductionItem := false;
-            HardWareDept := false;
+            GraphicsHardwareProduction := false;
 
             SalesLine.Reset();
             SalesLine.SetRange("Document Type", SalesHeaderPar."Document Type");
@@ -88,12 +92,11 @@ codeunit 52618 "ORB LIFT Update Status & Pick"
                     if ItemRec."Replenishment System" = ItemRec."Replenishment System"::"Prod. Order" then
                         ProductionItem := true;
 
-                    if SalesLine."Shortcut Dimension 2 Code" = '01' then
-                        HardWareDept := true;
+                    if ProductionItem then
+                        if SalesLine."Shortcut Dimension 2 Code" = '01' then
+                            GraphicsHardwareProduction := true;
 
-                until (SalesLine.Next() = 0);
-                if ProductionItem and HardWareDept then
-                    GraphicsHardwareProduction := true;
+                until (SalesLine.Next() = 0) or (GraphicsHardwareProduction);
             end;
         end;
 
