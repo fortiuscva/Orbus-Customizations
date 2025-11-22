@@ -1,39 +1,31 @@
-pageextension 52651 "ORB Item Card" extends "Item Card"
+pageextension 53401 "ORB Item Variants" extends "Item Variants"
 {
     layout
     {
-        addafter(Height)
+        addlast(Control1)
         {
-            field("ORB Master Qty. Count"; Rec."ORB Master Qty. Count")
+            field("ORB Unit Cost"; Rec."ORB Unit Cost")
             {
-                Caption = 'Master Carton QTY.';
                 ApplicationArea = All;
-                Tooltip = 'Quantity in the Master Carton';
+                ToolTip = 'Specifies the value of the Unit Cost field.', Comment = '%';
             }
-            field("ORB Bagging Quantity"; Rec."ORB Bagging Quantity")
+            field("ORB Department Dimension"; Rec."ORB Department Dimension")
             {
-                Caption = 'Bag QTY.';
                 ApplicationArea = All;
-                ToolTip = 'Quantity packed in a bag';
+                ToolTip = 'Specifies the value of the Department Dimension field.', Comment = '%';
             }
-        }
-        //LIFT
-        addlast(Item)
-        {
             field("ORB Material Id"; Rec."ORB Material Id")
             {
-                Caption = 'Material Id';
-                ApplicationArea = All;
+                ApplicationArea = all;
             }
             field("ORB Material Name"; Rec."ORB Material Name")
             {
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the Material Name field.', Comment = '%';
             }
-            field("ORB Stroage Type Id"; Rec."ORB Stroage Type Id")
+            field("ORB Storage Type Id"; Rec."ORB Storage Type Id")
             {
-                Caption = 'Storage Type Id';
-                ApplicationArea = All;
+                ApplicationArea = all;
             }
             field("ORB Storage Type Name"; Rec."ORB Storage Type Name")
             {
@@ -44,11 +36,6 @@ pageextension 52651 "ORB Item Card" extends "Item Card"
             {
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the Do Not Integrate field.', Comment = '%';
-            }
-            field("ORB Has Active Variants"; Rec."ORB Has Active Variants")
-            {
-                ApplicationArea = All;
-                ToolTip = 'Specifies the value of the Has Active Variants field.', Comment = '%';
             }
         }
     }
