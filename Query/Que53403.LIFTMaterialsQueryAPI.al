@@ -1,4 +1,4 @@
-query 52607 "ORB LIFT Materials Query API"
+query 53403 "ORB LIFT Materials Query API"
 {
     APIGroup = 'orbus';
     APIPublisher = 'orbus';
@@ -12,7 +12,7 @@ query 52607 "ORB LIFT Materials Query API"
     {
         dataitem(item; Item)
         {
-            DataItemTableFilter = "No." = filter('GVNL-ACV-FLATMX-98');
+            DataItemTableFilter = "ORB Material Id" = filter('<>0');
             column(no; "No.")
             {
             }
@@ -58,11 +58,12 @@ query 52607 "ORB LIFT Materials Query API"
             column(materialDimension; "Material Dimension")
             {
             }
+            column(systemCreatedAt; SystemCreatedAt)
+            {
+            }
+            column(systemModifiedAt; SystemModifiedAt)
+            {
+            }
         }
     }
-
-    trigger OnBeforeOpen()
-    begin
-
-    end;
 }
