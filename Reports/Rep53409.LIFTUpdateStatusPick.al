@@ -1,6 +1,6 @@
-report 53409 "ORB LIFT Auto Create Pick"
+report 53409 "ORB LIFT Update Status & Pick"
 {
-    Caption = 'LIFT Auto Create Pick & Update Order Status';
+    Caption = 'LIFT Update Order Status and Auto Create Pick';
     ProcessingOnly = true;
     ApplicationArea = all;
     UsageCategory = ReportsAndAnalysis;
@@ -14,7 +14,7 @@ report 53409 "ORB LIFT Auto Create Pick"
             trigger OnPreDataItem()
             begin
                 //SetFilter("Order Status", '<=%1', SalesHeader."Order Status"::"ReadyforPick/Release");
-                SetFilter("Shipment Date", '>=%1', Today());
+                SetFilter("Shipment Date", '<=%1', Today());
                 SetRange("ORB Lift Order", true);
             end;
 
@@ -28,7 +28,7 @@ report 53409 "ORB LIFT Auto Create Pick"
                 SalesLineRecLcl.SetRange(Type, SalesLineRecLcl.Type::Item);
                 SalesLineRecLcl.SetFilter("Outstanding Quantity", '<>%1', 0);
                 if not SalesLineRecLcl.IsEmpty() then
-                    if not Codeunit.Run(Codeunit::"ORB LIFT Auto SO Release&Pick", SalesHeader) then;
+                    if not Codeunit.Run(Codeunit::"ORB LIFT Update Status & Pick", SalesHeader) then;
 
             end;
 
