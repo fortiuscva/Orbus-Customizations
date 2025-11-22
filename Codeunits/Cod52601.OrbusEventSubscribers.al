@@ -982,18 +982,6 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
 
 
 
-    [EventSubscriber(ObjectType::Report, Report::"Create Invt Put-away/Pick/Mvmt", OnAfterInitWhseActivHeader, '', false, false)]
-    local procedure "Create Invt Put-away/Pick/Mvmt_OnAfterInitWhseActivHeader"(var WarehouseActivityHeader: Record "Warehouse Activity Header"; var WarehouseRequest: Record "Warehouse Request")
-    var
-        SalesHeaderRecLcl: Record "Sales Header";
-    begin
-        if SalesHeaderRecLcl.Get(SalesHeaderRecLcl."Document Type"::Order, WarehouseRequest."Source No.") then begin
-            SalesHeaderRecLcl."ORB Pick Created" := true;
-            SalesHeaderRecLcl.Modify(true);
-        end;
-    end;
-
-
 
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
