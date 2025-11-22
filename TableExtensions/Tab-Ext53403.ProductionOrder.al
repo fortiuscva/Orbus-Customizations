@@ -9,9 +9,9 @@ tableextension 53403 "ORB Production Order" extends "Production Order"
             CalcFormula = exist("Prod. Order Routing Line" where(Status = field(Status), "Prod. Order No." = field("No."), "ORB Fast Solutions" = const(True)));
             Editable = false;
         }
-        field(53401; "ORB Fast Solutions Sent"; Boolean)
+        field(53401; "ORB Fast Solutions Status Sent"; Boolean)
         {
-            Caption = 'Fast Solutions Sent';
+            Caption = 'Fast Solutions Status Sent';
             Editable = false;
         }
     }
