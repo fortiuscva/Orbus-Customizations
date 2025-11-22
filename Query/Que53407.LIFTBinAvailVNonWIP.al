@@ -14,7 +14,7 @@ query 53407 "ORB LIFT BinAvail V Non-WIP"
         {
             DataItemTableFilter =
                 "Variant Code" = filter(<> ''),
-                "Bin Code" = filter('<>LIFT*');
+                "Bin Code" = filter('..LIFF|LIFU..');
 
             column(Item_No; "Item No.") { }
             column(Location_Code; "Location Code") { }
