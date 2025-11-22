@@ -42,6 +42,7 @@ codeunit 53418 "ORB Update Fast Sol. SO Status"
 
                 if ProdRoutingLineRecLcl.FindSet() then
                     repeat
+                        ProdRoutingLineRecLcl.CalcFields("SFI Finished Quantity");
                         if ProdRoutingLineRecLcl."Input Quantity" > ProdRoutingLineRecLcl."SFI Finished Quantity" then begin
                             AllRoutingsValid := false;
                             break;
@@ -60,7 +61,7 @@ codeunit 53418 "ORB Update Fast Sol. SO Status"
 
             if ProdOrderLineRecLcl.FindSet() then
                 repeat
-                    if SalesHdrRecLcl.get(SalesHdrRecLcl."Document Type", ProdOrderLineRecLcl."ORB Sales Order No.") and SalesHdrRecLcl."ORB Lift Order" then begin
+                    if SalesHdrRecLcl.get(SalesHdrRecLcl."Document Type"::Order, ProdOrderLineRecLcl."ORB Sales Order No.") and SalesHdrRecLcl."ORB Lift Order" then begin
                         if not SendSOStatusUpdateForProdLine(
                             ProdOrderLineRecLcl,
                             IsSandbox,
@@ -102,7 +103,7 @@ codeunit 53418 "ORB Update Fast Sol. SO Status"
         Base64Convert: Codeunit "Base64 Convert";
         SalesLineRec: Record "Sales Line";
     begin
-        if not SalesLineRec.Get(ProdOrderLine."ORB Sales Order No.", ProdOrderLine."ORB Sales Order Line No.") then
+        if not SalesLineRec.Get(SalesLineRec."Document Type"::Order, ProdOrderLine."ORB Sales Order No.", ProdOrderLine."ORB Sales Order Line No.") then
             exit(false);
 
         if IsSandbox then
