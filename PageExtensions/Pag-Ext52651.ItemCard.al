@@ -65,6 +65,11 @@ pageextension 52651 "ORB Item Card" extends "Item Card"
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the Has Active Variants field.', Comment = '%';
             }
+            field("ORB Do Not Integrate (Sell)"; Rec."ORB Do Not Integrate (Sell)")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Do Not Integrate (Sellable) field.', Comment = '%';
+            }
         }
     }
 }
