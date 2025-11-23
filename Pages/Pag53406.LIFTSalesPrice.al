@@ -9,8 +9,8 @@ page 53406 "ORB LIFT Sales Price"
     EntityName = 'LIFTSalesPrice';
     EntitySetName = 'LIFTSalesPrice';
     PageType = API;
-    SourceTable = "Sales Price";
-    SourceTableView = sorting("Starting Date", "Ending Date") order(ascending) where("Sales Type" = filter("Customer Price Group"));
+    SourceTable = "ORB LIFT Sales Price";
+    SourceTableView = sorting("Item No.", "Sales Type", "Sales Code", "Minimum Quantity", "Starting Date") order(ascending) where("Sales Type" = filter("Customer Price Group"));
 
     layout
     {
@@ -30,13 +30,17 @@ page 53406 "ORB LIFT Sales Price"
                 {
                     Caption = 'Item No.';
                 }
-                field(unitOfMeasureCode; Rec."Unit of Measure Code")
+                field(unitOfMeasureCode; Rec."Unit Of Measure Code")
                 {
-                    Caption = 'Unit of Measure Code';
+                    Caption = 'Unit Of Measure Code';
                 }
                 field(minimumQuantity; Rec."Minimum Quantity")
                 {
                     Caption = 'Minimum Quantity';
+                }
+                field(maximumQuantity; Rec."ORB LIFT Maximum Quantity")
+                {
+                    Caption = 'Maximum Quantity';
                 }
                 field(unitPrice; Rec."Unit Price")
                 {
@@ -50,35 +54,7 @@ page 53406 "ORB LIFT Sales Price"
                 {
                     Caption = 'Ending Date';
                 }
-                field(currencyCode; Rec."Currency Code")
-                {
-                    Caption = 'Currency Code';
-                }
-                field(variantCode; Rec."Variant Code")
-                {
-                    Caption = 'Variant Code';
-                }
-                field(priceIncludesVAT; Rec."Price Includes VAT")
-                {
-                    Caption = 'Price Includes VAT';
-                }
-                field(allowLineDisc; Rec."Allow Line Disc.")
-                {
-                    Caption = 'Allow Line Disc.';
-                }
-                field(allowInvoiceDisc; Rec."Allow Invoice Disc.")
-                {
-                    Caption = 'Allow Invoice Disc.';
-                }
-                field(vatBusPostingGrPrice; Rec."VAT Bus. Posting Gr. (Price)")
-                {
-                    Caption = 'VAT Bus. Posting Gr. (Price)';
-                }
-                field(toBeExported; Rec."ORB To Be Exported")
-                {
-                    Caption = 'To Be Exported';
-                }
-                field(liftStatus; ORBLIFTStatus)
+                field(orbLIFTStatus; Rec."ORB LIFT Status")
                 {
                     Caption = 'Status';
                 }
@@ -90,18 +66,7 @@ page 53406 "ORB LIFT Sales Price"
                 {
                     Caption = 'SystemModifiedAt';
                 }
-
             }
         }
     }
-    trigger OnAfterGetRecord()
-    begin
-        if (Rec."Starting Date" < Today) and (Rec."Ending Date" > Today) then
-            ORBLIFTStatus := 'A'
-        else
-            ORBLIFTStatus := 'I';
-    end;
-
-    var
-        ORBLIFTStatus: Code[1];
 }

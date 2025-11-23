@@ -21,9 +21,7 @@ table 52622 "ORB Orbus Setup"
         field(6; "Enable Auto Print Pick"; Boolean)
         {
             Caption = 'Enable Auto Print Pick';
-            DataClassification = CustomerContent;
         }
-
     }
     keys
     {

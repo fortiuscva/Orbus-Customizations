@@ -165,10 +165,6 @@ page 53425 "ORB Price List Lines"
                 {
                     Caption = 'Unit of Measure Code';
                 }
-                field(orbToBeExported; Rec."ORB To Be Exported")
-                {
-                    Caption = 'To Be Exported';
-                }
                 field(systemCreatedAt; Rec.SystemCreatedAt)
                 {
                     Caption = 'SystemCreatedAt';
