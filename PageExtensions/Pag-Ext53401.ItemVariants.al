@@ -37,6 +37,11 @@ pageextension 53401 "ORB Item Variants" extends "Item Variants"
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the Do Not Integrate field.', Comment = '%';
             }
+            field("ORB Do Not Integrate (Sell)"; Rec."ORB Do Not Integrate (Sell)")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Do Not Integrate (Sellable) field.', Comment = '%';
+            }
         }
     }
 }

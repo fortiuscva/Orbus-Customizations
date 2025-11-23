@@ -49,7 +49,7 @@ tableextension 52631 "ORB Item" extends Item
         }
         field(53404; "ORB Do Not Integrate"; Boolean)
         {
-            Caption = 'Do Not Integrate';
+            Caption = 'Do Not Integrate (Material)';
             InitValue = true;
             DataClassification = CustomerContent;
         }
