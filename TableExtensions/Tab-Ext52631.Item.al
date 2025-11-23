@@ -94,13 +94,14 @@ tableextension 52631 "ORB Item" extends Item
         field(53409; "ORB Do Not Integrate (Sell)"; Boolean)
         {
             Caption = 'Do Not Integrate (Sellable)';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
     }
 
     trigger OnInsert()
     begin
         "ORB Do Not Integrate" := true;
+        "ORB Do Not Integrate (Sell)" := true;
     end;
 
 }
