@@ -21,6 +21,10 @@ table 52622 "ORB Orbus Setup"
         field(6; "Enable Auto Print Pick"; Boolean)
         {
             Caption = 'Enable Auto Print Pick';
+        }
+        field(4; "Last Sync DateTime"; DateTime)
+        {
+            Caption = 'Price Last Sync DateTime';
             DataClassification = CustomerContent;
         }
 
