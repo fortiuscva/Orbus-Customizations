@@ -10,7 +10,7 @@ page 53435 "ORB LIFT Regular Products"
     EntitySetName = 'RegularProductsAPI';
     PageType = API;
     SourceTable = Item;
-    SourceTableView = where(Blocked = const(false), "Department Dimension" = const('01'), "ORB Parent Item No." = filter(''), "ORB Do Not Integrate" = const(false));
+    SourceTableView = where(Blocked = const(false), "Department Dimension" = const('01'), "ORB Parent Item No." = filter(''), "ORB Do Not Integrate (Sell)" = const(false));
 
     layout
     {
@@ -25,6 +25,10 @@ page 53435 "ORB LIFT Regular Products"
                 field(description; Rec.Description)
                 {
                     Caption = 'Description';
+                }
+                field(productId; Rec."ORB Product Id")
+                {
+                    Caption = 'Product ID';
                 }
                 field(materialId; Rec."ORB Material Id")
                 {
@@ -74,34 +78,6 @@ page 53435 "ORB LIFT Regular Products"
                 {
                     Caption = 'SystemModifiedAt';
                 }
-                // field(shortDescription; Rec."Short Description")
-                // {
-                //     Caption = 'Short Description';
-                // }
-                // field(longDescription; Rec."Long Description")
-                // {
-                //     Caption = 'Long Description';
-                // }
-                // field(searchDescription; Rec."Search Description")
-                // {
-                //     Caption = 'Search Description';
-                // }
-                // field(blocked; Rec.Blocked)
-                // {
-                //     Caption = 'Blocked';
-                // }
-                // field(type; Rec."Type")
-                // {
-                //     Caption = 'Type';
-                // }
-                // field(divisionDimension; Rec."Division Dimension")
-                // {
-                //     Caption = 'Division Dimension';
-                // }
-                // field(materialDimension; Rec."Material Dimension")
-                // {
-                //     Caption = 'Material Dimension';
-                // }
             }
         }
     }
