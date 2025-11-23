@@ -1,4 +1,4 @@
-page 53426 "ORB Price List Lines"
+page 53425 "ORB Price List Lines"
 {
     APIGroup = 'Orbus';
     APIPublisher = 'Orbus';
