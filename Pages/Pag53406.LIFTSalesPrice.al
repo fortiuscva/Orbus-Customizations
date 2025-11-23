@@ -10,7 +10,7 @@ page 53406 "ORB LIFT Sales Price"
     EntitySetName = 'LIFTSalesPrice';
     PageType = API;
     SourceTable = "Sales Price";
-    SourceTableView = where("Sales Type" = filter("Customer Price Group"));
+    SourceTableView = sorting("Starting Date", "Ending Date") order(ascending) where("Sales Type" = filter("Customer Price Group"));
 
     layout
     {
@@ -74,13 +74,13 @@ page 53406 "ORB LIFT Sales Price"
                 {
                     Caption = 'VAT Bus. Posting Gr. (Price)';
                 }
-                field(coupledToDataverse; Rec."Coupled to Dataverse")
-                {
-                    Caption = 'Coupled to Dynamics 365 Sales';
-                }
                 field(toBeExported; Rec."ORB To Be Exported")
                 {
                     Caption = 'To Be Exported';
+                }
+                field(liftStatus; ORBLIFTStatus)
+                {
+                    Caption = 'Status';
                 }
                 field(systemCreatedAt; Rec.SystemCreatedAt)
                 {
@@ -94,13 +94,14 @@ page 53406 "ORB LIFT Sales Price"
             }
         }
     }
-    /*
     trigger OnAfterGetRecord()
     begin
-        SalesTypeText := Format(Rec."Sales Type");
+        if (Rec."Starting Date" < Today) and (Rec."Ending Date" > Today) then
+            ORBLIFTStatus := 'A'
+        else
+            ORBLIFTStatus := 'I';
     end;
 
     var
-        SalesTypeText: Text;
-    */
+        ORBLIFTStatus: Code[1];
 }
