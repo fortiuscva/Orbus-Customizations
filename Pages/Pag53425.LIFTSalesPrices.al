@@ -10,6 +10,7 @@ page 53425 "ORB LIFT Sales Prices"
     EntitySetName = 'LIFTSalesPrices';
     PageType = API;
     SourceTable = "Sales Price";
+    SourceTableView = where("Sales Type" = filter("Customer Price Group"));
 
     layout
     {
