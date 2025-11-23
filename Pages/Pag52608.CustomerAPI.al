@@ -225,6 +225,14 @@ page 52608 "ORB Customer API"
                 {
                     Caption = 'Last Invoice Date';
                 }
+                field(upsAccountNumber; Rec."UPS Account Number")
+                {
+                    Caption = 'UPS Account Number';
+                }
+                field(fedExAccountNumber; Rec."FedEx Account Number")
+                {
+                    Caption = 'FedEx Account Number';
+                }
             }
         }
     }
