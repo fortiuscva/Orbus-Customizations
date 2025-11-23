@@ -58,6 +58,14 @@ page 53406 "ORB LIFT Sales Price"
                 {
                     Caption = 'Status';
                 }
+                field(systemCreatedAt; Rec.SystemCreatedAt)
+                {
+                    Caption = 'SystemCreatedAt';
+                }
+                field(systemModifiedAt; Rec.SystemModifiedAt)
+                {
+                    Caption = 'SystemModifiedAt';
+                }
             }
         }
     }
