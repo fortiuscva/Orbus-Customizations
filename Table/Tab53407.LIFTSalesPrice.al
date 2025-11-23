@@ -81,6 +81,12 @@ table 53407 "ORB LIFT Sales Price"
         {
             Caption = 'Status';
         }
+        field(53401; "ORB LIFT Maximum Quantity"; Decimal)
+        {
+            Caption = 'Maximum Quantity';
+            DecimalPlaces = 0 : 5;
+            DataClassification = CustomerContent;
+        }
     }
     keys
     {
