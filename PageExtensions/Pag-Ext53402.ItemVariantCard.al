@@ -37,6 +37,11 @@ pageextension 53402 "ORB Item Variant Card" extends "Item Variant Card"
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the Do Not Integrate field.', Comment = '%';
             }
+            field("ORB Do Not Integrate (Sell)"; Rec."ORB Do Not Integrate (Sell)")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Do Not Integrate (Sellable) field.', Comment = '%';
+            }
         }
     }
 }

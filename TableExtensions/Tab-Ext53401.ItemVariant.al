@@ -35,7 +35,7 @@ tableextension 53401 "ORB Item Variant" extends "Item Variant"
         }
         field(53404; "ORB Do Not Integrate"; Boolean)
         {
-            Caption = 'Do Not Integrate';
+            Caption = 'Do Not Integrate (Material)';
             InitValue = true;
             DataClassification = CustomerContent;
         }
@@ -53,6 +53,12 @@ tableextension 53401 "ORB Item Variant" extends "Item Variant"
             CalcFormula = lookup(Item."Unit Cost" where("No." = field("Item No.")));
             Editable = false;
         }
+        field(53407; "ORB Do Not Integrate (Sell)"; Boolean)
+        {
+            Caption = 'Do Not Integrate (Sellable)';
+            DataClassification = CustomerContent;
+        }
+
     }
     trigger OnInsert()
     var
