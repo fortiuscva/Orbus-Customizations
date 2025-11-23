@@ -20,6 +20,21 @@ pageextension 52651 "ORB Item Card" extends "Item Card"
         //LIFT
         addlast(Item)
         {
+            field("ORB Parent Item No."; Rec."ORB Parent Item No.")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Parent Item No. field.', Comment = '%';
+            }
+            field("ORB Parent Product Id"; Rec."ORB Parent Product Id")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Parent Product ID field.', Comment = '%';
+            }
+            field("ORB Product Id"; Rec."ORB Product Id")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Product ID field.', Comment = '%';
+            }
             field("ORB Material Id"; Rec."ORB Material Id")
             {
                 Caption = 'Material Id';
@@ -49,6 +64,11 @@ pageextension 52651 "ORB Item Card" extends "Item Card"
             {
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the Has Active Variants field.', Comment = '%';
+            }
+            field("ORB Do Not Integrate (Sell)"; Rec."ORB Do Not Integrate (Sell)")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Do Not Integrate (Sellable) field.', Comment = '%';
             }
         }
     }
