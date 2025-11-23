@@ -65,6 +65,7 @@ tableextension 53401 "ORB Item Variant" extends "Item Variant"
         LIFTStorageType: Record "ORB LIFT Storage Type";
     begin
         "ORB Do Not Integrate" := true;
+        "ORB Do Not Integrate (Sell)" := true;
 
         LIFTStorageType.Reset();
         LIFTStorageType.SetRange(Name, Rec.Code);
