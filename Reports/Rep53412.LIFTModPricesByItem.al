@@ -15,8 +15,8 @@ report 53412 "ORB LIFT Mod. Prices By Item"
             trigger OnPreDataItem()
             begin
                 LIFTERPSetup.Get();
-                if Item.GetFilters = '' then
-                    error(FilterMustNotBeEmpty);
+                // if Item.GetFilters = '' then
+                //     error(FilterMustNotBeEmpty);
             end;
 
             trigger OnAfterGetRecord()
