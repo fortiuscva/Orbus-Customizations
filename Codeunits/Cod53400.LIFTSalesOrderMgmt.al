@@ -171,10 +171,12 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         SalesLine.SetRange("ORB LIFT Line ID", LIFTSalesLineBuffer."LIFT Line ID");
         if not SalesLine.FindLast() then begin
             SalesLine.Init();
+            SalesLine.SuspendStatusCheck(true);
             SalesLine.Validate("Document Type", LIFTSalesLineBuffer."Document Type");
             SalesLine.Validate("Document No.", LIFTSalesLineBuffer."Document No.");
             SalesLine.Validate("Line No.", LineNo);
             SalesLine.Insert(true);
+            SalesLine.SuspendStatusCheck(false);
         end;
 
         UpdateSalesLine(LIFTSalesLineBuffer);
