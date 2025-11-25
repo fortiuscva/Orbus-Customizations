@@ -58,6 +58,10 @@ page 53406 "ORB LIFT Sales Price"
                 {
                     Caption = 'Status';
                 }
+                field(toBeProcessed; Rec."To Be Processed")
+                {
+                    Caption = 'To Be Processed';
+                }
                 field(systemCreatedAt; Rec.SystemCreatedAt)
                 {
                     Caption = 'SystemCreatedAt';
