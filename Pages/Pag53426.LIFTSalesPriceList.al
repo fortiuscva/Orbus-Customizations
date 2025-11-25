@@ -52,6 +52,11 @@ page 53426 "ORB LIFT Sales Price List"
                 {
                     ToolTip = 'Specifies the value of the Status field.', Comment = '%';
                 }
+                field("To Be Processed"; Rec."To Be Processed")
+                {
+                    ToolTip = 'This field will be used to process sales price sync. in batches', Comment = '%';
+
+                }
                 field(SystemCreatedAt; Rec.SystemCreatedAt)
                 {
                     ToolTip = 'Specifies the value of the SystemCreatedAt field.', Comment = '%';
