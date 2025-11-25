@@ -14,6 +14,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         DShipPackOptions.RetrievePackageOptions(Enum::"DSHIP Document Type"::"Sales Order", LIFTSalesOrderBuffer."No.", '');
         UpdateSalesHeader(LIFTSalesOrderBuffer, true);
         UpdateDShipPackageOptions(DShipPackOptions, LIFTSalesOrderBuffer);
+        ReleaseSalesOrder(SalesHeader);
     end;
 
     procedure PropagateOnSalesHeaderModify(var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer")
