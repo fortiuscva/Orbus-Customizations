@@ -10,7 +10,7 @@ page 53437 "ORB LIFT KIT Components"
     EntitySetName = 'KITComponentsAPI';
     PageType = API;
     SourceTable = "BOM Component";
-    SourceTableView = where("ORB Do Not Integrate (Sell)" = const(false));
+    SourceTableView = where("ORB LIFT Parent Product ID" = filter(<> 0), "ORB Do Not Integrate (Sell)" = const(false));
     layout
     {
         area(Content)
@@ -37,7 +37,10 @@ page 53437 "ORB LIFT KIT Components"
                 {
                     Caption = 'No.';
                 }
-
+                field(productId; Rec."ORB LIFT Product ID")
+                {
+                    Caption = 'Product ID';
+                }
                 field(assemblyBOM; Rec."Assembly BOM")
                 {
                     Caption = 'Assembly BOM';
