@@ -19,6 +19,7 @@ pageextension 52666 "ORB LIFT Bins" extends Bins
             action("ORB Update Bin Location Id")
             {
                 ApplicationArea = all;
+                Caption = 'Update Bin Location Id';
 
                 trigger OnAction()
                 var
