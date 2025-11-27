@@ -21,7 +21,7 @@ page 53440 "ORB LIFT Sales Price Items"
                 {
                     Caption = 'Item No.';
                 }
-                field(processed; Rec."To Be Processed")
+                field(processed; Rec."Processed")
                 {
                     Caption = 'Processed';
                 }
