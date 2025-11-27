@@ -9,7 +9,7 @@ table 53412 "ORB LIFT Sales Price Items"
         {
             Caption = 'Item No.';
         }
-        field(10; "To Be Processed"; Boolean)
+        field(10; Processed; Boolean)
         {
             Caption = 'Processed';
         }
