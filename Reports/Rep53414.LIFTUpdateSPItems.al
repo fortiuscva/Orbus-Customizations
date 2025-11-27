@@ -19,10 +19,10 @@ report 53414 "ORB LIFT Update SP Items"
                 IF not LIFTSalesPriceItems.FindFirst() then begin
                     LIFTSalesPriceItems."Item No." := ItemNo;
                     LIFTSalesPriceItems.Processed := false;
-                    LIFTSalesPriceItems.Modify();
+                    LIFTSalesPriceItems.Insert(true);
                 end else begin
                     LIFTSalesPriceItems."Processed" := false;
-                    LIFTSalesPriceItems.Modify();
+                    LIFTSalesPriceItems.Modify(true);
                 end;
             end;
         end;
