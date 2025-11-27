@@ -1,10 +1,10 @@
-page 53426 "ORB LIFT Sales Price List"
+page 53442 "ORB LIFT Sales Price List"
 {
     ApplicationArea = All;
     Caption = 'LIFT Sales Price List';
     PageType = List;
     SourceTable = "ORB LIFT Sales Price";
-    UsageCategory = Lists;
+    UsageCategory = None;
 
     layout
     {
@@ -52,10 +52,13 @@ page 53426 "ORB LIFT Sales Price List"
                 {
                     ToolTip = 'Specifies the value of the Status field.', Comment = '%';
                 }
+                field("Sent to Celigo"; Rec."Sent to Celigo")
+                {
+                    ToolTip = 'Specifies the value of the Sent to Celigo field.', Comment = '%';
+                }
                 field("To Be Processed"; Rec."To Be Processed")
                 {
                     ToolTip = 'This field will be used to process sales price sync. in batches', Comment = '%';
-
                 }
                 field(SystemCreatedAt; Rec.SystemCreatedAt)
                 {
@@ -66,21 +69,6 @@ page 53426 "ORB LIFT Sales Price List"
                     ToolTip = 'Specifies the value of the SystemModifiedAt field.', Comment = '%';
                 }
             }
-        }
-    }
-    actions
-    {
-        area(Navigation)
-        {
-            action(LIFTSalesPriceItems)
-            {
-                Caption = 'Items';
-                ApplicationArea = All;
-                Promoted = true;
-                PromotedIsBig = true;
-                RunObject = page "ORB LIFT Sales Price Items";
-            }
-
         }
     }
 }
