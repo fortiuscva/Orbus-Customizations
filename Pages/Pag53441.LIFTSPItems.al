@@ -1,6 +1,7 @@
 page 53441 "ORB LIFT SP Items"
 {
     ApplicationArea = All;
+    PageType = List;
     Caption = 'LIFT Sales Price Items';
     DelayedInsert = true;
     SourceTable = "ORB LIFT Sales Price Items";
