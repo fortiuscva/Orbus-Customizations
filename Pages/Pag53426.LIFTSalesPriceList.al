@@ -68,4 +68,19 @@ page 53426 "ORB LIFT Sales Price List"
             }
         }
     }
+    actions
+    {
+        area(Navigation)
+        {
+            action(LIFTSalesPriceItems)
+            {
+                Caption = 'Items';
+                ApplicationArea = All;
+                Promoted = true;
+                PromotedIsBig = true;
+                RunObject = page "ORB LIFT Sales Price Items";
+            }
+
+        }
+    }
 }
