@@ -51,6 +51,8 @@ report 53412 "ORB LIFT Mod. Prices By Item"
                                                 LIFTSalesPrice.Insert(true);
                                                 AssignMaxQty(SalesPrice, LIFTSalesPrice);
                                                 LIFTSalesPrice."ORB LIFT Status" := 'A';
+                                                LIFTSalesPrice."To Be Processed" := true;
+                                                LIFTSalesPrice."Sent to Celigo" := false;
                                                 LIFTSalesPrice.Modify(true);
                                             end;
                                         end
@@ -73,6 +75,7 @@ report 53412 "ORB LIFT Mod. Prices By Item"
                                                     AssignMaxQty(SalesPrice, LIFTSalesPrice);
                                                     LIFTSalesPrice."ORB LIFT Status" := 'A';
                                                     LIFTSalesPrice."To Be Processed" := true;
+                                                    LIFTSalesPrice."Sent to Celigo" := false;
                                                     LIFTSalesPrice.Modify(true);
                                                 until CustomerPriceGroup.Next() = 0;
                                             end;

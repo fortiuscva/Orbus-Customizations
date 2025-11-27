@@ -21,6 +21,10 @@ page 53441 "ORB LIFT SP Items"
                 {
                     Caption = 'Processed';
                 }
+                field("Price Lines"; Rec."Price Lines")
+                {
+                    Caption = 'Price Lines';
+                }
                 field(systemCreatedAt; Rec.SystemCreatedAt)
                 {
                     Caption = 'SystemCreatedAt';
