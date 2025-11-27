@@ -1,4 +1,4 @@
-report 53413 "ORB Update Bin Location ID"
+report 53413 "ORB LIFT Update Location ID"
 {
     ApplicationArea = All;
     Caption = 'LIFT Update Bin Location Id';
@@ -8,6 +8,8 @@ report 53413 "ORB Update Bin Location ID"
     {
         dataitem(Bin; Bin)
         {
+            DataItemTableView = sorting("Location Code", Code);
+            RequestFilterFields = "Location Code", "Code";
 
             trigger OnPreDataItem()
             begin

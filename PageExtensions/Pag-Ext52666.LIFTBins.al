@@ -6,7 +6,6 @@ pageextension 52666 "ORB LIFT Bins" extends Bins
         {
             field("ORB Bin Location Id"; Rec."ORB Bin Location Id")
             {
-
                 ApplicationArea = all;
             }
         }
@@ -19,6 +18,7 @@ pageextension 52666 "ORB LIFT Bins" extends Bins
             action("ORB Update Bin Location Id")
             {
                 ApplicationArea = all;
+                Caption = 'Update Bin Location Id';
 
                 trigger OnAction()
                 var
@@ -28,7 +28,7 @@ pageextension 52666 "ORB LIFT Bins" extends Bins
                     BinRecLcl.SetRange("Location Code", rec."Location Code");
                     BinRecLcl.SetRange(Code, rec.Code);
                     if BinRecLcl.FindFirst() then
-                        Report.RunModal(Report::"ORB Update Bin Location ID", true, false, BinRecLcl);
+                        Report.RunModal(Report::"ORB LIFT Update Location ID", true, false, BinRecLcl);
                 end;
             }
         }
