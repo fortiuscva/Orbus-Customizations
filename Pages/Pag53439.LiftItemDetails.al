@@ -33,11 +33,6 @@ page 53439 "ORB Lift Item Details"
                         ApplicationArea = All;
                         ToolTip = 'Specifies the value of the Parent Item No. field.', Comment = '%';
                     }
-                    field("ORB Parent Product Id"; Rec."ORB Parent Product Id")
-                    {
-                        ApplicationArea = All;
-                        ToolTip = 'Specifies the value of the Parent Product ID field.', Comment = '%';
-                    }
                 }
                 group(Material)
                 {
