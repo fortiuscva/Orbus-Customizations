@@ -14,6 +14,7 @@ table 53412 "ORB LIFT Sales Price Items"
         field(10; Processed; Boolean)
         {
             Caption = 'Processed';
+            Editable = false;
         }
         field(15; "Price Lines"; Integer)
         {

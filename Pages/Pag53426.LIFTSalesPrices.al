@@ -4,6 +4,7 @@ page 53426 "ORB LIFT Sales Prices"
     Caption = 'LIFT Sales Prices';
     PageType = Worksheet;
     SourceTable = "ORB LIFT Sales Price";
+    Editable = false;
     UsageCategory = Tasks;
 
     layout
@@ -54,10 +55,12 @@ page 53426 "ORB LIFT Sales Prices"
                 }
                 field("Sent to Celigo"; Rec."Sent to Celigo")
                 {
+                    Editable = false;
                     ToolTip = 'Specifies the value of the Sent to Celigo field.', Comment = '%';
                 }
                 field("To Be Processed"; Rec."To Be Processed")
                 {
+                    Editable = false;
                     ToolTip = 'This field will be used to process sales price sync. in batches', Comment = '%';
                 }
                 field(SystemCreatedAt; Rec.SystemCreatedAt)
@@ -167,6 +170,57 @@ page 53426 "ORB LIFT Sales Prices"
                 {
                 }
 
+            }
+        }
+        area(Processing)
+        {
+            group(Celigo)
+            {
+                Caption = 'Celigo';
+                action(EnableSentToCeligo)
+                {
+                    Caption = 'Enable Sent to Celigo';
+                    ApplicationArea = all;
+                    Image = ChangeStatus;
+                    trigger OnAction()
+                    var
+                        LIFTSalesPrice: Record "ORB LIFT Sales Price";
+                    begin
+                        if Confirm('Do you want to Enable the Sent to Celigo flag?', false) then begin
+                            CurrPage.SetSelectionFilter(LIFTSalesPrice);
+                            LIFTSalesPrice.MarkedOnly(True);
+                            if LIFTSalesPrice.FindSet() then begin
+                                repeat
+                                    LIFTSalesPrice."Sent to Celigo" := true;
+                                    LIFTSalesPrice.Modify(true);
+                                until LIFTSalesPrice.Next() = 0;
+                            end;
+                            CurrPage.Update();
+                        end;
+                    end;
+                }
+                action(DisableSentToCeligo)
+                {
+                    Caption = 'Disable Sent to Celigo';
+                    ApplicationArea = all;
+                    Image = ChangeStatus;
+                    trigger OnAction()
+                    var
+                        LIFTSalesPrice: Record "ORB LIFT Sales Price";
+                    begin
+                        if Confirm('Do you want to Disable the Sent to Celigo flag?', false) then begin
+                            CurrPage.SetSelectionFilter(LIFTSalesPrice);
+                            LIFTSalesPrice.MarkedOnly(True);
+                            if LIFTSalesPrice.FindSet() then begin
+                                repeat
+                                    LIFTSalesPrice."Sent to Celigo" := false;
+                                    LIFTSalesPrice.Modify(true);
+                                until LIFTSalesPrice.Next() = 0;
+                            end;
+                            CurrPage.Update();
+                        end;
+                    end;
+                }
             }
         }
     }
