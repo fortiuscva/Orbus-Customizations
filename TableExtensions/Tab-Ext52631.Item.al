@@ -28,6 +28,7 @@ tableextension 52631 "ORB Item" extends Item
             Caption = 'Storage Type ID';
             TableRelation = "ORB LIFT Storage Type";
             DataClassification = ToBeClassified;
+            ValidateTableRelation = false;
             trigger OnValidate()
             begin
                 CalcFields("ORB Storage Type Name");
