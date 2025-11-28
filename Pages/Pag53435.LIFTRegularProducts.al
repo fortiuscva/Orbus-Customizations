@@ -10,7 +10,7 @@ page 53435 "ORB LIFT Regular Products"
     EntitySetName = 'RegularProductsAPI';
     PageType = API;
     SourceTable = Item;
-    SourceTableView = where(Blocked = const(false), "Department Dimension" = const('01'), "ORB Parent Item No." = filter(''), "ORB Do Not Integrate (Sell)" = const(false));
+    SourceTableView = where(Blocked = const(false), "Department Dimension" = const('01'), "ORB Do Not Integrate (Sell)" = const(false));
 
     layout
     {
@@ -69,6 +69,10 @@ page 53435 "ORB LIFT Regular Products"
                 field(orbHasActiveVariants; Rec."ORB Has Active Variants")
                 {
                     Caption = 'Has Active Variants';
+                }
+                field(orbParentItemNo; Rec."ORB Parent Item No.")
+                {
+                    Caption = 'Parent Item No.';
                 }
                 field(systemCreatedAt; Rec.SystemCreatedAt)
                 {

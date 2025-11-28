@@ -85,13 +85,6 @@ tableextension 52631 "ORB Item" extends Item
             Caption = 'Product ID';
             DataClassification = CustomerContent;
         }
-        field(53408; "ORB Parent Product Id"; Integer)
-        {
-            Caption = 'Parent Product ID';
-            FieldClass = FlowField;
-            CalcFormula = lookup(Item."ORB Product Id" where("ORB Parent Item No." = field("No.")));
-            Editable = false;
-        }
         field(53409; "ORB Do Not Integrate (Sell)"; Boolean)
         {
             Caption = 'Do Not Integrate (Sellable)';
