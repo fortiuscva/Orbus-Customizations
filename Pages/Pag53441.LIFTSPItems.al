@@ -5,6 +5,7 @@ page 53441 "ORB LIFT SP Items"
     Caption = 'LIFT Sales Price Items';
     DelayedInsert = true;
     SourceTable = "ORB LIFT Sales Price Items";
+    Editable = false;
     UsageCategory = Lists;
 
     layout
@@ -20,6 +21,7 @@ page 53441 "ORB LIFT SP Items"
                 field(processed; Rec."Processed")
                 {
                     Caption = 'Processed';
+                    Editable = false;
                 }
                 field("Price Lines"; Rec."Price Lines")
                 {
