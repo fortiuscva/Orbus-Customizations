@@ -9,7 +9,7 @@ report 53414 "ORB LIFT Update SP Items"
         if GuiAllowed then
             Window.Open(UpdateSPProcessedItemsMsg);
         Clear(LIFTSalesPriceByItemQuery);
-        LIFTSalesPriceByItemQuery.SetFilter(To_Be_Processed, '%1', true);
+        LIFTSalesPriceByItemQuery.SetFilter(To_Be_Processed, '%1', false);
         if LIFTSalesPriceByItemQuery.Open() then begin
             while LIFTSalesPriceByItemQuery.Read() do begin
                 ItemNo := LIFTSalesPriceByItemQuery.ItemNo;
@@ -18,10 +18,10 @@ report 53414 "ORB LIFT Update SP Items"
                 LIFTSalesPriceItems.SetRange("Item No.", ItemNo);
                 IF not LIFTSalesPriceItems.FindFirst() then begin
                     LIFTSalesPriceItems."Item No." := ItemNo;
-                    LIFTSalesPriceItems.Processed := false;
+                    LIFTSalesPriceItems.Processed := true;
                     LIFTSalesPriceItems.Insert(true);
                 end else begin
-                    LIFTSalesPriceItems."Processed" := false;
+                    LIFTSalesPriceItems."Processed" := true;
                     LIFTSalesPriceItems.Modify(true);
                 end;
             end;
