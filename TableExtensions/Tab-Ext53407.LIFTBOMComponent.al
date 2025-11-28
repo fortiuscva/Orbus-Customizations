@@ -19,9 +19,7 @@ tableextension 53407 "ORB LIFT BOM Component" extends "BOM Component"
         field(53402; "ORB LIFT Product ID"; Integer)
         {
             Caption = 'Product ID';
-            FieldClass = FlowField;
-            CalcFormula = lookup(Item."ORB Product Id" where("No." = field("No.")));
-            Editable = false;
+            DataClassification = CustomerContent;
         }
     }
 }
