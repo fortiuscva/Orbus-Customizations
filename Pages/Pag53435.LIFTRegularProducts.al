@@ -10,7 +10,7 @@ page 53435 "ORB LIFT Regular Products"
     EntitySetName = 'RegularProductsAPI';
     PageType = API;
     SourceTable = Item;
-    SourceTableView = where(Blocked = const(false), "Department Dimension" = const('01'), "ORB Do Not Integrate (Sell)" = const(false));
+    SourceTableView = where(Blocked = const(false), "ORB Do Not Integrate (Sell)" = const(false));
 
     layout
     {
