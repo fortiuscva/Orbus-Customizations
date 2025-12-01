@@ -161,6 +161,14 @@ page 52640 "ORB LIFT Item"
                 {
                     Caption = 'Order Tracking Policy';
                 }
+                field(materialId; Rec."ORB Material Id")
+                {
+                    Caption = 'Material Id';
+                }
+                field(storageTypeId; Rec."ORB Stroage Type Id")
+                {
+                    Caption = 'Storage Type Id';
+                }
             }
         }
     }
