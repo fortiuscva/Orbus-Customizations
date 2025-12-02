@@ -98,6 +98,7 @@ codeunit 52614 "ORB Create Inventory Pick"
         if IsInventoryPickCreated then begin
             //SalesHeader.get(SalesHeader."Document Type", SalesHeader."No.");
             SalesHeader."Order Status" := SalesHeader."Order Status"::"Pick Released";
+            SalesHeader."ORB Pick Created" := true;
             SalesHeader.Modify(true);
         end
         else begin

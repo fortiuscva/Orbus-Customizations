@@ -1,16 +1,17 @@
-page 53429 "ORB LIFT Materials API"
+page 53435 "ORB LIFT Regular Products"
 {
     APIGroup = 'orbus';
     APIPublisher = 'orbus';
     APIVersion = 'v2.0';
     ApplicationArea = All;
-    Caption = 'orbLIFTMaterialsAPI';
+    Caption = 'Regular Products API';
     DelayedInsert = true;
-    EntityName = 'LIFTMaterialsAPI';
-    EntitySetName = 'LIFTMaterialsAPI';
+    EntityName = 'RegularProductsAPI';
+    EntitySetName = 'RegularProductsAPI';
     PageType = API;
     SourceTable = Item;
-    // SourceTableView = where("No." = filter('GVNL-ACV-FLATMX-98'));
+    SourceTableView = where(Blocked = const(false), "ORB Do Not Integrate (Sell)" = const(false));
+
     layout
     {
         area(Content)
@@ -25,33 +26,25 @@ page 53429 "ORB LIFT Materials API"
                 {
                     Caption = 'Description';
                 }
-                field(shortDescription; Rec."Short Description")
+                field(productId; Rec."ORB Product Id")
                 {
-                    Caption = 'Short Description';
-                }
-                field(longDescription; Rec."Long Description")
-                {
-                    Caption = 'Long Description';
-                }
-                field(searchDescription; Rec."Search Description")
-                {
-                    Caption = 'Search Description';
+                    Caption = 'Product ID';
                 }
                 field(materialId; Rec."ORB Material Id")
                 {
                     Caption = 'Material Id';
                 }
+                field(materialName; Rec."ORB Material Name")
+                {
+                    Caption = 'Material Name';
+                }
                 field(storageTypeId; Rec."ORB Stroage Type Id")
                 {
                     Caption = 'Stroage Type Id';
                 }
-                field(blocked; Rec.Blocked)
+                field(storageTypeName; Rec."ORB Storage Type Name")
                 {
-                    Caption = 'Blocked';
-                }
-                field(type; Rec."Type")
-                {
-                    Caption = 'Type';
+                    Caption = 'Storage Type Name';
                 }
                 field(baseUnitOfMeasure; Rec."Base Unit of Measure")
                 {
@@ -65,13 +58,29 @@ page 53429 "ORB LIFT Materials API"
                 {
                     Caption = 'Department Dimension';
                 }
-                field(divisionDimension; Rec."Division Dimension")
+                field(unitCost; Rec."Unit Cost")
                 {
-                    Caption = 'Division Dimension';
+                    Caption = 'Unit Cost';
                 }
                 field(productLineDimension; Rec."Product Line Dimension")
                 {
                     Caption = 'Product Line Dimension';
+                }
+                field(orbHasActiveVariants; Rec."ORB Has Active Variants")
+                {
+                    Caption = 'Has Active Variants';
+                }
+                field(orbParentItemNo; Rec."ORB Parent Item No.")
+                {
+                    Caption = 'Parent Item No.';
+                }
+                field(systemCreatedAt; Rec.SystemCreatedAt)
+                {
+                    Caption = 'SystemCreatedAt';
+                }
+                field(systemModifiedAt; Rec.SystemModifiedAt)
+                {
+                    Caption = 'SystemModifiedAt';
                 }
             }
         }

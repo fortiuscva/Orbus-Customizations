@@ -5,7 +5,7 @@ page 53432 "ORB LIFT Material List"
     PageType = List;
     SourceTable = "ORB LIFT Material";
     UsageCategory = Lists;
-    Editable = false;
+    // Editable = false;
 
     layout
     {

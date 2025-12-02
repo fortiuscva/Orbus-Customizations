@@ -20,26 +20,53 @@ pageextension 52651 "ORB Item Card" extends "Item Card"
         //LIFT
         addlast(Item)
         {
-            field("ORB Material Id"; Rec."ORB Material Id")
+            group("ORB Lift")
             {
-                Caption = 'Material Id';
-                ApplicationArea = All;
-            }
-            field("ORB Material Name"; Rec."ORB Material Name")
-            {
-                ApplicationArea = All;
-                ToolTip = 'Specifies the value of the Material Name field.', Comment = '%';
-            }
-            field("ORB Stroage Type Id"; Rec."ORB Stroage Type Id")
-            {
-                Caption = 'Storage Type Id';
-                ApplicationArea = All;
-            }
-            field("ORB Storage Type Name"; Rec."ORB Storage Type Name")
-            {
-                ApplicationArea = All;
-                ToolTip = 'Specifies the value of the Storage Type Name field.', Comment = '%';
+                Caption = 'Lift';
+                field("ORB Product Id"; Rec."ORB Product Id")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Product ID field.', Comment = '%';
+                }
+                field("ORB Material Id"; Rec."ORB Material Id")
+                {
+                    Caption = 'Material Id';
+                    ApplicationArea = All;
+                }
+                field("ORB Stroage Type Id"; Rec."ORB Stroage Type Id")
+                {
+                    Caption = 'Storage Type Id';
+                    ApplicationArea = All;
+                }
+                field("ORB Do Not Integrate"; Rec."ORB Do Not Integrate")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Do Not Integrate field.', Comment = '%';
+                }
+                field("ORB Do Not Integrate (Sell)"; Rec."ORB Do Not Integrate (Sell)")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Do Not Integrate (Sellable) field.', Comment = '%';
+                }
             }
         }
     }
+    actions
+    {
+        addlast(Navigation_Item)
+        {
+            action("ORB Lift Details")
+            {
+                ApplicationArea = All;
+                Caption = 'Lift Details';
+                Promoted = true;
+                PromotedIsBig = true;
+                PromotedCategory = Category4;
+                RunObject = page "ORB Lift Item Details";
+                RunPageLink = "No." = field("No.");
+            }
+        }
+
+    }
+
 }

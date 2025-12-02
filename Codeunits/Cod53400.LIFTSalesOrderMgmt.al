@@ -49,8 +49,8 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             UpdateSalesHeader(LIFTSalesOrderBuffer, false);
             DShipPackOptions.RetrievePackageOptions(Enum::"DSHIP Document Type"::"Sales Order", LIFTSalesOrderBuffer."No.", '');
             UpdateDShipPackageOptions(DShipPackOptions, LIFTSalesOrderBuffer);
-            if OrderStatusReopen then
-                ReleaseSalesOrder(SalesHeader);
+            // if OrderStatusReopen then
+            //     ReleaseSalesOrder(SalesHeader);
         end
         else begin
             SalesInvoiceHeader.Reset();
@@ -213,10 +213,12 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
                 SalesLine."ORB LIFT Line ID" := LIFTSalesLineBuffer."LIFT Line ID";
             end;
         end else begin
-            SalesLine.Validate(Type, SalesLine.Type::Item);
+            IF LIFTSalesLineBuffer.Type = LIFTSalesLineBuffer.Type::Resource then
+                SalesLine.Validate(Type, SalesLine.Type::Resource)
+            else
+                SalesLine.Validate(Type, SalesLine.Type::Item);
             SalesLine.Validate("No.", LIFTSalesLineBuffer."No.");
             //SalesLine.Validate("Location Code", LIFTSalesLineBuffer."Location Code");
-
             SalesLine.Validate(Quantity, LIFTSalesLineBuffer.Quantity);
             //SalesLine.Validate("Shortcut Dimension 1 Code", LIFTSalesLineBuffer."Shortcut Dimension 1 Code");
             SalesLine.Validate("Shortcut Dimension 2 Code", LIFTSalesLineBuffer."Shortcut Dimension 2 Code");
@@ -296,13 +298,13 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         //SalesHeader.PerformManualReopen(SalesHeader);
     end;
 
-    local procedure ReleaseSalesOrder(var SalesHeader: Record "Sales Header")
-    var
-        ReleaseSalesDocument: Codeunit "Release Sales Document";
-    begin
-        ReleaseSalesDocument.PerformManualRelease(SalesHeader);
-        //SalesHeader.PerformManualRelease(SalesHeader);
-    end;
+    // local procedure ReleaseSalesOrder(var SalesHeader: Record "Sales Header")
+    // var
+    //     ReleaseSalesDocument: Codeunit "Release Sales Document";
+    // begin
+    //     ReleaseSalesDocument.PerformManualRelease(SalesHeader);
+    //     //SalesHeader.PerformManualRelease(SalesHeader);
+    // end;
 
     local procedure ClearDSPaymentDetails(var DShipPackOptions: Record "DSHIP Package Options")
     begin

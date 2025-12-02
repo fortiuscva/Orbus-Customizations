@@ -18,9 +18,9 @@ table 52622 "ORB Orbus Setup"
             Caption = 'Enable Auto Address Validation On Sales Order Release';
             DataClassification = CustomerContent;
         }
-        field(4; "Last Sync DateTime"; DateTime)
+        field(6; "Enable Auto Print Pick"; Boolean)
         {
-            Caption = 'Price Last Sync DateTime';
+            Caption = 'Enable Auto Print Pick';
             DataClassification = CustomerContent;
         }
 

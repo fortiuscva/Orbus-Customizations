@@ -5,7 +5,7 @@ page 53431 "ORB LIFT Storage Type List"
     PageType = List;
     SourceTable = "ORB LIFT Storage Type";
     UsageCategory = Lists;
-    Editable = false;
+    // Editable = false;
 
     layout
     {

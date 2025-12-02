@@ -17,6 +17,7 @@ tableextension 52631 "ORB Item" extends Item
             Caption = 'Material ID';
             TableRelation = "ORB LIFT Material";
             DataClassification = ToBeClassified;
+            ValidateTableRelation = false;
             trigger OnValidate()
             begin
                 CalcFields("ORB Material Name");
@@ -27,6 +28,7 @@ tableextension 52631 "ORB Item" extends Item
             Caption = 'Storage Type ID';
             TableRelation = "ORB LIFT Storage Type";
             DataClassification = ToBeClassified;
+            ValidateTableRelation = false;
             trigger OnValidate()
             begin
                 CalcFields("ORB Storage Type Name");
@@ -46,6 +48,54 @@ tableextension 52631 "ORB Item" extends Item
             CalcFormula = lookup("ORB LIFT Material"."Material Name" where("Material Id" = field("ORB Material Id")));
             Editable = false;
         }
+        field(53404; "ORB Do Not Integrate"; Boolean)
+        {
+            Caption = 'Do Not Integrate (Material)';
+            InitValue = true;
+            DataClassification = CustomerContent;
+        }
+        field(53405; "ORB Has Active Variants"; Boolean)
+        {
+            Caption = 'Has Active Variants';
+            FieldClass = FlowField;
+            CalcFormula = exist("Item Variant" where("Item No." = field("No."), Blocked = const(false)));
+            Editable = false;
+        }
+        modify("Department Dimension")
+        {
+            trigger OnAfterValidate()
+            begin
+                if "Department Dimension" <> xRec."Department Dimension" then begin
+                    if "Department Dimension" = '01' then
+                        Rec.Validate("ORB Stroage Type Id", 35884)
+                    else
+                        Rec.Validate("ORB Stroage Type Id", 0)
+                end;
+            end;
+        }
+        field(53406; "ORB Parent Item No."; Code[20])
+        {
+            Caption = 'Parent Item No.';
+            FieldClass = FlowField;
+            CalcFormula = lookup("BOM Component"."Parent Item No." where("No." = field("No.")));
+            Editable = false;
+        }
+        field(53407; "ORB Product Id"; Integer)
+        {
+            Caption = 'Product ID';
+            DataClassification = CustomerContent;
+        }
+        field(53409; "ORB Do Not Integrate (Sell)"; Boolean)
+        {
+            Caption = 'Do Not Integrate (Sellable)';
+            DataClassification = CustomerContent;
+        }
     }
+
+    trigger OnInsert()
+    begin
+        "ORB Do Not Integrate" := true;
+        "ORB Do Not Integrate (Sell)" := true;
+    end;
 
 }

@@ -58,6 +58,30 @@ page 53406 "ORB LIFT Sales Price"
                 {
                     Caption = 'Status';
                 }
+                field(currencyCode; Rec."Currency Code")
+                {
+                    Caption = 'Currency Code';
+                }
+                field(variantCode; Rec."Variant Code")
+                {
+                    Caption = 'Variant Code';
+                }
+                field(toBeProcessed; Rec."To Be Processed")
+                {
+                    Caption = 'To Be Processed';
+                }
+                field(sentToCeligo; Rec."Sent to Celigo")
+                {
+                    Caption = 'Sent to Celigo';
+                }
+                field(systemCreatedAt; Rec.SystemCreatedAt)
+                {
+                    Caption = 'SystemCreatedAt';
+                }
+                field(systemModifiedAt; Rec.SystemModifiedAt)
+                {
+                    Caption = 'SystemModifiedAt';
+                }
             }
         }
     }

@@ -113,6 +113,10 @@ page 53416 "ORB LIFT Customer API"
                 {
                     Caption = 'Tax Exempt';
                 }
+                field(shippingAdvice; Rec."Shipping Advice")
+                {
+                    Caption = 'Shipping Advice';
+                }
                 field(contactID; Rec."Contact ID")
                 {
                     Caption = 'Contact ID';

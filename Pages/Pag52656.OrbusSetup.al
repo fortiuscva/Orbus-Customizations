@@ -18,6 +18,10 @@ page 52656 "ORB Orbus Setup"
                 {
                     ToolTip = 'Specifies the value of the Enable User Pick Zone field.', Comment = '%';
                 }
+                field("Enable Auto Print Pick"; Rec."Enable Auto Print Pick")
+                {
+                    ApplicationArea = all;
+                }
             }
             group("Address Validation")
             {
@@ -25,14 +29,6 @@ page 52656 "ORB Orbus Setup"
                 field("Enable Auto Address Validation"; Rec."Enable Auto Address Validation")
                 {
                     ToolTip = 'Specifies the value of the Enable Auto Address Validation on Sales Order Release field.', Comment = '%';
-                }
-            }
-            group("Price Integration")
-            {
-                Caption = 'Price Integration';
-                field("Last Sync DateTime"; Rec."Last Sync DateTime")
-                {
-                    ToolTip = 'Specifies the value of the Last Sync DateTime field.', Comment = '%';
                 }
             }
         }

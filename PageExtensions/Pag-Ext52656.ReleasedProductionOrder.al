@@ -4,7 +4,11 @@ pageextension 52656 "ORB Released Production Order" extends "Released Production
     {
         addlast(General)
         {
-            field("ORB Fast Solutions Sent"; Rec."ORB Fast Solutions Sent")
+            field("ORB Fast Solutions Status Sent"; Rec."ORB Fast Solutions Status Sent")
+            {
+                ApplicationArea = all;
+            }
+            field("ORB LIFT Sales Order"; Rec."ORB LIFT Sales Order")
             {
                 ApplicationArea = all;
             }

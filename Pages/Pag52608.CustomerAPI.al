@@ -185,6 +185,10 @@ page 52608 "ORB Customer API"
                 {
                     Caption = 'Channel Code';
                 }
+                field(industryDimension; Rec."Shortcut Dimension 6 Code")
+                {
+                    Caption = 'Industry Dimension';
+                }
                 field(customerPostingGroup; Rec."Customer Posting Group")
                 {
                     Caption = 'Customer Posting Group';
@@ -204,6 +208,30 @@ page 52608 "ORB Customer API"
                 field(documentSendingProfile; Rec."Document Sending Profile")
                 {
                     Caption = 'Document Sending Profile';
+                }
+                field(primaryContactNo; Rec."Primary Contact No.")
+                {
+                    Caption = 'Primary Contact No.';
+                }
+                field(contact; Rec.Contact)
+                {
+                    Caption = 'Contact';
+                }
+                field(firstInvoiceDate; Rec."First Invoice Date")
+                {
+                    Caption = 'First Invoice Date';
+                }
+                field(lastInvoiceDate; Rec."Last Invoice Date")
+                {
+                    Caption = 'Last Invoice Date';
+                }
+                field(upsAccountNumber; Rec."UPS Account Number")
+                {
+                    Caption = 'UPS Account Number';
+                }
+                field(fedExAccountNumber; Rec."FedEx Account Number")
+                {
+                    Caption = 'FedEx Account Number';
                 }
             }
         }

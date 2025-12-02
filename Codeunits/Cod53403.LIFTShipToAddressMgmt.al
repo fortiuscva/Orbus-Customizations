@@ -8,22 +8,22 @@ codeunit 53403 "ORB LIFT Ship-To Address Mgmt"
             ShipToAddress.Validate(Code, LIFTShipToAddress.Code);
             ShipToAddress.Insert();
         end;
-        UpdateShipToAddress(LIFTShipToAddress);
+        UpdateShipToAddress(LIFTShipToAddress, true);
     end;
 
     procedure PropagateOnShipToAddressModify(var LIFTShipToAddress: Record "ORB LIFT Ship-To Address")
     begin
         if ShipToAddress.Get(LIFTShipToAddress."Customer No.", LIFTShipToAddress.Code) then
-            UpdateShipToAddress(LIFTShipToAddress);
+            UpdateShipToAddress(LIFTShipToAddress, false);
     end;
 
-    procedure UpdateShipToAddress(var LIFTShipToAddress: Record "ORB LIFT Ship-To Address")
+    procedure UpdateShipToAddress(var LIFTShipToAddress: Record "ORB LIFT Ship-To Address"; CreateShipToAddress: Boolean)
     begin
-        ValidateShipToAddressFields(LIFTShipToAddress);
+        ValidateShipToAddressFields(LIFTShipToAddress, CreateShipToAddress);
         ShipToAddress.Modify();
     end;
 
-    procedure ValidateShipToAddressFields(var LIFTShipToAddress: Record "ORB LIFT Ship-To Address")
+    procedure ValidateShipToAddressFields(var LIFTShipToAddress: Record "ORB LIFT Ship-To Address"; CreateShipToAddress: Boolean)
     begin
         ShipToAddress.Validate(Name, LIFTShipToAddress.Name);
         ShipToAddress.Validate("Name 2", LIFTShipToAddress."Name 2");
@@ -39,6 +39,9 @@ codeunit 53403 "ORB LIFT Ship-To Address Mgmt"
 
         if LIFTShipToAddress.Active = 'I' then
             ShipToAddress."ORB Active Status" := ShipToAddress."ORB Active Status"::InActive;
+
+        if CreateShipToAddress then
+            ShipToAddress.Validate("Tax Liable", LIFTShipToAddress."Tax Liable");
     end;
 
     var

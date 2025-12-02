@@ -64,6 +64,22 @@ page 53417 "ORB LIFT Ship-To Address List"
                 {
                     ToolTip = 'Specifies the value of the E-Mail field.', Comment = '%';
                 }
+                field(Active; Rec.Active)
+                {
+                    ToolTip = 'Specifies the value of the Active field.', Comment = '%';
+                }
+                field("Tax Liable"; Rec."Tax Liable")
+                {
+                    ToolTip = 'Specifies the value of the Tax Liable field.', Comment = '%';
+                }
+                field(SystemCreatedAt; Rec.SystemCreatedAt)
+                {
+                    ToolTip = 'Specifies the value of the SystemCreatedAt field.', Comment = '%';
+                }
+                field(SystemModifiedAt; Rec.SystemModifiedAt)
+                {
+                    ToolTip = 'Specifies the value of the SystemModifiedAt field.', Comment = '%';
+                }
             }
         }
     }

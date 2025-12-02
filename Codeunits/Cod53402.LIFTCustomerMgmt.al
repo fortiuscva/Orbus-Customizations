@@ -73,7 +73,7 @@ codeunit 53402 "ORB LIFT Customer Mgmt"
         if (LIFTCustomer."ORB Customer Support" <> '') then
             Customer.Validate("ORB Customer Support", LIFTCustomer."ORB Customer Support");
         Customer.Validate("ORB Business Development", LIFTCustomer."ORB Business Development");
-        // Customer.Validate("ORB LIFT Customer", LIFTCustomer."ORB LIFT Customer");
+        Customer.Validate("ORB LIFT Customer", LIFTCustomer."ORB LIFT Customer");
         // Customer.Validate("First Invoice Date", LIFTCustomer."First Invoice Date");
         Customer.Validate("Magento Contact No.", LIFTCustomer."Magento Contact No.");
         Customer.Validate("Magento Contact Name", LIFTCustomer."Magento Contact Name");
@@ -87,6 +87,12 @@ codeunit 53402 "ORB LIFT Customer Mgmt"
         Customer.Validate("Shortcut Dimension 6 Code", LIFTCustomer.Industry);
         if CreateCustomer then
             Customer.Validate("Tax Area Code", 'AVATAX');
+        if CreateCustomer then begin
+            if LIFTCustomer."Shipping Advice" = 'Complete' then
+                Customer.Validate("Shipping Advice", Customer."Shipping Advice"::Complete)
+            else if LIFTCustomer."Shipping Advice" = 'Partial' then
+                Customer.Validate("Shipping Advice", Customer."Shipping Advice"::Partial);
+        end;
     end;
 
     var
