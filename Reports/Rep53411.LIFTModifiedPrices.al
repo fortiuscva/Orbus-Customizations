@@ -10,6 +10,7 @@ report 53411 "ORB LIFT Modified Prices"
         ItemNo: Code[20];
     begin
         LIFTERPSetup.Get();
+        LIFTERPSetup.TestField("Price Last Sync DateTime");
         LastSyncDateTime := LIFTERPSetup."Price Last Sync DateTime";
 
         // Apply Modified Date Time filter to the Query
