@@ -213,10 +213,12 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
                 SalesLine."ORB LIFT Line ID" := LIFTSalesLineBuffer."LIFT Line ID";
             end;
         end else begin
-            SalesLine.Validate(Type, SalesLine.Type::Item);
+            IF LIFTSalesLineBuffer.Type = LIFTSalesLineBuffer.Type::Resource then
+                SalesLine.Validate(Type, SalesLine.Type::Resource)
+            else
+                SalesLine.Validate(Type, SalesLine.Type::Item);
             SalesLine.Validate("No.", LIFTSalesLineBuffer."No.");
             //SalesLine.Validate("Location Code", LIFTSalesLineBuffer."Location Code");
-
             SalesLine.Validate(Quantity, LIFTSalesLineBuffer.Quantity);
             //SalesLine.Validate("Shortcut Dimension 1 Code", LIFTSalesLineBuffer."Shortcut Dimension 1 Code");
             SalesLine.Validate("Shortcut Dimension 2 Code", LIFTSalesLineBuffer."Shortcut Dimension 2 Code");
