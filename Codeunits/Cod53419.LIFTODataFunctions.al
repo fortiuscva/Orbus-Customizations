@@ -6,7 +6,10 @@ codeunit 53419 "ORB LIFT OData Functions"
         SalesHeader: Record "Sales Header";
         ReleaseSalesDoc: Codeunit "Release Sales Document";
     begin
+        // Commit;
         SalesHeader.Get(SalesHeader."Document Type"::Order, SalesOrderNo);
-        ReleaseSalesDoc.Run(SalesHeader);
+        // ReleaseSalesDoc.Run(SalesHeader);
+        SalesHeader.PerformManualRelease();
+        // Database.SelectLatestVersion();
     end;
 }
