@@ -12,7 +12,7 @@ tableextension 52634 "ORB Job Queue Entry" extends "Job Queue Entry"
             Caption = 'Send Failure Notification';
             DataClassification = CustomerContent;
         }
-        field(52602; "ORB Notify All EmailRecipients"; Boolean)
+        field(52602; "ORB Notify All EmailRecipients"; Text[250])
         {
             Caption = 'Send Job Queue Failure Notification to all the Email Recipients';
             DataClassification = CustomerContent;
