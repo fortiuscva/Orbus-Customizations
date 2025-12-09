@@ -579,6 +579,38 @@ codeunit 52606 "ORB Functions"
             end;
     end;
 
+    procedure HandleFailedJob(var JobQueue: Record "Job Queue Entry")
+    var
+        Email: Codeunit Email;
+        EmailMessage: Codeunit "Email Message";
+        BodyText: Text;
+    begin
+        if JobQueue."ORB Set Ready When Failed" then begin
+            JobQueue.Status := JobQueue.Status::Ready;
+            JobQueue.Modify(true);
+        end;
+
+        if JobQueue."ORB Send Failure Notification" then begin
+
+            BodyText :=
+                'Job Queue Failure Detected<br><br>' +
+                'Entry No: ' + Format(JobQueue."Entry No.") + '<br>' +
+                'Description: ' + JobQueue.Description + '<br>' +
+                'Object Type: ' + Format(JobQueue."Object Type to Run") + '<br>' +
+                'Object ID: ' + Format(JobQueue."Object ID to Run") + '<br>' +
+                'Status: Error<br><br>' +
+                'Error Message:<br>' + JobQueue."Error Message";
+
+            EmailMessage.Create(
+                JobQueue."ORB Notify All EmailRecipients",
+                'Job Queue Failure Alert',
+                BodyText,
+                true);
+
+            if Email.Send(EmailMessage, Enum::"Email Scenario"::Default) then;
+        end;
+    end;
+
     var
         ReportSelectionWarehouse: Record "Report Selection Warehouse";
 }

@@ -1065,10 +1065,20 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         NewOrderType := 1;
     end;
 
+    [EventSubscriber(ObjectType::Table, Database::"Job Queue Entry",
+                         'OnAfterModifyEvent', '', false, false)]
+    local procedure OnJobQueueAfterModify(var Rec: Record "Job Queue Entry"; var xRec: Record "Job Queue Entry")
+    begin
+        if (Rec.Status = Rec.Status::Error) and
+           (xRec.Status <> xRec.Status::Error) then begin
+            OrbusFunctionsCUGbl.HandleFailedJob(Rec);
+        end;
+    end;
 
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
         OrbusFunctionsCUGbl: Codeunit "ORB Functions";
         OrbusSetup: Record "ORB Orbus Setup";
+
 
 }
