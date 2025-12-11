@@ -58,10 +58,12 @@ codeunit 53402 "ORB LIFT Customer Mgmt"
             Customer.Validate("Tax Liable", true);
         Customer.Validate("Currency Id", LIFTCustomer."Currency Id");
         Customer.Validate("Contact ID", LIFTCustomer."Contact ID");
-        if LIFTCustomer."ORB LIFT TermsStatus" = 'PENDING' then
-            Customer.Validate(Needs_Approval, Customer.Needs_Approval::noNeedsApproval)
-        else
-            Customer.Validate(Needs_Approval, Customer.Needs_Approval::yesNeedsApproval);
+        // if LIFTCustomer."ORB LIFT TermsStatus" = 'PENDING' then
+        //     Customer.Validate(Needs_Approval, Customer.Needs_Approval::noNeedsApproval)
+        // else
+        //     Customer.Validate(Needs_Approval, Customer.Needs_Approval::yesNeedsApproval);
+        if CreateCustomer then
+            Customer.Validate(Needs_Approval, Customer.Needs_Approval::noNeedsApproval);
         TPSAUpperCaseDesc := UpperCase(LIFTCustomer.TPSADescription);
         if TPSAUpperCaseDesc.Contains('UPS') then
             Customer.Validate("UPS Account Number", LIFTCustomer."UPS Account Number")
