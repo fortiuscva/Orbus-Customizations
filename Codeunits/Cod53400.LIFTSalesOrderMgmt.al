@@ -27,9 +27,6 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         ShippedOrderError: Label 'Sales Order %1 is already Shipped. And the Posted Sales Shipment is %2.';
         CancelledSalesOrderError: Label 'Sales Order %1 is already cancelled.';
     begin
-        //Sales Line UnReserve
-        SOLinesUnReserverCU.UnreserveSalesOrder(SalesHeader."No.");
-
         Clear(OrderStatusReopen);
         OrderStatusReopen := false;
         SalesHeader.Reset();
@@ -49,6 +46,10 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
                 ReOpenSalesOrder(SalesHeader);
                 OrderStatusReopen := true;
             end;
+
+            //Sales Line UnReserve
+            SOLinesUnReserverCU.UnreserveSalesOrder(SalesHeader."No.");
+
             ArchiveManagement.ArchiveSalesDocument(SalesHeader);
             UpdateSalesHeader(LIFTSalesOrderBuffer, false);
             DShipPackOptions.RetrievePackageOptions(Enum::"DSHIP Document Type"::"Sales Order", LIFTSalesOrderBuffer."No.", '');
