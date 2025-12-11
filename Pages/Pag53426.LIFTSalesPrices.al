@@ -4,7 +4,7 @@ page 53426 "ORB LIFT Sales Prices"
     Caption = 'LIFT Sales Prices';
     PageType = Worksheet;
     SourceTable = "ORB LIFT Sales Price";
-    Editable = false;
+    // Editable = false;
     UsageCategory = Tasks;
 
     layout
