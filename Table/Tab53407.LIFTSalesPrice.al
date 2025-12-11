@@ -91,14 +91,14 @@ table 53407 "ORB LIFT Sales Price"
         {
             Caption = 'To Be Processed';
             Description = 'This field had can used if we have to process entries in batches.';
-            Editable = false;
+            // Editable = false;
             DataClassification = CustomerContent;
         }
         field(53403; "Sent to Celigo"; Boolean)
         {
             Caption = 'Sent to Celigo';
             Description = 'This field will be used to identify if the record is picked from Celigo';
-            Editable = false;
+            // Editable = false;
             DataClassification = CustomerContent;
         }
 
