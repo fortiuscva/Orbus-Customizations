@@ -8,23 +8,17 @@ tableextension 52621 "ORB Sales Line" extends "Sales Line"
             var
                 salesHeader: Record "Sales Header";
                 SalesLine: Record "Sales Line";
-                SetGraphicsFlag: Boolean;
             begin
-                SetGraphicsFlag := false;
                 if not GuiAllowed then begin
                     SalesLine.SetRange("Document Type", Rec."Document Type");
                     SalesLine.SetRange("Document No.", Rec."Document No.");
                     SalesLine.SetRange("Shortcut Dimension 2 Code", '01');
-                    if not SalesLine.IsEmpty then
-                        SetGraphicsFlag := false
-                    else
-                        SetGraphicsFlag := true;
-                    if Rec."Shortcut Dimension 2 Code" = '01' then
-                        SetGraphicsFlag := false
-                end;
-                if SalesHeader.get(Rec."Document Type"::Order, Rec."Document No.") then begin
-                    SalesHeader.Validate("Graphics Only", SetGraphicsFlag);
-                    SalesHeader.Modify();
+                    if SalesLine.IsEmpty then begin
+                        if SalesHeader.get(Rec."Document Type"::Order, Rec."Document No.") then begin
+                            SalesHeader.Validate("Graphics Only", true);
+                            SalesHeader.Modify();
+                        end;
+                    end;
                 end;
             end;
         }
@@ -144,13 +138,14 @@ tableextension 52621 "ORB Sales Line" extends "Sales Line"
             exit;
         Rec.Validate("ORB Explode", true);
         Rec.Modify();
-        if Rec."Shortcut Dimension 2 Code" = '01' then
-            if SalesHeader.get(Rec."Document Type"::Order, Rec."Document No.") then
-                if not SalesHeader."Graphics Only" then begin
-                    SalesHeader.Validate("Graphics Only", true);
+        if Rec."Shortcut Dimension 2 Code" = '01' then begin
+            if SalesHeader.get(Rec."Document Type"::Order, Rec."Document No.") then begin
+                if SalesHeader."Graphics Only" then begin
+                    SalesHeader.Validate("Graphics Only", false);
                     SalesHeader.Modify();
                 end;
-
+            end;
+        end;
     end;
 
     trigger OnAfterInsert()
