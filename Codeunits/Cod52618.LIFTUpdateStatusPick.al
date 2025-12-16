@@ -110,7 +110,7 @@ codeunit 52618 "ORB LIFT Update Status & Pick"
             if not SalesHeaderPar."ORB Pick Created" then begin
                 WhseActHeader.Reset();
                 WhseActHeader.SetRange("Source Document", WhseActHeader."Source Document"::"Sales Order");
-                WhseActHeader.SetRange("Source No.", '<>%1', '');
+                WhseActHeader.SetRange("Source No.", SalesHeaderPar."No.");
                 if not WhseActHeader.FindFirst() then begin
                     SalesHeaderPar.Validate("Order Status", SalesHeaderPar."Order Status"::"ReadyforPick/Release");
                     SalesHeaderPar.Modify(true);
