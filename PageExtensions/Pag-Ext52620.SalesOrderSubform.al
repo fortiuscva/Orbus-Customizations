@@ -17,6 +17,12 @@ pageextension 52620 "ORB Sales Order Subform" extends "Sales Order Subform"
                 ToolTip = 'Specifies the value of the LIFT Step No. field.', Comment = '%';
                 Editable = false;
             }
+            field("ORB Family Dimension"; Rec."ORB Family Dimension")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of Family Dimension';
+                Editable = false;
+            }
         }
         addafter("Line Discount %")
         {

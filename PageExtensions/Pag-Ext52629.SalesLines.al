@@ -31,6 +31,11 @@ pageextension 52629 "ORB Sales Lines" extends "Sales Lines"
             {
                 ApplicationArea = All;
             }
+            field("ORB Family Dimension"; Rec."ORB Family Dimension")
+            {
+                ApplicationArea = All;
+            }
+
         }
     }
 }
