@@ -8,6 +8,7 @@ tableextension 52621 "ORB Sales Line" extends "Sales Line"
             var
                 salesHeader: Record "Sales Header";
                 SalesLine: Record "Sales Line";
+                ItemRecLcl: Record Item;
             begin
                 if not GuiAllowed then begin
                     SalesLine.SetRange("Document Type", Rec."Document Type");
@@ -18,6 +19,9 @@ tableextension 52621 "ORB Sales Line" extends "Sales Line"
                             SalesHeader.Validate("Graphics Only", true);
                             SalesHeader.Modify();
                         end;
+                    end;
+                    If ItemRecLcl.Get("No.") then begin
+                        Rec."ORB Family Dimension" := ItemRecLcl."ORB Family Dimension";
                     end;
                 end;
             end;
@@ -126,6 +130,13 @@ tableextension 52621 "ORB Sales Line" extends "Sales Line"
             Editable = false;
             TableRelation = "ORB LIFT Subway Map Steps";
             ValidateTableRelation = false;
+            DataClassification = CustomerContent;
+        }
+        field(53403; "ORB Family Dimension"; Text[20])
+        {
+            Caption = 'Family Dimension';
+            Editable = false;
+            TableRelation = "Dimension Value";
             DataClassification = CustomerContent;
         }
     }
