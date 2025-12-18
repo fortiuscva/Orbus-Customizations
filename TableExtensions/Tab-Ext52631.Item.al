@@ -73,7 +73,7 @@ tableextension 52631 "ORB Item" extends Item
                 DefaultDimension.SetRange("No.", Rec."No.");
                 DefaultDimension.SetFilter("Dimension Code", 'FAMILY');
                 if DefaultDimension.FindFirst() then begin
-                    DefaultDimension.Validate("Dimension Value Code", Rec."Department Dimension");
+                    DefaultDimension."Dimension Value Code" := Rec."ORB Family Dimension";
                     DefaultDimension.Modify();
                 end else begin
                     DefaultDimension.Init();
@@ -81,8 +81,7 @@ tableextension 52631 "ORB Item" extends Item
                     DefaultDimension."Table ID" := 27;
                     DefaultDimension."No." := Rec."No.";
                     DefaultDimension."Parent Type" := DefaultDimension."Parent Type"::Item;
-                    DefaultDimension.Validate("Dimension Value Code", Rec."Department Dimension");
-                    DefaultDimension."Dimension Value Code" := Rec."Department Dimension";
+                    DefaultDimension."Dimension Value Code" := Rec."ORB Family Dimension";
                     DefaultDimension.Insert();
                 end;
             end;
