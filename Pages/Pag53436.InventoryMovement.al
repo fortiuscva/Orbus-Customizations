@@ -1,23 +1,22 @@
-page 53435 "ORB Inventory Movement"
+page 53436 "ORB Inventory Movement"
 {
     PageType = CardPart;
     ApplicationArea = All;
     UsageCategory = Administration;
     SourceTable = "Warehouse Activity Header";
+    SourceTableView = where("No." = FILTER('INVMOV*'));
 
     layout
     {
         area(Content)
         {
-            cuegroup(InventoryMovement)
+            cuegroup("Inventory Movement")
             {
                 field(MovementCountVarLcl; MovementCountVarLcl)
                 {
                     Caption = 'Inventory Movements';
                     ApplicationArea = All;
-
                 }
-
             }
         }
     }
