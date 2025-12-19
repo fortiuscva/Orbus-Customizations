@@ -6,8 +6,8 @@ codeunit 53402 "ORB LIFT Customer Mgmt"
             Customer.Init();
             Customer."No." := LIFTCustomer."No.";
             Customer.Insert(true);
+            UpdateCustomer(LIFTCustomer, true);
         end;
-        UpdateCustomer(LIFTCustomer, true);
     end;
 
     procedure PropagateOnCustomerModify(var LIFTCustomer: Record "ORB LIFT Customer Buffer")
