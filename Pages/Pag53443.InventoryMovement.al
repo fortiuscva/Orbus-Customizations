@@ -15,7 +15,14 @@ page 53443 "ORB Inventory Movement"
                 field(MovementCountVarLcl; MovementCountVarLcl)
                 {
                     Caption = 'Inventory Movements';
-                    ApplicationArea = All;
+                    ApplicationArea = Basic, Suite;
+
+                    trigger OnDrillDown()
+                    var
+                        InventoryMovementPageLcl: Page "Inventory Movements";
+                    begin
+                        InventoryMovementPageLcl.run();
+                    end;
                 }
             }
         }
