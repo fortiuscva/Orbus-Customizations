@@ -4,7 +4,7 @@ report 53408 "ORB CadLink Item Edit"
     UsageCategory = ReportsAndAnalysis;
     ApplicationArea = All;
     DefaultRenderingLayout = Cadlink;
-    //ProcessingOnly = true;
+    ProcessingOnly = true;
 
     dataset
     {
