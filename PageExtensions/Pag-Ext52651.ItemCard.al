@@ -38,6 +38,16 @@ pageextension 52651 "ORB Item Card" extends "Item Card"
                     Caption = 'Storage Type Id';
                     ApplicationArea = All;
                 }
+                field("ORB Warehouse Location Id"; Rec."ORB Warehouse Location Id")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Warehouse Location Id field.', Comment = '%';
+                }
+                field("ORB Product Line Dimension Id"; Rec."ORB Product Line Dimension Id")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Product Line Dimension Id field.', Comment = '%';
+                }
                 field("ORB Do Not Integrate"; Rec."ORB Do Not Integrate")
                 {
                     ApplicationArea = All;
