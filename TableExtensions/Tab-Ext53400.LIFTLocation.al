@@ -13,5 +13,10 @@ tableextension 53400 "ORB LIFT Location" extends Location
             Caption = 'Location Id';
             DataClassification = ToBeClassified;
         }
+        field(53401; "ORB Warehouse Location Id"; Integer)
+        {
+            Caption = 'Warehouse Location Id';
+            DataClassification = CustomerContent;
+        }
     }
 }
