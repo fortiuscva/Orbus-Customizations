@@ -117,10 +117,28 @@ tableextension 52631 "ORB Item" extends Item
             Caption = 'Do Not Integrate (Sellable)';
             DataClassification = CustomerContent;
         }
+        field(53411; "ORB Ship From Warehouse"; Code[10])
+        {
+            Caption = 'Ship From Warehouse';
+            TableRelation = Location;
+            DataClassification = CustomerContent;
+            trigger OnValidate()
+            var
+                LocationRec: Record Location;
+            begin
+                if "ORB Ship From Warehouse" <> xRec."ORB Ship From Warehouse" then begin
+                    if "ORB Ship From Warehouse" <> '' then begin
+                        LocationRec.Get("ORB Ship From Warehouse");
+                        Validate("ORB Warehouse Location Id", LocationRec."ORB Warehouse Location Id");
+                    end else
+                        Validate("ORB Warehouse Location Id", 0);
+                end;
+            end;
+        }
         field(53412; "ORB Warehouse Location Id"; Integer)
         {
             Caption = 'Warehouse Location Id';
-            TableRelation = Location."ORB Warehouse Location Id";
+            Editable = false;
             DataClassification = CustomerContent;
         }
         field(53415; "ORB Product Line Dimension Id"; Integer)
