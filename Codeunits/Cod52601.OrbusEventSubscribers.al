@@ -1035,8 +1035,11 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         DeletedSalesOrdersRecLcl: Record "ORB LIFT Deleted Sales Orders";
         SalesHdrRecLcl: Record "Sales Header";
     begin
-        if SalesHdrRecLcl.get(SalesHdrRecLcl."Document Type", SalesLine."Document No.") and not SalesHdrRecLcl."ORB Lift Order" then
-            exit;
+        // if SalesHdrRecLcl.get(SalesHdrRecLcl."Document Type", SalesLine."Document No.") and not SalesHdrRecLcl."ORB Lift Order" then
+        //     exit;
+        if SalesHdrRecLcl.Get(SalesLine."Document Type", SalesLine."Document No.") then
+            if not SalesHdrRecLcl."ORB Lift Order" then
+                exit;
 
         if (SalesLine."Document Type" = SalesLine."Document Type"::Order) and (SalesLine.Type = SalesLine.Type::Item) and
         (SalesLine."Outstanding Quantity" = 0) then begin
