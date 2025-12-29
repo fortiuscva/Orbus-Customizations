@@ -47,6 +47,10 @@ tableextension 52616 "ORB Sales Cr.Memo Header" extends "Sales Cr.Memo Header"
         }
         //field(52633 ; used on sales header.
         //field(52634 ; used on sales header.
+        field(52652; "ORB Lift Order"; Boolean)
+        {
+            Caption = 'Lift Order';
+        }
         field(52653; "ORB Ship-to Contact Name (API)"; text[100])
         {
             Caption = 'Ship-to Contact Name (API)';
