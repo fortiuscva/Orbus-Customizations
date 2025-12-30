@@ -26,6 +26,7 @@ codeunit 53417 "ORB LIFT Update SO Status"
                     DeletedSalesOrdersRecLcl."Shipped Send to LIFT" := true;
                 end;
                 DeletedSalesOrdersRecLcl.Modify();
+                Commit;
             until DeletedSalesOrdersRecLcl.Next() = 0;
 
         // Update Invoice Status
@@ -44,6 +45,7 @@ codeunit 53417 "ORB LIFT Update SO Status"
                             DeletedSalesOrdersRecLcl."Invoice Send to LIFT" := true;
                         end;
                         DeletedSalesOrdersRecLcl.Modify();
+                        Commit;
                     end;
                 end;
             until DeletedSalesOrdersRecLcl.Next() = 0;
@@ -62,6 +64,7 @@ codeunit 53417 "ORB LIFT Update SO Status"
                     DeletedSalesOrdersRecLcl."Step 18 Completed" := true;
                 end;
                 DeletedSalesOrdersRecLcl.Modify();
+                Commit;
             until DeletedSalesOrdersRecLcl.Next() = 0;
     end;
 
