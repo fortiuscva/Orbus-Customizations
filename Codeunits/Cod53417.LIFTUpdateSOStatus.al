@@ -66,7 +66,7 @@ codeunit 53417 "ORB LIFT Update SO Status"
                 Commit;
                 if DeletedSalesOrdersRecLcl."API Result".StartsWith('{"error":"Incorrect step number 18 for line') then begin
                     CompleteStep18ForDeletedSalesOrder(DeletedSalesOrdersRecLcl);
-                    DeletedSalesOrdersRecLcl.Modify();
+                    DeletedSalesOrdersRecLcl.Modify(true);
                     Commit;
                 end;
             until DeletedSalesOrdersRecLcl.Next() = 0;
