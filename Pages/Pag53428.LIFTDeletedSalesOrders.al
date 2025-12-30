@@ -37,6 +37,10 @@ page 53428 "ORB LIFT Deleted Sales Orders"
                 {
                     ToolTip = 'Specifies the value of the Invoice Send to LIFT field.', Comment = '%';
                 }
+                field("Step 18 Completed"; Rec."Step 18 Completed")
+                {
+                    ToolTip = 'Specifies the value of the Step 18 Completed field.', Comment = '%';
+                }
                 field("API Result"; Rec."API Result")
                 {
 
