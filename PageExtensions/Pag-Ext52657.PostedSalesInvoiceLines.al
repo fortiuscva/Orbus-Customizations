@@ -16,6 +16,10 @@ pageextension 52657 "ORB Posted Sales Invoice Lines" extends "Posted Sales Invoi
             {
                 ApplicationArea = All;
             }
+            field("ORB Family Dimension"; Rec."ORB Family Dimension")
+            {
+                ApplicationArea = All;
+            }
         }
     }
 }
