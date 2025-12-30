@@ -57,7 +57,6 @@ codeunit 53417 "ORB LIFT Update SO Status"
         DeletedSalesOrdersRecLcl.SetRange("Step 18 Completed", false);
         if DeletedSalesOrdersRecLcl.FindSet() then
             repeat
-
                 if SendSOStatusStep18Update(DeletedSalesOrdersRecLcl, EnvironmentInfoCU.IsSandbox(),
                     LIFTERPSetupRecLcl."SO Status API - QA", LIFTERPSetupRecLcl."SO Status API - Production",
                     LIFTERPSetupRecLcl."API Username", LIFTERPSetupRecLcl."API Password") then begin
@@ -65,6 +64,11 @@ codeunit 53417 "ORB LIFT Update SO Status"
                 end;
                 DeletedSalesOrdersRecLcl.Modify();
                 Commit;
+                if DeletedSalesOrdersRecLcl."API Result".StartsWith('{"error":"Incorrect step number 18 for line') then begin
+                    CompleteStep18ForDeletedSalesOrder(DeletedSalesOrdersRecLcl);
+                    DeletedSalesOrdersRecLcl.Modify();
+                    Commit;
+                end;
             until DeletedSalesOrdersRecLcl.Next() = 0;
     end;
 
@@ -132,5 +136,12 @@ codeunit 53417 "ORB LIFT Update SO Status"
         DeletedSalesOrdersRecLcl."API Result" := CopyStr(ResultText, 1, 1024);
 
         exit(Response.HttpStatusCode = 200);
+    end;
+
+    local procedure CompleteStep18ForDeletedSalesOrder(var DeletedSalesOrdersRecPar: Record "ORB LIFT Deleted Sales Orders")
+    begin
+        DeletedSalesOrdersRecPar."Step 18 Completed in LIFT ERP" := true;
+        DeletedSalesOrdersRecPar."Step 18 Completed" := true;
+        DeletedSalesOrdersRecPar."API Result" := '';
     end;
 }

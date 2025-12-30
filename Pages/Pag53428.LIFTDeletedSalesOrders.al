@@ -43,7 +43,12 @@ page 53428 "ORB LIFT Deleted Sales Orders"
                 }
                 field("API Result"; Rec."API Result")
                 {
-
+                    ToolTip = 'Specifies the value of the API Result field.', Comment = '%';
+                }
+                field("Step 18 Completed in LIFT ERP"; Rec."Step 18 Completed in LIFT ERP")
+                {
+                    Visible = false;
+                    ToolTip = 'Specifies the value of the Step 18 Completed in LIFT ERP field.', Comment = '%';
                 }
             }
         }

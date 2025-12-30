@@ -37,6 +37,10 @@ table 53409 "ORB LIFT Deleted Sales Orders"
         {
             Caption = 'Step 18 Completed';
         }
+        field(10; "Step 18 Completed in LIFT ERP"; Boolean)
+        {
+            Caption = 'Step 18 Completed in LIFT ERP';
+        }
     }
     keys
     {
