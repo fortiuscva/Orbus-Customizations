@@ -63,7 +63,7 @@ tableextension 52631 "ORB Item" extends Item
         }
         field(53408; "ORB Family Dimension"; Text[20])
         {
-            TableRelation = "Dimension Value".Code where("Dimension Code" = filter('FAMILY'));
+            TableRelation = "Dimension Value".Code where("Dimension Code" = filter('PRDFAM'));
             ValidateTableRelation = true;
             trigger OnValidate()
             var
@@ -71,13 +71,13 @@ tableextension 52631 "ORB Item" extends Item
             begin
                 DefaultDimension.Reset();
                 DefaultDimension.SetRange("No.", Rec."No.");
-                DefaultDimension.SetFilter("Dimension Code", 'FAMILY');
+                DefaultDimension.SetFilter("Dimension Code", 'PRDFAM');
                 if DefaultDimension.FindFirst() then begin
                     DefaultDimension."Dimension Value Code" := Rec."ORB Family Dimension";
                     DefaultDimension.Modify();
                 end else begin
                     DefaultDimension.Init();
-                    DefaultDimension."Dimension Code" := 'FAMILY';
+                    DefaultDimension."Dimension Code" := 'PRDFAM';
                     DefaultDimension."Table ID" := 27;
                     DefaultDimension."No." := Rec."No.";
                     DefaultDimension."Parent Type" := DefaultDimension."Parent Type"::Item;
