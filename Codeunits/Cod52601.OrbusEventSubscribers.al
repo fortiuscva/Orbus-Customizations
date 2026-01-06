@@ -1072,10 +1072,8 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
                          'OnAfterModifyEvent', '', false, false)]
     local procedure OnJobQueueAfterModify(var Rec: Record "Job Queue Entry"; var xRec: Record "Job Queue Entry")
     begin
-        if (Rec.Status = Rec.Status::Error) and
-           (xRec.Status <> xRec.Status::Error) then begin
+        if Rec.Status = Rec.Status::Error then
             OrbusFunctionsCUGbl.HandleFailedJob(Rec);
-        end;
     end;
 
     var

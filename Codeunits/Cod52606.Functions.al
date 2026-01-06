@@ -587,18 +587,16 @@ codeunit 52606 "ORB Functions"
     begin
         if JobQueue."ORB Set Ready When Failed" then begin
             JobQueue.Status := JobQueue.Status::Ready;
-            JobQueue.Modify(true);
+            JobQueue.Modify();
         end;
 
         if JobQueue."ORB Send Failure Notification" then begin
 
             BodyText :=
-                'Job Queue Failure Detected<br><br>' +
-                'Entry No: ' + Format(JobQueue."Entry No.") + '<br>' +
+                'Job Queue has failed with the following error message<br><br>' +
                 'Description: ' + JobQueue.Description + '<br>' +
                 'Object Type: ' + Format(JobQueue."Object Type to Run") + '<br>' +
                 'Object ID: ' + Format(JobQueue."Object ID to Run") + '<br>' +
-                'Status: Error<br><br>' +
                 'Error Message:<br>' + JobQueue."Error Message";
 
             EmailMessage.Create(
