@@ -20,7 +20,9 @@ tableextension 52621 "ORB Sales Line" extends "Sales Line"
                             SalesHeader.Modify();
                         end;
                     end;
-                    If ItemRecLcl.Get("No.") then begin
+                end;
+                If (Rec.Type = Rec.Type::Item) and (Rec."No." <> '') then begin
+                    if ItemRecLcl.Get(Rec."No.") then begin
                         Rec."ORB Family Dimension" := ItemRecLcl."ORB Family Dimension";
                     end;
                 end;
