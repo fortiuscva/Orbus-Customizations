@@ -38,5 +38,12 @@ tableextension 52620 "ORB Sales Cr.Memo Line" extends "Sales Cr.Memo Line"
             TableRelation = "ORB LIFT Subway Map Steps";
             DataClassification = CustomerContent;
         }
+        field(53403; "ORB Family Dimension"; Text[20])
+        {
+            Caption = 'Family Dimension';
+            Editable = false;
+            TableRelation = "Dimension Value";
+            DataClassification = CustomerContent;
+        }
     }
 }

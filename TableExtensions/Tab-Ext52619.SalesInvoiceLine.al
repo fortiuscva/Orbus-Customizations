@@ -44,5 +44,12 @@ tableextension 52619 "ORB Sales Invoice Line" extends "Sales Invoice Line"
             TableRelation = "ORB LIFT Subway Map Steps";
             DataClassification = CustomerContent;
         }
+        field(53403; "ORB Family Dimension"; Text[20])
+        {
+            Caption = 'Family Dimension';
+            Editable = false;
+            TableRelation = "Dimension Value";
+            DataClassification = CustomerContent;
+        }
     }
 }
