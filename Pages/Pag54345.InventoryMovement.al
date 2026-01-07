@@ -24,7 +24,7 @@ page 54345 "ORB .Inventory Movement"
     var
         myInt: Integer;
     begin
-        MovementCountVarLcl := REc.Count;
+        MovementCountVarLcl := Rec.Count;
     end;
 
     var
