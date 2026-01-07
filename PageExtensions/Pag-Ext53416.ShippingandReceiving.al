@@ -6,9 +6,10 @@ pageextension 53416 "ORB Shipping and Receiving" extends "Whse. WMS Role Center"
         {
             group("ORB cuegroup1")
             {
+                Caption = 'Inventory Movement';
                 Part(Control12; "ORB Inventory Movement")
                 {
-                    ApplicationArea = All;
+                    ApplicationArea = Warehouse;
 
                 }
             }
