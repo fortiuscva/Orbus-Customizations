@@ -1,4 +1,4 @@
-page 54345 "ORB .Inventory Movement"
+page 53435 "ORB Inventory Movement"
 {
     PageType = CardPart;
     ApplicationArea = All;
@@ -15,6 +15,7 @@ page 54345 "ORB .Inventory Movement"
                 {
                     Caption = 'Inventory Movements';
                     ApplicationArea = All;
+
                 }
 
             }
