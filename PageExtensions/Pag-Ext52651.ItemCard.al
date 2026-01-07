@@ -50,6 +50,15 @@ pageextension 52651 "ORB Item Card" extends "Item Card"
                 }
             }
         }
+        addafter("Material Dimension")
+        {
+            field("ORB Family Dimension"; Rec."ORB Family Dimension")
+            {
+                Caption = 'Family Dimension';
+                ApplicationArea = All;
+            }
+        }
+
     }
     actions
     {

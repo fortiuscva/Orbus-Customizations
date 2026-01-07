@@ -61,8 +61,35 @@ tableextension 52631 "ORB Item" extends Item
             CalcFormula = exist("Item Variant" where("Item No." = field("No."), Blocked = const(false)));
             Editable = false;
         }
+        field(53408; "ORB Family Dimension"; Text[20])
+        {
+            TableRelation = "Dimension Value".Code where("Dimension Code" = filter('PRDFAM'));
+            ValidateTableRelation = true;
+            trigger OnValidate()
+            var
+                DefaultDimension: Record "Default Dimension";
+            begin
+                DefaultDimension.Reset();
+                DefaultDimension.SetRange("No.", Rec."No.");
+                DefaultDimension.SetFilter("Dimension Code", 'PRDFAM');
+                if DefaultDimension.FindFirst() then begin
+                    DefaultDimension."Dimension Value Code" := Rec."ORB Family Dimension";
+                    DefaultDimension.Modify();
+                end else begin
+                    DefaultDimension.Init();
+                    DefaultDimension."Dimension Code" := 'PRDFAM';
+                    DefaultDimension."Table ID" := 27;
+                    DefaultDimension."No." := Rec."No.";
+                    DefaultDimension."Parent Type" := DefaultDimension."Parent Type"::Item;
+                    DefaultDimension."Dimension Value Code" := Rec."ORB Family Dimension";
+                    DefaultDimension.Insert();
+                end;
+            end;
+        }
+
         modify("Department Dimension")
         {
+
             trigger OnAfterValidate()
             begin
                 if "Department Dimension" <> xRec."Department Dimension" then begin
