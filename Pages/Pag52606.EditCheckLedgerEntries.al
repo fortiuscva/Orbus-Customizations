@@ -108,10 +108,15 @@ page 52606 "ORB Edit Check Ledger Entries"
                 {
                     ToolTip = 'Specifies the value of the Positive Pay Exported field.';
                 }
-                field("Record ID to Print"; Rec."Record ID to Print")
+                field("Print Gen Jnl Line SystemId"; Rec."Print Gen Jnl Line SystemId")
                 {
-                    ToolTip = 'Specifies the value of the Record ID to Print field.';
+                    ToolTip = 'Specifies the value of the SystemId to Print field.', Comment = '%';
                 }
+
+                // field("Record ID to Print"; Rec."Record ID to Print")
+                // {
+                //     ToolTip = 'Specifies the value of the Record ID to Print field.';
+                // }
                 field("Trace No."; Rec."Trace No.")
                 {
                     ToolTip = 'Specifies the value of the Trace No. field.';
