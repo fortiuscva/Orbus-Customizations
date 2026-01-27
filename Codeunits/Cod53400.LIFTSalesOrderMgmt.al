@@ -49,8 +49,8 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             UpdateSalesHeader(LIFTSalesOrderBuffer, false);
             DShipPackOptions.RetrievePackageOptions(Enum::"DSHIP Document Type"::"Sales Order", LIFTSalesOrderBuffer."No.", '');
             UpdateDShipPackageOptions(DShipPackOptions, LIFTSalesOrderBuffer);
-            if OrderStatusReopen then
-                ReleaseSalesOrder(SalesHeader);
+            // if OrderStatusReopen then
+            //     ReleaseSalesOrder(SalesHeader);
         end
         else begin
             SalesInvoiceHeader.Reset();
@@ -305,13 +305,13 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         //SalesHeader.PerformManualReopen(SalesHeader);
     end;
 
-    local procedure ReleaseSalesOrder(var SalesHeader: Record "Sales Header")
-    var
-        ReleaseSalesDocument: Codeunit "Release Sales Document";
-    begin
-        ReleaseSalesDocument.PerformManualRelease(SalesHeader);
-        //SalesHeader.PerformManualRelease(SalesHeader);
-    end;
+    // local procedure ReleaseSalesOrder(var SalesHeader: Record "Sales Header")
+    // var
+    //     ReleaseSalesDocument: Codeunit "Release Sales Document";
+    // begin
+    //     ReleaseSalesDocument.PerformManualRelease(SalesHeader);
+    //     //SalesHeader.PerformManualRelease(SalesHeader);
+    // end;
 
     local procedure ClearDSPaymentDetails(var DShipPackOptions: Record "DSHIP Package Options")
     begin
