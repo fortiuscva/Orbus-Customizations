@@ -22,7 +22,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         SalesShipmentHeader: Record "Sales Shipment Header";
         SalesInvoiceHeader: Record "Sales Invoice Header";
         SalesHeaderArchive: Record "Sales Header Archive";
-        SOLinesUnReserverCU: Codeunit "ORB SO Lines Unreserve";
+        // SOLinesUnReserverCU: Codeunit "ORB SO Lines Unreserve";
         PostedSalesOrderError: Label 'Sales Order %1 is already Invoiced. And the Posted Sales Invoice is %2.';
         ShippedOrderError: Label 'Sales Order %1 is already Shipped. And the Posted Sales Shipment is %2.';
         CancelledSalesOrderError: Label 'Sales Order %1 is already cancelled.';
@@ -48,7 +48,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             end;
 
             //Sales Line UnReserve
-            SOLinesUnReserverCU.UnreserveSalesOrder(SalesHeader."No.");
+            // SOLinesUnReserverCU.UnreserveSalesOrder(SalesHeader."No.");
 
             ArchiveManagement.ArchiveSalesDocument(SalesHeader);
             UpdateSalesHeader(LIFTSalesOrderBuffer, false);
