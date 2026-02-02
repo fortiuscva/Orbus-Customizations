@@ -51,6 +51,10 @@ page 53439 "ORB Lift Item Details"
                     {
                         ToolTip = 'Specifies the value of the Status field.', Comment = '%';
                     }
+                    field("ORB Print Format"; Rec."ORB Print Format")
+                    {
+                        ToolTip = 'Specifies the value of the Print Format field.', Comment = '%';
+                    }
                     field("ORB Parent Item No."; Rec."ORB Parent Item No.")
                     {
                         ApplicationArea = All;

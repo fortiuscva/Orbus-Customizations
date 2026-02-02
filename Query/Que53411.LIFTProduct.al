@@ -39,6 +39,9 @@ query 53411 "ORB LIFT Product"
             column(productId; "ORB Product Id")
             {
             }
+            column(printFormat; "ORB Print Format")
+            {
+            }
         }
     }
 }
