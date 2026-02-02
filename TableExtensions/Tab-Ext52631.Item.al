@@ -167,6 +167,11 @@ tableextension 52631 "ORB Item" extends Item
                     "ORB Status" := 'A';
             end;
         }
+        field(53421; "ORB Print Format"; Integer)
+        {
+            Caption = 'Print Format';
+            DataClassification = CustomerContent;
+        }
     }
 
     trigger OnInsert()
