@@ -50,7 +50,7 @@ table 52615 "ORB FreightChargeDataTable"
             Caption = 'Shipping Agent Service';
             DataClassification = ToBeClassified;
         }
-        field(10; Package_Tracking_No_; code[30])
+        field(10; Package_Tracking_No_; code[50])
         {
             Caption = 'Package Tracking';
             DataClassification = ToBeClassified;
