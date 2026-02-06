@@ -1,6 +1,8 @@
 table 53414 "ORB LIFT ERP Item"
 {
     Caption = 'LIFT ERP Item';
+    LookupPageId = "ORB Lift ERP Items";
+    DrillDownPageId = "ORB Lift ERP Items";
     DataClassification = CustomerContent;
 
     fields
@@ -23,9 +25,35 @@ table 53414 "ORB LIFT ERP Item"
         {
             Caption = 'Description';
         }
+        field(12; "Unit Cost"; Decimal)
+        {
+            Caption = 'Unit Cost';
+            DecimalPlaces = 0 : 5;
+            DataClassification = CustomerContent;
+        }
         field(15; "Catalog Id"; Integer)
         {
             Caption = 'Catalog Id';
+        }
+        field(16; "Material Type Id"; Integer)
+        {
+            Caption = 'Material Type Id';
+            DataClassification = CustomerContent;
+        }
+        field(17; "Primary Vendor Id"; Integer)
+        {
+            Caption = 'Primary Vendor Id';
+            DataClassification = CustomerContent;
+        }
+        field(18; "Material Category Id"; Integer)
+        {
+            Caption = 'Material Category Id';
+            DataClassification = CustomerContent;
+        }
+        field(19; "Material Subcategory Id"; Integer)
+        {
+            Caption = 'Material Subcategory Id';
+            DataClassification = CustomerContent;
         }
         field(20; "Prod Line Dim Id"; Integer)
         {
@@ -41,27 +69,39 @@ table 53414 "ORB LIFT ERP Item"
         }
         field(35; Status; Text[10])
         {
-            Caption = 'Status';
+            Caption = 'Product Status';
         }
         field(40; "Material Id"; Integer)
         {
             Caption = 'Material Id';
         }
+        field(41; "Product Material Id"; Integer)
+        {
+            Caption = 'Product Material Id';
+            DataClassification = CustomerContent;
+        }
         field(45; "Storage Type Id"; Integer)
         {
             Caption = 'Storage Type Id';
+        }
+        field(48; "Product Id"; Integer)
+        {
+            Caption = 'Product Id';
+            DataClassification = CustomerContent;
         }
         field(50; "Print Format"; Integer)
         {
             Caption = 'Print Format';
         }
-        field(55; "Do Not Integrate Material"; Boolean)
+        field(55; "Do Not Integrate"; Boolean)
         {
-            Caption = 'Do Not Integate (Material)';
+            Caption = 'Do Not Integrate';
+            DataClassification = CustomerContent;
         }
-        field(60; "Do Not Integrate Sellable"; Boolean)
+        field(60; "Do Not Integrate (Sellable)"; Boolean)
         {
-            Caption = 'Do Not Integate (Sellable)';
+            Caption = 'Do Not Integrate (Sellable)';
+            DataClassification = CustomerContent;
         }
         field(65; "To Be Synchronized"; Boolean)
         {

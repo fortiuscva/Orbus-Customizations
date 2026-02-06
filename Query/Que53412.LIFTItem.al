@@ -23,7 +23,22 @@ query 53412 "ORB LIFT Item"
             column(description; Description)
             {
             }
+            column(unitCost; "Unit Cost")
+            {
+            }
             column(catalogId; "Catalog Id")
+            {
+            }
+            column(materialTypeId; "Material Type Id")
+            {
+            }
+            column(primaryVendorId; "Primary Vendor Id")
+            {
+            }
+            column(materialCategoryId; "Material Category Id")
+            {
+            }
+            column(materialSubcategoryId; "Material Subcategory Id")
             {
             }
             column(prodLineDimId; "Prod Line Dim Id")
@@ -47,10 +62,13 @@ query 53412 "ORB LIFT Item"
             column(printFormat; "Print Format")
             {
             }
-            column(doNotIntegrateMaterial; "Do Not Integrate Material")
+            column(productId; "Product Id")
             {
             }
-            column(doNotIntegrateSellable; "Do Not Integrate Sellable")
+            column(doNotIntegrate; "Do Not Integrate")
+            {
+            }
+            column(doNotIntegrateSellable; "Do Not Integrate (Sellable)")
             {
             }
             column(toBeSynchronized; "To Be Synchronized")
