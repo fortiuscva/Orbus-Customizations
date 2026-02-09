@@ -74,8 +74,16 @@ pageextension 52651 "ORB Item Card" extends "Item Card"
                 RunObject = page "ORB Lift Item Details";
                 RunPageLink = "No." = field("No.");
             }
+            action("ORB Lift ERP Items")
+            {
+                ApplicationArea = All;
+                Caption = 'Lift ERP Items';
+                Promoted = true;
+                PromotedIsBig = true;
+                PromotedCategory = Category4;
+                RunObject = page "ORB Lift Items List";
+                RunPageLink = "Item No." = field("No.");
+            }
         }
-
     }
-
 }
