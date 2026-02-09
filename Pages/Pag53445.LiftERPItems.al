@@ -88,7 +88,7 @@ page 53445 "ORB Lift ERP Items"
                 {
                     ToolTip = 'Specifies the value of the Product Status field.', Comment = '%';
                 }
-                field("Do Not Integrate"; Rec."Do Not Integrate")
+                field("Do Not Integrate"; Rec."Do Not Integrate (Material)")
                 {
                     ToolTip = 'Specifies the value of the Do Not Integrate field.', Comment = '%';
                 }
