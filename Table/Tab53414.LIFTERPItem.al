@@ -93,14 +93,32 @@ table 53414 "ORB LIFT ERP Item"
         {
             Caption = 'Print Format';
         }
-        field(55; "Do Not Integrate"; Boolean)
+        field(55; "Do Not Integrate (Material)"; Boolean)
         {
-            Caption = 'Do Not Integrate';
+            Caption = 'Do Not Integrate (Material)';
+            Editable = false;
             DataClassification = CustomerContent;
+            trigger OnValidate()
+            var
+                LIFTMaterial: Record "ORB LIFT Material";
+            begin
+                Validate("Material Type Id", 121821);
+                Validate("Primary Vendor Id", 57643);
+                LIFTMaterial.Reset();
+                LIFTMaterial.SetRange("Material Name", Rec."Item No.");
+                if LIFTMaterial.FindFirst() then begin
+                    Validate("Material Id", LIFTMaterial."Material Id");
+                    Validate("Material Type Id", LIFTMaterial."Material Type Id");
+                    Validate("Primary Vendor Id", LIFTMaterial."Primary Vendor Id");
+                    Validate("Material Category Id", LIFTMaterial.Category);
+                    Validate("Material Subcategory Id", LIFTMaterial."Sub Category");
+                end;
+            end;
         }
         field(60; "Do Not Integrate (Sellable)"; Boolean)
         {
             Caption = 'Do Not Integrate (Sellable)';
+            Editable = false;
             DataClassification = CustomerContent;
         }
         field(65; "To Be Synchronized"; Boolean)

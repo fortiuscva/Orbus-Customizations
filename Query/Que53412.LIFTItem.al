@@ -53,6 +53,9 @@ query 53412 "ORB LIFT Item"
             column(status; Status)
             {
             }
+            column(productMaterialId; "Product Material Id")
+            {
+            }
             column(materialId; "Material Id")
             {
             }
@@ -65,7 +68,7 @@ query 53412 "ORB LIFT Item"
             column(productId; "Product Id")
             {
             }
-            column(doNotIntegrate; "Do Not Integrate")
+            column(doNotIntegrateMaterial; "Do Not Integrate (Material)")
             {
             }
             column(doNotIntegrateSellable; "Do Not Integrate (Sellable)")
