@@ -74,6 +74,22 @@ table 53414 "ORB LIFT ERP Item"
         field(40; "Material Id"; Integer)
         {
             Caption = 'Material Id';
+            trigger OnValidate()
+            var
+                LiftItemLcl: Record "ORB LIFT ERP Item";
+            begin
+                if Rec."Variant Code" = '' then begin
+                    LiftItemLcl.Reset();
+                    LiftItemLcl.SetRange("Item No.", Rec."Item No.");
+                    LiftItemLcl.SetFilter("Variant Code", '<>%1', '');
+                    if LiftItemLcl.FindSet() then begin
+                        repeat
+                            LiftItemLcl.Validate("Material Id", Rec."Material Id");
+                            LiftItemLcl.Modify();
+                        until LiftItemLcl.Next() = 0;
+                    end;
+                end;
+            end;
         }
         field(41; "Product Material Id"; Integer)
         {

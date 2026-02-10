@@ -24,6 +24,16 @@ table 53413 "ORB LIFT Product Line Values"
             Caption = 'Product Line Dimension';
             DataClassification = CustomerContent;
         }
+        field(4; "Category Id"; Integer)
+        {
+            Caption = 'Material Category Id';
+            DataClassification = CustomerContent;
+        }
+        field(5; "Subcategory Id"; Integer)
+        {
+            Caption = 'Material Subcategory Id';
+            DataClassification = CustomerContent;
+        }
     }
     keys
     {
