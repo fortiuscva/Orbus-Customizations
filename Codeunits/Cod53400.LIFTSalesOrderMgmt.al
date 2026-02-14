@@ -259,56 +259,85 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         LIFTSubwayMapSteps: Record "ORB LIFT Subway Map Steps";
     begin
         SalesLine.SuspendStatusCheck(true);
-        SalesLine.Validate("Sell-to Customer No.", LIFTSalesLineBuffer."Sell-to Customer No.");
+        if SalesLine."Sell-to Customer No." <> LIFTSalesLineBuffer."Sell-to Customer No." then
+            SalesLine.Validate("Sell-to Customer No.", LIFTSalesLineBuffer."Sell-to Customer No.");
         //SalesLine.Validate(Type, SalesLine.Type::Item);
         IF LIFTSalesLineBuffer.Type = LIFTSalesLineBuffer.Type::Comment then begin
-            SalesLine.Validate(Type, SalesLine.Type::" ");
+            if SalesLine.Type <> SalesLine.Type::" " then
+                SalesLine.Validate(Type, SalesLine.Type::" ");
             if ItemRecLcl.get(LIFTSalesLineBuffer."No.") then begin
-                SalesLine.Description := ItemRecLcl.Description;
-                SalesLine."Description 2" := ItemRecLcl."Description 2";
-                SalesLine."ORB LIFT Line ID" := LIFTSalesLineBuffer."LIFT Line ID";
+                if SalesLine.Description <> ItemRecLcl.Description then
+                    SalesLine.Description := ItemRecLcl.Description;
+                if SalesLine."Description 2" <> ItemRecLcl."Description 2" then
+                    SalesLine."Description 2" := ItemRecLcl."Description 2";
+                if SalesLine."ORB LIFT Line ID" <> LIFTSalesLineBuffer."LIFT Line ID" then
+                    SalesLine."ORB LIFT Line ID" := LIFTSalesLineBuffer."LIFT Line ID";
             end;
         end else begin
-            IF LIFTSalesLineBuffer.Type = LIFTSalesLineBuffer.Type::Resource then
-                SalesLine.Validate(Type, SalesLine.Type::Resource)
+            IF LIFTSalesLineBuffer.Type = LIFTSalesLineBuffer.Type::Resource then begin
+                if SalesLine.Type <> SalesLine.Type::Resource then begin
+                    SalesLine.Validate(Type, SalesLine.Type::Resource)
+                end;
+            end
             else
-                SalesLine.Validate(Type, SalesLine.Type::Item);
-            SalesLine.Validate("No.", LIFTSalesLineBuffer."No.");
+                if SalesLine.Type <> SalesLine.Type::Item then
+                    SalesLine.Validate(Type, SalesLine.Type::Item);
+            if SalesLine."No." <> LIFTSalesLineBuffer."No." then
+                SalesLine.Validate("No.", LIFTSalesLineBuffer."No.");
             //SalesLine.Validate("Location Code", LIFTSalesLineBuffer."Location Code");
-            SalesLine.Validate(Quantity, LIFTSalesLineBuffer.Quantity);
+            if SalesLine.Quantity <> LIFTSalesLineBuffer.Quantity then
+                SalesLine.Validate(Quantity, LIFTSalesLineBuffer.Quantity);
             //SalesLine.Validate("Shortcut Dimension 1 Code", LIFTSalesLineBuffer."Shortcut Dimension 1 Code");
-            SalesLine.Validate("Shortcut Dimension 2 Code", LIFTSalesLineBuffer."Shortcut Dimension 2 Code");
-            SalesLine.Validate("Variant Code", LIFTSalesLineBuffer."Variant Code");
-            SalesLine.Validate("Unit of Measure Code", LIFTSalesLineBuffer."Unit of Measure Code");
-            SalesLine.Validate("Requested Delivery Date", LIFTSalesLineBuffer."Requested Delivery Date");
-            SalesLine.Validate("Promised Delivery Date", LIFTSalesLineBuffer."Promised Delivery Date");
-            SalesLine.Validate("Planned Delivery Date", LIFTSalesLineBuffer."Planned Delivery Date");
-            SalesLine.Validate("Planned Shipment Date", LIFTSalesLineBuffer."Planned Shipment Date");
-            SalesLine.Validate("Shipment Date", LIFTSalesLineBuffer."Shipment Date");
-            SalesLine.Validate(Width, LIFTSalesLineBuffer.Width);
-            SalesLine.Validate(Height, LIFTSalesLineBuffer.Height);
-            SalesLine.Validate("Hardware Price", LIFTSalesLineBuffer."Hardware Price");
-            SalesLine.Validate("Graphics Price", LIFTSalesLineBuffer."Graphics Price");
+            if SalesLine."Shortcut Dimension 2 Code" <> LIFTSalesLineBuffer."Shortcut Dimension 2 Code" then
+                SalesLine.Validate("Shortcut Dimension 2 Code", LIFTSalesLineBuffer."Shortcut Dimension 2 Code");
+            if SalesLine."Variant Code" <> LIFTSalesLineBuffer."Variant Code" then
+                SalesLine.Validate("Variant Code", LIFTSalesLineBuffer."Variant Code");
+            if SalesLine."Unit of Measure Code" <> LIFTSalesLineBuffer."Unit of Measure Code" then
+                SalesLine.Validate("Unit of Measure Code", LIFTSalesLineBuffer."Unit of Measure Code");
+            if SalesLine."Requested Delivery Date" <> LIFTSalesLineBuffer."Requested Delivery Date" then
+                SalesLine.Validate("Requested Delivery Date", LIFTSalesLineBuffer."Requested Delivery Date");
+            if SalesLine."Promised Delivery Date" <> LIFTSalesLineBuffer."Promised Delivery Date" then
+                SalesLine.Validate("Promised Delivery Date", LIFTSalesLineBuffer."Promised Delivery Date");
+            if SalesLine."Planned Delivery Date" <> LIFTSalesLineBuffer."Planned Delivery Date" then
+                SalesLine.Validate("Planned Delivery Date", LIFTSalesLineBuffer."Planned Delivery Date");
+            if SalesLine."Planned Shipment Date" <> LIFTSalesLineBuffer."Planned Shipment Date" then
+                SalesLine.Validate("Planned Shipment Date", LIFTSalesLineBuffer."Planned Shipment Date");
+            if SalesLine."Shipment Date" <> LIFTSalesLineBuffer."Shipment Date" then
+                SalesLine.Validate("Shipment Date", LIFTSalesLineBuffer."Shipment Date");
+            if SalesLine.Width <> LIFTSalesLineBuffer.Width then
+                SalesLine.Validate(Width, LIFTSalesLineBuffer.Width);
+            if SalesLine.Height <> LIFTSalesLineBuffer.Height then
+                SalesLine.Validate(Height, LIFTSalesLineBuffer.Height);
+            if SalesLine."Hardware Price" <> LIFTSalesLineBuffer."Hardware Price" then
+                SalesLine.Validate("Hardware Price", LIFTSalesLineBuffer."Hardware Price");
+            if SalesLine."Graphics Price" <> LIFTSalesLineBuffer."Graphics Price" then
+                SalesLine.Validate("Graphics Price", LIFTSalesLineBuffer."Graphics Price");
             //SalesLine.Validate("Line Discount %", LIFTSalesLineBuffer."Line Discount %");
             //Calculate "Discount Grp Code Discount" on Net Jnit Price coming from LIFT start
-            SalesLine.Validate("Unit Price", LIFTSalesLineBuffer."Unit Price");
+            if SalesLine."Unit Price" <> LIFTSalesLineBuffer."Unit Price" then
+                SalesLine.Validate("Unit Price", LIFTSalesLineBuffer."Unit Price");
             BCOriginalDiscount := SalesLine."Line Discount Amount";
             //Calculate "Discount Grp Code Discount" on Net Jnit Price coming from LIFT End
-            SalesLine.Validate("Unit Price", LIFTSalesLineBuffer."Original Unit Price");
+            if SalesLine."Unit Price" <> LIFTSalesLineBuffer."Original Unit Price" then
+                SalesLine.Validate("Unit Price", LIFTSalesLineBuffer."Original Unit Price");
             //SalesLine.Validate("Line Discount Amount", LIFTSalesLineBuffer."Line Discount Amount");
             //BCLineDiscount := SalesLine."Line Discount Amount";
-            SalesLine.Validate("ORB LIFT Discount Amount", LIFTSalesLineBuffer."Line Discount Amount");
+            if SalesLine."ORB LIFT Discount Amount" <> LIFTSalesLineBuffer."Line Discount Amount" then
+                SalesLine.Validate("ORB LIFT Discount Amount", LIFTSalesLineBuffer."Line Discount Amount");
             //SalesLine.Validate("Line Discount Amount", (BCLineDiscount + SalesLine."ORB LIFT Discount Amount"));
-            SalesLine.Validate("Line Discount Amount", (BCOriginalDiscount + SalesLine."ORB LIFT Discount Amount"));
-            SalesLine."ORB LIFT Line ID" := LIFTSalesLineBuffer."LIFT Line ID";
+            if SalesLine."Line Discount Amount" <> (BCOriginalDiscount + SalesLine."ORB LIFT Discount Amount") then
+                SalesLine.Validate("Line Discount Amount", (BCOriginalDiscount + SalesLine."ORB LIFT Discount Amount"));
+            if SalesLine."ORB LIFT Line ID" <> LIFTSalesLineBuffer."LIFT Line ID" then
+                SalesLine."ORB LIFT Line ID" := LIFTSalesLineBuffer."LIFT Line ID";
 
-            if not LIFTSubwayMapSteps.Get(LIFTSalesLineBuffer."ORB LIFT Step No.") then begin
-                LIFTSubwayMapSteps.Init();
-                LIFTSubwayMapSteps."No." := LIFTSalesLineBuffer."ORB LIFT Step No.";
-                LIFTSubwayMapSteps.Insert(true);
+            if SalesLine."ORB LIFT Step No." <> LIFTSalesLineBuffer."ORB LIFT Step No." then begin
+                if not LIFTSubwayMapSteps.Get(LIFTSalesLineBuffer."ORB LIFT Step No.") then begin
+                    LIFTSubwayMapSteps.Init();
+                    LIFTSubwayMapSteps."No." := LIFTSalesLineBuffer."ORB LIFT Step No.";
+                    LIFTSubwayMapSteps.Insert(true);
+                end;
+                SalesLine.Validate("ORB LIFT Step No.", LIFTSalesLineBuffer."ORB LIFT Step No.");
             end;
-
-            SalesLine.Validate("ORB LIFT Step No.", LIFTSalesLineBuffer."ORB LIFT Step No.");
         end
     end;
 
