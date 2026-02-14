@@ -175,28 +175,29 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         if SalesHeader."Created At" <> LIFTSalesOrderBuffer."Created At" then
             SalesHeader.Validate("Created At", LIFTSalesOrderBuffer."Created At");
         //SalesHeader.Validate("Sell-to Contact No.", LIFTSalesOrderBuffer."Sell-to Contact No.");
-        if SalesHeader."Sell-To Contact No. (Custom)" <> LIFTSalesOrderBuffer."Sell-To Contact No." then
+        if SalesHeader."Sell-To Contact No. (Custom)" <> LIFTSalesOrderBuffer."Sell-To Contact No." then begin
             SalesHeader.Validate("Sell-To Contact No. (Custom)", LIFTSalesOrderBuffer."Sell-to Contact No.");
-        Contact.Reset();
-        if Contact.Get(LIFTSalesOrderBuffer."Sell-To Contact No.") then begin
-            if SalesHeader."Sell-to Contact No." <> Contact."No." then
-                SalesHeader.Validate("Sell-to Contact No.", Contact."No.");
-            if SalesHeader."Sell-To Contact Name (Custom)" <> Contact.Name then
-                SalesHeader.Validate("Sell-To Contact Name (Custom)", Contact.Name);
-            if SalesHeader."Sell-to Contact" <> Contact.Name then
-                SalesHeader.Validate("Sell-to Contact", Contact.Name);
-            if SalesHeader."Sell-To Phone No. (Custom)" <> Contact."Phone No." then
-                SalesHeader.Validate("Sell-To Phone No. (Custom)", Contact."Phone No.");
-            if SalesHeader."Sell-to Phone No." <> Contact."Phone No." then
-                SalesHeader.Validate("Sell-to Phone No.", Contact."Phone No.");
-            if SalesHeader."Sell-To Email (Custom)" <> Contact."E-Mail" then
-                SalesHeader.Validate("Sell-To Email (Custom)", Contact."E-Mail");
-            if SalesHeader."Sell-to E-Mail" <> Contact."E-Mail" then
-                SalesHeader.Validate("Sell-to E-Mail", Contact."E-Mail");
-            if SalesHeader."Bill-to Contact No." <> Contact."No." then
-                SalesHeader.Validate("Bill-to Contact No.", Contact."No.");
-            if SalesHeader."Bill-to Contact" <> Contact.Name then
-                SalesHeader.Validate("Bill-to Contact", Contact.Name);
+            Contact.Reset();
+            if Contact.Get(LIFTSalesOrderBuffer."Sell-To Contact No.") then begin
+                if SalesHeader."Sell-to Contact No." <> Contact."No." then
+                    SalesHeader.Validate("Sell-to Contact No.", Contact."No.");
+                if SalesHeader."Sell-To Contact Name (Custom)" <> Contact.Name then
+                    SalesHeader.Validate("Sell-To Contact Name (Custom)", Contact.Name);
+                if SalesHeader."Sell-to Contact" <> Contact.Name then
+                    SalesHeader.Validate("Sell-to Contact", Contact.Name);
+                if SalesHeader."Sell-To Phone No. (Custom)" <> Contact."Phone No." then
+                    SalesHeader.Validate("Sell-To Phone No. (Custom)", Contact."Phone No.");
+                if SalesHeader."Sell-to Phone No." <> Contact."Phone No." then
+                    SalesHeader.Validate("Sell-to Phone No.", Contact."Phone No.");
+                if SalesHeader."Sell-To Email (Custom)" <> Contact."E-Mail" then
+                    SalesHeader.Validate("Sell-To Email (Custom)", Contact."E-Mail");
+                if SalesHeader."Sell-to E-Mail" <> Contact."E-Mail" then
+                    SalesHeader.Validate("Sell-to E-Mail", Contact."E-Mail");
+                if SalesHeader."Bill-to Contact No." <> Contact."No." then
+                    SalesHeader.Validate("Bill-to Contact No.", Contact."No.");
+                if SalesHeader."Bill-to Contact" <> Contact.Name then
+                    SalesHeader.Validate("Bill-to Contact", Contact.Name);
+            end;
         end;
         //SalesHeader.Validate("Sell-to Contact", LIFTSalesOrderBuffer."Sell-to Contact");
         if SalesHeader."Your Reference" <> LIFTSalesOrderBuffer."Your Reference" then
