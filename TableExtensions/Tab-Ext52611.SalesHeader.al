@@ -362,31 +362,31 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
 
             end;
         }
-        modify("Sell-to Contact No.")
-        {
+        // modify("Sell-to Contact No.")
+        // {
 
-            trigger OnAfterValidate()
-            begin
-                CheckContactActiveStatus("Sell-to Contact No.");
-            end;
+        //     trigger OnAfterValidate()
+        //     begin
+        //         // CheckContactActiveStatus("Sell-to Contact No.");
+        //     end;
 
-        }
-        modify("Sell-To Contact No. (Custom)")
-        {
+        // }
+        // modify("Sell-To Contact No. (Custom)")
+        // {
 
-            trigger OnAfterValidate()
-            begin
-                CheckContactActiveStatus("Sell-To Contact No. (Custom)");
-            end;
+        //     trigger OnAfterValidate()
+        //     begin
+        //         // CheckContactActiveStatus("Sell-To Contact No. (Custom)");
+        //     end;
 
-        }
-        modify("Bill-to Contact No.")
-        {
-            trigger OnAfterValidate()
-            begin
-                CheckContactActiveStatus("Bill-to Contact No.");
-            end;
-        }
+        // }
+        // modify("Bill-to Contact No.")
+        // {
+        //     trigger OnAfterValidate()
+        //     begin
+        //         // CheckContactActiveStatus("Bill-to Contact No.");
+        //     end;
+        // }
     }
 
     trigger OnDelete()
@@ -466,13 +466,13 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             exit(false);
     end;
 
-    local procedure CheckContactActiveStatus(ContactNoPar: Code[20])
-    var
-        ContactRec: Record Contact;
-    begin
-        if ContactRec.Get(ContactNoPar) then
-            ContactRec.TestField("ORB Active Status", ContactRec."ORB Active Status"::Active);
-    end;
+    // local procedure CheckContactActiveStatus(ContactNoPar: Code[20])
+    // var
+    //     ContactRec: Record Contact;
+    // begin
+    //     if ContactRec.Get(ContactNoPar) then
+    //         ContactRec.TestField("ORB Active Status", ContactRec."ORB Active Status"::Active);
+    // end;
 
 
 
