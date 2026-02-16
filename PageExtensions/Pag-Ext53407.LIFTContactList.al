@@ -4,10 +4,10 @@ pageextension 53407 "ORB LIFT Contact List" extends "Contact List"
     {
         addfirst(Control1)
         {
-            field("ORB Active Status"; Rec."ORB Active Status")
-            {
-                ApplicationArea = all;
-            }
+            // field("ORB Active Status"; Rec."ORB Active Status")
+            // {
+            //     ApplicationArea = all;
+            // }
         }
     }
 }

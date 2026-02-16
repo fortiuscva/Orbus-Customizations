@@ -4,10 +4,10 @@ pageextension 53405 "ORB LIFT Contact Card" extends "Contact Card"
     {
         addlast(General)
         {
-            field("ORB Active Status"; Rec."ORB Active Status")
-            {
-                ApplicationArea = all;
-            }
+            // field("ORB Active Status"; Rec."ORB Active Status")
+            // {
+            //     ApplicationArea = all;
+            // }
         }
     }
 }

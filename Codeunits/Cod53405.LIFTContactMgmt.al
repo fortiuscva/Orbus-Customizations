@@ -50,10 +50,10 @@ codeunit 53405 "ORB LIFT Contact Mgmt"
         Contact.Validate(Surname, LIFTContact."Last Name");
         Contact.Validate(Type, LIFTContact.Type);
 
-        if LIFTContact.Active = 'I' then
-            Contact."ORB Active Status" := Contact."ORB Active Status"::InActive
-        else if LIFTContact.Active = 'A' then
-            Contact."ORB Active Status" := Contact."ORB Active Status"::Active;
+        // if LIFTContact.Active = 'I' then
+        //     Contact."ORB Active Status" := Contact."ORB Active Status"::InActive
+        // else if LIFTContact.Active = 'A' then
+        //     Contact."ORB Active Status" := Contact."ORB Active Status"::Active;
 
         // Contact.Validate("Company Name", LIFTContact."Customer Name");
         // Contact.Validate("Contact Business Relation", Contact."Contact Business Relation"::Customer);
