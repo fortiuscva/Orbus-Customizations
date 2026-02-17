@@ -16,6 +16,33 @@ pageextension 52632 "ORB IWX License Plate List" extends "IWX License Plate List
                 ToolTip = 'Specifies the value of the Invoice No. field.';
                 Editable = false;
             }
+            field("ORB SystemCreatedAt"; Rec.SystemCreatedAt)
+            {
+                Caption = 'System Created At';
+                ApplicationArea = All;
+                ToolTip = 'Specifies the date and time when the License plate was created in the system.';
+            }
+
+            field("ORB SystemModifiedAt"; Rec.SystemModifiedAt)
+            {
+                Caption = 'System Modified At';
+                ApplicationArea = All;
+                ToolTip = 'Specifies the date and time when the License plate was last modified in the system.';
+            }
+
+            field("ORB SystemCreatedBy"; Rec.SystemCreatedBy)
+            {
+                Caption = 'System Created By';
+                ApplicationArea = All;
+                ToolTip = 'Specifies the user who created the License plate in the system.';
+            }
+            field("ORB SystemModifiedBy"; Rec.SystemModifiedBy)
+            {
+                Caption = 'System Modified By';
+                ApplicationArea = All;
+                ToolTip = 'Specifies the user who last modified the License plate in the system.';
+
+            }
         }
     }
 
