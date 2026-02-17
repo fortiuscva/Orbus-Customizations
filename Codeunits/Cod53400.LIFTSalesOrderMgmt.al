@@ -76,132 +76,76 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
     var
         Contact: Record Contact;
     begin
-        if SalesHeader."Sell-to Customer No." <> LIFTSalesOrderBuffer."Sell-to Customer No." then
-            SalesHeader.Validate("Sell-to Customer No.", LIFTSalesOrderBuffer."Sell-to Customer No.");
+        SalesHeader.Validate("Sell-to Customer No.", LIFTSalesOrderBuffer."Sell-to Customer No.");
         //SalesHeader.Validate("Bill-to Customer No.", LIFTSalesOrderBuffer."Bill-to Customer No.");
-        if SalesHeader."Ship-to Code" <> LIFTSalesOrderBuffer."Ship-to Code" then
-            SalesHeader.Validate("Ship-to Code", LIFTSalesOrderBuffer."Ship-to Code");
-        if SalesHeader."Ship-to Name" <> LIFTSalesOrderBuffer."Ship-to Name" then
-            SalesHeader.Validate("Ship-to Name", LIFTSalesOrderBuffer."Ship-to Name");
-        if SalesHeader."Ship-to Name 2" <> LIFTSalesOrderBuffer."Ship-to Name 2" then
-            SalesHeader.Validate("Ship-to Name 2", LIFTSalesOrderBuffer."Ship-to Name 2");
-        if SalesHeader."Ship-to Address" <> LIFTSalesOrderBuffer."Ship-to Address" then
-            SalesHeader.Validate("Ship-to Address", LIFTSalesOrderBuffer."Ship-to Address");
-        if SalesHeader."Ship-to Address 2" <> LIFTSalesOrderBuffer."Ship-to Address 2" then
-            SalesHeader.Validate("Ship-to Address 2", LIFTSalesOrderBuffer."Ship-to Address 2");
-        if SalesHeader."Ship-to City" <> LIFTSalesOrderBuffer."Ship-to City" then
-            SalesHeader.Validate("Ship-to City", LIFTSalesOrderBuffer."Ship-to City");
-        if SalesHeader."Ship-to Contact" <> LIFTSalesOrderBuffer."Ship-to Contact" then
-            SalesHeader.Validate("Ship-to Contact", LIFTSalesOrderBuffer."Ship-to Contact");
-        if SalesHeader."Order Date" <> LIFTSalesOrderBuffer."Order Date" then
-            SalesHeader.Validate("Order Date", LIFTSalesOrderBuffer."Order Date");
-        if SalesHeader."Posting Date" <> LIFTSalesOrderBuffer."Posting Date" then
-            SalesHeader.Validate("Posting Date", LIFTSalesOrderBuffer."Posting Date");
-        if SalesHeader."Shipment Date" <> LIFTSalesOrderBuffer."Shipment Date" then
-            SalesHeader.Validate("Shipment Date", LIFTSalesOrderBuffer."Shipment Date");
+        SalesHeader.Validate("Ship-to Code", LIFTSalesOrderBuffer."Ship-to Code");
+        SalesHeader.Validate("Ship-to Name", LIFTSalesOrderBuffer."Ship-to Name");
+        SalesHeader.Validate("Ship-to Name 2", LIFTSalesOrderBuffer."Ship-to Name 2");
+        SalesHeader.Validate("Ship-to Address", LIFTSalesOrderBuffer."Ship-to Address");
+        SalesHeader.Validate("Ship-to Address 2", LIFTSalesOrderBuffer."Ship-to Address 2");
+        SalesHeader.Validate("Ship-to City", LIFTSalesOrderBuffer."Ship-to City");
+        SalesHeader.Validate("Ship-to Contact", LIFTSalesOrderBuffer."Ship-to Contact");
+        SalesHeader.Validate("Order Date", LIFTSalesOrderBuffer."Order Date");
+        SalesHeader.Validate("Posting Date", LIFTSalesOrderBuffer."Posting Date");
+        SalesHeader.Validate("Shipment Date", LIFTSalesOrderBuffer."Shipment Date");
         if LIFTSalesOrderBuffer."Your Reference" <> '' then
-            if SalesHeader."Payment Terms Code" <> 'CC' then
-                SalesHeader.Validate("Payment Terms Code", 'CC');
-        if SalesHeader."Due Date" <> LIFTSalesOrderBuffer."Due Date" then
-            SalesHeader.Validate("Due Date", LIFTSalesOrderBuffer."Due Date");
-        if SalesHeader."Shipment Method Code" <> LIFTSalesOrderBuffer."Shipment Method Code" then
-            SalesHeader.Validate("Shipment Method Code", LIFTSalesOrderBuffer."Shipment Method Code");
-        if SalesHeader."Customer Price Group" <> LIFTSalesOrderBuffer."Customer Price Group" then
-            SalesHeader.Validate("Customer Price Group", LIFTSalesOrderBuffer."Customer Price Group");
-        if SalesHeader."Salesperson Code" <> LIFTSalesOrderBuffer."Salesperson Code" then
-            SalesHeader.Validate("Salesperson Code", LIFTSalesOrderBuffer."Salesperson Code");
-        if SalesHeader."ORB Customer Support" <> LIFTSalesOrderBuffer."ORB Customer Support" then
-            SalesHeader.Validate("ORB Customer Support", LIFTSalesOrderBuffer."ORB Customer Support");
-        if SalesHeader."Ship-to Post Code" <> LIFTSalesOrderBuffer."Ship-to Post Code" then
-            SalesHeader.Validate("Ship-to Post Code", LIFTSalesOrderBuffer."Ship-to Post Code");
-        if SalesHeader."Ship-to County" <> LIFTSalesOrderBuffer."Ship-to County" then
-            SalesHeader.Validate("Ship-to County", LIFTSalesOrderBuffer."Ship-to County");
-        if LIFTSalesOrderBuffer."Ship-to Country/Region Code" <> '' then begin
-            if SalesHeader."Ship-to Country/Region Code" <> LIFTSalesOrderBuffer."Ship-to Country/Region Code" then
-                SalesHeader.Validate("Ship-to Country/Region Code", LIFTSalesOrderBuffer."Ship-to Country/Region Code");
-        end else begin
-            if SalesHeader."Ship-to Country/Region Code" <> 'US' then
-                SalesHeader.Validate("Ship-to Country/Region Code", 'US');
-        end;
-        if SalesHeader."Document Date" <> LIFTSalesOrderBuffer."Document Date" then
-            SalesHeader.Validate("Document Date", LIFTSalesOrderBuffer."Document Date");
-        if SalesHeader."External Document No." <> LIFTSalesOrderBuffer."External Document No." then
-            SalesHeader.Validate("External Document No.", LIFTSalesOrderBuffer."External Document No.");
+            SalesHeader.Validate("Payment Terms Code", 'CC');
+        SalesHeader.Validate("Due Date", LIFTSalesOrderBuffer."Due Date");
+        SalesHeader.Validate("Shipment Method Code", LIFTSalesOrderBuffer."Shipment Method Code");
+        SalesHeader.Validate("Customer Price Group", LIFTSalesOrderBuffer."Customer Price Group");
+        SalesHeader.Validate("Salesperson Code", LIFTSalesOrderBuffer."Salesperson Code");
+        SalesHeader.Validate("ORB Customer Support", LIFTSalesOrderBuffer."ORB Customer Support");
+        SalesHeader.Validate("Ship-to Post Code", LIFTSalesOrderBuffer."Ship-to Post Code");
+        SalesHeader.Validate("Ship-to County", LIFTSalesOrderBuffer."Ship-to County");
+        if LIFTSalesOrderBuffer."Ship-to Country/Region Code" <> '' then
+            SalesHeader.Validate("Ship-to Country/Region Code", LIFTSalesOrderBuffer."Ship-to Country/Region Code")
+        else
+            SalesHeader.Validate("Ship-to Country/Region Code", 'US');
+        SalesHeader.Validate("Document Date", LIFTSalesOrderBuffer."Document Date");
+        SalesHeader.Validate("External Document No.", LIFTSalesOrderBuffer."External Document No.");
         if LIFTSalesOrderBuffer."Your Reference" <> '' then
-            if SalesHeader."Payment Method Code" <> LIFTSalesOrderBuffer."Payment Method Code" then
-                SalesHeader.Validate("Payment Method Code", LIFTSalesOrderBuffer."Payment Method Code");
-        if SalesHeader."Shipping Agent Code" <> LIFTSalesOrderBuffer."Shipping Agent Code" then
-            SalesHeader.Validate("Shipping Agent Code", LIFTSalesOrderBuffer."Shipping Agent Code");
+            SalesHeader.Validate("Payment Method Code", LIFTSalesOrderBuffer."Payment Method Code");
+        SalesHeader.Validate("Shipping Agent Code", LIFTSalesOrderBuffer."Shipping Agent Code");
         SalesHeader.SetWorkDescription(LIFTSalesOrderBuffer."ORB LIFT ART_NOTE");
         //SalesHeader.Validate("Shipping Advice", LIFTSalesOrderBuffer."Shipping Advice");
-        if SalesHeader."Shipping Agent Service Code" <> LIFTSalesOrderBuffer."Shipping Agent Service Code" then
-            SalesHeader.Validate("Shipping Agent Service Code", LIFTSalesOrderBuffer."Shipping Agent Service Code");
+        SalesHeader.Validate("Shipping Agent Service Code", LIFTSalesOrderBuffer."Shipping Agent Service Code");
         if CreateSO then
             SalesHeader.Validate("Order Status", LIFTSalesOrderBuffer."Order Status");
-        if SalesHeader."Location Code" <> LIFTSalesOrderBuffer."Location Code" then
-            SalesHeader.Validate("Location Code", LIFTSalesOrderBuffer."Location Code");
-        if SalesHeader."Shortcut Dimension 1 Code" <> LIFTSalesOrderBuffer."Shortcut Dimension 1 Code" then
-            SalesHeader.Validate("Shortcut Dimension 1 Code", LIFTSalesOrderBuffer."Shortcut Dimension 1 Code");
-        if SalesHeader."Shortcut Dimension 2 Code" <> LIFTSalesOrderBuffer."Shortcut Dimension 2 Code" then
-            SalesHeader.Validate("Shortcut Dimension 2 Code", LIFTSalesOrderBuffer."Shortcut Dimension 2 Code");
-        if SalesHeader."Location Override" <> LIFTSalesOrderBuffer."Location Override" then
-            SalesHeader.Validate("Location Override", LIFTSalesOrderBuffer."Location Override");
-        if SalesHeader.Created_By <> LIFTSalesOrderBuffer.Created_By then
-            SalesHeader.Validate("Created_By", LIFTSalesOrderBuffer."Created_By");
-        if SalesHeader.Rush <> LIFTSalesOrderBuffer.Rush then
-            SalesHeader.Validate("Rush", LIFTSalesOrderBuffer."Rush");
-        if SalesHeader."ORB Declared Value" <> LIFTSalesOrderBuffer."ORB Declared Value" then
-            SalesHeader.Validate("ORB Declared Value", LIFTSalesOrderBuffer."ORB Declared Value");
-        if SalesHeader."ORB International Contact" <> LIFTSalesOrderBuffer."ORB International Contact" then
-            SalesHeader.Validate("ORB International Contact", LIFTSalesOrderBuffer."ORB International Contact");
-        if SalesHeader."ORB Magento Order #" <> LIFTSalesOrderBuffer."ORB Magento Order #" then
-            SalesHeader.Validate("ORB Magento Order #", LIFTSalesOrderBuffer."ORB Magento Order #");
-        if SalesHeader."ORB Magento CC 4 Digits" <> LIFTSalesOrderBuffer."ORB Magento CC 4 Digits" then
-            SalesHeader.Validate("ORB Magento CC 4 Digits", LIFTSalesOrderBuffer."ORB Magento CC 4 Digits");
-        if LIFTSalesOrderBuffer."Sales Order Payment Type" = LIFTSalesOrderBuffer."Sales Order Payment Type"::"3rd Party" then begin
-            if SalesHeader."Sales Order Payment Type" <> SalesHeader."Sales Order Payment Type"::"Third Party" then
-                SalesHeader.Validate("Sales Order Payment Type", SalesHeader."Sales Order Payment Type"::"Third Party")
-        end else if LIFTSalesOrderBuffer."Sales Order Payment Type" = LIFTSalesOrderBuffer."Sales Order Payment Type"::Free then begin
-            if SalesHeader."Sales Order Payment Type" <> SalesHeader."Sales Order Payment Type"::Collect then
-                SalesHeader.Validate("Sales Order Payment Type", SalesHeader."Sales Order Payment Type"::Collect)
-        end else begin
-            if SalesHeader."Sales Order Payment Type" <> LIFTSalesOrderBuffer."Sales Order Payment Type" then
-                SalesHeader.Validate("Sales Order Payment Type", LIFTSalesOrderBuffer."Sales Order Payment Type");
-        end;
-        if SalesHeader."SO Payment Account No." <> LIFTSalesOrderBuffer."SO Payment Account No." then
-            SalesHeader.Validate("SO Payment Account No.", LIFTSalesOrderBuffer."SO Payment Account No.");
-        if SalesHeader."In-Hands Date" <> LIFTSalesOrderBuffer."In-Hands Date" then
-            SalesHeader.Validate("In-Hands Date", LIFTSalesOrderBuffer."In-Hands Date");
-        if SalesHeader."Created At" <> LIFTSalesOrderBuffer."Created At" then
-            SalesHeader.Validate("Created At", LIFTSalesOrderBuffer."Created At");
+        SalesHeader.Validate("Location Code", LIFTSalesOrderBuffer."Location Code");
+        SalesHeader.Validate("Shortcut Dimension 1 Code", LIFTSalesOrderBuffer."Shortcut Dimension 1 Code");
+        SalesHeader.Validate("Shortcut Dimension 2 Code", LIFTSalesOrderBuffer."Shortcut Dimension 2 Code");
+        SalesHeader.Validate("Location Override", LIFTSalesOrderBuffer."Location Override");
+        SalesHeader.Validate("Created_By", LIFTSalesOrderBuffer."Created_By");
+        SalesHeader.Validate("Rush", LIFTSalesOrderBuffer."Rush");
+        SalesHeader.Validate("ORB Declared Value", LIFTSalesOrderBuffer."ORB Declared Value");
+        SalesHeader.Validate("ORB International Contact", LIFTSalesOrderBuffer."ORB International Contact");
+        SalesHeader.Validate("ORB Magento Order #", LIFTSalesOrderBuffer."ORB Magento Order #");
+        SalesHeader.Validate("ORB Magento CC 4 Digits", LIFTSalesOrderBuffer."ORB Magento CC 4 Digits");
+        if LIFTSalesOrderBuffer."Sales Order Payment Type" = LIFTSalesOrderBuffer."Sales Order Payment Type"::"3rd Party" then
+            SalesHeader.Validate("Sales Order Payment Type", SalesHeader."Sales Order Payment Type"::"Third Party")
+        else if LIFTSalesOrderBuffer."Sales Order Payment Type" = LIFTSalesOrderBuffer."Sales Order Payment Type"::Free then
+            SalesHeader.Validate("Sales Order Payment Type", SalesHeader."Sales Order Payment Type"::Collect)
+        else
+            SalesHeader.Validate("Sales Order Payment Type", LIFTSalesOrderBuffer."Sales Order Payment Type");
+        SalesHeader.Validate("SO Payment Account No.", LIFTSalesOrderBuffer."SO Payment Account No.");
+        SalesHeader.Validate("In-Hands Date", LIFTSalesOrderBuffer."In-Hands Date");
+        SalesHeader.Validate("Created At", LIFTSalesOrderBuffer."Created At");
         //SalesHeader.Validate("Sell-to Contact No.", LIFTSalesOrderBuffer."Sell-to Contact No.");
-        if SalesHeader."Sell-To Contact No. (Custom)" <> LIFTSalesOrderBuffer."Sell-To Contact No." then begin
-            SalesHeader.Validate("Sell-To Contact No. (Custom)", LIFTSalesOrderBuffer."Sell-to Contact No.");
-            Contact.Reset();
-            if Contact.Get(LIFTSalesOrderBuffer."Sell-To Contact No.") then begin
-                if SalesHeader."Sell-to Contact No." <> Contact."No." then
-                    SalesHeader.Validate("Sell-to Contact No.", Contact."No.");
-                if SalesHeader."Sell-To Contact Name (Custom)" <> Contact.Name then
-                    SalesHeader.Validate("Sell-To Contact Name (Custom)", Contact.Name);
-                if SalesHeader."Sell-to Contact" <> Contact.Name then
-                    SalesHeader.Validate("Sell-to Contact", Contact.Name);
-                if SalesHeader."Sell-To Phone No. (Custom)" <> Contact."Phone No." then
-                    SalesHeader.Validate("Sell-To Phone No. (Custom)", Contact."Phone No.");
-                if SalesHeader."Sell-to Phone No." <> Contact."Phone No." then
-                    SalesHeader.Validate("Sell-to Phone No.", Contact."Phone No.");
-                if SalesHeader."Sell-To Email (Custom)" <> Contact."E-Mail" then
-                    SalesHeader.Validate("Sell-To Email (Custom)", Contact."E-Mail");
-                if SalesHeader."Sell-to E-Mail" <> Contact."E-Mail" then
-                    SalesHeader.Validate("Sell-to E-Mail", Contact."E-Mail");
-                if SalesHeader."Bill-to Contact No." <> Contact."No." then
-                    SalesHeader.Validate("Bill-to Contact No.", Contact."No.");
-                if SalesHeader."Bill-to Contact" <> Contact.Name then
-                    SalesHeader.Validate("Bill-to Contact", Contact.Name);
-            end;
+        SalesHeader.Validate("Sell-To Contact No. (Custom)", LIFTSalesOrderBuffer."Sell-to Contact No.");
+        Contact.Reset();
+        if Contact.Get(LIFTSalesOrderBuffer."Sell-To Contact No.") then begin
+            SalesHeader.Validate("Sell-to Contact No.", Contact."No.");
+            SalesHeader.Validate("Sell-To Contact Name (Custom)", Contact.Name);
+            SalesHeader.Validate("Sell-to Contact", Contact.Name);
+            SalesHeader.Validate("Sell-To Phone No. (Custom)", Contact."Phone No.");
+            SalesHeader.Validate("Sell-to Phone No.", Contact."Phone No.");
+            SalesHeader.Validate("Sell-To Email (Custom)", Contact."E-Mail");
+            SalesHeader.Validate("Sell-to E-Mail", Contact."E-Mail");
+            SalesHeader.Validate("Bill-to Contact No.", Contact."No.");
+            SalesHeader.Validate("Bill-to Contact", Contact.Name);
         end;
         //SalesHeader.Validate("Sell-to Contact", LIFTSalesOrderBuffer."Sell-to Contact");
-        if SalesHeader."Your Reference" <> LIFTSalesOrderBuffer."Your Reference" then
-            SalesHeader.Validate("Your Reference", LIFTSalesOrderBuffer."Your Reference");
+        SalesHeader.Validate("Your Reference", LIFTSalesOrderBuffer."Your Reference");
         SalesHeader."ORB Lift Order" := true;
     end;
 
@@ -259,85 +203,56 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         LIFTSubwayMapSteps: Record "ORB LIFT Subway Map Steps";
     begin
         SalesLine.SuspendStatusCheck(true);
-        if SalesLine."Sell-to Customer No." <> LIFTSalesLineBuffer."Sell-to Customer No." then
-            SalesLine.Validate("Sell-to Customer No.", LIFTSalesLineBuffer."Sell-to Customer No.");
+        SalesLine.Validate("Sell-to Customer No.", LIFTSalesLineBuffer."Sell-to Customer No.");
         //SalesLine.Validate(Type, SalesLine.Type::Item);
         IF LIFTSalesLineBuffer.Type = LIFTSalesLineBuffer.Type::Comment then begin
-            if SalesLine.Type <> SalesLine.Type::" " then
-                SalesLine.Validate(Type, SalesLine.Type::" ");
+            SalesLine.Validate(Type, SalesLine.Type::" ");
             if ItemRecLcl.get(LIFTSalesLineBuffer."No.") then begin
-                if SalesLine.Description <> ItemRecLcl.Description then
-                    SalesLine.Description := ItemRecLcl.Description;
-                if SalesLine."Description 2" <> ItemRecLcl."Description 2" then
-                    SalesLine."Description 2" := ItemRecLcl."Description 2";
-                if SalesLine."ORB LIFT Line ID" <> LIFTSalesLineBuffer."LIFT Line ID" then
-                    SalesLine."ORB LIFT Line ID" := LIFTSalesLineBuffer."LIFT Line ID";
+                SalesLine.Description := ItemRecLcl.Description;
+                SalesLine."Description 2" := ItemRecLcl."Description 2";
+                SalesLine."ORB LIFT Line ID" := LIFTSalesLineBuffer."LIFT Line ID";
             end;
         end else begin
-            IF LIFTSalesLineBuffer.Type = LIFTSalesLineBuffer.Type::Resource then begin
-                if SalesLine.Type <> SalesLine.Type::Resource then begin
-                    SalesLine.Validate(Type, SalesLine.Type::Resource)
-                end;
-            end
+            IF LIFTSalesLineBuffer.Type = LIFTSalesLineBuffer.Type::Resource then
+                SalesLine.Validate(Type, SalesLine.Type::Resource)
             else
-                if SalesLine.Type <> SalesLine.Type::Item then
-                    SalesLine.Validate(Type, SalesLine.Type::Item);
-            if SalesLine."No." <> LIFTSalesLineBuffer."No." then
-                SalesLine.Validate("No.", LIFTSalesLineBuffer."No.");
+                SalesLine.Validate(Type, SalesLine.Type::Item);
+            SalesLine.Validate("No.", LIFTSalesLineBuffer."No.");
             //SalesLine.Validate("Location Code", LIFTSalesLineBuffer."Location Code");
-            if SalesLine.Quantity <> LIFTSalesLineBuffer.Quantity then
-                SalesLine.Validate(Quantity, LIFTSalesLineBuffer.Quantity);
+            SalesLine.Validate(Quantity, LIFTSalesLineBuffer.Quantity);
             //SalesLine.Validate("Shortcut Dimension 1 Code", LIFTSalesLineBuffer."Shortcut Dimension 1 Code");
-            if SalesLine."Shortcut Dimension 2 Code" <> LIFTSalesLineBuffer."Shortcut Dimension 2 Code" then
-                SalesLine.Validate("Shortcut Dimension 2 Code", LIFTSalesLineBuffer."Shortcut Dimension 2 Code");
-            if SalesLine."Variant Code" <> LIFTSalesLineBuffer."Variant Code" then
-                SalesLine.Validate("Variant Code", LIFTSalesLineBuffer."Variant Code");
-            if SalesLine."Unit of Measure Code" <> LIFTSalesLineBuffer."Unit of Measure Code" then
-                SalesLine.Validate("Unit of Measure Code", LIFTSalesLineBuffer."Unit of Measure Code");
-            if SalesLine."Requested Delivery Date" <> LIFTSalesLineBuffer."Requested Delivery Date" then
-                SalesLine.Validate("Requested Delivery Date", LIFTSalesLineBuffer."Requested Delivery Date");
-            if SalesLine."Promised Delivery Date" <> LIFTSalesLineBuffer."Promised Delivery Date" then
-                SalesLine.Validate("Promised Delivery Date", LIFTSalesLineBuffer."Promised Delivery Date");
-            if SalesLine."Planned Delivery Date" <> LIFTSalesLineBuffer."Planned Delivery Date" then
-                SalesLine.Validate("Planned Delivery Date", LIFTSalesLineBuffer."Planned Delivery Date");
-            if SalesLine."Planned Shipment Date" <> LIFTSalesLineBuffer."Planned Shipment Date" then
-                SalesLine.Validate("Planned Shipment Date", LIFTSalesLineBuffer."Planned Shipment Date");
-            if SalesLine."Shipment Date" <> LIFTSalesLineBuffer."Shipment Date" then
-                SalesLine.Validate("Shipment Date", LIFTSalesLineBuffer."Shipment Date");
-            if SalesLine.Width <> LIFTSalesLineBuffer.Width then
-                SalesLine.Validate(Width, LIFTSalesLineBuffer.Width);
-            if SalesLine.Height <> LIFTSalesLineBuffer.Height then
-                SalesLine.Validate(Height, LIFTSalesLineBuffer.Height);
-            if SalesLine."Hardware Price" <> LIFTSalesLineBuffer."Hardware Price" then
-                SalesLine.Validate("Hardware Price", LIFTSalesLineBuffer."Hardware Price");
-            if SalesLine."Graphics Price" <> LIFTSalesLineBuffer."Graphics Price" then
-                SalesLine.Validate("Graphics Price", LIFTSalesLineBuffer."Graphics Price");
+            SalesLine.Validate("Shortcut Dimension 2 Code", LIFTSalesLineBuffer."Shortcut Dimension 2 Code");
+            SalesLine.Validate("Variant Code", LIFTSalesLineBuffer."Variant Code");
+            SalesLine.Validate("Unit of Measure Code", LIFTSalesLineBuffer."Unit of Measure Code");
+            SalesLine.Validate("Requested Delivery Date", LIFTSalesLineBuffer."Requested Delivery Date");
+            SalesLine.Validate("Promised Delivery Date", LIFTSalesLineBuffer."Promised Delivery Date");
+            SalesLine.Validate("Planned Delivery Date", LIFTSalesLineBuffer."Planned Delivery Date");
+            SalesLine.Validate("Planned Shipment Date", LIFTSalesLineBuffer."Planned Shipment Date");
+            SalesLine.Validate("Shipment Date", LIFTSalesLineBuffer."Shipment Date");
+            SalesLine.Validate(Width, LIFTSalesLineBuffer.Width);
+            SalesLine.Validate(Height, LIFTSalesLineBuffer.Height);
+            SalesLine.Validate("Hardware Price", LIFTSalesLineBuffer."Hardware Price");
+            SalesLine.Validate("Graphics Price", LIFTSalesLineBuffer."Graphics Price");
             //SalesLine.Validate("Line Discount %", LIFTSalesLineBuffer."Line Discount %");
             //Calculate "Discount Grp Code Discount" on Net Jnit Price coming from LIFT start
-            if SalesLine."Unit Price" <> LIFTSalesLineBuffer."Unit Price" then
-                SalesLine.Validate("Unit Price", LIFTSalesLineBuffer."Unit Price");
+            SalesLine.Validate("Unit Price", LIFTSalesLineBuffer."Unit Price");
             BCOriginalDiscount := SalesLine."Line Discount Amount";
             //Calculate "Discount Grp Code Discount" on Net Jnit Price coming from LIFT End
-            if SalesLine."Unit Price" <> LIFTSalesLineBuffer."Original Unit Price" then
-                SalesLine.Validate("Unit Price", LIFTSalesLineBuffer."Original Unit Price");
+            SalesLine.Validate("Unit Price", LIFTSalesLineBuffer."Original Unit Price");
             //SalesLine.Validate("Line Discount Amount", LIFTSalesLineBuffer."Line Discount Amount");
             //BCLineDiscount := SalesLine."Line Discount Amount";
-            if SalesLine."ORB LIFT Discount Amount" <> LIFTSalesLineBuffer."Line Discount Amount" then
-                SalesLine.Validate("ORB LIFT Discount Amount", LIFTSalesLineBuffer."Line Discount Amount");
+            SalesLine.Validate("ORB LIFT Discount Amount", LIFTSalesLineBuffer."Line Discount Amount");
             //SalesLine.Validate("Line Discount Amount", (BCLineDiscount + SalesLine."ORB LIFT Discount Amount"));
-            if SalesLine."Line Discount Amount" <> (BCOriginalDiscount + SalesLine."ORB LIFT Discount Amount") then
-                SalesLine.Validate("Line Discount Amount", (BCOriginalDiscount + SalesLine."ORB LIFT Discount Amount"));
-            if SalesLine."ORB LIFT Line ID" <> LIFTSalesLineBuffer."LIFT Line ID" then
-                SalesLine."ORB LIFT Line ID" := LIFTSalesLineBuffer."LIFT Line ID";
+            SalesLine.Validate("Line Discount Amount", (BCOriginalDiscount + SalesLine."ORB LIFT Discount Amount"));
+            SalesLine."ORB LIFT Line ID" := LIFTSalesLineBuffer."LIFT Line ID";
 
-            if SalesLine."ORB LIFT Step No." <> LIFTSalesLineBuffer."ORB LIFT Step No." then begin
-                if not LIFTSubwayMapSteps.Get(LIFTSalesLineBuffer."ORB LIFT Step No.") then begin
-                    LIFTSubwayMapSteps.Init();
-                    LIFTSubwayMapSteps."No." := LIFTSalesLineBuffer."ORB LIFT Step No.";
-                    LIFTSubwayMapSteps.Insert(true);
-                end;
-                SalesLine.Validate("ORB LIFT Step No.", LIFTSalesLineBuffer."ORB LIFT Step No.");
+            if not LIFTSubwayMapSteps.Get(LIFTSalesLineBuffer."ORB LIFT Step No.") then begin
+                LIFTSubwayMapSteps.Init();
+                LIFTSubwayMapSteps."No." := LIFTSalesLineBuffer."ORB LIFT Step No.";
+                LIFTSubwayMapSteps.Insert(true);
             end;
+
+            SalesLine.Validate("ORB LIFT Step No.", LIFTSalesLineBuffer."ORB LIFT Step No.");
         end
     end;
 
