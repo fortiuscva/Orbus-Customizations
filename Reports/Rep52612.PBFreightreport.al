@@ -76,6 +76,7 @@ report 52612 "ORB PB Freightreport"
                 FreightChargedataTableRecLcl.Sales_Order_Payment_Type := format("Sales Invoice Header"."Sales Order Payment Type");
                 FreightChargedataTableRecLcl.Case_No_ := "Sales Invoice Header"."Case No.";
                 //FreightChargedataTableRecLcl.Your_Reference := "Sales Invoice Header"."Your Reference";
+                FreightChargedataTableRecLcl."SO payment account no" := "Sales Invoice Header"."SO Payment Account No.";//2.28.26, added third party no on sales order
                 FreightChargedataTableRecLcl.Your_Reference := "Sales Invoice Header"."ORB Your Reference(CS)";
                 FreightChargedataTableRecLcl.ORB_Magento_Order := "Sales Invoice Header"."ORB Magento Order #";
                 FreightChargedataTableRecLcl.Package_Tracking_No_ := "Sales Invoice Header"."Package Tracking No.";
@@ -119,7 +120,6 @@ report 52612 "ORB PB Freightreport"
                             DSHIPLabelDataRecLcl.SetFilter(Cost, '>%1', 0);
                             IF DSHIPLabelDataRecLcl.FindFirst() then begin
                                 FreightCostGvar := DSHIPLabelDataRecLcl.Cost;
-
                             end;
                             LicensePlateNoVarLcl := IWXLPHeaderRecLcl."No.";
                             LicensePlatepkgNoVarLcl := IWXLPHeaderRecLcl."Package Order ID";
@@ -132,7 +132,10 @@ report 52612 "ORB PB Freightreport"
                         until (IWXLPHeaderRecLcl.next = 0) or (bcostFoundVarLcl = true);
                         DSHIPPackageOptionsRecLcl.Reset();
                         DSHIPPackageOptionsRecLcl.SetRange("License Plate No.", LicensePlateNoVarLcl);
-                        IF DSHIPPackageOptionsRecLcl.FindFirst() then LiceplatePaymentTypeGvar := Format(DSHIPPackageOptionsRecLcl."Payment Type");
+                        IF DSHIPPackageOptionsRecLcl.FindFirst() then begin
+                            LiceplatePaymentTypeGvar := Format(DSHIPPackageOptionsRecLcl."Payment Type");
+                            FreightChargedataTableRecLcl."LP payment account no" := DSHIPPackageOptionsRecLcl."Payment Account No.";//2.28.26, added LP payment account no
+                        end;
                         FreightChargedataTableRecLcl.LicensepaymentType := LiceplatePaymentTypeGvar;
                         DSHIPShipmentOptionsRecLcl.Reset();
                         DSHIPShipmentOptionsRecLcl.SetRange("Order ID", LicensePlatepkgNoVarLcl);
@@ -167,7 +170,11 @@ report 52612 "ORB PB Freightreport"
                                 until (IWXLPHeaderRecLcl.next = 0) or (bcostFoundVarLcl = true);
                                 DSHIPPackageOptionsRecLcl.Reset();
                                 DSHIPPackageOptionsRecLcl.SetRange("License Plate No.", LicensePlateNoVarLcl);
-                                IF DSHIPPackageOptionsRecLcl.FindFirst() then LiceplatePaymentTypeGvar := Format(DSHIPPackageOptionsRecLcl."Payment Type");
+                                IF DSHIPPackageOptionsRecLcl.FindFirst() then begin
+                                    LiceplatePaymentTypeGvar := Format(DSHIPPackageOptionsRecLcl."Payment Type");
+                                    FreightChargedataTableRecLcl."LP payment account no" := DSHIPPackageOptionsRecLcl."Payment Account No.";//2.28.26, added LP payment account no
+                                end;
+
                                 FreightChargedataTableRecLcl.LicensepaymentType := LiceplatePaymentTypeGvar;
                                 DSHIPShipmentOptionsRecLcl.Reset();
                                 DSHIPShipmentOptionsRecLcl.SetRange("Order ID", LicensePlatepkgNoVarLcl);
