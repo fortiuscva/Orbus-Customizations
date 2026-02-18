@@ -140,6 +140,16 @@ table 52615 "ORB FreightChargeDataTable"
             Caption = 'Markup Amount';
             DataClassification = ToBeClassified;
         }
+        field(28; "SO payment account no"; Text[100])
+        {
+            Caption = 'Third Party Payment Account No';
+            DataClassification = ToBeClassified;
+        }
+        field(29; "LP payment account no"; Text[100])
+        {
+            Caption = 'LP Third Party Payment Account No';
+            DataClassification = ToBeClassified;
+        }
     }
     keys
     {
