@@ -110,6 +110,14 @@ page 52635 "ORB Invoice Freight Details PB"
                 {
                     Caption = 'Markup Amount';
                 }
+                field("SO payment account no"; Rec."SO payment account no")
+                {
+                    Caption = 'SO Third party account no';
+                }
+                field("LP payment account no"; Rec."LP payment account no")
+                {
+                    Caption = 'LP Third party account no';
+                }
 
 
             }
