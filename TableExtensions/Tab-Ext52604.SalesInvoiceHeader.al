@@ -125,5 +125,10 @@ tableextension 52604 "ORB Sales Invoice Header" extends "Sales Invoice Header"
             DataClassification = CustomerContent;
             Editable = false;
         }
+        field(52670; "ORB LIFT Last Updated DateTime"; Text[30])
+        {
+            Caption = 'LIFT Last Updated DateTime';
+            DataClassification = CustomerContent;
+        }
     }
 }
