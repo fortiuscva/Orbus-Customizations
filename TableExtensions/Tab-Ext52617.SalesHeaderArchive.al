@@ -76,5 +76,10 @@ tableextension 52617 "ORB Sales Header Archive" extends "Sales Header Archive"
             Caption = 'Is LIFT Order Cancelled';
             DataClassification = CustomerContent;
         }
+        field(52670; "ORB LIFT Last Updated DateTime"; Text[30])
+        {
+            Caption = 'LIFT Last Updated DateTime';
+            DataClassification = CustomerContent;
+        }
     }
 }

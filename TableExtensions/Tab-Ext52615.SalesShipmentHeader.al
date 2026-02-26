@@ -58,6 +58,10 @@ tableextension 52615 "ORB Sales Shipment Header" extends "Sales Shipment Header"
         }
         //field(52658; "ORB Inv. Pick No."; Code[20]) Used on Sales header
         //field(52659; "ORB Posted Inv. Pick No."; Code[20]) Used on Sales header
-
+        field(52670; "ORB LIFT Last Updated DateTime"; Text[30])
+        {
+            Caption = 'LIFT Last Updated DateTime';
+            DataClassification = CustomerContent;
+        }
     }
 }

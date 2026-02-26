@@ -253,6 +253,10 @@ page 53411 "ORB LIFT SO Buffer API"
                 {
                     Caption = 'LIFT Item Lines Count';
                 }
+                field(orbLIFTLastUpdatedDateTime; Rec."ORB LIFT Last Updated DateTime")
+                {
+                    Caption = 'LIFT Last Updated DateTime';
+                }
             }
         }
     }

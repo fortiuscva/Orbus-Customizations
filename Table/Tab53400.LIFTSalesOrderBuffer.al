@@ -309,6 +309,11 @@ table 53400 "ORB LIFT Sales Order Buffer"
             Caption = 'LIFT Item Lines Count';
             DataClassification = CustomerContent;
         }
+        field(55132; "ORB LIFT Last Updated DateTime"; Text[30])
+        {
+            Caption = 'LIFT Last Updated DateTime';
+            DataClassification = CustomerContent;
+        }
     }
     keys
     {

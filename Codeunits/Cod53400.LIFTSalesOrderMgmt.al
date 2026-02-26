@@ -49,8 +49,8 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
 
             //Sales Line UnReserve
             // SOLinesUnReserverCU.UnreserveSalesOrder(SalesHeader."No.");
-
-            ArchiveManagement.ArchiveSalesDocument(SalesHeader);
+            if SalesHeader."ORB LIFT Last Updated DateTime" <> LIFTSalesOrderBuffer."ORB LIFT Last Updated DateTime" then
+                ArchiveManagement.ArchiveSalesDocument(SalesHeader);
             UpdateSalesHeader(LIFTSalesOrderBuffer, false);
             DShipPackOptions.RetrievePackageOptions(Enum::"DSHIP Document Type"::"Sales Order", LIFTSalesOrderBuffer."No.", '');
             UpdateDShipPackageOptions(DShipPackOptions, LIFTSalesOrderBuffer);
@@ -152,6 +152,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
         //SalesHeader.Validate("Sell-to Contact", LIFTSalesOrderBuffer."Sell-to Contact");
         SalesHeader.Validate("Your Reference", LIFTSalesOrderBuffer."Your Reference");
         SalesHeader."ORB Lift Order" := true;
+        SalesHeader.Validate("ORB LIFT Last Updated DateTime", LIFTSalesOrderBuffer."ORB LIFT Last Updated DateTime");
     end;
 
     procedure PropagateOnSalesLineInsert(var LIFTSalesLineBuffer: Record "ORB LIFT Sales Line Buffer")
