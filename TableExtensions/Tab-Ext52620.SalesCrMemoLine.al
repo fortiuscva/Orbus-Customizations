@@ -51,5 +51,12 @@ tableextension 52620 "ORB Sales Cr.Memo Line" extends "Sales Cr.Memo Line"
             TableRelation = "Dimension Value";
             DataClassification = CustomerContent;
         }
+        field(53404; "ORB LIFT Unit Price"; Decimal)
+        {
+            Caption = 'LIFT Unit Price';
+            DecimalPlaces = 0 : 5;
+            Editable = false;
+            DataClassification = CustomerContent;
+        }
     }
 }

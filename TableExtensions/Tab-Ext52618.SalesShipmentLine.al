@@ -44,5 +44,12 @@ tableextension 52618 "ORB Sales Shipment Line" extends "Sales Shipment Line"
             TableRelation = "ORB LIFT Subway Map Steps";
             DataClassification = CustomerContent;
         }
+        field(53404; "ORB LIFT Unit Price"; Decimal)
+        {
+            Caption = 'LIFT Unit Price';
+            DecimalPlaces = 0 : 5;
+            Editable = false;
+            DataClassification = CustomerContent;
+        }
     }
 }

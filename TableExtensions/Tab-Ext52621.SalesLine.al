@@ -141,6 +141,13 @@ tableextension 52621 "ORB Sales Line" extends "Sales Line"
             TableRelation = "Dimension Value";
             DataClassification = CustomerContent;
         }
+        field(53404; "ORB LIFT Unit Price"; Decimal)
+        {
+            Caption = 'LIFT Unit Price';
+            DecimalPlaces = 0 : 5;
+            Editable = false;
+            DataClassification = CustomerContent;
+        }
     }
 
     trigger OnAfterModify()
