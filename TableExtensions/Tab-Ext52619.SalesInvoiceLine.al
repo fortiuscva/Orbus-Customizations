@@ -57,5 +57,12 @@ tableextension 52619 "ORB Sales Invoice Line" extends "Sales Invoice Line"
             TableRelation = "Dimension Value";
             DataClassification = CustomerContent;
         }
+        field(53404; "ORB LIFT Unit Price"; Decimal)
+        {
+            Caption = 'LIFT Unit Price';
+            DecimalPlaces = 0 : 5;
+            Editable = false;
+            DataClassification = CustomerContent;
+        }
     }
 }
