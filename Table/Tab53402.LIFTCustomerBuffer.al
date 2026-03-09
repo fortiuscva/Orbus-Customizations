@@ -20,6 +20,11 @@ table 53402 "ORB LIFT Customer Buffer"
             Caption = 'Address';
             DataClassification = CustomerContent;
         }
+        field(6; "Address 2"; Text[50])
+        {
+            Caption = 'Address 2';
+            DataClassification = CustomerContent;
+        }
         field(7; City; Text[30])
         {
             Caption = 'City';
