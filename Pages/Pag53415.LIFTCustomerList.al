@@ -24,6 +24,10 @@ page 53415 "ORB LIFT Customer List"
                 {
                     ToolTip = 'Specifies the value of the Address field.', Comment = '%';
                 }
+                field("Address 2"; Rec."Address 2")
+                {
+                    ToolTip = 'Specifies the value of the Address 2 field.', Comment = '%';
+                }
                 field(City; Rec.City)
                 {
                     ToolTip = 'Specifies the value of the City field.', Comment = '%';

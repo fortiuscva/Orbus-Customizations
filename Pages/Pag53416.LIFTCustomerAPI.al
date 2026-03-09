@@ -29,6 +29,10 @@ page 53416 "ORB LIFT Customer API"
                 {
                     Caption = 'Address';
                 }
+                field(address2; Rec."Address 2")
+                {
+                    Caption = 'Address 2';
+                }
                 field(city; Rec.City)
                 {
                     Caption = 'City';
