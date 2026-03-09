@@ -355,19 +355,19 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
                         SalesLine.Validate(Type, SalesLine.Type::Item);
                 if ((SalesLine."No." <> LIFTSalesLineBuffer."No.") or (SalesLine."Unit of Measure" <> LIFTSalesLineBuffer."Unit of Measure Code") or (SalesLine.Quantity <> LIFTSalesLineBuffer.Quantity) or (SalesLine."ORB LIFT Unit Price" <> LIFTSalesLineBuffer."Unit Price")) then
                     ChangeInPriceDiscounts := true;
-                if SalesLine."No." <> LIFTSalesLineBuffer."No." then
-                    SalesLine.Validate("No.", LIFTSalesLineBuffer."No.");
                 if ChangeInPriceDiscounts then
                     SalesLine.Validate("Line Discount %", 0);
+                if ChangeInPriceDiscounts then
+                    SalesLine.Validate("No.", LIFTSalesLineBuffer."No.");
                 //SalesLine.Validate("Location Code", LIFTSalesLineBuffer."Location Code");
-                if SalesLine.Quantity <> LIFTSalesLineBuffer.Quantity then
+                if ChangeInPriceDiscounts then
                     SalesLine.Validate(Quantity, LIFTSalesLineBuffer.Quantity);
                 //SalesLine.Validate("Shortcut Dimension 1 Code", LIFTSalesLineBuffer."Shortcut Dimension 1 Code");
                 if SalesLine."Shortcut Dimension 2 Code" <> LIFTSalesLineBuffer."Shortcut Dimension 2 Code" then
                     SalesLine.Validate("Shortcut Dimension 2 Code", LIFTSalesLineBuffer."Shortcut Dimension 2 Code");
                 if SalesLine."Variant Code" <> LIFTSalesLineBuffer."Variant Code" then
                     SalesLine.Validate("Variant Code", LIFTSalesLineBuffer."Variant Code");
-                if SalesLine."Unit of Measure Code" <> LIFTSalesLineBuffer."Unit of Measure Code" then
+                if ChangeInPriceDiscounts then
                     SalesLine.Validate("Unit of Measure Code", LIFTSalesLineBuffer."Unit of Measure Code");
                 if SalesLine."Requested Delivery Date" <> LIFTSalesLineBuffer."Requested Delivery Date" then
                     SalesLine.Validate("Requested Delivery Date", LIFTSalesLineBuffer."Requested Delivery Date");
@@ -389,12 +389,12 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
                     SalesLine.Validate("Graphics Price", LIFTSalesLineBuffer."Graphics Price");
                 //SalesLine.Validate("Line Discount %", LIFTSalesLineBuffer."Line Discount %");
                 //Calculate "Discount Grp Code Discount" on Net Jnit Price coming from LIFT start
-                if SalesLine."ORB LIFT Unit Price" <> LIFTSalesLineBuffer."Unit Price" then
+                if ChangeInPriceDiscounts then
                     SalesLine.Validate("Unit Price", LIFTSalesLineBuffer."Unit Price");
                 if ChangeInPriceDiscounts then
                     BCOriginalDiscount := SalesLine."Line Discount Amount";
                 //Calculate "Discount Grp Code Discount" on Net Jnit Price coming from LIFT End
-                if SalesLine."ORB LIFT Unit Price" <> LIFTSalesLineBuffer."Unit Price" then
+                if ChangeInPriceDiscounts then
                     SalesLine.Validate("Unit Price", LIFTSalesLineBuffer."Original Unit Price");
                 //SalesLine.Validate("Line Discount Amount", LIFTSalesLineBuffer."Line Discount Amount");
                 //BCLineDiscount := SalesLine."Line Discount Amount";
