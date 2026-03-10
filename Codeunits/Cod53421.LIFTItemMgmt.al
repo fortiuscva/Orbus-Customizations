@@ -86,9 +86,12 @@ codeunit 53421 "ORB LIFT Item Mgmt."
             else if ((Item."Replenishment System" = Item."Replenishment System"::Purchase) or (Item."Replenishment System" = Item."Replenishment System"::"Prod. Order")) then begin
                 LIFTMaterial.Reset();
                 LIFTMaterial.SetRange("Material Name", LIFTItem."Item No.");
-                if LIFTMaterial.FindFirst() then
+                if LIFTMaterial.FindFirst() then begin
                     if LIFTItem."Product Material Id" <> LIFTMaterial."Material Id" then
-                        LIFTItem.Validate("Product Material Id", LIFTMaterial."Material Id");
+                        LIFTItem.Validate("Product Material Id", LIFTMaterial."Material Id")
+                end
+                else
+                    LIFTItem.Validate("Product Material Id", LIFTItem."Material Id");
             end;
 
             LIFTStorageType.Reset();
@@ -101,19 +104,29 @@ codeunit 53421 "ORB LIFT Item Mgmt."
                 LIFTItem.Validate("Print Format", 5941450);
         end
         else if Item."Department Dimension" = '02' then begin
-            DimensionValue.Reset();
-            DimensionValue.Get('MATERIAL', Item."Material Dimension");
-            LIFTMaterial.Reset();
-            LIFTMaterial.SetRange("Material Name", DimensionValue.Name);
-            LIFTMaterial.FindFirst();
-            if LIFTItem."Product Material Id" <> LIFTMaterial."Material Id" then
-                LIFTItem.Validate("Product Material Id", LIFTMaterial."Material Id");
+            if Item."Replenishment System" = Item."Replenishment System"::Assembly then begin
+                LIFTMaterial.Reset();
+                LIFTMaterial.SetRange("Material Name", 'Kit');
+                if LIFTMaterial.FindFirst() then
+                    if LIFTItem."Product Material Id" <> LIFTMaterial."Material Id" then
+                        LIFTItem.Validate("Product Material Id", LIFTMaterial."Material Id");
+            end
+            else if ((Item."Replenishment System" = Item."Replenishment System"::Purchase) or (Item."Replenishment System" = Item."Replenishment System"::"Prod. Order")) then begin
+                DimensionValue.Reset();
+                DimensionValue.Get('MATERIAL', Item."Material Dimension");
+                LIFTMaterial.Reset();
+                LIFTMaterial.SetRange("Material Name", DimensionValue.Name);
+                LIFTMaterial.FindFirst();
+                if LIFTItem."Product Material Id" <> LIFTMaterial."Material Id" then
+                    LIFTItem.Validate("Product Material Id", LIFTMaterial."Material Id");
+            end;
 
             LIFTStorageType.Reset();
             LIFTStorageType.SetRange(Name, '--Select Variant--');
             LIFTStorageType.FindFirst();
             if LIFTItem."Storage Type Id" <> LIFTStorageType."Storage Type ID" then
                 LIFTItem.Validate("Storage Type Id", LIFTStorageType."Storage Type ID");
+
         end;
 
         if LIFTItem."Variant Code" = '' then begin
@@ -126,6 +139,9 @@ codeunit 53421 "ORB LIFT Item Mgmt."
 
         if LIFTItem."Primary Vendor Id" <> 57643 then
             LIFTItem.Validate("Primary Vendor Id", 57643);
+
+        if LIFTItem."Material Type Id" <> 121821 then
+            LIFTItem.Validate("Material Type Id", 121821);
 
         if LIFTItem."Unit Cost" <> Item."Unit Cost" then
             LIFTItem.Validate("Unit Cost", Item."Unit Cost");
