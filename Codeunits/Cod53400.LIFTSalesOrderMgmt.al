@@ -103,8 +103,8 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
                 if SalesHeader."Payment Terms Code" <> 'CC' then
                     SalesHeader.Validate("Payment Terms Code", 'CC');
             end;
-            if SalesHeader."Due Date" <> LIFTSalesOrderBuffer."Due Date" then
-                SalesHeader.Validate("Due Date", LIFTSalesOrderBuffer."Due Date");
+            // if SalesHeader."Due Date" <> LIFTSalesOrderBuffer."Due Date" then
+            //     SalesHeader.Validate("Due Date", LIFTSalesOrderBuffer."Due Date");
             if SalesHeader."Shipment Method Code" <> LIFTSalesOrderBuffer."Shipment Method Code" then
                 SalesHeader.Validate("Shipment Method Code", LIFTSalesOrderBuffer."Shipment Method Code");
             if SalesHeader."Customer Price Group" <> LIFTSalesOrderBuffer."Customer Price Group" then
