@@ -38,6 +38,11 @@ pageextension 52651 "ORB Item Card" extends "Item Card"
                     Caption = 'Storage Type Id';
                     ApplicationArea = All;
                 }
+                field("ORB Ship From Warehouse"; Rec."ORB Ship From Warehouse")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Ship From Warehouse field.', Comment = '%';
+                }
                 field("ORB Warehouse Location Id"; Rec."ORB Warehouse Location Id")
                 {
                     ApplicationArea = All;
