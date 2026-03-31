@@ -90,6 +90,10 @@ page 53446 "ORB Lift Items List"
                 {
                     ToolTip = 'Specifies the value of the Unit Cost field.', Comment = '%';
                 }
+                field("Has Variants"; Rec."Has Variants")
+                {
+                    ToolTip = 'Specifies the value of the Has Variants field.', Comment = '%';
+                }
                 field("Do Not Integrate (Material)"; Rec."Do Not Integrate (Material)")
                 {
                     ToolTip = 'Specifies the value of the Do Not Integrate field.', Comment = '%';

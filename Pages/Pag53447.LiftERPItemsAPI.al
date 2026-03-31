@@ -89,6 +89,10 @@ page 53447 "ORB Lift ERP Items API"
                 {
                     Caption = 'Unit Cost';
                 }
+                field(hasVariants; Rec."Has Variants")
+                {
+                    Caption = 'Has Variants';
+                }
                 field(printFormat; Rec."Print Format")
                 {
                     Caption = 'Print Format';

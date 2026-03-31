@@ -58,6 +58,9 @@ table 53414 "ORB LIFT ERP Item"
         field(20; "Prod Line Dim Id"; Integer)
         {
             Caption = 'Prod Line Dim Id';
+            TableRelation = "ORB LIFT Product Line Values";
+            ValidateTableRelation = false;
+            DataClassification = CustomerContent;
         }
         field(25; "Product Type"; Text[10])
         {
@@ -74,6 +77,9 @@ table 53414 "ORB LIFT ERP Item"
         field(40; "Material Id"; Integer)
         {
             Caption = 'Material Id';
+            TableRelation = "ORB LIFT Material";
+            ValidateTableRelation = false;
+            DataClassification = CustomerContent;
             trigger OnValidate()
             var
                 LiftItemLcl: Record "ORB LIFT ERP Item";
@@ -99,6 +105,9 @@ table 53414 "ORB LIFT ERP Item"
         field(45; "Storage Type Id"; Integer)
         {
             Caption = 'Storage Type Id';
+            TableRelation = "ORB LIFT Storage Type";
+            ValidateTableRelation = false;
+            DataClassification = CustomerContent;
         }
         field(48; "Product Id"; Integer)
         {
@@ -108,6 +117,11 @@ table 53414 "ORB LIFT ERP Item"
         field(50; "Print Format"; Integer)
         {
             Caption = 'Print Format';
+        }
+        field(52; "Has Variants"; Boolean)
+        {
+            Caption = 'Has Variants';
+            DataClassification = CustomerContent;
         }
         field(55; "Do Not Integrate (Material)"; Boolean)
         {

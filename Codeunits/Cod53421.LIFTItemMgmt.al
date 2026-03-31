@@ -20,6 +20,7 @@ codeunit 53421 "ORB LIFT Item Mgmt."
         ProdLineValue: Record "ORB LIFT Product Line Values";
         LIFTMaterial: Record "ORB LIFT Material";
         LIFTStorageType: Record "ORB LIFT Storage Type";
+        ItemVariantLcl: Record "Item Variant";
     begin
 
         LIFTItem.Validate(Description, Item.Description);
@@ -71,6 +72,19 @@ codeunit 53421 "ORB LIFT Item Mgmt."
             LIFTStorageType.FindFirst();
             LIFTItem.Validate("Storage Type Id", LIFTStorageType."Storage Type ID");
             LIFTItem.Validate("Print Format", 5941450);
+        end
+        else if Item."Department Dimension" = '02' then begin
+            LIFTStorageType.Reset();
+            LIFTStorageType.SetRange(Name, '--Select Variant--');
+            LIFTStorageType.FindFirst();
+            LIFTItem.Validate("Storage Type Id", LIFTStorageType."Storage Type ID");
+        end;
+
+        if LIFTItem."Variant Code" = '' then begin
+            ItemVariantLcl.Reset();
+            ItemVariantLcl.SetRange("Item No.", LIFTItem."Item No.");
+            if ItemVariantLcl.FindLast() then
+                LIFTItem.Validate("Has Variants", true);
         end;
 
         LIFTItem.Validate("Unit Cost", Item."Unit Cost");
