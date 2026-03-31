@@ -1,10 +1,12 @@
-page 53445 "ORB Lift ERP Items"
+page 53446 "ORB Lift Items List"
 {
     ApplicationArea = All;
-    Caption = 'Lift ERP Items';
+    Caption = 'Lift Items List';
     PageType = List;
+    Editable = false;
+    DeleteAllowed = false;
     SourceTable = "ORB LIFT ERP Item";
-    UsageCategory = Administration;
+    UsageCategory = Lists;
 
     layout
     {
@@ -28,22 +30,6 @@ page 53445 "ORB Lift ERP Items"
                 {
                     ToolTip = 'Specifies the value of the Product Name field.', Comment = '%';
                 }
-                field("Material Id"; Rec."Material Id")
-                {
-                    ToolTip = 'Specifies the value of the Material Id field.', Comment = '%';
-                }
-                field("Storage Type Id"; Rec."Storage Type Id")
-                {
-                    ToolTip = 'Specifies the value of the Storage Type Id field.', Comment = '%';
-                }
-                field("Product Id"; Rec."Product Id")
-                {
-                    ToolTip = 'Specifies the value of the Product Id field.', Comment = '%';
-                }
-                field("Product Material Id"; Rec."Product Material Id")
-                {
-                    ToolTip = 'Specifies the value of the Product Material Id field.', Comment = '%';
-                }
                 field("Product Type"; Rec."Product Type")
                 {
                     ToolTip = 'Specifies the value of the Product Type field.', Comment = '%';
@@ -51,6 +37,34 @@ page 53445 "ORB Lift ERP Items"
                 field("Catalog Id"; Rec."Catalog Id")
                 {
                     ToolTip = 'Specifies the value of the Catalog Id field.', Comment = '%';
+                }
+                field(Status; Rec.Status)
+                {
+                    ToolTip = 'Specifies the value of the Product Status field.', Comment = '%';
+                }
+                field("Prod Line Dim Id"; Rec."Prod Line Dim Id")
+                {
+                    ToolTip = 'Specifies the value of the Prod Line Dim Id field.', Comment = '%';
+                }
+                field("Material Id"; Rec."Material Id")
+                {
+                    ToolTip = 'Specifies the value of the Material Id field.', Comment = '%';
+                }
+                field("Product Material Id"; Rec."Product Material Id")
+                {
+                    ToolTip = 'Specifies the value of the Product Material Id field.', Comment = '%';
+                }
+                field("Product Id"; Rec."Product Id")
+                {
+                    ToolTip = 'Specifies the value of the Product Id field.', Comment = '%';
+                }
+                field("Ship From Whse Loc Id"; Rec."Ship From Whse Loc Id")
+                {
+                    ToolTip = 'Specifies the value of the Ship From Whse Loc Id field.', Comment = '%';
+                }
+                field("Storage Type Id"; Rec."Storage Type Id")
+                {
+                    ToolTip = 'Specifies the value of the Storage Type Id field.', Comment = '%';
                 }
                 field("Material Type Id"; Rec."Material Type Id")
                 {
@@ -68,14 +82,6 @@ page 53445 "ORB Lift ERP Items"
                 {
                     ToolTip = 'Specifies the value of the Primary Vendor Id field.', Comment = '%';
                 }
-                field("Prod Line Dim Id"; Rec."Prod Line Dim Id")
-                {
-                    ToolTip = 'Specifies the value of the Prod Line Dim Id field.', Comment = '%';
-                }
-                field("Ship From Whse Loc Id"; Rec."Ship From Whse Loc Id")
-                {
-                    ToolTip = 'Specifies the value of the Ship From Whse Loc Id field.', Comment = '%';
-                }
                 field("Print Format"; Rec."Print Format")
                 {
                     ToolTip = 'Specifies the value of the Print Format field.', Comment = '%';
@@ -84,11 +90,7 @@ page 53445 "ORB Lift ERP Items"
                 {
                     ToolTip = 'Specifies the value of the Unit Cost field.', Comment = '%';
                 }
-                field(Status; Rec.Status)
-                {
-                    ToolTip = 'Specifies the value of the Product Status field.', Comment = '%';
-                }
-                field("Do Not Integrate"; Rec."Do Not Integrate (Material)")
+                field("Do Not Integrate (Material)"; Rec."Do Not Integrate (Material)")
                 {
                     ToolTip = 'Specifies the value of the Do Not Integrate field.', Comment = '%';
                 }

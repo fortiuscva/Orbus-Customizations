@@ -53,14 +53,14 @@ codeunit 53421 "ORB LIFT Item Mgmt."
             if Item."Replenishment System" = Item."Replenishment System"::Assembly then begin
                 LIFTMaterial.Reset();
                 LIFTMaterial.SetRange("Material Name", 'Kit');
-                LIFTMaterial.FindFirst();
-                LIFTItem.Validate("Product Material Id", LIFTMaterial."Material Id");
+                if LIFTMaterial.FindFirst() then
+                    LIFTItem.Validate("Product Material Id", LIFTMaterial."Material Id");
             end
             else if ((Item."Replenishment System" = Item."Replenishment System"::Purchase) or (Item."Replenishment System" = Item."Replenishment System"::"Prod. Order")) then begin
                 LIFTMaterial.Reset();
                 LIFTMaterial.SetRange("Material Name", LIFTItem."Item No.");
-                LIFTMaterial.FindFirst();
-                LIFTItem.Validate("Product Material Id", LIFTMaterial."Material Id");
+                if LIFTMaterial.FindFirst() then
+                    LIFTItem.Validate("Product Material Id", LIFTMaterial."Material Id");
             end;
 
             LIFTStorageType.Reset();
