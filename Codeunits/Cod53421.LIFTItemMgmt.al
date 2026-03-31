@@ -124,6 +124,9 @@ codeunit 53421 "ORB LIFT Item Mgmt."
                     LIFTItem.Validate("Has Variants", true);
         end;
 
+        if LIFTItem."Primary Vendor Id" <> 57643 then
+            LIFTItem.Validate("Primary Vendor Id", 57643);
+
         if LIFTItem."Unit Cost" <> Item."Unit Cost" then
             LIFTItem.Validate("Unit Cost", Item."Unit Cost");
 
