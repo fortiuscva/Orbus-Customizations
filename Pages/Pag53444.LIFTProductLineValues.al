@@ -1,10 +1,9 @@
 page 53444 "ORB LIFT Product Line Values"
 {
     ApplicationArea = All;
-    Caption = 'ORB LIFT Product Line Values';
+    Caption = 'LIFT Product Line Values';
     PageType = List;
     SourceTable = "ORB LIFT Product Line Values";
-    DataCaptionFields = VALUE_ID, VALUE;
     UsageCategory = Lists;
 
     layout
@@ -20,6 +19,10 @@ page 53444 "ORB LIFT Product Line Values"
                 field(VALUE; Rec."VALUE")
                 {
                     ToolTip = 'Specifies the value of the VALUE field.', Comment = '%';
+                }
+                field("Product Line Dimension"; Rec."Product Line Dimension")
+                {
+                    ToolTip = 'Specifies the value of the Product Line Dimension field.', Comment = '%';
                 }
                 field(SystemCreatedAt; Rec.SystemCreatedAt)
                 {

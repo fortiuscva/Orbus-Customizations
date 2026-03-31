@@ -2,9 +2,9 @@ table 53413 "ORB LIFT Product Line Values"
 {
     Caption = 'ORB LIFT Product Line Values';
     DataCaptionFields = VALUE_ID, VALUE;
-    LookupPageId = "ORB LIFT Product Line Values";
     DrillDownPageId = "ORB LIFT Product Line Values";
-    DataClassification = ToBeClassified;
+    LookupPageId = "ORB LIFT Product Line Values";
+    DataClassification = CustomerContent;
 
 
     fields
@@ -19,6 +19,11 @@ table 53413 "ORB LIFT Product Line Values"
             Caption = 'VALUE';
             DataClassification = CustomerContent;
         }
+        field(3; "Product Line Dimension"; Text[20])
+        {
+            Caption = 'Product Line Dimension';
+            DataClassification = CustomerContent;
+        }
     }
     keys
     {
@@ -29,7 +34,7 @@ table 53413 "ORB LIFT Product Line Values"
     }
     fieldgroups
     {
-        fieldgroup(ProdLineVal; VALUE_ID, VALUE)
+        fieldgroup(DropDown; VALUE_ID, VALUE)
         {
         }
     }
