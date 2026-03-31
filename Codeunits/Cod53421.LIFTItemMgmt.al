@@ -31,8 +31,11 @@ codeunit 53421 "ORB LIFT Item Mgmt."
 
         ProdLineValue.Reset();
         ProdLineValue.SetRange("Product Line Dimension", Item."Product Line Dimension");
-        if ProdLineValue.FindFirst() then
+        if ProdLineValue.FindFirst() then begin
             LIFTItem.Validate("Prod Line Dim Id", ProdLineValue.VALUE_ID);
+            LIFTItem.Validate("Material Category Id", ProdLineValue."Category Id");
+            LIFTItem.Validate("Material Subcategory Id", ProdLineValue."Subcategory Id");
+        end;
 
         if ((Item."Replenishment System" = Item."Replenishment System"::Purchase) or (Item."Replenishment System" = Item."Replenishment System"::"Prod. Order")) then
             LIFTItem.Validate("Product Type", 'Regular')
@@ -93,6 +96,7 @@ codeunit 53421 "ORB LIFT Item Mgmt."
     var
         LIFTStorageType: Record "ORB LIFT Storage Type";
         ItemRec: Record Item;
+        LiftItemLcl: Record "ORB LIFT ERP Item";
     begin
         LIFTItem.Validate(Description, ItemVariant.Description);
         LIFTItem.Validate("Do Not Integrate (Material)", ItemVariant."ORB Do Not Integrate");
@@ -107,6 +111,10 @@ codeunit 53421 "ORB LIFT Item Mgmt."
             LIFTItem.Validate(Status, 'I');
 
         LIFTItem.Validate("Unit Cost", ItemRec."Unit Cost");
+
+        LiftItemLcl.Reset();
+        LiftItemLcl.Get(ItemVariant."Item No.", '');
+        LIFTItem.Validate("Material Id", LiftItemLcl."Material Id");
 
         LIFTStorageType.Reset();
         LIFTStorageType.SetRange(Name, ItemVariant.Code);
