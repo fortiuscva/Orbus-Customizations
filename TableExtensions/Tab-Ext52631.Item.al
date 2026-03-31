@@ -185,20 +185,11 @@ tableextension 52631 "ORB Item" extends Item
         LIFTItem: Record "ORB LIFT ERP Item";
         LIFTItemMgmt: Codeunit "ORB LIFT Item Mgmt.";
     begin
-        if not Rec."ORB Do Not Integrate" then begin
-            LIFTItem.Reset();
-            If not LIFTItem.Get(Rec."No.", '') then
-                LIFTItemMgmt.InsertLiftERPMaterialProduct(Rec)
-            else
-                LIFTItemMgmt.ModifyLiftERPMaterialProduct(Rec, LIFTItem);
-        end;
-        if not Rec."ORB Do Not Integrate (Sell)" then begin
-            LIFTItem.Reset();
-            If not LIFTItem.Get(Rec."No.", '') then
-                LIFTItemMgmt.InsertLIFTERPMaterialProduct(Rec)
-            else
-                LIFTItemMgmt.ModifyLIFTERPMaterialProduct(Rec, LIFTItem);
-        end;
+        LIFTItem.Reset();
+        If not LIFTItem.Get(Rec."No.", '') then
+            LIFTItemMgmt.InsertBCItemIntoStagingTable(Rec)
+        else
+            LIFTItemMgmt.ModifyBCItemInStagingTable(Rec, LIFTItem);
     end;
 
 }
