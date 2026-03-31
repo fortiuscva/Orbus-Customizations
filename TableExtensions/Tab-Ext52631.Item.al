@@ -147,6 +147,26 @@ tableextension 52631 "ORB Item" extends Item
             TableRelation = "ORB LIFT Product Line Values";
             DataClassification = CustomerContent;
         }
+        field(53418; "ORB Product Type"; Text[10])
+        {
+            Caption = 'Product Type';
+            DataClassification = CustomerContent;
+        }
+        field(53420; "ORB Status"; Text[1])
+        {
+            Caption = 'Status';
+            DataClassification = CustomerContent;
+        }
+        modify("Sales Blocked")
+        {
+            trigger OnAfterValidate()
+            begin
+                if "Sales Blocked" then
+                    "ORB Status" := 'I'
+                else
+                    "ORB Status" := 'A';
+            end;
+        }
     }
 
     trigger OnInsert()

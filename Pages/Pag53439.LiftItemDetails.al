@@ -43,6 +43,14 @@ page 53439 "ORB Lift Item Details"
                         ApplicationArea = All;
                         ToolTip = 'Specifies the value of the Product Line Dimension Id field.', Comment = '%';
                     }
+                    field("ORB Product Type"; Rec."ORB Product Type")
+                    {
+                        ToolTip = 'Specifies the value of the Product Type field.', Comment = '%';
+                    }
+                    field("ORB Status"; Rec."ORB Status")
+                    {
+                        ToolTip = 'Specifies the value of the Status field.', Comment = '%';
+                    }
                     field("ORB Parent Item No."; Rec."ORB Parent Item No.")
                     {
                         ApplicationArea = All;
