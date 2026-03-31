@@ -35,7 +35,9 @@ codeunit 53421 "ORB LIFT Item Mgmt."
             LIFTItem.Validate("Product Type", 'Kit');
 
         if not Item."LV Sourced" then
-            LIFTItem.Validate("Ship From Whse Loc Id", 1086748);
+            LIFTItem.Validate("Ship From Whse Loc Id", 1086748)
+        else
+            LIFTItem.Validate("Ship From Whse Loc Id", 0);
 
         if not Item."Sales Blocked" then
             LIFTItem.Validate(Status, 'A')
@@ -49,19 +51,25 @@ codeunit 53421 "ORB LIFT Item Mgmt."
                 if LIFTMaterial.FindFirst() then
                     LIFTItem.Validate("Product Material Id", LIFTMaterial."Material Id");
             end else begin
-                LIFTMaterial.Reset();
-                LIFTMaterial.SetRange("Material Name", Item."No.");
-                if LIFTMaterial.FindFirst() then
-                    LIFTItem.Validate("Product Material Id", LIFTMaterial."Material Id");
+                if Item."ORB Material Id" <> 0 then
+                    LIFTItem.Validate("Product Material Id", Item."ORB Material Id")
+                else begin
+                    LIFTMaterial.Reset();
+                    LIFTMaterial.SetRange("Material Name", Item."No.");
+                    if LIFTMaterial.FindFirst() then
+                        LIFTItem.Validate("Product Material Id", LIFTMaterial."Material Id");
+                end;
             end;
 
             LIFTStorageType.Reset();
             LIFTStorageType.SetRange(Name, 'Hardware-FG');
             if LIFTStorageType.FindFirst() then
                 LIFTItem.Validate("Storage Type Id", LIFTStorageType."Storage Type ID");
+
+            LIFTItem.Validate("Print Format", 5941450);
         end;
 
-        LIFTItem.Validate("Print Format", 5941450);
+
 
         if Item."ORB Material Id" <> 0 then begin
             LIFTItem.Validate("Material Id", Item."ORB Material Id");
@@ -91,6 +99,8 @@ codeunit 53421 "ORB LIFT Item Mgmt."
         end;
 
         LIFTItem.Validate("Unit Cost", Item."Unit Cost");
+        LIFTItem.Validate("Do Not Integrate", Item."ORB Do Not Integrate");
+        LIFTItem.Validate("Do Not Integrate (Sellable)", Item."ORB Do Not Integrate (Sell)");
         LIFTItem.Validate("To Be Synchronized", true);
     end;
 
