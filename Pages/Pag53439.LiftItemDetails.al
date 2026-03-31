@@ -28,6 +28,21 @@ page 53439 "ORB Lift Item Details"
                 group(Sellable)
                 {
                     Caption = 'Sellable';
+                    field("ORB Ship From Warehouse"; Rec."ORB Ship From Warehouse")
+                    {
+                        ApplicationArea = All;
+                        ToolTip = 'Specifies the value of the Ship From Warehouse field.', Comment = '%';
+                    }
+                    field("ORB Warehouse Location Id"; Rec."ORB Warehouse Location Id")
+                    {
+                        ApplicationArea = All;
+                        ToolTip = 'Specifies the value of the Warehouse Location Id field.', Comment = '%';
+                    }
+                    field("ORB Product Line Dimension Id"; Rec."ORB Product Line Dimension Id")
+                    {
+                        ApplicationArea = All;
+                        ToolTip = 'Specifies the value of the Product Line Dimension Id field.', Comment = '%';
+                    }
                     field("ORB Parent Item No."; Rec."ORB Parent Item No.")
                     {
                         ApplicationArea = All;
