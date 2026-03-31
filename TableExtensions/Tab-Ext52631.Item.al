@@ -117,6 +117,18 @@ tableextension 52631 "ORB Item" extends Item
             Caption = 'Do Not Integrate (Sellable)';
             DataClassification = CustomerContent;
         }
+        field(53412; "ORB Warehouse Location Id"; Integer)
+        {
+            Caption = 'Warehouse Location Id';
+            TableRelation = Location."ORB Warehouse Location Id";
+            DataClassification = CustomerContent;
+        }
+        field(53415; "ORB Product Line Dimension Id"; Integer)
+        {
+            Caption = 'Product Line Dimension Id';
+            TableRelation = "ORB LIFT Product Line Values";
+            DataClassification = CustomerContent;
+        }
     }
 
     trigger OnInsert()
