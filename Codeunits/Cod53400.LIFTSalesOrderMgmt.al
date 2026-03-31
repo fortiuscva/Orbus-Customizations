@@ -323,7 +323,9 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
     var
         ItemRecLcl: Record Item;
         LIFTSubwayMapSteps: Record "ORB LIFT Subway Map Steps";
+        ChangeInPriceDiscounts: Boolean;
     begin
+        ChangeInPriceDiscounts := false;
         SalesLine.SuspendStatusCheck(true);
         if not InsertMode then begin
             IF LIFTSalesLineBuffer.Type = LIFTSalesLineBuffer.Type::Comment then begin
@@ -346,10 +348,12 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
                 else
                     if SalesLine.Type <> SalesLine.Type::Item then
                         SalesLine.Validate(Type, SalesLine.Type::Item);
+                if ((SalesLine."No." <> LIFTSalesLineBuffer."No.") or (SalesLine."Unit of Measure" <> LIFTSalesLineBuffer."Unit of Measure Code") or (SalesLine.Quantity <> LIFTSalesLineBuffer.Quantity) or (SalesLine."ORB LIFT Unit Price" <> LIFTSalesLineBuffer."Unit Price")) then
+                    ChangeInPriceDiscounts := true;
                 if SalesLine."No." <> LIFTSalesLineBuffer."No." then
                     SalesLine.Validate("No.", LIFTSalesLineBuffer."No.");
-                if (SalesLine.Quantity <> LIFTSalesLineBuffer.Quantity) or (SalesLine."ORB LIFT Unit Price" <> LIFTSalesLineBuffer."Unit Price") then
-                    SalesLine.Validate("Line Discount %", 0.0);
+                if ChangeInPriceDiscounts then
+                    SalesLine.Validate("Line Discount %", 0);
                 //SalesLine.Validate("Location Code", LIFTSalesLineBuffer."Location Code");
                 if SalesLine.Quantity <> LIFTSalesLineBuffer.Quantity then
                     SalesLine.Validate(Quantity, LIFTSalesLineBuffer.Quantity);
@@ -382,16 +386,17 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
                 //Calculate "Discount Grp Code Discount" on Net Jnit Price coming from LIFT start
                 if SalesLine."ORB LIFT Unit Price" <> LIFTSalesLineBuffer."Unit Price" then
                     SalesLine.Validate("Unit Price", LIFTSalesLineBuffer."Unit Price");
-                BCOriginalDiscount := SalesLine."Line Discount Amount";
+                if ChangeInPriceDiscounts then
+                    BCOriginalDiscount := SalesLine."Line Discount Amount";
                 //Calculate "Discount Grp Code Discount" on Net Jnit Price coming from LIFT End
                 if SalesLine."ORB LIFT Unit Price" <> LIFTSalesLineBuffer."Unit Price" then
                     SalesLine.Validate("Unit Price", LIFTSalesLineBuffer."Original Unit Price");
                 //SalesLine.Validate("Line Discount Amount", LIFTSalesLineBuffer."Line Discount Amount");
                 //BCLineDiscount := SalesLine."Line Discount Amount";
-                if SalesLine."ORB LIFT Discount Amount" <> LIFTSalesLineBuffer."Line Discount Amount" then
+                if ChangeInPriceDiscounts then
                     SalesLine.Validate("ORB LIFT Discount Amount", LIFTSalesLineBuffer."Line Discount Amount");
                 //SalesLine.Validate("Line Discount Amount", (BCLineDiscount + SalesLine."ORB LIFT Discount Amount"));
-                if SalesLine."Line Discount Amount" <> (BCOriginalDiscount + SalesLine."ORB LIFT Discount Amount") then
+                if ChangeInPriceDiscounts then
                     SalesLine.Validate("Line Discount Amount", (BCOriginalDiscount + SalesLine."ORB LIFT Discount Amount"));
                 if SalesLine."ORB LIFT Line ID" <> LIFTSalesLineBuffer."LIFT Line ID" then
                     SalesLine."ORB LIFT Line ID" := LIFTSalesLineBuffer."LIFT Line ID";
