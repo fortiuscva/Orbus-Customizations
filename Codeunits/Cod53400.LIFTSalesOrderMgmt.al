@@ -200,7 +200,6 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             if SalesHeader."Your Reference" <> LIFTSalesOrderBuffer."Your Reference" then
                 SalesHeader.Validate("Your Reference", LIFTSalesOrderBuffer."Your Reference");
             SalesHeader."ORB Lift Order" := true;
-            SalesHeader.Validate("ORB LIFT Last Updated DateTime", LIFTSalesOrderBuffer."ORB LIFT Last Updated DateTime");
         end else begin
             SalesHeader.Validate("Sell-to Customer No.", LIFTSalesOrderBuffer."Sell-to Customer No.");
             SalesHeader.Validate("Ship-to Code", LIFTSalesOrderBuffer."Ship-to Code");
