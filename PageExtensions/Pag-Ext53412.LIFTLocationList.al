@@ -8,6 +8,11 @@ pageextension 53412 "ORB LIFT Location List" extends "Location List"
             {
                 ApplicationArea = all;
             }
+            field("ORB Warehouse Location Id"; Rec."ORB Warehouse Location Id")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Warehouse Location Id field.', Comment = '%';
+            }
         }
     }
 }

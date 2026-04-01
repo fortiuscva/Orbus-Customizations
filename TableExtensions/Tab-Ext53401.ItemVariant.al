@@ -85,4 +85,16 @@ tableextension 53401 "ORB Item Variant" extends "Item Variant"
             Rec.Modify(true);
         end;
     end;
+
+    trigger OnModify()
+    var
+        LIFTItem: Record "ORB LIFT ERP Item";
+        LIFTItemMgmt: Codeunit "ORB LIFT Item Mgmt.";
+    begin
+        LIFTItem.Reset();
+        If not LIFTItem.Get(Rec."Item No.", Rec.Code) then
+            LIFTItemMgmt.InsertBCItemVariantIntoStagingTable(Rec)
+        else
+            LIFTItemMgmt.ModifyBCItemVariantInStagingTable(Rec, LIFTItem);
+    end;
 }

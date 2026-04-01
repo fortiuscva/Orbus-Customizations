@@ -117,12 +117,79 @@ tableextension 52631 "ORB Item" extends Item
             Caption = 'Do Not Integrate (Sellable)';
             DataClassification = CustomerContent;
         }
+        field(53411; "ORB Ship From Warehouse"; Code[10])
+        {
+            Caption = 'Ship From Warehouse';
+            TableRelation = Location;
+            DataClassification = CustomerContent;
+            trigger OnValidate()
+            var
+                LocationRec: Record Location;
+            begin
+                if "ORB Ship From Warehouse" <> xRec."ORB Ship From Warehouse" then begin
+                    if "ORB Ship From Warehouse" <> '' then begin
+                        LocationRec.Get("ORB Ship From Warehouse");
+                        Validate("ORB Warehouse Location Id", LocationRec."ORB Warehouse Location Id");
+                    end else
+                        Validate("ORB Warehouse Location Id", 0);
+                end;
+            end;
+        }
+        field(53412; "ORB Warehouse Location Id"; Integer)
+        {
+            Caption = 'Warehouse Location Id';
+            Editable = false;
+            DataClassification = CustomerContent;
+        }
+        field(53415; "ORB Product Line Dimension Id"; Integer)
+        {
+            Caption = 'Product Line Dimension Id';
+            TableRelation = "ORB LIFT Product Line Values";
+            DataClassification = CustomerContent;
+        }
+        field(53418; "ORB Product Type"; Text[10])
+        {
+            Caption = 'Product Type';
+            DataClassification = CustomerContent;
+        }
+        field(53420; "ORB Status"; Text[1])
+        {
+            Caption = 'Status';
+            DataClassification = CustomerContent;
+        }
+        modify("Sales Blocked")
+        {
+            trigger OnAfterValidate()
+            begin
+                if "Sales Blocked" then
+                    "ORB Status" := 'I'
+                else
+                    "ORB Status" := 'A';
+            end;
+        }
+        field(53421; "ORB Print Format"; Integer)
+        {
+            Caption = 'Print Format';
+            DataClassification = CustomerContent;
+        }
     }
 
     trigger OnInsert()
     begin
         "ORB Do Not Integrate" := true;
         "ORB Do Not Integrate (Sell)" := true;
+    end;
+
+    trigger OnModify()
+    var
+        LIFTItem: Record "ORB LIFT ERP Item";
+        LIFTItemMgmt: Codeunit "ORB LIFT Item Mgmt.";
+    begin
+        LIFTItem.Reset();
+        If not LIFTItem.Get(Rec."No.", '') then
+            LIFTItemMgmt.InsertBCItemIntoStagingTable(Rec)
+        else
+            LIFTItemMgmt.ModifyBCItemInStagingTable(Rec, LIFTItem);
     end;
 
 }

@@ -75,7 +75,28 @@ pageextension 52651 "ORB Item Card" extends "Item Card"
                 RunPageLink = "No." = field("No.");
             }
         }
-
+        addlast(processing)
+        {
+            group("ORB Lift ERP")
+            {
+                Caption = 'LIFT ERP';
+                action("ORB Lift ERP Items")
+                {
+                    ApplicationArea = All;
+                    Caption = 'LIFT ERP Items';
+                    Image = Item;
+                    trigger OnAction()
+                    var
+                        LiftERPItem: Record "ORB LIFT ERP Item";
+                    begin
+                        LiftERPItem.Reset();
+                        LiftERPItem.SetRange("Item No.", Rec."No.");
+                        LiftERPItem.SetRange("Variant Code", '');
+                        if LiftERPItem.FindFirst() then
+                            Page.RunModal(Page::"ORB Lift Items List", LiftERPItem);
+                    end;
+                }
+            }
+        }
     }
-
 }
