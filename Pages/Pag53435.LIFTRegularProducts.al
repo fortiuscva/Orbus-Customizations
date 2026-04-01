@@ -26,10 +26,6 @@ page 53435 "ORB LIFT Regular Products"
                 {
                     Caption = 'Description';
                 }
-                field(productId; Rec."ORB Product Id")
-                {
-                    Caption = 'Product ID';
-                }
                 field(materialId; Rec."ORB Material Id")
                 {
                     Caption = 'Material Id';
@@ -46,10 +42,6 @@ page 53435 "ORB LIFT Regular Products"
                 {
                     Caption = 'Storage Type Name';
                 }
-                field(warehouseLocationId; Rec."ORB Warehouse Location Id")
-                {
-                    Caption = 'Warehouse Location Id';
-                }
                 field(baseUnitOfMeasure; Rec."Base Unit of Measure")
                 {
                     Caption = 'Base Unit of Measure';
@@ -65,10 +57,6 @@ page 53435 "ORB LIFT Regular Products"
                 field(unitCost; Rec."Unit Cost")
                 {
                     Caption = 'Unit Cost';
-                }
-                field(productLineDimensionId; Rec."ORB Product Line Dimension Id")
-                {
-                    Caption = 'Product Line Dimension Id';
                 }
                 field(productLineDimension; Rec."Product Line Dimension")
                 {

@@ -25,10 +25,6 @@ page 53438 "ORB LIFT Update BC Item"
                 {
                     Caption = 'Storage Type ID';
                 }
-                field(orbProductId; Rec."ORB Product Id")
-                {
-                    Caption = 'Product ID';
-                }
             }
         }
     }
