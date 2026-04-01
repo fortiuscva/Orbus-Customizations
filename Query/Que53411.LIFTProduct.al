@@ -18,28 +18,10 @@ query 53411 "ORB LIFT Product"
             column(description; Description)
             {
             }
-            column(productLineDimensionId; "ORB Product Line Dimension Id")
-            {
-            }
-            column(productType; "ORB Product Type")
-            {
-            }
-            column(warehouseLocationId; "ORB Warehouse Location Id")
-            {
-            }
-            column(status; "ORB Status")
-            {
-            }
             column(materialId; "ORB Material Id")
             {
             }
             column(storageTypeId; "ORB Stroage Type Id")
-            {
-            }
-            column(productId; "ORB Product Id")
-            {
-            }
-            column(printFormat; "ORB Print Format")
             {
             }
         }

@@ -23,11 +23,6 @@ pageextension 52651 "ORB Item Card" extends "Item Card"
             group("ORB Lift")
             {
                 Caption = 'Lift';
-                field("ORB Product Id"; Rec."ORB Product Id")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the value of the Product ID field.', Comment = '%';
-                }
                 field("ORB Material Id"; Rec."ORB Material Id")
                 {
                     Caption = 'Material Id';
