@@ -19,14 +19,14 @@ tableextension 53405 "ORB LIFT Bin Content" extends "Bin Content"
         field(53402; "ORB Item Material Id"; Integer)
         {
             Caption = 'Item Material Id';
-            CalcFormula = lookup("ORB LIFT ERP Item"."Material Id" where("Item No." = field("Item No.")));
+            CalcFormula = lookup("ORB LIFT ERP Item"."Material Id" where("Item No." = field("Item No."), "Variant Code" = filter('')));
             FieldClass = FlowField;
             Editable = false;
         }
         field(53403; "ORB Item Storage Type Id"; Integer)
         {
             Caption = 'Item Storage Type Id';
-            CalcFormula = lookup("ORB LIFT ERP Item"."Storage Type Id" where("Item No." = field("Item No.")));
+            CalcFormula = lookup("ORB LIFT ERP Item"."Storage Type Id" where("Item No." = field("Item No."), "Variant Code" = filter('')));
             FieldClass = FlowField;
             Editable = false;
         }
