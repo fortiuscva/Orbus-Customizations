@@ -140,7 +140,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post Prepayments", OnBeforeSalesInvHeaderInsert, '', false, false)]
     local procedure Cod442_OnBeforeSalesInvHeaderInsert(var SalesInvHeader: Record "Sales Invoice Header"; SalesHeader: Record "Sales Header"; CommitIsSuppressed: Boolean; GenJnlDocNo: Code[20]);
     begin
-        SalesInvHeader."Order No." := SalesHeader."No."
+        SalesInvHeader."Order No." := SalesHeader."No.";
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Document-Mailing", OnBeforeGetEmailSubject, '', false, false)]
@@ -250,6 +250,14 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
                 SalesShipLineAddtionalFields.Modify();
         end;
     end;
+
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnBeforeInsertInvoiceHeader, '', false, false)]
+    local procedure "Sales-Post_OnBeforeInsertInvoiceHeader"(SalesHeader: Record "Sales Header"; var SalesInvHeader: Record "Sales Invoice Header")
+    begin
+        SalesInvHeader."Document Date" := SalesHeader."Shipment Date";
+    end;
+
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnAfterInsertInvoiceHeader, '', false, false)]
     local procedure "Sales-Post_OnAfterInsertInvoiceHeader"(var SalesHeader: Record "Sales Header"; var SalesInvHeader: Record "Sales Invoice Header")
