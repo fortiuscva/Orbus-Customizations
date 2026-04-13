@@ -82,7 +82,6 @@ tableextension 53401 "ORB Item Variant" extends "Item Variant"
         LIFTStorageType.SetRange(Name, Rec.Code);
         if LIFTStorageType.FindFirst() then begin
             Rec.Validate("ORB Storage Type Id", LIFTStorageType."Storage Type ID");
-            Rec.Modify(true);
         end;
     end;
 
