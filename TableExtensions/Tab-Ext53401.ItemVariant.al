@@ -82,7 +82,6 @@ tableextension 53401 "ORB Item Variant" extends "Item Variant"
         LIFTStorageType.SetRange(Name, Rec.Code);
         if LIFTStorageType.FindFirst() then begin
             Rec.Validate("ORB Storage Type Id", LIFTStorageType."Storage Type ID");
-            Rec.Modify(true);
         end;
     end;
 
@@ -91,10 +90,12 @@ tableextension 53401 "ORB Item Variant" extends "Item Variant"
         LIFTItem: Record "ORB LIFT ERP Item";
         LIFTItemMgmt: Codeunit "ORB LIFT Item Mgmt.";
     begin
-        LIFTItem.Reset();
-        If not LIFTItem.Get(Rec."Item No.", Rec.Code) then
-            LIFTItemMgmt.InsertBCItemVariantIntoStagingTable(Rec)
-        else
-            LIFTItemMgmt.ModifyBCItemVariantInStagingTable(Rec, LIFTItem);
+        if not (Rec."ORB Do Not Integrate" and Rec."ORB Do Not Integrate (Sell)") then begin
+            LIFTItem.Reset();
+            If not LIFTItem.Get(Rec."Item No.", Rec.Code) then
+                LIFTItemMgmt.InsertBCItemVariantIntoStagingTable(Rec)
+            else
+                LIFTItemMgmt.ModifyBCItemVariantInStagingTable(Rec, LIFTItem);
+        end;
     end;
 }
