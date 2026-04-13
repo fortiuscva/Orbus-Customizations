@@ -195,9 +195,10 @@ codeunit 53421 "ORB LIFT Item Mgmt."
             LIFTItem.Validate("Unit Cost", ItemRec."Unit Cost");
 
         LiftItemLcl.Reset();
-        LiftItemLcl.Get(ItemVariant."Item No.", '');
-        if LIFTItem."Material Id" <> LiftItemLcl."Material Id" then
-            LIFTItem.Validate("Material Id", LiftItemLcl."Material Id");
+        if LiftItemLcl.Get(ItemVariant."Item No.", '') then begin
+            if LIFTItem."Material Id" <> LiftItemLcl."Material Id" then
+                LIFTItem.Validate("Material Id", LiftItemLcl."Material Id");
+        end;
 
         LIFTStorageType.Reset();
         LIFTStorageType.SetRange(Name, ItemVariant.Code);
