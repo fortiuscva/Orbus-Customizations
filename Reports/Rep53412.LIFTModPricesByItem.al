@@ -40,12 +40,14 @@ report 53412 "ORB LIFT Mod. Prices By Item"
 
                             // Fetches all the Sales Price Records for this Item No.
                             SalesPrice.Reset();
-                            SalesPrice.SetRange("Item No.", ItemNo);
+                            SalesPrice.SetRange("Price Type", SalesPrice."Price Type"::Sale);
+                            SalesPrice.SetRange("Asset Type", SalesPrice."Asset Type"::Item);
+                            SalesPrice.SetRange("Asset No.", ItemNo);
                             if SalesPrice.FindSet() then begin
                                 repeat
                                     if CheckForActiveSalesPrice(SalesPrice) then begin
-                                        if SalesPrice."Sales Type" = SalesPrice."Sales Type"::"Customer Price Group" then begin
-                                            if SalesPrice."Sales Code" <> '' then begin
+                                        if SalesPrice."Source Type" = SalesPrice."Source Type"::"Customer Price Group" then begin
+                                            if SalesPrice."Source No." <> '' then begin
                                                 LIFTSalesPrice.Init();
                                                 LIFTSalesPrice.TransferFields(SalesPrice);
                                                 LIFTSalesPrice.Insert(true);
@@ -56,13 +58,13 @@ report 53412 "ORB LIFT Mod. Prices By Item"
                                                 LIFTSalesPrice.Modify(true);
                                             end;
                                         end
-                                        else if SalesPrice."Sales Type" = SalesPrice."Sales Type"::"All Customers" then begin
+                                        else if SalesPrice."Source Type" = SalesPrice."Source Type"::"All Customers" then begin
                                             CustomerPriceGroup.Reset();
                                             if CustomerPriceGroup.FindFirst() then begin
                                                 repeat
                                                     LIFTSalesPrice.Init();
-                                                    LIFTSalesPrice."Item No." := SalesPrice."Item No.";
-                                                    LIFTSalesPrice."Sales Type" := SalesPrice."Sales Type"::"Customer Price Group";
+                                                    LIFTSalesPrice."Item No." := SalesPrice."Asset No.";
+                                                    LIFTSalesPrice."Sales Type" := SalesPrice."Source Type"::"Customer Price Group";
                                                     LIFTSalesPrice."Sales Code" := CustomerPriceGroup.Code;
                                                     LIFTSalesPrice."Starting Date" := SalesPrice."Starting Date";
                                                     LIFTSalesPrice."Currency Code" := SalesPrice."Currency Code";
@@ -93,7 +95,7 @@ report 53412 "ORB LIFT Mod. Prices By Item"
             end;
         }
     }
-    procedure CheckForActiveSalesPrice(var SalesPrice: Record "Sales Price"): Boolean
+    procedure CheckForActiveSalesPrice(var SalesPrice: Record "Price List Line"): Boolean
     begin
         if (SalesPrice."Starting Date" <= Today) and ((SalesPrice."Ending Date" >= Today) or (SalesPrice."Ending Date" = 0D)) then
             exit(true)
@@ -101,14 +103,16 @@ report 53412 "ORB LIFT Mod. Prices By Item"
             exit(false);
     end;
 
-    procedure AssignMaxQty(SalesPrice: Record "Sales Price"; var LIFTSalesPrice: Record "ORB LIFT Sales Price")
+    procedure AssignMaxQty(SalesPrice: Record "Price List Line"; var LIFTSalesPrice: Record "ORB LIFT Sales Price")
     var
-        SalesPrice2: Record "Sales Price";
+        SalesPrice2: Record "Price List Line";
     begin
         SalesPrice2.Reset();
-        SalesPrice2.SetRange("Item No.", SalesPrice."Item No.");
-        SalesPrice2.SetRange("Sales Type", SalesPrice."Sales Type");
-        SalesPrice2.SetRange("Sales Code", SalesPrice."Sales Code");
+        SalesPrice2.SetRange("Price Type", SalesPrice2."Price Type"::Sale);
+        SalesPrice2.SetRange("Asset Type", SalesPrice2."Asset Type"::Item);
+        SalesPrice2.SetRange("Asset No.", SalesPrice."Asset No.");
+        SalesPrice2.SetRange("Source Type", SalesPrice."Source Type");
+        SalesPrice2.SetRange("Source No.", SalesPrice."Source No.");
         SalesPrice2.SetRange("Unit of Measure Code", SalesPrice."Unit of Measure Code");
         SalesPrice2.SetRange("Starting Date", SalesPrice."Starting Date");
         SalesPrice2.SetRange("Ending Date", SalesPrice."Ending Date");
@@ -135,7 +139,7 @@ report 53412 "ORB LIFT Mod. Prices By Item"
 
     var
         LIFTERPSetup: Record "ORB LIFT ERP Setup";
-        SalesPrice: Record "Sales Price";
+        SalesPrice: Record "Price List Line";
         ModifiedSalesPricesQuery: Query "ORB Modified Sales Prices";
         LIFTSalesPrice: Record "ORB LIFT Sales Price";
         CustomerPriceGroup: Record "Customer Price Group";

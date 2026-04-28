@@ -834,27 +834,46 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             HideDialog := true;
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales Price Calc. Mgt.", OnBeforeSalesLineLineDiscExists, '', false, false)]
-    local procedure "Sales Price Calc. Mgt._OnBeforeSalesLineLineDiscExists"(var SalesLine: Record "Sales Line"; var SalesHeader: Record "Sales Header"; var TempSalesLineDisc: Record "Sales Line Discount" temporary; StartingDate: Date; Qty: Decimal; QtyPerUOM: Decimal; ShowAll: Boolean; var IsHandled: Boolean)
+    // [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales Price Calc. Mgt.", OnBeforeSalesLineLineDiscExists, '', false, false)]
+    // local procedure "Sales Price Calc. Mgt._OnBeforeSalesLineLineDiscExists"(var SalesLine: Record "Sales Line"; var SalesHeader: Record "Sales Header"; var TempSalesLineDisc: Record "Sales Line Discount" temporary; StartingDate: Date; Qty: Decimal; QtyPerUOM: Decimal; ShowAll: Boolean; var IsHandled: Boolean)
+    // begin
+    //     OrbusSingleInstanceCUGbl.SetCampaignNo(SalesHeader."Campaign No.");
+    // end;
+
+    // [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales Price Calc. Mgt.", OnAfterSalesLineLineDiscExists, '', false, false)]
+    // local procedure "Sales Price Calc. Mgt._OnAfterSalesLineLineDiscExists"(var SalesLine: Record "Sales Line"; var SalesHeader: Record "Sales Header"; var TempSalesLineDisc: Record "Sales Line Discount" temporary; ShowAll: Boolean)
+    // begin
+    //     OrbusSingleInstanceCUGbl.SetCampaignNo('');
+    // end;
+
+
+    // [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales Price Calc. Mgt.", OnBeforeActivatedCampaignExists, '', false, false)]
+    // local procedure "Sales Price Calc. Mgt._OnBeforeActivatedCampaignExists"(var ToCampaignTargetGr: Record "Campaign Target Group"; CustNo: Code[20]; ContNo: Code[20]; CampaignNo: Code[20]; var IsHandled: Boolean)
+    // begin
+    //     if CampaignNo = '' then
+    //         CampaignNo := OrbusSingleInstanceCUGbl.GetCampaignNo();
+
+    //     if CampaignNo = '' then
+    //         IsHandled := true;
+    // end;
+
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales Line - Price", 'OnAfterAddSources', '', false, false)]
+    local procedure OnAfterAddSources(
+    SalesHeader: Record "Sales Header";
+    SalesLine: Record "Sales Line";
+    PriceType: Enum "Price Type";
+    var PriceSourceList: Codeunit "Price Source List")
+    var
+        SourceType: Enum "Price Source Type";
     begin
-        OrbusSingleInstanceCUGbl.SetCampaignNo(SalesHeader."Campaign No.");
-    end;
+        if PriceType <> PriceType::Sale then
+            exit;
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales Price Calc. Mgt.", OnAfterSalesLineLineDiscExists, '', false, false)]
-    local procedure "Sales Price Calc. Mgt._OnAfterSalesLineLineDiscExists"(var SalesLine: Record "Sales Line"; var SalesHeader: Record "Sales Header"; var TempSalesLineDisc: Record "Sales Line Discount" temporary; ShowAll: Boolean)
-    begin
-        OrbusSingleInstanceCUGbl.SetCampaignNo('');
-    end;
+        if SalesHeader."Campaign No." = '' then
+            exit;
 
-
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales Price Calc. Mgt.", OnBeforeActivatedCampaignExists, '', false, false)]
-    local procedure "Sales Price Calc. Mgt._OnBeforeActivatedCampaignExists"(var ToCampaignTargetGr: Record "Campaign Target Group"; CustNo: Code[20]; ContNo: Code[20]; CampaignNo: Code[20]; var IsHandled: Boolean)
-    begin
-        if CampaignNo = '' then
-            CampaignNo := OrbusSingleInstanceCUGbl.GetCampaignNo();
-
-        if CampaignNo = '' then
-            IsHandled := true;
+        PriceSourceList.Add(SourceType::Campaign, SalesHeader."Campaign No.");
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", OnCodeOnBeforeSetStatusReleased, '', false, false)]
