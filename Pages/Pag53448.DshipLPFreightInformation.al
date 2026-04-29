@@ -1,4 +1,4 @@
-page 53448 "ORB Dship LP Freight Information"
+page 53448 "ORB DshipLPFreightInformation"
 
 {
     APIgroup = 'orbus';
