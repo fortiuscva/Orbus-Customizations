@@ -49,7 +49,16 @@ report 53412 "ORB LIFT Mod. Prices By Item"
                                         if SalesPrice."Source Type" = SalesPrice."Source Type"::"Customer Price Group" then begin
                                             if SalesPrice."Source No." <> '' then begin
                                                 LIFTSalesPrice.Init();
-                                                LIFTSalesPrice.TransferFields(SalesPrice);
+                                                LIFTSalesPrice."Item No." := SalesPrice."Asset No.";
+                                                LIFTSalesPrice."Sales Type" := LIFTSalesPrice."Sales Type"::"Customer Price Group";
+                                                LIFTSalesPrice."Sales Code" := SalesPrice."Source No.";
+                                                LIFTSalesPrice."Starting Date" := SalesPrice."Starting Date";
+                                                LIFTSalesPrice."Currency Code" := SalesPrice."Currency Code";
+                                                LIFTSalesPrice."Variant Code" := SalesPrice."Variant Code";
+                                                LIFTSalesPrice."Unit Of Measure Code" := SalesPrice."Unit of Measure Code";
+                                                LIFTSalesPrice."Minimum Quantity" := SalesPrice."Minimum Quantity";
+                                                LIFTSalesPrice."Unit Price" := SalesPrice."Unit Price";
+                                                LIFTSalesPrice."Ending Date" := SalesPrice."Ending Date";
                                                 LIFTSalesPrice.Insert(true);
                                                 AssignMaxQty(SalesPrice, LIFTSalesPrice);
                                                 LIFTSalesPrice."ORB LIFT Status" := 'A';
@@ -64,7 +73,7 @@ report 53412 "ORB LIFT Mod. Prices By Item"
                                                 repeat
                                                     LIFTSalesPrice.Init();
                                                     LIFTSalesPrice."Item No." := SalesPrice."Asset No.";
-                                                    LIFTSalesPrice."Sales Type" := SalesPrice."Source Type"::"Customer Price Group";
+                                                    LIFTSalesPrice."Sales Type" := LIFTSalesPrice."Sales Type"::"Customer Price Group";
                                                     LIFTSalesPrice."Sales Code" := CustomerPriceGroup.Code;
                                                     LIFTSalesPrice."Starting Date" := SalesPrice."Starting Date";
                                                     LIFTSalesPrice."Currency Code" := SalesPrice."Currency Code";
