@@ -127,10 +127,10 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
                 SalesHeader.Validate("Document Date", LIFTSalesOrderBuffer."Document Date");
             if SalesHeader."External Document No." <> LIFTSalesOrderBuffer."External Document No." then
                 SalesHeader.Validate("External Document No.", LIFTSalesOrderBuffer."External Document No.");
-            if LIFTSalesOrderBuffer."Your Reference" <> '' then begin
-                if SalesHeader."Payment Method Code" <> LIFTSalesOrderBuffer."Payment Method Code" then
-                    SalesHeader.Validate("Payment Method Code", LIFTSalesOrderBuffer."Payment Method Code");
-            end;
+            // if LIFTSalesOrderBuffer."Your Reference" <> '' then begin
+            if SalesHeader."Payment Method Code" <> LIFTSalesOrderBuffer."Payment Method Code" then
+                SalesHeader.Validate("Payment Method Code", LIFTSalesOrderBuffer."Payment Method Code");
+            // end;
             if SalesHeader."Shipping Agent Code" <> LIFTSalesOrderBuffer."Shipping Agent Code" then
                 SalesHeader.Validate("Shipping Agent Code", LIFTSalesOrderBuffer."Shipping Agent Code");
             SalesHeader.SetWorkDescription(LIFTSalesOrderBuffer."ORB LIFT ART_NOTE");
@@ -228,8 +228,8 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             end;
             SalesHeader.Validate("Document Date", LIFTSalesOrderBuffer."Document Date");
             SalesHeader.Validate("External Document No.", LIFTSalesOrderBuffer."External Document No.");
-            if LIFTSalesOrderBuffer."Your Reference" <> '' then
-                SalesHeader.Validate("Payment Method Code", LIFTSalesOrderBuffer."Payment Method Code");
+            // if LIFTSalesOrderBuffer."Your Reference" <> '' then
+            SalesHeader.Validate("Payment Method Code", LIFTSalesOrderBuffer."Payment Method Code");
             SalesHeader.Validate("Shipping Agent Code", LIFTSalesOrderBuffer."Shipping Agent Code");
             SalesHeader.SetWorkDescription(LIFTSalesOrderBuffer."ORB LIFT ART_NOTE");
             SalesHeader.Validate("Shipping Agent Service Code", LIFTSalesOrderBuffer."Shipping Agent Service Code");
