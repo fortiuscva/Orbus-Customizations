@@ -30,6 +30,7 @@ codeunit 53402 "ORB LIFT Customer Mgmt"
         TPSAUpperCaseDesc := '';
         Customer.Validate(Name, LIFTCustomer.Name);
         Customer.Validate(Address, LIFTCustomer.Address);
+        Customer.Validate("Address 2", LIFTCustomer."Address 2");
         Customer.Validate(City, LIFTCustomer.City);
         Customer.Validate(Contact, LIFTCustomer.Contact);
         Customer.Validate("Phone No.", LIFTCustomer."Phone No.");
