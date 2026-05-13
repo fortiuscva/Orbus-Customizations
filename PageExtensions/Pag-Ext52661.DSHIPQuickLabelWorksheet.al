@@ -14,8 +14,12 @@ pageextension 52661 "DSHIP Quick Label Worksheet" extends "DSHIP Quick Label Wor
             begin
                 if rec."Source Document" = rec."Source Document"::"Sales Order" then begin
                     CurrPage.Close();
-                    if SalesHeaderRec.Get(SalesHeaderRec."Document Type"::Order, rec."Source No.") then
+                    if SalesHeaderRec.Get(SalesHeaderRec."Document Type"::Order, rec."Source No.") then begin
                         SetOrderBuffer(SalesHeaderRec);
+                        SalesHeaderRec."Document Date" := DT2Date(CurrentDateTime);
+                        SalesHeaderRec.Modify();
+                    end;
+
                 end;
             end;
         }
