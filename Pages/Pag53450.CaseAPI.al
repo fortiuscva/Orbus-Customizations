@@ -121,7 +121,9 @@ page 53450 "ORB Case API"
         }
     }
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
+    var
+        CaseMgmt: Codeunit "ORB Case Management";
     begin
-
+        CaseMgmt.PropagateOnCaseCardInsert(Rec);
     end;
 }
