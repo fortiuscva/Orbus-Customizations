@@ -37,10 +37,14 @@ codeunit 53422 "ORB Case Management"
         if ORBCaseBuffer."Document Type" = ORBCaseBuffer."Document Type"::"Posted Sales Invoice" then begin
             CaseWSG.Validate("Sales Invoice Header No.", ORBCaseBuffer."Document No.");
             PropagateFieldValuesFromSalesInvoiceHeader(CaseWSG, ORBCaseBuffer);
+            if ORBCaseBuffer.Link <> '' then
+                CaseWSG.AddLink(ORBCaseBuffer.Link, 'Posted Sales Invoice' + ' ' + ORBCaseBuffer."Document No." + ' ' + 'URL');
         end
         else if ORBCaseBuffer."Document Type" = ORBCaseBuffer."Document Type"::"Sales Order" then begin
             CaseWSG.Validate("Sales Header No.", ORBCaseBuffer."Document No.");
             PropagateFieldValuesFromSalesHeader(CaseWSG, ORBCaseBuffer);
+            if ORBCaseBuffer.Link <> '' then
+                CaseWSG.AddLink(ORBCaseBuffer.Link, 'Sales Order' + ' ' + ORBCaseBuffer."Document No." + ' ' + 'URL');
         end;
 
         CaseWSG.Validate("Entity Type", ORBCaseBuffer."Entity Type"::Customer);
