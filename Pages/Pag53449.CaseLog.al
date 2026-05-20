@@ -1,7 +1,7 @@
 page 53449 "ORB Case Log"
 {
     ApplicationArea = All;
-    Caption = 'Case Log';
+    Caption = 'Case Log Entries';
     PageType = List;
     SourceTable = "ORB Case Buffer";
     UsageCategory = Lists;
