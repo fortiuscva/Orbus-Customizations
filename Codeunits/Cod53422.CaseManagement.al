@@ -37,20 +37,22 @@ codeunit 53422 "ORB Case Management"
         if ORBCaseBuffer."Document Type" = ORBCaseBuffer."Document Type"::"Posted Sales Invoice" then begin
             CaseWSG.Validate("Sales Invoice Header No.", ORBCaseBuffer."Document No.");
             PropagateFieldValuesFromSalesInvoiceHeader(CaseWSG, ORBCaseBuffer);
+            CreateRelatedorSourceRecord(Database::"Sales Invoice Header", ORBCaseBuffer."Document No.");
+            CaseWSG.Validate("Source Table Id", Database::"Sales Invoice Header");
+            CaseWSG.Validate("Source Page Id", Page::"Posted Sales Invoice");
+            CaseWSG.Validate("Source No.", ORBCaseBuffer."Document No.");
         end
         else if ORBCaseBuffer."Document Type" = ORBCaseBuffer."Document Type"::"Sales Order" then begin
             CaseWSG.Validate("Sales Header No.", ORBCaseBuffer."Document No.");
             PropagateFieldValuesFromSalesHeader(CaseWSG, ORBCaseBuffer);
+            CreateRelatedorSourceRecord(Database::"Sales Header", ORBCaseBuffer."Document No.");
+            CaseWSG.Validate("Source Table Id", Database::"Sales Header");
+            CaseWSG.Validate("Source Page Id", Page::"Sales Order");
+            CaseWSG.Validate("Source No.", ORBCaseBuffer."Document No.");
         end;
 
         if (CaseWSG."Entity Type" <> CaseWSG."Entity Type"::Customer) then
             CaseWSG.Validate("Entity Type", ORBCaseBuffer."Entity Type"::Customer);
-
-        if (CaseWSG."Source Page Name" <> Format(ORBCaseBuffer."Document Type")) then
-            CaseWSG.Validate("Source Page Name", Format(ORBCaseBuffer."Document Type"));
-
-        if (CaseWSG."Source No." <> ORBCaseBuffer."Document No.") then
-            CaseWSG.Validate("Source No.", ORBCaseBuffer."Document No.");
 
         if ((ORBCaseBuffer."Entity No." <> '') and (CaseWSG."Entity No." <> ORBCaseBuffer."Entity No.")) then
             CaseWSG.Validate("Entity No.", ORBCaseBuffer."Entity No.");
@@ -132,6 +134,7 @@ codeunit 53422 "ORB Case Management"
             CaseWSG.Validate("Location Code", SalesInvoiceHeader."Location Code");
             CaseWSG.Validate("SalesPerson Code", SalesInvoiceHeader."Salesperson Code");
             CaseWSG.Validate("Entity No.", SalesInvoiceHeader."Sell-to Customer No.");
+            CreateRelatedorSourceRecord(Database::Customer, SalesInvoiceHeader."Sell-to Customer No.");
             CaseWSG.Validate("Entity Name", SalesInvoiceHeader."Sell-to Customer Name");
             CaseWSG.Validate("Contact Name", SalesInvoiceHeader."Sell-to Contact");
             CaseWSG.Validate("Contact Phone", SalesInvoiceHeader."Sell-to Phone No.");
@@ -158,6 +161,7 @@ codeunit 53422 "ORB Case Management"
         if SalesHeader.FindFirst() then begin
             CaseWSG.Validate("Location Code", SalesHeader."Location Code");
             CaseWSG.Validate("Entity No.", SalesHeader."Sell-to Customer No.");
+            CreateRelatedorSourceRecord(Database::Customer, SalesHeader."Sell-to Customer No.");
             CaseWSG.Validate("Entity Name", SalesHeader."Sell-to Customer Name");
             CaseWSG.Validate("Contact Name", SalesHeader."Sell-to Contact");
             CaseWSG.Validate("Contact Phone", SalesHeader."Sell-to Phone No.");
@@ -171,6 +175,69 @@ codeunit 53422 "ORB Case Management"
             CaseWSG.Validate("External Doc No.", SalesHeader."External Document No.");
             CaseWSG.Validate("Shipment Date", SalesHeader."Shipment Date");
             CaseWSG.Validate(State, SalesHeader."Ship-To County");
+        end;
+    end;
+
+    procedure CreateRelatedorSourceRecord(TableID: Integer; Number: Code[20])
+    var
+        Customer: Record Customer;
+        SalesHeader: Record "Sales Header";
+        SalesInvoiceHeader: Record "Sales Invoice Header";
+        RelatedRecordWSG: Record "Related Record WSG";
+    begin
+        if TableID = Database::Customer then begin
+            Customer.Reset();
+            if Customer.Get(Number) then begin
+                RelatedRecordWSG.Reset();
+                if not RelatedRecordWSG.Get(CaseWSG."No.", Database::Customer, Customer.SystemId) then begin
+                    RelatedRecordWSG.Init();
+                    RelatedRecordWSG."Case No." := CaseWSG."No.";
+                    RelatedRecordWSG."Table Id" := Database::Customer;
+                    RelatedRecordWSG."Related SystemId" := Customer.SystemId;
+                    RelatedRecordWSG.Insert(true);
+                    RelatedRecordWSG.Validate("Case Relation", RelatedRecordWSG."Case Relation"::Related);
+                    RelatedRecordWSG.Validate("Document Page Id", Page::"Customer Card");
+                    RelatedRecordWSG.Validate("Document No.", Customer."No.");
+                    RelatedRecordWSG.Validate("Document Type", RelatedRecordWSG."Document Type"::None);
+                    RelatedRecordWSG.Modify(true);
+                end;
+            end;
+        end
+        else if TableID = Database::"Sales Invoice Header" then begin
+            SalesInvoiceHeader.Reset();
+            if SalesInvoiceHeader.Get(Number) then begin
+                RelatedRecordWSG.Reset();
+                if not RelatedRecordWSG.Get(CaseWSG."No.", Database::"Sales Invoice Header", SalesInvoiceHeader.SystemId) then begin
+                    RelatedRecordWSG.Init();
+                    RelatedRecordWSG."Case No." := CaseWSG."No.";
+                    RelatedRecordWSG."Table Id" := Database::"Sales Invoice Header";
+                    RelatedRecordWSG."Related SystemId" := SalesInvoiceHeader.SystemId;
+                    RelatedRecordWSG.Insert(true);
+                    RelatedRecordWSG.Validate("Case Relation", RelatedRecordWSG."Case Relation"::Source);
+                    RelatedRecordWSG.Validate("Document Page Id", Page::"Posted Sales Invoice");
+                    RelatedRecordWSG.Validate("Document No.", SalesInvoiceHeader."No.");
+                    RelatedRecordWSG.Validate("Document Type", RelatedRecordWSG."Document Type"::Posted);
+                    RelatedRecordWSG.Modify(true);
+                end;
+            end;
+        end
+        else if TableID = Database::"Sales Header" then begin
+            SalesHeader.Reset();
+            if SalesHeader.Get(SalesHeader."Document Type"::Order, Number) then begin
+                RelatedRecordWSG.Reset();
+                if not RelatedRecordWSG.Get(CaseWSG."No.", Database::"Sales Header", SalesHeader.SystemId) then begin
+                    RelatedRecordWSG.Init();
+                    RelatedRecordWSG."Case No." := CaseWSG."No.";
+                    RelatedRecordWSG."Table Id" := Database::"Sales Invoice Header";
+                    RelatedRecordWSG."Related SystemId" := SalesHeader.SystemId;
+                    RelatedRecordWSG.Insert(true);
+                    RelatedRecordWSG.Validate("Case Relation", RelatedRecordWSG."Case Relation"::Related);
+                    RelatedRecordWSG.Validate("Document Page Id", Page::"Sales Order");
+                    RelatedRecordWSG.Validate("Document No.", SalesHeader."No.");
+                    RelatedRecordWSG.Validate("Document Type", RelatedRecordWSG."Document Type"::Document);
+                    RelatedRecordWSG.Modify(true);
+                end;
+            end;
         end;
     end;
 
