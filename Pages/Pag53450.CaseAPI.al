@@ -109,13 +109,17 @@ page 53450 "ORB Case API"
                 {
                     Caption = 'City';
                 }
+                field(state; Rec.State)
+                {
+                    Caption = 'State';
+                }
                 field(postCode; Rec."Post Code")
                 {
                     Caption = 'Post Code';
                 }
-                field(state; Rec.State)
+                field(magentoResultID; Rec."Magento Result ID")
                 {
-                    Caption = 'State';
+                    Caption = 'Magento Result ID';
                 }
             }
         }
