@@ -21,14 +21,11 @@ table 53415 "ORB Case Buffer"
         field(5; "Document No."; Code[20])
         {
             Caption = 'Document No.';
-            TableRelation = if ("Document Type" = const("Posted Sales Invoice")) "Sales Invoice Header" else if ("Document Type" = const("Sales Order")) "Sales Header";
-            ValidateTableRelation = false;
             DataClassification = CustomerContent;
         }
         field(7; "Case No."; Code[20])
         {
             Caption = 'Case No.';
-            TableRelation = "Case WSG";
             DataClassification = CustomerContent;
         }
         field(8; "Entity Type"; Enum "Entity Type WSG")
@@ -141,6 +138,11 @@ table 53415 "ORB Case Buffer"
         field(47; "Post Code"; Code[20])
         {
             Caption = 'Post Code';
+            DataClassification = CustomerContent;
+        }
+        field(50; "Magento Result ID"; Code[20])
+        {
+            Caption = 'Magento Result ID';
             DataClassification = CustomerContent;
         }
     }
