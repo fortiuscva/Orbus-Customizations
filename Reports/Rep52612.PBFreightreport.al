@@ -24,14 +24,14 @@ report 52612 "ORB PB Freightreport"
                 else
                     reccount := 0;
                 FreightChargedataTableRecLcl.Reset(); */
-                if not GuiAllowed then begin
-                    //add the posting date for the current year
-                    currentYearFromDateVarLcl := DMY2Date(1, 1, Date2DMY(Today, 3));
-                    currentYearToDateVarLcl := Today;
-                    "Sales Invoice Header".SetRange("Posting Date", currentYearFromDateVarLcl, currentYearToDateVarLcl);
-                    message(Format(currentYearFromDateVarLcl) + Format(currentYearToDateVarLcl));
-                    exit
-                end;
+                //if not GuiAllowed then begin
+                //add the posting date for the current year
+                currentYearFromDateVarLcl := DMY2Date(1, 1, Date2DMY(Today, 3));
+                currentYearToDateVarLcl := Today;
+                "Sales Invoice Header".SetRange("Posting Date", currentYearFromDateVarLcl, currentYearToDateVarLcl);
+                message(Format(currentYearFromDateVarLcl) + Format(currentYearToDateVarLcl));
+                //exit
+                //end;
             end;
 
             trigger OnAfterGetRecord()
