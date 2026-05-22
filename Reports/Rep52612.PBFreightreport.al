@@ -19,19 +19,12 @@ report 52612 "ORB PB Freightreport"
                 SetFilter("No.", 'PS*');
                 SetCurrentKey("Order No.");
                 FreightChargedataTableRecLcl.DeleteAll();
-                /* if FreightChargedataTableRecLcl.FindLast() then
-                    reccount := FreightChargedataTableRecLcl.RowNo
-                else
-                    reccount := 0;
-                FreightChargedataTableRecLcl.Reset(); */
-                //if not GuiAllowed then begin
-                //add the posting date for the current year
-                currentYearFromDateVarLcl := DMY2Date(1, 1, Date2DMY(Today, 3));
-                currentYearToDateVarLcl := Today;
-                "Sales Invoice Header".SetRange("Posting Date", currentYearFromDateVarLcl, currentYearToDateVarLcl);
-                message(Format(currentYearFromDateVarLcl) + Format(currentYearToDateVarLcl));
-                //exit
-                //end;
+                if not GuiAllowed then begin
+                    //add the posting date for the current year
+                    currentYearFromDateVarLcl := DMY2Date(1, 1, Date2DMY(Today, 3));
+                    currentYearToDateVarLcl := Today;
+                    "Sales Invoice Header".SetRange("Posting Date", currentYearFromDateVarLcl, currentYearToDateVarLcl);
+                end;
             end;
 
             trigger OnAfterGetRecord()
