@@ -16,7 +16,7 @@ pageextension 52661 "DSHIP Quick Label Worksheet" extends "DSHIP Quick Label Wor
                     CurrPage.Close();
                     if SalesHeaderRec.Get(SalesHeaderRec."Document Type"::Order, rec."Source No.") then begin
                         SetOrderBuffer(SalesHeaderRec);
-                        SalesHeaderRec."Document Date" := DT2Date(CurrentDateTime);
+                        SalesHeaderRec.validatE("Document Date", DT2Date(CurrentDateTime));//Document date to be the actual label creation date
                         SalesHeaderRec.Modify();
                     end;
 
