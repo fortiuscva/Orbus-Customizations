@@ -80,6 +80,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
     procedure ValidateSalesHeaderFields(var SalesHeader: Record "Sales Header"; var LIFTSalesOrderBuffer: Record "ORB LIFT Sales Order Buffer"; InsertMode: Boolean)
     var
         Contact: Record Contact;
+        CaseMgmt: Codeunit "ORB Case Management";
     begin
         if not InsertMode then begin
             if SalesHeader."Sell-to Customer No." <> LIFTSalesOrderBuffer."Sell-to Customer No." then
@@ -132,6 +133,10 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
                 SalesHeader.Validate("Document Date", LIFTSalesOrderBuffer."Document Date");
             if SalesHeader."External Document No." <> LIFTSalesOrderBuffer."External Document No." then
                 SalesHeader.Validate("External Document No.", LIFTSalesOrderBuffer."External Document No.");
+            if ((LIFTSalesOrderBuffer."Case No." <> '') and (SalesHeader."Case No." <> LIFTSalesOrderBuffer."Case No.")) then begin
+                SalesHeader.Validate("Case No.", LIFTSalesOrderBuffer."Case No.");
+                CaseMgmt.CreateRelatedReplacementOrder(LIFTSalesOrderBuffer."Case No.", SalesHeader."No.");
+            end;
             // if LIFTSalesOrderBuffer."Your Reference" <> '' then begin
             if LIFTSalesOrderBuffer."Payment Terms Code" = 'DR' then
                 SalesHeader.Validate("Payment Method Code", '')
@@ -236,6 +241,10 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             end;
             SalesHeader.Validate("Document Date", LIFTSalesOrderBuffer."Document Date");
             SalesHeader.Validate("External Document No.", LIFTSalesOrderBuffer."External Document No.");
+            if LIFTSalesOrderBuffer."Case No." <> '' then begin
+                SalesHeader.Validate("Case No.", LIFTSalesOrderBuffer."Case No.");
+                CaseMgmt.CreateRelatedReplacementOrder(LIFTSalesOrderBuffer."Case No.", SalesHeader."No.");
+            end;
             // if LIFTSalesOrderBuffer."Your Reference" <> '' then
             if LIFTSalesOrderBuffer."Payment Terms Code" = 'DR' then
                 SalesHeader.Validate("Payment Method Code", '')

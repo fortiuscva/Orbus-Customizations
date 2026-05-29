@@ -314,6 +314,13 @@ table 53400 "ORB LIFT Sales Order Buffer"
             Caption = 'LIFT Last Updated DateTime';
             DataClassification = CustomerContent;
         }
+        field(55135; "Case No."; Code[20])
+        {
+            Caption = 'Case No.';
+            TableRelation = "Case WSG";
+            ValidateTableRelation = false;
+            DataClassification = CustomerContent;
+        }
     }
     keys
     {

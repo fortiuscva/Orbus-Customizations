@@ -228,10 +228,10 @@ codeunit 53422 "ORB Case Management"
                 if not RelatedRecordWSG.Get(CaseWSG."No.", Database::"Sales Header", SalesHeader.SystemId) then begin
                     RelatedRecordWSG.Init();
                     RelatedRecordWSG."Case No." := CaseWSG."No.";
-                    RelatedRecordWSG."Table Id" := Database::"Sales Invoice Header";
+                    RelatedRecordWSG."Table Id" := Database::"Sales Header";
                     RelatedRecordWSG."Related SystemId" := SalesHeader.SystemId;
                     RelatedRecordWSG.Insert(true);
-                    RelatedRecordWSG.Validate("Case Relation", RelatedRecordWSG."Case Relation"::Related);
+                    RelatedRecordWSG.Validate("Case Relation", RelatedRecordWSG."Case Relation"::Source);
                     RelatedRecordWSG.Validate("Document Page Id", Page::"Sales Order");
                     RelatedRecordWSG.Validate("Document No.", SalesHeader."No.");
                     RelatedRecordWSG.Validate("Document Type", RelatedRecordWSG."Document Type"::Document);
@@ -239,6 +239,30 @@ codeunit 53422 "ORB Case Management"
                 end;
             end;
         end;
+    end;
+
+    procedure CreateRelatedReplacementOrder(CaseNo: Code[20]; SONumber: Code[20])
+    var
+        RelatedRec: Record "Related Record WSG";
+        SOHeader: Record "Sales Header";
+    begin
+        SOHeader.Reset();
+        if SOHeader.Get(SOHeader."Document Type"::Order, SONumber) then begin
+            RelatedRec.Reset();
+            if not RelatedRec.Get(CaseWSG."No.", Database::"Sales Header", SOHeader.SystemId) then begin
+                RelatedRec.Init();
+                RelatedRec."Case No." := CaseNo;
+                RelatedRec."Table Id" := Database::"Sales Header";
+                RelatedRec."Related SystemId" := SOHeader.SystemId;
+                RelatedRec.Insert(true);
+                RelatedRec.Validate("Case Relation", RelatedRec."Case Relation"::Related);
+                RelatedRec.Validate("Document Page Id", Page::"Sales Order");
+                RelatedRec.Validate("Document No.", SOHeader."No.");
+                RelatedRec.Validate("Document Type", RelatedRec."Document Type"::Document);
+                RelatedRec.Modify(true);
+            end;
+        end;
+
     end;
 
     var
