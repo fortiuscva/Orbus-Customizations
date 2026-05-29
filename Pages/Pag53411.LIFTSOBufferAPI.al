@@ -257,6 +257,10 @@ page 53411 "ORB LIFT SO Buffer API"
                 {
                     Caption = 'LIFT Last Updated DateTime';
                 }
+                field(caseNo; Rec."Case No.")
+                {
+                    Caption = 'Case No.';
+                }
             }
         }
     }

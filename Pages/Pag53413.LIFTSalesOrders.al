@@ -57,6 +57,10 @@ page 53413 "ORB LIFT Sales Orders"
                 {
                     ToolTip = 'Specifies the value of the External Document No. field.', Comment = '%';
                 }
+                field("Case No."; Rec."Case No.")
+                {
+                    ToolTip = 'Specifies the value of the Case No. field.', Comment = '%';
+                }
                 field("Salesperson Code"; Rec."Salesperson Code")
                 {
                     ToolTip = 'Specifies the value of the Salesperson Code field.', Comment = '%';
