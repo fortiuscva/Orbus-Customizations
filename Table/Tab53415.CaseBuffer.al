@@ -100,6 +100,11 @@ table 53415 "ORB Case Buffer"
             Caption = 'Link';
             DataClassification = CustomerContent;
         }
+        field(32; Description; Text[250])
+        {
+            Caption = 'Description';
+            DataClassification = CustomerContent;
+        }
         field(33; "Must Arrive Date"; Date)
         {
             Caption = 'Must Arrive Date';
