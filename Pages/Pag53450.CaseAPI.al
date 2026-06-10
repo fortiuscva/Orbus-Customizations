@@ -85,6 +85,10 @@ page 53450 "ORB Case API"
                 {
                     Caption = 'Link';
                 }
+                field(description; Rec.Description)
+                {
+                    Caption = 'Description';
+                }
                 field(mustArriveDate; Rec."Must Arrive Date")
                 {
                     Caption = 'Must Arrive Date';

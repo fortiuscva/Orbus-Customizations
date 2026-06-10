@@ -96,6 +96,10 @@ page 53449 "ORB Case Log"
                 {
                     ToolTip = 'Specifies the value of the Link field.', Comment = '%';
                 }
+                field(Description; Rec.Description)
+                {
+                    ToolTip = 'Specifies the value of the Description field.', Comment = '%';
+                }
                 field("Must Arrive Date"; Rec."Must Arrive Date")
                 {
                     ToolTip = 'Specifies the value of the Must Arrive Date field.', Comment = '%';
