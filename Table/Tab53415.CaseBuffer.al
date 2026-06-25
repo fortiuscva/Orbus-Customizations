@@ -150,6 +150,11 @@ table 53415 "ORB Case Buffer"
             Caption = 'Magento Result ID';
             DataClassification = CustomerContent;
         }
+        field(53; Status; enum "Case Statuses WSG")
+        {
+            Caption = 'Status';
+            DataClassification = CustomerContent;
+        }
     }
     keys
     {
