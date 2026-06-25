@@ -80,6 +80,10 @@ page 53449 "ORB Case Log"
                 {
                     ToolTip = 'Specifies the value of the Salesperson Code field.', Comment = '%';
                 }
+                field(Status; Rec.Status)
+                {
+                    ToolTip = 'Specifies the value of the Status field.', Comment = '%';
+                }
                 field("Customer Complaint"; Rec."Customer Complaint")
                 {
                     ToolTip = 'Specifies the value of the Customer Complaint field.', Comment = '%';

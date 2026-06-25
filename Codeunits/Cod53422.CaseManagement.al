@@ -78,6 +78,9 @@ codeunit 53422 "ORB Case Management"
         if ((ORBCaseBuffer."Salesperson Code" <> '') and (CaseWSG."SalesPerson Code" <> ORBCaseBuffer."Salesperson Code")) then
             CaseWSG.Validate("SalesPerson Code", ORBCaseBuffer."Salesperson Code");
 
+        if (CaseWSG.Status <> ORBCaseBuffer.Status) then
+            CaseWSG.Validate(Status, ORBCaseBuffer.Status);
+
         if ((ORBCaseBuffer."Customer Complaint" <> '') and (CaseWSG."Customer Complaint" <> ORBCaseBuffer."Customer Complaint")) then
             CaseWSG.Validate("Customer Complaint", ORBCaseBuffer."Customer Complaint");
 
