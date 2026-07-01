@@ -21,6 +21,8 @@ table 53415 "ORB Case Buffer"
         field(5; "Document No."; Code[20])
         {
             Caption = 'Document No.';
+            TableRelation = if ("Document Type" = const("Posted Sales Invoice")) "Sales Invoice Header" else if ("Document Type" = const("Sales Order")) "Sales Header";
+            ValidateTableRelation = false;
             DataClassification = CustomerContent;
         }
         field(7; "Case No."; Code[20])
@@ -36,6 +38,8 @@ table 53415 "ORB Case Buffer"
         field(9; "Entity No."; Code[20])
         {
             Caption = 'Entity No.';
+            TableRelation = if ("Entity Type" = const(Customer)) Customer else if ("Entity Type" = const(Vendor)) Vendor;
+            ValidateTableRelation = false;
             DataClassification = CustomerContent;
         }
         field(10; "Entity Name"; Text[100])
@@ -66,21 +70,26 @@ table 53415 "ORB Case Buffer"
         field(21; "Location Code"; Code[10])
         {
             Caption = 'Location Code';
+            TableRelation = Location;
+            ValidateTableRelation = false;
             DataClassification = CustomerContent;
         }
         field(23; "Salesperson Code"; Code[20])
         {
             Caption = 'Salesperson Code';
+            TableRelation = "Salesperson/Purchaser";
             DataClassification = CustomerContent;
         }
         field(25; "Customer Complaint"; Text[100])
         {
             Caption = 'Customer Complaint';
+            TableRelation = CustomerComplaint;
             DataClassification = CustomerContent;
         }
         field(27; "Customer Expectation"; Text[100])
         {
             Caption = 'Customer Expectation';
+            TableRelation = CustomerExpectation;
             DataClassification = CustomerContent;
         }
         field(29; "Describe Issue"; Text[2048])
