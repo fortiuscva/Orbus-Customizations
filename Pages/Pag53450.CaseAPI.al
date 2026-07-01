@@ -69,6 +69,11 @@ page 53450 "ORB Case API"
                 {
                     Caption = 'Salesperson Code';
                 }
+                field(status; Rec.Status)
+                {
+                    Caption = 'Status';
+                }
+
                 field(customerComplaint; Rec."Customer Complaint")
                 {
                     Caption = 'Customer Complaint';
