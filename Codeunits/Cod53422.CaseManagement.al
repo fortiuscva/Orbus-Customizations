@@ -43,7 +43,14 @@ codeunit 53422 "ORB Case Management"
             PropagateFieldValuesFromSalesHeader(CaseWSG, ORBCaseBuffer);
         end;
 
-        CaseWSG.Validate("Entity Type", ORBCaseBuffer."Entity Type"::Customer);
+        if (CaseWSG."Entity Type" <> CaseWSG."Entity Type"::Customer) then
+            CaseWSG.Validate("Entity Type", ORBCaseBuffer."Entity Type"::Customer);
+
+        if (CaseWSG."Source Page Name" <> Format(ORBCaseBuffer."Document Type")) then
+            CaseWSG.Validate("Source Page Name", Format(ORBCaseBuffer."Document Type"));
+
+        if (CaseWSG."Source No." <> ORBCaseBuffer."Document No.") then
+            CaseWSG.Validate("Source No.", ORBCaseBuffer."Document No.");
 
         if ((ORBCaseBuffer."Entity No." <> '') and (CaseWSG."Entity No." <> ORBCaseBuffer."Entity No.")) then
             CaseWSG.Validate("Entity No.", ORBCaseBuffer."Entity No.");
