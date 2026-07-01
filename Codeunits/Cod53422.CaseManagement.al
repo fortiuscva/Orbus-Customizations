@@ -88,7 +88,7 @@ codeunit 53422 "ORB Case Management"
             CaseWSG.Validate("Describe Issue", ORBCaseBuffer."Describe Issue");
 
         if ORBCaseBuffer.Link <> '' then
-            CaseWSG.AddLink(ORBCaseBuffer.Link, Format(ORBCaseBuffer."Document Type") + ' ' + ORBCaseBuffer."Document No." + ' ' + 'URL');
+            CaseWSG.AddLink(ORBCaseBuffer.Link, ORBCaseBuffer.Description);
 
         if ((ORBCaseBuffer."Must Arrive Date" <> 0D) and (CaseWSG."Must Arrive Date" <> ORBCaseBuffer."Must Arrive Date")) then
             CaseWSG.Validate("Must Arrive Date", ORBCaseBuffer."Must Arrive Date");
