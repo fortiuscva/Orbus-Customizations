@@ -294,6 +294,33 @@ table 53400 "ORB LIFT Sales Order Buffer"
             Caption = 'LIFT Cancellation Status';
             DataClassification = CustomerContent;
         }
+        field(55124; "ORB LIFT Total Lines Count"; Integer)
+        {
+            Caption = 'LIFT Total Lines Count';
+            DataClassification = CustomerContent;
+        }
+        field(55125; "ORB LIFT Comment Lines Count"; Integer)
+        {
+            Caption = 'LIFT Comment Lines Count';
+            DataClassification = CustomerContent;
+        }
+        field(55126; "ORB LIFT Item Lines Count"; Integer)
+        {
+            Caption = 'LIFT Item Lines Count';
+            DataClassification = CustomerContent;
+        }
+        field(55132; "ORB LIFT Last Updated DateTime"; Text[30])
+        {
+            Caption = 'LIFT Last Updated DateTime';
+            DataClassification = CustomerContent;
+        }
+        field(55135; "Case No."; Code[20])
+        {
+            Caption = 'Case No.';
+            TableRelation = "Case WSG";
+            ValidateTableRelation = false;
+            DataClassification = CustomerContent;
+        }
     }
     keys
     {
