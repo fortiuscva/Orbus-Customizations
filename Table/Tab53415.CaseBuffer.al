@@ -28,6 +28,7 @@ table 53415 "ORB Case Buffer"
         field(7; "Case No."; Code[20])
         {
             Caption = 'Case No.';
+            TableRelation = "Case WSG";
             DataClassification = CustomerContent;
         }
         field(8; "Entity Type"; Enum "Entity Type WSG")
