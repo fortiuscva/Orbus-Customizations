@@ -43,8 +43,7 @@ codeunit 53422 "ORB Case Management"
             PropagateFieldValuesFromSalesHeader(CaseWSG, ORBCaseBuffer);
         end;
 
-        if CaseWSG."Entity Type" <> ORBCaseBuffer."Entity Type" then
-            CaseWSG.Validate("Entity Type", ORBCaseBuffer."Entity Type");
+        CaseWSG.Validate("Entity Type", ORBCaseBuffer."Entity Type"::Customer);
 
         if ((ORBCaseBuffer."Entity No." <> '') and (CaseWSG."Entity No." <> ORBCaseBuffer."Entity No.")) then
             CaseWSG.Validate("Entity No.", ORBCaseBuffer."Entity No.");
@@ -107,7 +106,6 @@ codeunit 53422 "ORB Case Management"
     procedure UpdateCaseNumberinCaseBuffer(var CaseWSG: Record "Case WSG"; var ORBCaseBuffer: Record "ORB Case Buffer")
     begin
         ORBCaseBuffer."Case No." := CaseWSG."No.";
-        ORBCaseBuffer.Modify(true);
     end;
 
     procedure PropagateFieldValuesFromSalesInvoiceHeader(var CaseWSG: Record "Case WSG"; var ORBCaseBuffer: Record "ORB Case Buffer")
