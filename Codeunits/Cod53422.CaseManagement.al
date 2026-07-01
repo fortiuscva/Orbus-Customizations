@@ -99,11 +99,14 @@ codeunit 53422 "ORB Case Management"
         if ((ORBCaseBuffer.City <> '') and (CaseWSG.City <> ORBCaseBuffer.City)) then
             CaseWSG.Validate(City, ORBCaseBuffer.City);
 
+        if ((ORBCaseBuffer.State <> '') and (CaseWSG.State <> ORBCaseBuffer.State)) then
+            CaseWSG.Validate(State, ORBCaseBuffer.State);
+
         if ((ORBCaseBuffer."Post Code" <> '') and (CaseWSG."Post Code" <> ORBCaseBuffer."Post Code")) then
             CaseWSG.Validate("Post Code", ORBCaseBuffer."Post Code");
 
-        if ((ORBCaseBuffer.State <> '') and (CaseWSG.State <> ORBCaseBuffer.State)) then
-            CaseWSG.Validate(State, ORBCaseBuffer.State);
+        if ((ORBCaseBuffer."Magento Result ID" <> '') and (CaseWSG."ORB Magento Result ID" <> ORBCaseBuffer."Magento Result ID")) then
+            CaseWSG.Validate("ORB Magento Result ID", ORBCaseBuffer."Magento Result ID");
     end;
 
     procedure UpdateCaseNumberinCaseBuffer(var CaseWSG: Record "Case WSG"; var ORBCaseBuffer: Record "ORB Case Buffer")
@@ -152,15 +155,15 @@ codeunit 53422 "ORB Case Management"
             CaseWSG.Validate("Contact Name", SalesHeader."Sell-to Contact");
             CaseWSG.Validate("Contact Phone", SalesHeader."Sell-to Phone No.");
             CaseWSG.Validate("SalesPerson Code", SalesHeader."Salesperson Code");
-            CaseWSG.Validate("Ship To Name", SalesHeader."Ship-to Name (Custom)");
-            CaseWSG.Validate("Ship To Address", SalesHeader."Ship-to Address (Custom)");
-            CaseWSG.Validate("Ship To Address 2", SalesHeader."Ship-to Address 2 (Custom)");
-            CaseWSG.Validate("Ship To Contact", SalesHeader."Ship-to Contact (Custom)");
-            CaseWSG.Validate(City, SalesHeader."Ship-to City (Custom)");
-            CaseWSG.Validate("Post Code", SalesHeader."Ship-To Post Code (Custom)");
+            CaseWSG.Validate("Ship To Name", SalesHeader."Ship-to Name");
+            CaseWSG.Validate("Ship To Address", SalesHeader."Ship-to Address");
+            CaseWSG.Validate("Ship To Address 2", SalesHeader."Ship-to Address 2");
+            CaseWSG.Validate("Ship To Contact", SalesHeader."Ship-to Contact");
+            CaseWSG.Validate(City, SalesHeader."Ship-to City");
+            CaseWSG.Validate("Post Code", SalesHeader."Ship-To Post Code");
             CaseWSG.Validate("External Doc No.", SalesHeader."External Document No.");
             CaseWSG.Validate("Shipment Date", SalesHeader."Shipment Date");
-            CaseWSG.Validate(State, SalesHeader."Ship-To County (Custom)");
+            CaseWSG.Validate(State, SalesHeader."Ship-To County");
         end;
     end;
 
