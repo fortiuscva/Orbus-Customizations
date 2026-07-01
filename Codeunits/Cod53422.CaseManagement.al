@@ -78,9 +78,6 @@ codeunit 53422 "ORB Case Management"
         if ((ORBCaseBuffer."Salesperson Code" <> '') and (CaseWSG."SalesPerson Code" <> ORBCaseBuffer."Salesperson Code")) then
             CaseWSG.Validate("SalesPerson Code", ORBCaseBuffer."Salesperson Code");
 
-        if (CaseWSG.Status <> ORBCaseBuffer.Status) then
-            CaseWSG.Validate(Status, ORBCaseBuffer.Status);
-
         if ((ORBCaseBuffer."Customer Complaint" <> '') and (CaseWSG."Customer Complaint" <> ORBCaseBuffer."Customer Complaint")) then
             CaseWSG.Validate("Customer Complaint", ORBCaseBuffer."Customer Complaint");
 
@@ -119,6 +116,8 @@ codeunit 53422 "ORB Case Management"
 
         if ((ORBCaseBuffer."Magento Result ID" <> '') and (CaseWSG."ORB Magento Result ID" <> ORBCaseBuffer."Magento Result ID")) then
             CaseWSG.Validate("ORB Magento Result ID", ORBCaseBuffer."Magento Result ID");
+
+        CaseWSG.Validate(Status, ORBCaseBuffer.Status);
     end;
 
     procedure UpdateCaseNumberinCaseBuffer(var CaseWSG: Record "Case WSG"; var ORBCaseBuffer: Record "ORB Case Buffer")
