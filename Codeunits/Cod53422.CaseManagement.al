@@ -30,6 +30,10 @@ codeunit 53422 "ORB Case Management"
     end;
 
     procedure ValidateCaseCardFields(var CaseWSG: Record "Case WSG"; var ORBCaseBuffer: Record "ORB Case Buffer")
+    var
+        RecordLinkLcl: Record "Record Link";
+        Outstr: OutStream;
+        LinkID: Integer;
     begin
         if CaseWSG."Lookup Type" <> ORBCaseBuffer."Document Type" then
             CaseWSG.Validate("Lookup Type", ORBCaseBuffer."Document Type");
@@ -118,6 +122,28 @@ codeunit 53422 "ORB Case Management"
             CaseWSG.Validate("ORB Magento Result ID", ORBCaseBuffer."Magento Result ID");
 
         CaseWSG.Validate(Status, ORBCaseBuffer.Status);
+
+        if ORBCaseBuffer.Notes <> '' then begin
+            Clear(RecordLinkGbl);
+            RecordLinkGbl.Reset();
+            if RecordLinkGbl.FindLast() then
+                LinkID := RecordLinkGbl."Link ID" + 1
+            else
+                LinkID := 1;
+
+            Clear(RecordLinkLcl);
+            RecordLinkLcl.Reset();
+            RecordLinkLcl.Init();
+            RecordLinkLcl."Link ID" := LinkID;
+            RecordLinkLcl.Insert(true);
+            RecordLinkLcl."Record ID" := CaseWSG.RecordId;
+            RecordLinkLcl.Type := RecordLinkLcl.Type::Note;
+            RecordLinkMgt.WriteNote(RecordLinkLcl, ORBCaseBuffer.Notes);
+            RecordLinkLcl."User ID" := UserId;
+            RecordLinkLcl.Created := CurrentDateTime;
+            RecordLinkLcl.Company := CompanyName;
+            RecordLinkLcl.Modify(true);
+        end;
     end;
 
     procedure UpdateCaseNumberinCaseBuffer(var CaseWSG: Record "Case WSG"; var ORBCaseBuffer: Record "ORB Case Buffer")
@@ -269,4 +295,6 @@ codeunit 53422 "ORB Case Management"
 
     var
         CaseWSG: Record "Case WSG";
+        RecordLinkGbl: Record "Record Link";
+        RecordLinkMgt: Codeunit "Record Link Management";
 }
