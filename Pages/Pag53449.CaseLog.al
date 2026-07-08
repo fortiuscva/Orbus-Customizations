@@ -144,6 +144,10 @@ page 53449 "ORB Case Log"
                 {
                     ToolTip = 'Specifies the value of the Entry No. field.', Comment = '%';
                 }
+                field(Notes; Rec.Notes)
+                {
+                    ToolTip = 'Specifies the value of the Notes field.', Comment = '%';
+                }
             }
         }
     }

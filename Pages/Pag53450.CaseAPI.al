@@ -130,6 +130,10 @@ page 53450 "ORB Case API"
                 {
                     Caption = 'Magento Result ID';
                 }
+                field(notes; Rec.Notes)
+                {
+                    Caption = 'Notes';
+                }
             }
         }
     }
