@@ -155,6 +155,11 @@ table 53415 "ORB Case Buffer"
             Caption = 'Status';
             DataClassification = CustomerContent;
         }
+        field(55; Notes; Text[2048])
+        {
+            Caption = 'Notes';
+            DataClassification = CustomerContent;
+        }
     }
     keys
     {
