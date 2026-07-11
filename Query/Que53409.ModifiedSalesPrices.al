@@ -5,18 +5,22 @@ query 53409 "ORB Modified Sales Prices"
 
     elements
     {
-        dataitem(SalesPrice; "Sales Price")
+        dataitem(PriceListLine; "Price List Line")
         {
-            column(ItemNo; "Item No.")
+            DataItemTableFilter = "Price Type" = const(Sale);
+            column(ItemNo; "Asset No.")
             {
             }
+
             column(MinimumQuantity; "Minimum Quantity")
             {
                 Method = Sum;
             }
+
             filter(SystemModifiedAt; SystemModifiedAt)
             {
             }
+
         }
     }
 }
