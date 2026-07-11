@@ -114,6 +114,7 @@ report 53411 "ORB LIFT Modified Prices"
         SalesPrice2: Record "Price List Line";
     begin
         SalesPrice2.Reset();
+        SalesPrice2.SetCurrentKey("Asset Type", "Asset No.", "Source Type", "Source No.", "Starting Date", "Currency Code", "Variant Code", "Unit of Measure Code", "Minimum Quantity");
         SalesPrice2.SetRange("Price Type", SalesPrice2."Price Type"::Sale);
         SalesPrice2.SetRange("Asset Type", SalesPrice2."Asset Type"::Item);
         SalesPrice2.SetRange("Asset No.", SalesPrice."Asset No.");
