@@ -127,7 +127,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post Prepayments", OnBeforeSalesInvHeaderInsert, '', false, false)]
     local procedure Cod442_OnBeforeSalesInvHeaderInsert(var SalesInvHeader: Record "Sales Invoice Header"; SalesHeader: Record "Sales Header"; CommitIsSuppressed: Boolean; GenJnlDocNo: Code[20]);
     begin
-        SalesInvHeader."Order No." := SalesHeader."No."
+        SalesInvHeader."Order No." := SalesHeader."No.";
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Document-Mailing", OnBeforeGetEmailSubject, '', false, false)]
@@ -237,6 +237,10 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
                 SalesShipLineAddtionalFields.Modify();
         end;
     end;
+
+
+
+
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnAfterInsertInvoiceHeader, '', false, false)]
     local procedure "Sales-Post_OnAfterInsertInvoiceHeader"(var SalesHeader: Record "Sales Header"; var SalesInvHeader: Record "Sales Invoice Header")
@@ -541,8 +545,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
     var
     begin
         IF (SalesHeader."Document Type" = SalesHeader."Document Type"::Order) and (SalesHeader.Status = SalesHeader.Status::Released) and (SalesHeader."ORB Original Promised Ship Dt." = 0D) then begin
-            //SalesHeader.Validate("ORB Original Promised Ship Dt.", today);
-            SalesHeader.Validate("ORB Original Promised Ship Dt.", SalesHeader."Shipment Date");
+            SalesHeader.Validate("ORB Original Promised Ship Dt.", today);
             SalesHeader.Modify;
         end;
     end;
