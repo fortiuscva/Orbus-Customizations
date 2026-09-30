@@ -48,7 +48,7 @@ table 53401 "ORB LIFT Sales Line Buffer"
         }
         field(22; "Unit Price"; Decimal)
         {
-            Caption = 'Unit Price';
+            Caption = 'Override Unit Price';
         }
         field(23; "Original Unit Price"; Decimal)
         {
@@ -60,11 +60,11 @@ table 53401 "ORB LIFT Sales Line Buffer"
         }
         field(28; "Line Discount Amount"; Decimal)
         {
-            Caption = 'Line Discount Amount';
+            Caption = 'Total Line Discount';
         }
         field(29; "Unit Discount Amount"; Decimal)
         {
-            Caption = 'Unit Discount Amount';
+            Caption = 'Price Override Unit Discount Amount';
         }
         field(40; "Shortcut Dimension 1 Code"; Code[20])
         {
@@ -133,6 +133,26 @@ table 53401 "ORB LIFT Sales Line Buffer"
         field(60103; "ORB LIFT Status"; Integer)
         {
             Caption = 'LIFT Status';
+            DataClassification = CustomerContent;
+        }
+        field(60104; "PO Total Line Discount Amount"; Decimal)
+        {
+            Caption = 'Price Override Total Line Discount Amount';
+            DataClassification = CustomerContent;
+        }
+        field(60105; "CDG Code"; Code[10])
+        {
+            Caption = 'Customer Discount Group Code';
+            DataClassification = CustomerContent;
+        }
+        field(60106; "CDG Value"; Decimal)
+        {
+            Caption = 'Customer Discount Group Value';
+            DataClassification = CustomerContent;
+        }
+        field(60107; "Net Amount"; Decimal)
+        {
+            Caption = 'Net Amount';
             DataClassification = CustomerContent;
         }
     }
