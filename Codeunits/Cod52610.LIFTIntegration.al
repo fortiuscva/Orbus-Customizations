@@ -236,10 +236,11 @@ codeunit 52610 "ORB LIFT Integration"
     local procedure EvaluateUTCDateTime(DataTimeText: Text) EvaluatedDateTime: DateTime;
     var
         TypeHelper: Codeunit "Type Helper";
+        Language: Codeunit Language;
         ValueTest: Variant;
     begin
         ValueTest := EvaluatedDateTime;
-        IF TypeHelper.Evaluate(ValueTest, DataTimeText, '', TypeHelper.GetCultureName()) THEN
+        IF TypeHelper.Evaluate(ValueTest, DataTimeText, '', Language.GetCurrentCultureName()) THEN
             EvaluatedDateTime := ValueTest;
     end;
 

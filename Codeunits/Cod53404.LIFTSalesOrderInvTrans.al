@@ -312,10 +312,11 @@ codeunit 53404 "LIFT Sales Order Inv. Trans"
     local procedure EvaluateUTCDateTime(DateTimeText: Text): DateTime
     var
         TypeHelper: Codeunit "Type Helper";
+        Language: Codeunit Language;
         TempVar: Variant;
     begin
         TempVar := DateTimeText;
-        if TypeHelper.Evaluate(TempVar, DateTimeText, '', TypeHelper.GetCultureName()) then
+        if TypeHelper.Evaluate(TempVar, DateTimeText, '', Language.GetCurrentCultureName()) then
             exit(TempVar);
         exit(0DT);
     end;
