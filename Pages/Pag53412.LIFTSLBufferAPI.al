@@ -61,10 +61,6 @@ page 53412 "ORB LIFT SL Buffer API"
                 {
                     Caption = 'Original Unit Price';
                 }
-                field(lineDiscount; Rec."Line Discount %")
-                {
-                    Caption = 'Line Discount %';
-                }
                 field(lineDiscountAmount; Rec."Line Discount Amount")
                 {
                     Caption = 'Line Discount Amount';
@@ -132,6 +128,22 @@ page 53412 "ORB LIFT SL Buffer API"
                 field(liftStatus; Rec."ORB LIFT Status")
                 {
                     Caption = 'LIFT Status';
+                }
+                field(cdgCode; Rec."CDG Code")
+                {
+                    Caption = 'Customer Discount Group Code';
+                }
+                field(cdgValue; Rec."CDG Value")
+                {
+                    Caption = 'Customer Discount Group Value';
+                }
+                field(netAmount; Rec."Net Amount")
+                {
+                    Caption = 'Net Amount';
+                }
+                field(poTotalLineDiscountAmount; Rec."PO Total Line Discount Amount")
+                {
+                    Caption = 'Price Override Total Line Discount Amount';
                 }
             }
         }
