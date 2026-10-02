@@ -31,6 +31,11 @@ pageextension 52620 "ORB Sales Order Subform" extends "Sales Order Subform"
                 ApplicationArea = All;
                 Visible = false;
             }
+            field("ORB LIFT Net Amount"; Rec."ORB LIFT Net Amount")
+            {
+                ApplicationArea = All;
+                Editable = false;
+            }
         }
         modify(Quantity)
         {

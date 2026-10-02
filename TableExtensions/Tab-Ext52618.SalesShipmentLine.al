@@ -51,5 +51,11 @@ tableextension 52618 "ORB Sales Shipment Line" extends "Sales Shipment Line"
             Editable = false;
             DataClassification = CustomerContent;
         }
+        field(53405; "ORB LIFT Net Amount"; Decimal)
+        {
+            Caption = 'LIFT Net Amount';
+            DecimalPlaces = 0 : 5;
+            DataClassification = CustomerContent;
+        }
     }
 }

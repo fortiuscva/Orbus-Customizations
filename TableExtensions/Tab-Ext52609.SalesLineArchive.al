@@ -70,5 +70,11 @@ tableextension 52609 "ORB Sales Line Archive" extends "Sales Line Archive"
             Editable = false;
             DataClassification = CustomerContent;
         }
+        field(53405; "ORB LIFT Net Amount"; Decimal)
+        {
+            Caption = 'LIFT Net Amount';
+            DecimalPlaces = 0 : 5;
+            DataClassification = CustomerContent;
+        }
     }
 }

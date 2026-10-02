@@ -398,6 +398,8 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
                     SalesLine.Validate("ORB LIFT Discount Amount", LIFTSalesLineBuffer."PO Total Line Discount Amount");
                 if SalesLine."Line Discount Amount" <> LIFTSalesLineBuffer."Line Discount Amount" then
                     SalesLine.Validate("Line Discount Amount", LIFTSalesLineBuffer."Line Discount Amount");
+                if SalesLine."ORB LIFT Net Amount" <> LIFTSalesLineBuffer."Net Amount" then
+                    SalesLine.Validate("ORB LIFT Net Amount", LIFTSalesLineBuffer."Net Amount");
                 if SalesLine."ORB LIFT Line ID" <> LIFTSalesLineBuffer."LIFT Line ID" then
                     SalesLine."ORB LIFT Line ID" := LIFTSalesLineBuffer."LIFT Line ID";
 
@@ -445,6 +447,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
                 SalesLine.Validate("Unit Price", LIFTSalesLineBuffer."Original Unit Price");
                 SalesLine.Validate("ORB LIFT Discount Amount", LIFTSalesLineBuffer."PO Total Line Discount Amount");
                 SalesLine.Validate("Line Discount Amount", LIFTSalesLineBuffer."Line Discount Amount");
+                SalesLine.Validate("ORB LIFT Net Amount", LIFTSalesLineBuffer."Net Amount");
                 SalesLine."ORB LIFT Line ID" := LIFTSalesLineBuffer."LIFT Line ID";
 
                 if not LIFTSubwayMapSteps.Get(LIFTSalesLineBuffer."ORB LIFT Step No.") then begin
