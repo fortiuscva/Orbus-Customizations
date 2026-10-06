@@ -6,9 +6,9 @@ page 52660 "ORB Posted Sales Invoices"
     DelayedInsert = true;
     EntityName = 'postedSalesInvoice';
     EntitySetName = 'postedSalesInvoices';
-    ODataKeyFields = Id;
+    ODataKeyFields = SystemId;
     PageType = API;
-    SourceTable = "Sales Invoice Entity Aggregate";
+    SourceTable = "Sales Invoice Header";
     Extensible = true;
 
     layout
@@ -17,14 +17,14 @@ page 52660 "ORB Posted Sales Invoices"
         {
             repeater(Group)
             {
-                field(id; Rec.Id)
+                field(id; Rec.SystemId)
                 {
                     Caption = 'Id';
                     Editable = false;
 
                     trigger OnValidate()
                     begin
-                        RegisterFieldSet(Rec.FieldNo(Id));
+                        RegisterFieldSet(Rec.FieldNo(SystemId));
                     end;
                 }
                 field(number; Rec."No.")
@@ -36,6 +36,10 @@ page 52660 "ORB Posted Sales Invoices"
                     begin
                         RegisterFieldSet(Rec.FieldNo("No."));
                     end;
+                }
+                field(magentoOrderNo; Rec."ORB Magento Order #")
+                {
+                    Caption = 'Magento Order #';
                 }
                 field(customerNumber; Rec."Sell-to Customer No.")
                 {
@@ -52,8 +56,8 @@ page 52660 "ORB Posted Sales Invoices"
                         if not SellToCustomer.Get(Rec."Sell-to Customer No.") then
                             Error(CouldNotFindSellToCustomerErr);
 
-                        Rec."Customer Id" := SellToCustomer.SystemId;
-                        RegisterFieldSet(Rec.FieldNo("Customer Id"));
+                        // Rec."Customer Id" := SellToCustomer.SystemId;
+                        // RegisterFieldSet(Rec.FieldNo("Customer Id"));
                         RegisterFieldSet(Rec.FieldNo("Sell-to Customer No."));
                     end;
                 }
@@ -117,16 +121,16 @@ page 52660 "ORB Posted Sales Invoices"
                             exit;
                         end;
 
-                        if Rec."Currency Code" = '' then
-                            Rec."Currency Id" := BlankGUID
-                        else begin
-                            if not Currency.Get(Rec."Currency Code") then
-                                Error(CurrencyCodeDoesNotMatchACurrencyErr);
+                        // if Rec."Currency Code" = '' then
+                        //     Rec."Currency Id" := BlankGUID
+                        // else begin
+                        //     if not Currency.Get(Rec."Currency Code") then
+                        //         Error(CurrencyCodeDoesNotMatchACurrencyErr);
 
-                            Rec."Currency Id" := Currency.SystemId;
-                        end;
+                        //     Rec."Currency Id" := Currency.SystemId;
+                        // end;
 
-                        RegisterFieldSet(Rec.FieldNo("Currency Id"));
+                        // RegisterFieldSet(Rec.FieldNo("Currency Id"));
                         RegisterFieldSet(Rec.FieldNo("Currency Code"));
                     end;
                 }
@@ -150,46 +154,24 @@ page 52660 "ORB Posted Sales Invoices"
                     Multiplicity = ZeroOrOne;
                     EntityName = 'pdfPSIDocument';
                     EntitySetName = 'pdfPSIDocument';
-                    SubPageLink = "Document Id" = field(Id), "Document Type" = const("Sales Invoice");
+                    SubPageLink = "Document Id" = field(SystemId), "Document Type" = const("Sales Invoice");
                 }
             }
         }
     }
 
-    actions
-    {
-    }
 
     trigger OnAfterGetRecord()
     var
         SalesInvoiceAggregator: Codeunit "Sales Invoice Aggregator";
     begin
-        if not Rec.Posted then
-            if HasWritePermissionForDraft then
-                SalesInvoiceAggregator.RedistributeInvoiceDiscounts(Rec);
         SetCalculatedFields();
-    end;
-
-    trigger OnDeleteRecord(): Boolean
-    var
-        SalesInvoiceAggregator: Codeunit "Sales Invoice Aggregator";
-    begin
-        SalesInvoiceAggregator.PropagateOnDelete(Rec);
-
-        exit(false);
     end;
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     var
         SalesInvoiceAggregator: Codeunit "Sales Invoice Aggregator";
     begin
-        CheckSellToCustomerSpecified();
-
-        SalesInvoiceAggregator.PropagateOnInsert(Rec, TempFieldBuffer);
-        SetDates();
-
-        UpdateDiscount();
-
         SetCalculatedFields();
 
         exit(false);
@@ -199,12 +181,8 @@ page 52660 "ORB Posted Sales Invoices"
     var
         SalesInvoiceAggregator: Codeunit "Sales Invoice Aggregator";
     begin
-        if xRec.Id <> Rec.Id then
+        if xRec.SystemId <> Rec.SystemId then
             Error(CannotChangeIDErr);
-
-        SalesInvoiceAggregator.PropagateOnModify(Rec, TempFieldBuffer);
-        UpdateDiscount();
-
         SetCalculatedFields();
 
         exit(false);
@@ -213,11 +191,6 @@ page 52660 "ORB Posted Sales Invoices"
     trigger OnNewRecord(BelowxRec: Boolean)
     begin
         ClearCalculatedFields();
-    end;
-
-    trigger OnOpenPage()
-    begin
-        SetPermissionFilters();
     end;
 
     var
@@ -272,7 +245,7 @@ page 52660 "ORB Posted Sales Invoices"
 
     local procedure SetCalculatedFields()
     begin
-        Rec.LoadFields("No.", "Currency Code", "Amount Including VAT", Posted, Status);
+        Rec.LoadFields("No.", "Currency Code", "Amount Including VAT");
         GetRemainingAmount();
         CurrencyCodeTxt := GraphMgtGeneralTools.TranslateNAVCurrencyCodeToCurrencyCode(LCYCurrencyCode, Rec."Currency Code");
     end;
@@ -295,7 +268,7 @@ page 52660 "ORB Posted Sales Invoices"
 
         Clear(TempFieldBuffer);
         TempFieldBuffer.Order := LastOrderNo;
-        TempFieldBuffer."Table ID" := Database::"Sales Invoice Entity Aggregate";
+        TempFieldBuffer."Table ID" := Database::"Sales Invoice Header";
         TempFieldBuffer."Field ID" := FieldNo;
         TempFieldBuffer.Insert();
     end;
@@ -304,72 +277,7 @@ page 52660 "ORB Posted Sales Invoices"
     var
         SalesInvoiceHeader: Record "Sales Invoice Header";
     begin
-        RemainingAmountVar := Rec."Amount Including VAT";
-        if Rec.Posted then
-            if (Rec.Status = Rec.Status::Canceled) then begin
-                RemainingAmountVar := 0;
-                exit;
-            end else
-                if SalesInvoiceHeader.Get(Rec."No.") then
-                    RemainingAmountVar := SalesInvoiceHeader.GetRemainingAmount();
-    end;
-
-    local procedure CheckSellToCustomerSpecified()
-    begin
-        if (Rec."Sell-to Customer No." = '') and
-           (Rec."Customer Id" = BlankGUID)
-        then
-            Error(SellToCustomerNotProvidedErr);
-    end;
-
-    local procedure SetPermissionFilters()
-    var
-        SalesHeader: Record "Sales Header";
-        SalesInvoiceHeader: Record "Sales Invoice Header";
-        FilterText: Text;
-    begin
-        // Filtering out test documents
-        SalesHeader.SetRange(IsTest, false);
-
-        SalesHeader.SetRange("Document Type", SalesHeader."Document Type"::Invoice);
-        if not SalesHeader.ReadPermission() then
-            FilterText :=
-              StrSubstNo(PermissionFilterFormatTxt, Rec.Status::Draft, Rec.Status::"In Review");
-
-        if not SalesInvoiceHeader.ReadPermission() then begin
-            if FilterText <> '' then
-                FilterText += '&';
-            FilterText +=
-              StrSubstNo(
-                PermissionInvoiceFilterformatTxt, Rec.Status::Canceled, Rec.Status::Corrective,
-                Rec.Status::Open, Rec.Status::Paid);
-        end;
-
-        if FilterText <> '' then begin
-            Rec.FilterGroup(2);
-            Rec.SetFilter(Status, FilterText);
-            Rec.FilterGroup(0);
-        end;
-
-        HasWritePermissionForDraft := SalesHeader.WritePermission();
-    end;
-
-    local procedure UpdateDiscount()
-    var
-        SalesHeader: Record "Sales Header";
-        SalesInvoiceAggregator: Codeunit "Sales Invoice Aggregator";
-        SalesCalcDiscountByType: Codeunit "Sales - Calc Discount By Type";
-    begin
-        if Rec.Posted then
-            exit;
-
-        if not DiscountAmountSet then begin
-            SalesInvoiceAggregator.RedistributeInvoiceDiscounts(Rec);
-            exit;
-        end;
-
-        SalesHeader.Get(Rec."Document Type"::Invoice, Rec."No.");
-        SalesCalcDiscountByType.ApplyInvDiscBasedOnAmt(InvoiceDiscountAmount, SalesHeader);
+        RemainingAmountVar := Rec.GetRemainingAmount();
     end;
 
     local procedure SetDates()
@@ -397,48 +305,7 @@ page 52660 "ORB Posted Sales Invoices"
             RegisterFieldSet(Rec.FieldNo("Due Date"));
         end;
 
-        SalesInvoiceAggregator.PropagateOnModify(Rec, TempFieldBuffer);
         Rec.Find();
-    end;
-
-    local procedure GetPostedInvoice(var SalesInvoiceHeader: Record "Sales Invoice Header")
-    var
-        SalesInvoiceAggregator: Codeunit "Sales Invoice Aggregator";
-    begin
-        if not Rec.Posted then
-            Error(PostedInvoiceActionErr);
-
-        if not SalesInvoiceAggregator.GetSalesInvoiceHeaderFromId(Rec.Id, SalesInvoiceHeader) then
-            Error(CannotFindInvoiceErr);
-    end;
-
-    local procedure GetDraftInvoice(var SalesHeader: Record "Sales Header")
-    begin
-        if Rec.Posted then
-            Error(DraftInvoiceActionErr);
-
-        SalesHeader.SetRange(SystemId, Rec.Id);
-        if not SalesHeader.FindFirst() then
-            Error(CannotFindInvoiceErr);
-
-        SalesHeader.SetRange(SystemId);
-    end;
-
-    local procedure CheckSendToEmailAddress(DocumentNo: Code[20])
-    begin
-        if GetSendToEmailAddress(DocumentNo) = '' then
-            Error(EmptyEmailErr);
-    end;
-
-    local procedure GetSendToEmailAddress(DocumentNo: Code[20]): Text[250]
-    var
-        EmailAddress: Text[250];
-    begin
-        EmailAddress := GetDocumentEmailAddress(DocumentNo);
-        if EmailAddress <> '' then
-            exit(EmailAddress);
-        EmailAddress := GetCustomerEmailAddress();
-        exit(EmailAddress);
     end;
 
     local procedure GetCustomerEmailAddress(): Text[250]
@@ -448,205 +315,5 @@ page 52660 "ORB Posted Sales Invoices"
         if not Customer.Get(Rec."Sell-to Customer No.") then
             exit('');
         exit(Customer."E-Mail");
-    end;
-
-    local procedure GetDocumentEmailAddress(DocumentNo: Code[20]): Text[250]
-    var
-        EmailParameter: Record "Email Parameter";
-    begin
-        if not EmailParameter.Get(DocumentNo, Rec."Document Type", EmailParameter."Parameter Type"::Address) then
-            exit('');
-        exit(EmailParameter."Parameter Value");
-    end;
-
-    local procedure CheckInvoiceCanBeCanceled(var SalesInvoiceHeader: Record "Sales Invoice Header")
-    var
-        CorrectPostedSalesInvoice: Codeunit "Correct Posted Sales Invoice";
-    begin
-        if IsInvoiceCanceled() then
-            Error(AlreadyCanceledErr);
-        CorrectPostedSalesInvoice.TestCorrectInvoiceIsAllowed(SalesInvoiceHeader, true);
-    end;
-
-    local procedure IsInvoiceCanceled(): Boolean
-    begin
-        exit(Rec.Status = Rec.Status::Canceled);
-    end;
-
-    local procedure PostInvoice(var SalesHeader: Record "Sales Header"; var SalesInvoiceHeader: Record "Sales Invoice Header")
-    var
-        LinesInstructionMgt: Codeunit "Lines Instruction Mgt.";
-        PreAssignedNo: Code[20];
-    begin
-        // APIV2SendSalesDocument.CheckDocumentIfNoItemsExists(SalesHeader);
-        LinesInstructionMgt.SalesCheckAllLinesHaveQuantityAssigned(SalesHeader);
-        PreAssignedNo := SalesHeader."No.";
-        SalesHeader.SendToPosting(Codeunit::"Sales-Post");
-        SalesInvoiceHeader.SETCURRENTKEY("Pre-Assigned No.");
-        SalesInvoiceHeader.SetRange("Pre-Assigned No.", PreAssignedNo);
-        SalesInvoiceHeader.FindFirst();
-    end;
-
-    local procedure SendPostedInvoice(var SalesInvoiceHeader: Record "Sales Invoice Header")
-    begin
-        O365SetupEmail.CheckMailSetup();
-        CheckSendToEmailAddress(SalesInvoiceHeader."No.");
-
-        SalesInvoiceHeader.SETRECFILTER();
-        SalesInvoiceHeader.EmailRecords(false);
-    end;
-
-    local procedure SendDraftInvoice(var SalesHeader: Record "Sales Header")
-    var
-        LinesInstructionMgt: Codeunit "Lines Instruction Mgt.";
-    begin
-        // APIV2SendSalesDocument.CheckDocumentIfNoItemsExists(SalesHeader);
-        LinesInstructionMgt.SalesCheckAllLinesHaveQuantityAssigned(SalesHeader);
-        O365SetupEmail.CheckMailSetup();
-        CheckSendToEmailAddress(SalesHeader."No.");
-
-        SalesHeader.SETRECFILTER();
-        SalesHeader.EmailRecords(false);
-    end;
-
-    local procedure SendCanceledInvoice(var SalesInvoiceHeader: Record "Sales Invoice Header")
-    var
-        JobQueueEntry: Record "Job Queue Entry";
-    begin
-        O365SetupEmail.CheckMailSetup();
-        CheckSendToEmailAddress(SalesInvoiceHeader."No.");
-
-        JobQueueEntry.Init();
-        JobQueueEntry."Object Type to Run" := JobQueueEntry."Object Type to Run"::Codeunit;
-        JobQueueEntry."Object ID to Run" := Codeunit::"O365 Sales Cancel Invoice";
-        JobQueueEntry."Maximum No. of Attempts to Run" := 3;
-        JobQueueEntry."Record ID to Process" := SalesInvoiceHeader.RecordId();
-        Codeunit.RUN(Codeunit::"Job Queue - Enqueue", JobQueueEntry);
-    end;
-
-    local procedure CancelInvoice(var SalesInvoiceHeader: Record "Sales Invoice Header")
-    var
-        SalesCrMemoHeader: Record "Sales Cr.Memo Header";
-        SalesHeader: Record "Sales Header";
-    begin
-        GetPostedInvoice(SalesInvoiceHeader);
-        CheckInvoiceCanBeCanceled(SalesInvoiceHeader);
-        if not Codeunit.RUN(Codeunit::"Correct Posted Sales Invoice", SalesInvoiceHeader) then begin
-            SalesCrMemoHeader.SetRange("Applies-to Doc. No.", SalesInvoiceHeader."No.");
-            if not SalesCrMemoHeader.IsEmpty() then
-                Error(CancelingInvoiceFailedCreditMemoCreatedAndPostedErr, GETLASTERRORTEXT());
-            SalesHeader.SetRange("Applies-to Doc. No.", SalesInvoiceHeader."No.");
-            if not SalesHeader.IsEmpty() then
-                Error(CancelingInvoiceFailedCreditMemoCreatedButNotPostedErr, GETLASTERRORTEXT());
-            Error(CancelingInvoiceFailedNothingCreatedErr, GETLASTERRORTEXT());
-        end;
-    end;
-
-    local procedure SetActionResponse(var ActionContext: WebServiceActionContext; InvoiceId: Guid)
-    begin
-        // SetActionResponse(ActionContext, Page::"APIV2 - Sales Invoices", InvoiceId);
-    end;
-
-    local procedure SetActionResponse(var ActionContext: WebServiceActionContext; PageId: Integer; DocumentId: Guid)
-    begin
-        ActionContext.SetObjectType(ObjectType::Page);
-        ActionContext.SetObjectId(PageId);
-        ActionContext.AddEntityKey(Rec.FieldNo(Id), DocumentId);
-        ActionContext.SetResultCode(WebServiceActionResultCode::Deleted);
-    end;
-
-    [ServiceEnabled]
-    [Scope('Cloud')]
-    procedure Post(var ActionContext: WebServiceActionContext)
-    var
-        SalesHeader: Record "Sales Header";
-        SalesInvoiceHeader: Record "Sales Invoice Header";
-        SalesInvoiceAggregator: Codeunit "Sales Invoice Aggregator";
-    begin
-        GetDraftInvoice(SalesHeader);
-        PostInvoice(SalesHeader, SalesInvoiceHeader);
-        SetActionResponse(ActionContext, SalesInvoiceAggregator.GetSalesInvoiceHeaderId(SalesInvoiceHeader));
-    end;
-
-    [ServiceEnabled]
-    [Scope('Cloud')]
-    procedure PostAndSend(var ActionContext: WebServiceActionContext)
-    var
-        SalesHeader: Record "Sales Header";
-        SalesInvoiceHeader: Record "Sales Invoice Header";
-        SalesInvoiceAggregator: Codeunit "Sales Invoice Aggregator";
-    begin
-        GetDraftInvoice(SalesHeader);
-        PostInvoice(SalesHeader, SalesInvoiceHeader);
-        Commit();
-        SendPostedInvoice(SalesInvoiceHeader);
-        SetActionResponse(ActionContext, SalesInvoiceAggregator.GetSalesInvoiceHeaderId(SalesInvoiceHeader));
-    end;
-
-    [ServiceEnabled]
-    [Scope('Cloud')]
-    procedure Send(var ActionContext: WebServiceActionContext)
-    var
-        SalesHeader: Record "Sales Header";
-        SalesInvoiceHeader: Record "Sales Invoice Header";
-        SalesInvoiceAggregator: Codeunit "Sales Invoice Aggregator";
-    begin
-        if Rec.Posted then begin
-            GetPostedInvoice(SalesInvoiceHeader);
-            if IsInvoiceCanceled() then
-                SendCanceledInvoice(SalesInvoiceHeader)
-            else
-                SendPostedInvoice(SalesInvoiceHeader);
-            SetActionResponse(ActionContext, SalesInvoiceAggregator.GetSalesInvoiceHeaderId(SalesInvoiceHeader));
-            exit;
-        end;
-        GetDraftInvoice(SalesHeader);
-        SendDraftInvoice(SalesHeader);
-        SetActionResponse(ActionContext, SalesHeader.SystemId);
-    end;
-
-    [ServiceEnabled]
-    [Scope('Cloud')]
-    procedure Cancel(var ActionContext: WebServiceActionContext)
-    var
-        SalesInvoiceHeader: Record "Sales Invoice Header";
-        SalesInvoiceAggregator: Codeunit "Sales Invoice Aggregator";
-    begin
-        GetPostedInvoice(SalesInvoiceHeader);
-        CancelInvoice(SalesInvoiceHeader);
-        SetActionResponse(ActionContext, SalesInvoiceAggregator.GetSalesInvoiceHeaderId(SalesInvoiceHeader));
-    end;
-
-    [ServiceEnabled]
-    [Scope('Cloud')]
-    procedure CancelAndSend(var ActionContext: WebServiceActionContext)
-    var
-        SalesInvoiceHeader: Record "Sales Invoice Header";
-        SalesInvoiceAggregator: Codeunit "Sales Invoice Aggregator";
-    begin
-        GetPostedInvoice(SalesInvoiceHeader);
-        CancelInvoice(SalesInvoiceHeader);
-        SendCanceledInvoice(SalesInvoiceHeader);
-        SetActionResponse(ActionContext, SalesInvoiceAggregator.GetSalesInvoiceHeaderId(SalesInvoiceHeader));
-    end;
-
-    [ServiceEnabled]
-    [Scope('Cloud')]
-    procedure MakeCorrectiveCreditMemo(var ActionContext: WebServiceActionContext)
-    var
-        SalesHeader: Record "Sales Header";
-        SalesInvoiceHeader: Record "Sales Invoice Header";
-        CorrectPostedSalesInvoice: Codeunit "Correct Posted Sales Invoice";
-    begin
-        GetPostedInvoice(SalesInvoiceHeader);
-        SalesInvoiceHeader.CalcFields("Amount Including VAT", "Remaining Amount", Closed);
-        if SalesInvoiceHeader."Amount Including VAT" <> SalesInvoiceHeader."Remaining Amount" then
-            if SalesInvoiceHeader.Closed then
-                Error(InvoiceClosedErr)
-            else
-                Error(InvoicePartiallyPaidErr);
-        SalesInvoiceHeader.SETRECFILTER();
-        CorrectPostedSalesInvoice.CreateCreditMemoCopyDocument(SalesInvoiceHeader, SalesHeader);
-        // SetActionResponse(ActionContext, Page::"APIV2 - Sales Credit Memos", SalesHeader.SystemId);
     end;
 }
