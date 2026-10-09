@@ -29,6 +29,7 @@ pageextension 52620 "ORB Sales Order Subform" extends "Sales Order Subform"
             field("ORB LIFT Discount Amount"; Rec."ORB LIFT Discount Amount")
             {
                 ApplicationArea = All;
+                Visible = false;
             }
         }
         modify(Quantity)

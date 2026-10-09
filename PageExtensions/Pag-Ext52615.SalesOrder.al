@@ -70,7 +70,6 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
             {
                 ApplicationArea = All;
                 ToolTip = 'Specifies reasons for delayed shipment';
-
             }
             field("ORB Delayed Ship Sub-Reason"; Rec."ORB Delayed Ship Sub-Reason")
             {
@@ -85,6 +84,12 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
             field("ORB Pick Created"; Rec."ORB Pick Created")
             {
                 ApplicationArea = all;
+            }
+            field("ORB Lift Order"; Rec."ORB Lift Order")
+            {
+                ApplicationArea = All;
+                Caption = 'LIFT Order';
+                ToolTip = 'Specifies the value of the Lift Order field.', Comment = '%';
             }
         }
         modify("Payment Terms Code")
