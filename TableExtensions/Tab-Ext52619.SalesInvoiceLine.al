@@ -64,5 +64,11 @@ tableextension 52619 "ORB Sales Invoice Line" extends "Sales Invoice Line"
             Editable = false;
             DataClassification = CustomerContent;
         }
+        field(53405; "ORB LIFT Net Amount"; Decimal)
+        {
+            Caption = 'LIFT Net Amount';
+            DecimalPlaces = 0 : 5;
+            DataClassification = CustomerContent;
+        }
     }
 }

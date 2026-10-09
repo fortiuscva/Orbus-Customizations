@@ -4,6 +4,7 @@ page 53414 "ORB LIFT Sales Lines"
     Caption = 'LIFT Sales Lines';
     PageType = List;
     SourceTable = "ORB LIFT Sales Line Buffer";
+    SourceTableView = sorting("Document No.") order(descending);
     UsageCategory = Lists;
 
     layout
