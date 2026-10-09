@@ -4,6 +4,7 @@ page 53414 "ORB LIFT Sales Lines"
     Caption = 'LIFT Sales Lines';
     PageType = List;
     SourceTable = "ORB LIFT Sales Line Buffer";
+    SourceTableView = sorting("Document No.") order(descending);
     UsageCategory = Lists;
 
     layout
@@ -40,6 +41,38 @@ page 53414 "ORB LIFT Sales Lines"
                 {
                     ToolTip = 'Specifies the value of the Quantity field.', Comment = '%';
                 }
+                field("Original Unit Price"; Rec."Original Unit Price")
+                {
+                    ToolTip = 'Specifies the value of the Original Unit Price field.', Comment = '%';
+                }
+                field("CDG Code"; Rec."CDG Code")
+                {
+                    ToolTip = 'Specifies the value of the Customer Discount Group Code field.', Comment = '%';
+                }
+                field("CDG Value"; Rec."CDG Value")
+                {
+                    ToolTip = 'Specifies the value of the Customer Discount Group Value field.', Comment = '%';
+                }
+                field("Unit Price"; Rec."Unit Price")
+                {
+                    ToolTip = 'Specifies the value of the Unit Price field.', Comment = '%';
+                }
+                field("Unit Discount Amount"; Rec."Unit Discount Amount")
+                {
+                    ToolTip = 'Specifies the value of the Unit Discount Amount field.', Comment = '%';
+                }
+                field("PO Total Line Discount Amount"; Rec."PO Total Line Discount Amount")
+                {
+                    ToolTip = 'Specifies the value of the Price Override Total Line Discount Amount field.', Comment = '%';
+                }
+                field("Line Discount Amount"; Rec."Line Discount Amount")
+                {
+                    ToolTip = 'Specifies the value of the Line Discount Amount field.', Comment = '%';
+                }
+                field("Net Amount"; Rec."Net Amount")
+                {
+                    ToolTip = 'Specifies the value of the Net Amount field.', Comment = '%';
+                }
                 field("ORB LIFT Step No."; Rec."ORB LIFT Step No.")
                 {
                     ToolTip = 'Specifies the value of the LIFT Step No. field.', Comment = '%';
@@ -48,26 +81,8 @@ page 53414 "ORB LIFT Sales Lines"
                 {
                     ToolTip = 'Specifies the value of the Variant Code field.', Comment = '%';
                 }
-                field("Unit Price"; Rec."Unit Price")
-                {
-                    ToolTip = 'Specifies the value of the Unit Price field.', Comment = '%';
-                }
-                field("Original Unit Price"; Rec."Original Unit Price")
-                {
-                    ToolTip = 'Specifies the value of the Original Unit Price field.', Comment = '%';
-                }
-                field("Line Discount %"; Rec."Line Discount %")
-                {
-                    ToolTip = 'Specifies the value of the Line Discount % field.', Comment = '%';
-                }
-                field("Line Discount Amount"; Rec."Line Discount Amount")
-                {
-                    ToolTip = 'Specifies the value of the Line Discount Amount field.', Comment = '%';
-                }
-                field("Unit Discount Amount"; Rec."Unit Discount Amount")
-                {
-                    ToolTip = 'Specifies the value of the Unit Discount Amount field.', Comment = '%';
-                }
+
+
                 field("Planned Shipment Date"; Rec."Planned Shipment Date")
                 {
                     ToolTip = 'Specifies the value of the Planned Shipment Date field.', Comment = '%';

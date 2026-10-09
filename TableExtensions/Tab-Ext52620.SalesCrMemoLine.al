@@ -58,5 +58,11 @@ tableextension 52620 "ORB Sales Cr.Memo Line" extends "Sales Cr.Memo Line"
             Editable = false;
             DataClassification = CustomerContent;
         }
+        field(53405; "ORB LIFT Net Amount"; Decimal)
+        {
+            Caption = 'LIFT Net Amount';
+            DecimalPlaces = 0 : 5;
+            DataClassification = CustomerContent;
+        }
     }
 }
