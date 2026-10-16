@@ -367,13 +367,16 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
                     if SalesLine.Type <> SalesLine.Type::Item then
                         SalesLine.Validate(Type, SalesLine.Type::Item);
 
-                SalesLine.Validate("No.", LIFTSalesLineBuffer."No.");
-                SalesLine.Validate(Quantity, LIFTSalesLineBuffer.Quantity);
+                if SalesLine."No." <> LIFTSalesLineBuffer."No." then
+                    SalesLine.Validate("No.", LIFTSalesLineBuffer."No.");
+                if SalesLine.Quantity <> LIFTSalesLineBuffer.Quantity then
+                    SalesLine.Validate(Quantity, LIFTSalesLineBuffer.Quantity);
                 if SalesLine."Shortcut Dimension 2 Code" <> LIFTSalesLineBuffer."Shortcut Dimension 2 Code" then
                     SalesLine.Validate("Shortcut Dimension 2 Code", LIFTSalesLineBuffer."Shortcut Dimension 2 Code");
                 if SalesLine."Variant Code" <> LIFTSalesLineBuffer."Variant Code" then
                     SalesLine.Validate("Variant Code", LIFTSalesLineBuffer."Variant Code");
-                SalesLine.Validate("Unit of Measure Code", LIFTSalesLineBuffer."Unit of Measure Code");
+                if SalesLine."Unit of Measure Code" <> LIFTSalesLineBuffer."Unit of Measure Code" then
+                    SalesLine.Validate("Unit of Measure Code", LIFTSalesLineBuffer."Unit of Measure Code");
                 if SalesLine."Requested Delivery Date" <> LIFTSalesLineBuffer."Requested Delivery Date" then
                     SalesLine.Validate("Requested Delivery Date", LIFTSalesLineBuffer."Requested Delivery Date");
                 if SalesLine."Promised Delivery Date" <> LIFTSalesLineBuffer."Promised Delivery Date" then
