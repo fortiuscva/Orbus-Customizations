@@ -1099,6 +1099,138 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             OrbusFunctionsCUGbl.HandleFailedJob(Rec);
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Inventory Pick/Movement", OnCreatePickOrMoveLineOnBeforeCheckIfInsertPickOrMoveBinWhseActLine, '', false, false)]
+    local procedure CreateInventoryPickMovement_OnBeforeCheckInsertBinLine(var WarehouseActivityLine: Record "Warehouse Activity Line"; var RemQtyToPickBase: Decimal)
+    var
+        UserPickZone: Record "ORB User Pick Zone";
+        AssignedZoneBinContent: Record "Bin Content";
+        OtherZoneBinContent: Record "Bin Content";
+        AssignedZoneHasStock: Boolean;
+        OtherZoneHasStock: Boolean;
+    begin
+        OrbusSingleInstanceCUGbl.SetUserPickZoneBlankLinePending(false);
+
+        if not OrbusSetup.Get() then
+            exit;
+
+        if not OrbusSetup."Enable User Pick Zone" then
+            exit;
+
+        if WarehouseActivityLine."Source Type" = Database::"Production Order" then
+            exit;
+
+        if RemQtyToPickBase <= 0 then
+            exit;
+
+        if WarehouseActivityLine."Activity Type" <> WarehouseActivityLine."Activity Type"::"Invt. Pick" then
+            exit;
+
+        UserPickZone.Reset();
+        UserPickZone.SetRange("User ID", UserId());
+        UserPickZone.SetRange("Location Code", WarehouseActivityLine."Location Code");
+        if not UserPickZone.FindFirst() then
+            exit;
+
+        if UserPickZone."Zone Code" = '' then
+            exit;
+
+        // Check for stock in the assigned zone.
+        AssignedZoneBinContent.Reset();
+        AssignedZoneBinContent.SetRange("Location Code", WarehouseActivityLine."Location Code");
+        AssignedZoneBinContent.SetRange("Item No.", WarehouseActivityLine."Item No.");
+        AssignedZoneBinContent.SetRange("Variant Code", WarehouseActivityLine."Variant Code");
+        AssignedZoneBinContent.SetRange("Zone Code", UserPickZone."Zone Code");
+        AssignedZoneBinContent.SetFilter("Bin Type Code", '%1|%2', '', 'PICK/PUT');
+        AssignedZoneBinContent.SetFilter("Bin Code", '<>%1', '*IN');
+        AssignedZoneBinContent.SetFilter("Quantity (Base)", '>0');
+        if AssignedZoneBinContent.FindFirst() then
+            exit;
+
+        // Check whether stock exists in another zone.
+        OtherZoneBinContent.Reset();
+        OtherZoneBinContent.SetRange("Location Code", WarehouseActivityLine."Location Code");
+        OtherZoneBinContent.SetRange("Item No.", WarehouseActivityLine."Item No.");
+        OtherZoneBinContent.SetRange("Variant Code", WarehouseActivityLine."Variant Code");
+        OtherZoneBinContent.SetFilter("Zone Code", '<>%1', UserPickZone."Zone Code");
+        OtherZoneBinContent.SetFilter("Bin Type Code", '%1|%2', '', 'PICK/PUT');
+        OtherZoneBinContent.SetFilter("Bin Code", '<>%1', '*IN');
+        OtherZoneBinContent.SetFilter("Quantity (Base)", '>0');
+        // Only activate the blank-line behavior when stock is available elsewhere but not in the user's assigned zone.
+        if OtherZoneBinContent.FindFirst() then
+            OrbusSingleInstanceCUGbl.SetUserPickZoneBlankLinePending(true);
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Inventory Pick/Movement", OnBeforeInsertPickOrMoveBinWhseActLine, '', false, false)]
+    local procedure CreateInventoryPickMovement_OnBeforeInsertPickOrMoveBinWhseActLine(NewWhseActivLine: Record "Warehouse Activity Line"; BinCode: Code[20]; DefaultBin: Boolean; var RemQtyToPickBase: Decimal; var IsHandled: Boolean; var WhseRequest: Record "Warehouse Request"; var WhseActivHeader: Record "Warehouse Activity Header"; IsInvtMovement: Boolean; AutoCreation: Boolean; PostingDate: Date; VendorDocNo: Code[35]; var LineCreated: Boolean; var NextLineNo: Integer)
+    var
+        WarehouseActivityLine: Record "Warehouse Activity Line";
+    begin
+        if not OrbusSingleInstanceCUGbl.GetUserPickZoneBlankLinePending() then
+            exit;
+
+        if NewWhseActivLine."Source Type" = Database::"Production Order" then
+            exit;
+
+        if NewWhseActivLine."Activity Type" <> NewWhseActivLine."Activity Type"::"Invt. Pick" then
+            exit;
+
+        if RemQtyToPickBase <= 0 then
+            exit;
+
+        // This custom handling is for a pick, not an inventory movement.
+        if IsInvtMovement then
+            exit;
+
+        // Create the activity header when standard auto-creation has not yet created one.
+        if WhseActivHeader."No." = '' then begin
+            if not AutoCreation then
+                exit;
+
+            WhseActivHeader."No." := '';
+            WhseActivHeader.Insert(true);
+
+            WhseActivHeader."Source Document" := WhseRequest."Source Document";
+            WhseActivHeader."Source Type" := WhseRequest."Source Type";
+            WhseActivHeader."Source Subtype" := WhseRequest."Source Subtype";
+            WhseActivHeader."Source No." := WhseRequest."Source No.";
+            WhseActivHeader."Destination Type" := WhseRequest."Destination Type";
+            WhseActivHeader."Destination No." := WhseRequest."Destination No.";
+            WhseActivHeader."External Document No." := WhseRequest."External Document No.";
+            WhseActivHeader."Shipment Date" := WhseRequest."Shipment Date";
+            WhseActivHeader."Posting Date" := PostingDate;
+            WhseActivHeader."External Document No.2" := VendorDocNo;
+            WhseActivHeader.Modify(true);
+
+            NextLineNo := 10000;
+        end;
+
+        // Build a pick line from the source activity line without assigning stock from another zone.
+        WarehouseActivityLine.Init();
+        WarehouseActivityLine.TransferFields(NewWhseActivLine);
+
+        WarehouseActivityLine."No." := WhseActivHeader."No.";
+        WarehouseActivityLine."Line No." := NextLineNo;
+        WarehouseActivityLine."Action Type" := WarehouseActivityLine."Action Type"::Take;
+        WarehouseActivityLine."Bin Code" := '';
+        WarehouseActivityLine."Zone Code" := '';
+        WarehouseActivityLine."Qty. (Base)" := RemQtyToPickBase;
+        WarehouseActivityLine.Quantity := WarehouseActivityLine.CalcQty(RemQtyToPickBase);
+        WarehouseActivityLine."Qty. Outstanding (Base)" := WarehouseActivityLine."Qty. (Base)";
+        WarehouseActivityLine."Qty. Outstanding" := WarehouseActivityLine.Quantity;
+        WarehouseActivityLine."Qty. to Handle" := 0;
+        WarehouseActivityLine."Qty. to Handle (Base)" := 0;
+        WarehouseActivityLine."Qty. Rounding Precision" := 0;
+        WarehouseActivityLine.Insert(true);
+
+        // Prevent standard code from selecting inventory from another zone.
+        RemQtyToPickBase := 0;
+        LineCreated := true;
+        NextLineNo += 10000;
+        IsHandled := true;
+
+        OrbusSingleInstanceCUGbl.SetUserPickZoneBlankLinePending(false);
+    end;
+
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
         OrbusFunctionsCUGbl: Codeunit "ORB Functions";

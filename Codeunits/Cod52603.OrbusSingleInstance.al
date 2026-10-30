@@ -310,6 +310,16 @@ codeunit 52603 "ORB Orbus Single Instance"
         exit(AutoPickPrint);
     end;
 
+    procedure SetUserPickZoneBlankLinePending(Pending: Boolean)
+    begin
+        UserPickZoneBlankLinePending := Pending;
+    end;
+
+    procedure GetUserPickZoneBlankLinePending(): Boolean
+    begin
+        exit(UserPickZoneBlankLinePending);
+    end;
+
     var
         ShowDialogLookupProfileVarGbl: Boolean;
         ShowDialogSendEmailToCustVarGbl: Boolean;
@@ -346,5 +356,5 @@ codeunit 52603 "ORB Orbus Single Instance"
         ExistBeforeFilter: Boolean;
         ExistAfterFilter: Boolean;
         AutoPickPrint: Boolean;
-
+        UserPickZoneBlankLinePending: Boolean;
 }
