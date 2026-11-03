@@ -696,7 +696,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         end;
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Inventory Pick/Movement", OnBeforeFindFromBinContent, '', false, false)]
+    /* [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Inventory Pick/Movement", OnBeforeFindFromBinContent, '', false, false)]
     local procedure "Create Inventory Pick/Movement_OnBeforeFindFromBinContent"(var FromBinContent: Record "Bin Content"; var WarehouseActivityLine: Record "Warehouse Activity Line"; FromBinCode: Code[20]; BinCode: Code[20]; IsInvtMovement: Boolean; IsBlankInvtMovement: Boolean; DefaultBin: Boolean; WhseItemTrackingSetup: Record "Item Tracking Setup" temporary; var WarehouseActivityHeader: Record "Warehouse Activity Header"; var WarehouseRequest: Record "Warehouse Request")
     var
         BinContentRecLcl: Record "Bin Content";
@@ -780,7 +780,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
 
         OrbusSingleInstanceCUGbl.SetBinContentExistBefore(false);
         OrbusSingleInstanceCUGbl.SetBinContentExistAfter(false);
-    end;
+    end; */
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Pick", OnBeforeGetBinContent, '', false, false)]
     local procedure "Create Pick_OnBeforeGetBinContent"(var TempBinContent: Record "Bin Content" temporary; ItemNo: Code[20]; VariantCode: Code[10]; UnitofMeasureCode: Code[10]; LocationCode: Code[10]; ToBinCode: Code[20]; CrossDock: Boolean; IsMovementWorksheet: Boolean; WhseItemTrkgExists: Boolean; BreakbulkBins: Boolean; SmallerUOMBins: Boolean; WhseItemTrackingSetup: Record "Item Tracking Setup" temporary; TotalQtytoPick: Decimal; TotalQtytoPickBase: Decimal; var Result: Boolean; var IsHandled: Boolean)
@@ -1107,6 +1107,9 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         OtherZoneBinContent: Record "Bin Content";
         AssignedZoneHasStock: Boolean;
         OtherZoneHasStock: Boolean;
+        Zone: Record Zone;
+        UserError: Label '%1 doesnot exists for %2', Comment = '%1 = Table Caption, %2 Userid';
+        ZoneError: Label 'Zone "%1" assigned to user "%2" does not exist in the Warehouse Zone table.', Comment = '%1 = Zone value, %2 Userid';
     begin
         OrbusSingleInstanceCUGbl.SetUserPickZoneBlankLinePending(false);
 
@@ -1122,17 +1125,29 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         if RemQtyToPickBase <= 0 then
             exit;
 
-        if WarehouseActivityLine."Activity Type" <> WarehouseActivityLine."Activity Type"::"Invt. Pick" then
-            exit;
+        /* if WarehouseActivityLine."Activity Type" <> WarehouseActivityLine."Activity Type"::"Invt. Pick" then
+            exit; */
+        case WarehouseActivityLine."Activity Type" of
+            WarehouseActivityLine."Activity Type"::"Invt. Pick":
+                ;
+            WarehouseActivityLine."Activity Type"::Pick:
+                if WarehouseActivityLine."Action Type" <> WarehouseActivityLine."Action Type"::Take then
+                    exit;
+            else
+                exit;
+        end;
 
         UserPickZone.Reset();
         UserPickZone.SetRange("User ID", UserId());
         UserPickZone.SetRange("Location Code", WarehouseActivityLine."Location Code");
         if not UserPickZone.FindFirst() then
-            exit;
+            Error(UserError, UserPickZone.TableCaption, UserId);
 
-        if UserPickZone."Zone Code" = '' then
-            exit;
+        Zone.Reset();
+        Zone.SetRange(Code, UserPickZone."Zone Code");
+        Zone.SetRange("Location Code", WarehouseActivityLine."Location Code");
+        if not Zone.FindFirst() then
+            Error(ZoneError, UserPickZone."Zone Code", UserId);
 
         // Check for stock in the assigned zone.
         AssignedZoneBinContent.Reset();
@@ -1171,8 +1186,15 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         if NewWhseActivLine."Source Type" = Database::"Production Order" then
             exit;
 
-        if NewWhseActivLine."Activity Type" <> NewWhseActivLine."Activity Type"::"Invt. Pick" then
-            exit;
+        case NewWhseActivLine."Activity Type" of
+            NewWhseActivLine."Activity Type"::"Invt. Pick":
+                ;
+            NewWhseActivLine."Activity Type"::Pick:
+                if NewWhseActivLine."Action Type" <> NewWhseActivLine."Action Type"::Take then
+                    exit;
+            else
+                exit;
+        end;
 
         if RemQtyToPickBase <= 0 then
             exit;
