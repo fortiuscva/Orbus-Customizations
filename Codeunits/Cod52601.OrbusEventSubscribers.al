@@ -1108,7 +1108,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         AssignedZoneHasStock: Boolean;
         OtherZoneHasStock: Boolean;
         Zone: Record Zone;
-        UserError: Label '%1 doesnot exists for %2', Comment = '%1 = Table Caption, %2 Userid';
+        // UserError: Label '%1 doesnot exists for %2', Comment = '%1 = Table Caption, %2 Userid';
         ZoneError: Label 'Zone "%1" assigned to user "%2" does not exist in the Warehouse Zone table.', Comment = '%1 = Zone value, %2 Userid';
     begin
         OrbusSingleInstanceCUGbl.SetUserPickZoneBlankLinePending(false);
@@ -1141,7 +1141,8 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         UserPickZone.SetRange("User ID", UserId());
         UserPickZone.SetRange("Location Code", WarehouseActivityLine."Location Code");
         if not UserPickZone.FindFirst() then
-            Error(UserError, UserPickZone.TableCaption, UserId);
+            exit;
+        // Error(UserError, UserPickZone.TableCaption, UserId);
 
         Zone.Reset();
         Zone.SetRange(Code, UserPickZone."Zone Code");
