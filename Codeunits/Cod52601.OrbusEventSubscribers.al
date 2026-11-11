@@ -1099,7 +1099,7 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
             OrbusFunctionsCUGbl.HandleFailedJob(Rec);
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Inventory Pick/Movement", OnCreatePickOrMoveLineOnBeforeCheckIfInsertPickOrMoveBinWhseActLine, '', false, false)]
+    /* [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Inventory Pick/Movement", OnCreatePickOrMoveLineOnBeforeCheckIfInsertPickOrMoveBinWhseActLine, '', false, false)]
     local procedure CreateInventoryPickMovement_OnBeforeCheckInsertBinLine(var WarehouseActivityLine: Record "Warehouse Activity Line"; var RemQtyToPickBase: Decimal)
     var
         UserPickZone: Record "ORB User Pick Zone";
@@ -1125,8 +1125,8 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         if RemQtyToPickBase <= 0 then
             exit;
 
-        /* if WarehouseActivityLine."Activity Type" <> WarehouseActivityLine."Activity Type"::"Invt. Pick" then
-            exit; */
+        // if WarehouseActivityLine."Activity Type" <> WarehouseActivityLine."Activity Type"::"Invt. Pick" then
+          //  exit;
         case WarehouseActivityLine."Activity Type" of
             WarehouseActivityLine."Activity Type"::"Invt. Pick":
                 ;
@@ -1248,16 +1248,271 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         // Prevent standard code from selecting inventory from another zone.
         RemQtyToPickBase := 0;
         LineCreated := true;
-        NextLineNo += 10000;
+        NextLineNo += 10000;    
         IsHandled := true;
 
         OrbusSingleInstanceCUGbl.SetUserPickZoneBlankLinePending(false);
+    end; */
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Inventory Pick/Movement", 'OnAfterInsertWhseActivLine', '', false, false)]
+    local procedure OnAfterInsertWhseActivLine(var WarehouseActivityLine: Record "Warehouse Activity Line"; SNRequired: Boolean; LNRequired: Boolean; var RemQtyToPickBase: Decimal; var CompleteShipment: Boolean; var ReservationExists: Boolean; WhseItemTrackingSetup: Record "Item Tracking Setup")
+    var
+        UserPickZone: Record "ORB User Pick Zone";
+        AssignedZoneBinContent: Record "Bin Content";
+        OtherZoneBinContent: Record "Bin Content";
+        AssignedZoneHasStock: Boolean;
+        OtherZoneHasStock: Boolean;
+        Zone: Record Zone;
+        // UserError: Label '%1 doesnot exists for %2', Comment = '%1 = Table Caption, %2 Userid';
+        ZoneError: Label 'Zone "%1" assigned to user "%2" does not exist in the Warehouse Zone table.', Comment = '%1 = Zone value, %2 Userid';
+        TotalAvailQtyInNonAssignedZone: Decimal;
+        NewWarehouseActivityLine: Record "Warehouse Activity Line";
+        WhseActivHeader: Record "Warehouse Activity Header";
+        WhseRequest: Record "Warehouse Request";
+        NextLineNo: Integer;
+    begin
+        OrbusSingleInstanceCUGbl.SetUserPickZoneBlankLinePending(false);
+
+        if not OrbusSetup.Get() then
+            exit;
+
+        if not OrbusSetup."Enable User Pick Zone" then
+            exit;
+
+        if WarehouseActivityLine."Source Type" <> Database::"Sales Line" then
+            exit;
+
+        if RemQtyToPickBase <= 0 then
+            exit;
+
+        /* if WarehouseActivityLine."Activity Type" <> WarehouseActivityLine."Activity Type"::"Invt. Pick" then
+            exit; */
+        case WarehouseActivityLine."Activity Type" of
+            WarehouseActivityLine."Activity Type"::"Invt. Pick":
+                ;
+            WarehouseActivityLine."Activity Type"::Pick:
+                if WarehouseActivityLine."Action Type" <> WarehouseActivityLine."Action Type"::Take then
+                    exit;
+            else
+                exit;
+        end;
+
+        UserPickZone.Reset();
+        UserPickZone.SetRange("User ID", UserId());
+        UserPickZone.SetRange("Location Code", WarehouseActivityLine."Location Code");
+        if not UserPickZone.FindFirst() then
+            exit;
+        // Error(UserError, UserPickZone.TableCaption, UserId);
+
+        Zone.Reset();
+        Zone.SetRange(Code, UserPickZone."Zone Code");
+        Zone.SetRange("Location Code", WarehouseActivityLine."Location Code");
+        if not Zone.FindFirst() then
+            Error(ZoneError, UserPickZone."Zone Code", UserId);
+
+
+        // Check whether stock exists in another zone.
+        OtherZoneBinContent.Reset();
+        OtherZoneBinContent.SetRange("Location Code", WarehouseActivityLine."Location Code");
+        OtherZoneBinContent.SetRange("Item No.", WarehouseActivityLine."Item No.");
+        OtherZoneBinContent.SetRange("Variant Code", WarehouseActivityLine."Variant Code");
+        OtherZoneBinContent.SetFilter("Zone Code", '<>%1', UserPickZone."Zone Code");
+        OtherZoneBinContent.SetFilter("Bin Type Code", '%1|%2', '', 'PICK/PUT');
+        OtherZoneBinContent.SetFilter("Bin Code", '<>%1', '*IN');
+        OtherZoneBinContent.SetFilter("Quantity (Base)", '>0');
+        OtherZoneBinContent.SetAutoCalcFields("Quantity (Base)");
+        // Only activate the blank-line behavior when stock is available elsewhere but not in the user's assigned zone.
+        if OtherZoneBinContent.FindSet() then
+            repeat
+                TotalAvailQtyInNonAssignedZone += OtherZoneBinContent."Quantity (Base)";
+            until OtherZoneBinContent.Next() = 0;
+
+        if RemQtyToPickBase > TotalAvailQtyInNonAssignedZone then
+            exit;
+
+        //OrbusSingleInstanceCUGbl.SetUserPickZoneBlankLinePending(true);
+        WhseRequest.Reset();
+        WhseRequest.SetRange("Location Code", WarehouseActivityLine."Location Code");
+        WhseRequest.SetRange("Source Type", WarehouseActivityLine."Source Type");
+        WhseRequest.SetRange("Source Subtype", WarehouseActivityLine."Source Subtype");
+        WhseRequest.SetRange("Source No.", WarehouseActivityLine."Source No.");
+        if not WhseRequest.FindFirst() then
+            exit;
+
+        /*
+        // Create the activity header when standard auto-creation has not yet created one.
+        if not WhseActivHeader.Get(WarehouseActivityLine."Activity Type", WarehouseActivityLine."No.") then begin
+            WhseActivHeader.Init();
+            WhseActivHeader.Type := WhseActivHeader.Type::"Invt. Pick";
+            WhseActivHeader."No." := '';
+            WhseActivHeader.Insert(true);
+
+            WhseActivHeader."Source Document" := WhseRequest."Source Document";
+            WhseActivHeader."Source Type" := WhseRequest."Source Type";
+            WhseActivHeader."Source Subtype" := WhseRequest."Source Subtype";
+            WhseActivHeader."Source No." := WhseRequest."Source No.";
+            WhseActivHeader."Destination Type" := WhseRequest."Destination Type";
+            WhseActivHeader."Destination No." := WhseRequest."Destination No.";
+            WhseActivHeader."External Document No." := WhseRequest."External Document No.";
+            WhseActivHeader."Shipment Date" := WhseRequest."Shipment Date";
+            WhseActivHeader."Posting Date" := Today;
+            WhseActivHeader."External Document No.2" := '';
+            WhseActivHeader.Modify(true);
+
+            NextLineNo := 0;
+        end;
+        */
+
+        // Build a pick line from the source activity line without assigning stock from another zone.
+        NextLineNo := WarehouseActivityLine."Line No." + 10000;
+        NewWarehouseActivityLine.Init();
+        NewWarehouseActivityLine.TransferFields(WarehouseActivityLine);
+
+        NewWarehouseActivityLine."No." := WhseActivHeader."No.";
+        NewWarehouseActivityLine."Line No." := NextLineNo;
+        NewWarehouseActivityLine.Description := 'test';
+        NewWarehouseActivityLine."Action Type" := NewWarehouseActivityLine."Action Type"::Take;
+        NewWarehouseActivityLine."Bin Code" := '';
+        NewWarehouseActivityLine."Zone Code" := '';
+        NewWarehouseActivityLine."Qty. (Base)" := RemQtyToPickBase;
+        NewWarehouseActivityLine.Quantity := RemQtyToPickBase;//WarehouseActivityLine.CalcQty(RemQtyToPickBase);
+        NewWarehouseActivityLine."Qty. Outstanding (Base)" := WarehouseActivityLine."Qty. (Base)";
+        NewWarehouseActivityLine."Qty. Outstanding" := WarehouseActivityLine.Quantity;
+        NewWarehouseActivityLine."Qty. to Handle" := 0;
+        NewWarehouseActivityLine."Qty. to Handle (Base)" := 0;
+        NewWarehouseActivityLine."Qty. Rounding Precision" := 0;
+        NewWarehouseActivityLine.Insert(true);
+        Message('A %1--%2', RemQtyToPickBase, WarehouseActivityLine.Count);
+        // Prevent standard code from selecting inventory from another zone.
+        //RemQtyToPickBase := 0;
+        //LineCreated := true;
+        //NextLineNo += 10000;
+        //IsHandled := true;
+
+    end;
+    /*     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Inventory Pick/Movement", 'OnAfterInsertWhseActivLine', '', false, false)]
+        local procedure OnAfterInsertWhseActivLine(var WarehouseActivityLine: Record "Warehouse Activity Line"; SNRequired: Boolean; LNRequired: Boolean; var RemQtyToPickBase: Decimal; var CompleteShipment: Boolean; var ReservationExists: Boolean; WhseItemTrackingSetup: Record "Item Tracking Setup")
+        var
+            SalesHeader: Record "Sales Header";
+            SalesLine: Record "Sales Line";
+            RemainingQtyBase: Decimal;
+        begin
+            // Validate only Inventory Pick lines.
+            if WarehouseActivityLine."Activity Type" <> WarehouseActivityLine."Activity Type"::"Invt. Pick" then
+                exit;
+
+            // Validate only Take lines.
+            if WarehouseActivityLine."Action Type" <> WarehouseActivityLine."Action Type"::Take then
+                exit;
+
+            // Validate Sales Order source only.
+            if WarehouseActivityLine."Source Type" <> Database::"Sales Line" then
+                exit;
+
+            if not SalesHeader.Get(SalesHeader."Document Type"::Order, WarehouseActivityLine."Source No.") then
+                exit;
+
+            // Check Complete Shipping Advice.
+            if SalesHeader."Shipping Advice" <> SalesHeader."Shipping Advice"::Complete then
+                exit;
+
+            // Get source Sales Order line.
+            if not SalesLine.Get(SalesLine."Document Type"::Order, SalesHeader."No.", WarehouseActivityLine."Source Line No.") then
+                exit;
+
+            // Remaining quantity to pick from standard calculation.
+            if CompleteShipment and (RemQtyToPickBase > 0) then
+                Error(PartialPickErr, SalesHeader."No.", SalesLine."Line No.", SalesLine."Outstanding Qty. (Base)",
+                    SalesLine."Outstanding Qty. (Base)" - RemQtyToPickBase, RemQtyToPickBase);
+        end;
+     */
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Create Inventory Pick/Movement", 'OnAfterCreatePickOrMoveFromSales', '', false, false)]
+    local procedure OnAfterCreatePickOrMoveFromSales(var WarehouseActivityHeader: Record "Warehouse Activity Header"; AutoCreation: Boolean; HideDialog: Boolean; var LineCreated: Boolean; IsInvtMovement: Boolean; IsBlankInvtMovement: Boolean)
+    var
+        WarehouseActivityLine: Record "Warehouse Activity Line";
+        SalesHeader: Record "Sales Header";
+        SalesLine: Record "Sales Line";
+        IsIncompletePick: Boolean;
+    begin
+        // Continue only if Inventory Pick lines were created.
+        if not LineCreated then
+            exit;
+
+        // Inventory Pick only.
+        if WarehouseActivityHeader.Type <> WarehouseActivityHeader.Type::"Invt. Pick" then
+            exit;
+
+        if WarehouseActivityHeader."No." = '' then
+            exit;
+
+        // Find the source Sales Order.
+        WarehouseActivityLine.Reset();
+        WarehouseActivityLine.SetRange("Activity Type", WarehouseActivityLine."Activity Type"::"Invt. Pick");
+        WarehouseActivityLine.SetRange("No.", WarehouseActivityHeader."No.");
+        WarehouseActivityLine.SetRange("Source Type", Database::"Sales Line");
+        if not WarehouseActivityLine.FindFirst() then
+            exit;
+
+        if not SalesHeader.Get(SalesHeader."Document Type"::Order, WarehouseActivityLine."Source No.") then
+            exit;
+
+        // Apply this validation only for Complete Shipping Advice.
+        if SalesHeader."Shipping Advice" <> SalesHeader."Shipping Advice"::Complete then
+            exit;
+
+        // Check all Sales Order item lines.
+        SalesLine.Reset();
+        SalesLine.SetRange("Document Type", SalesLine."Document Type"::Order);
+        SalesLine.SetRange("Document No.", SalesHeader."No.");
+        SalesLine.SetRange(Type, SalesLine.Type::Item);
+        SalesLine.SetFilter("Outstanding Qty. (Base)", '>0');
+        if SalesLine.FindSet() then
+            repeat
+                if GetPickQtyBase(WarehouseActivityHeader."No.", SalesHeader."No.", SalesLine."Line No.") < SalesLine."Outstanding Qty. (Base)" then
+                    IsIncompletePick := true;
+            until (SalesLine.Next() = 0) or IsIncompletePick;
+
+        // If even one Sales Order line is incomplete, remove the entire Inventory Pick.
+        if IsIncompletePick then begin
+            WarehouseActivityLine.Reset();
+            WarehouseActivityLine.SetRange("Activity Type", WarehouseActivityLine."Activity Type"::"Invt. Pick");
+            WarehouseActivityLine.SetRange("No.", WarehouseActivityHeader."No.");
+
+            // Delete all generated pick lines.
+            WarehouseActivityLine.DeleteAll(true);
+
+            // Delete the generated pick header.
+            WarehouseActivityHeader.Delete(true);
+
+            // Inform standard process that nothing was created.
+            LineCreated := false;
+        end;
+    end;
+
+    local procedure GetPickQtyBase(WarehouseActivityNo: Code[20]; SalesOrderNo: Code[20]; SalesOrderLineNo: Integer): Decimal
+    var
+        WarehouseActivityLine: Record "Warehouse Activity Line";
+        TotalPickQtyBase: Decimal;
+    begin
+        WarehouseActivityLine.Reset();
+        WarehouseActivityLine.SetRange("Activity Type", WarehouseActivityLine."Activity Type"::"Invt. Pick");
+        WarehouseActivityLine.SetRange("No.", WarehouseActivityNo);
+        WarehouseActivityLine.SetRange("Action Type", WarehouseActivityLine."Action Type"::Take);
+        WarehouseActivityLine.SetRange("Source Type", Database::"Sales Line");
+        WarehouseActivityLine.SetRange("Source No.", SalesOrderNo);
+        WarehouseActivityLine.SetRange("Source Line No.", SalesOrderLineNo);
+        if WarehouseActivityLine.FindSet() then
+            repeat
+                TotalPickQtyBase += WarehouseActivityLine."Qty. (Base)";
+            until WarehouseActivityLine.Next() = 0;
+
+        exit(TotalPickQtyBase);
     end;
 
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
         OrbusFunctionsCUGbl: Codeunit "ORB Functions";
         OrbusSetup: Record "ORB Orbus Setup";
-
+        PartialPickErr: Label 'Cannot create Inventory Pick for Sales Order %1, Line %2. Outstanding quantity is %3 and pick quantity is %4 and remaining quantity is %5. Shipping Advice is Complete. Change Shipping Advice to Partial to proceed.';
 
 }
