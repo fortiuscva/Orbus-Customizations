@@ -181,6 +181,25 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
         {
             Editable = false;
         }
+        addafter("Work Description")
+        {
+            group("ORB ProductionNote")
+            {
+                Caption = 'Production Note';
+                field("ORB Production Note"; ProductionNote)
+                {
+                    ApplicationArea = All;
+                    Importance = Additional;
+                    MultiLine = true;
+                    ShowCaption = false;
+                    ToolTip = 'Specifies the value of the Production Note field.', Comment = '%';
+                    trigger OnValidate()
+                    begin
+                        Rec.SetProductionNote(ProductionNote);
+                    end;
+                }
+            }
+        }
     }
     actions
     {
@@ -507,10 +526,15 @@ pageextension 52615 "ORB Sales Order" extends "Sales Order"
         }
 
     }
+    trigger OnAfterGetRecord()
+    begin
+        ProductionNote := Rec.GetProductionNote();
+    end;
 
     var
         OrbusFunctions: Codeunit "ORB Functions";
         ORBCreateInventoryPick: Codeunit "ORB Create Inventory Pick";
         SendOrderConfirmationEmailLbl: Label 'Send Order Confirmation Email';
         LocationNotFoundlbl: Label 'Location is missing for this order: %1';
+        ProductionNote: Text;
 }

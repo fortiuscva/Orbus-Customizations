@@ -367,6 +367,11 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
 
             end;
         }
+        field(52671; "ORB Production Note"; BLOB)
+        {
+            Caption = 'Production Note';
+            DataClassification = CustomerContent;
+        }
         // modify("Sell-to Contact No.")
         // {
 
@@ -469,6 +474,26 @@ tableextension 52611 "ORB Sales Header" extends "Sales Header"
             exit(true)
         else
             exit(false);
+    end;
+
+    procedure SetProductionNote(NewProductionNote: Text)
+    var
+        OutStream: OutStream;
+    begin
+        Clear("ORB Production Note");
+        "ORB Production Note".CreateOutStream(OutStream, TextEncoding::UTF8);
+        OutStream.WriteText(NewProductionNote);
+        Modify();
+    end;
+
+    procedure GetProductionNote() ProductionNote: Text
+    var
+        TypeHelper: Codeunit "Type Helper";
+        InStream: InStream;
+    begin
+        CalcFields("ORB Production Note");
+        "ORB Production Note".CreateInStream(InStream, TEXTENCODING::UTF8);
+        exit(TypeHelper.TryReadAsTextWithSepAndFieldErrMsg(InStream, TypeHelper.LFSeparator(), FieldName("ORB Production Note")));
     end;
 
     // local procedure CheckContactActiveStatus(ContactNoPar: Code[20])

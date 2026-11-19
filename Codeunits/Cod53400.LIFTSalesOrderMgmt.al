@@ -146,6 +146,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
             if SalesHeader."Shipping Agent Code" <> LIFTSalesOrderBuffer."Shipping Agent Code" then
                 SalesHeader.Validate("Shipping Agent Code", LIFTSalesOrderBuffer."Shipping Agent Code");
             SalesHeader.SetWorkDescription(LIFTSalesOrderBuffer."ORB LIFT ART_NOTE");
+            SalesHeader.SetProductionNote(LIFTSalesOrderBuffer."ORB LIFT PRODUCTION_NOTE");
             if SalesHeader."Shipping Agent Service Code" <> LIFTSalesOrderBuffer."Shipping Agent Service Code" then
                 SalesHeader.Validate("Shipping Agent Service Code", LIFTSalesOrderBuffer."Shipping Agent Service Code");
             if SalesHeader."Location Code" <> LIFTSalesOrderBuffer."Location Code" then
@@ -252,6 +253,7 @@ codeunit 53400 "ORB LIFT Sales Order Mgmt"
                 SalesHeader.Validate("Payment Method Code", LIFTSalesOrderBuffer."Payment Method Code");
             SalesHeader.Validate("Shipping Agent Code", LIFTSalesOrderBuffer."Shipping Agent Code");
             SalesHeader.SetWorkDescription(LIFTSalesOrderBuffer."ORB LIFT ART_NOTE");
+            SalesHeader.SetProductionNote(LIFTSalesOrderBuffer."ORB LIFT PRODUCTION_NOTE");
             SalesHeader.Validate("Shipping Agent Service Code", LIFTSalesOrderBuffer."Shipping Agent Service Code");
             SalesHeader.Validate("Order Status", LIFTSalesOrderBuffer."Order Status");
             SalesHeader.Validate("Location Code", LIFTSalesOrderBuffer."Location Code");
