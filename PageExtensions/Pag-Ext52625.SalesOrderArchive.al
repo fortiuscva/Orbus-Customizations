@@ -27,6 +27,22 @@ pageextension 52625 "ORB Sales Order Archive" extends "Sales Order Archive"
                               "Line No." = field("Line No.");
             }
         }
+        addafter("Work Description")
+        {
+            group("ORB ProductionNote")
+            {
+                Caption = 'Production Note';
+                field("ORB GetProductionNote"; Rec.GetProductionNote())
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                    Importance = Additional;
+                    MultiLine = true;
+                    ShowCaption = false;
+                    ToolTip = 'Specifies the value of the Production Note field.', Comment = '%';
+                }
+            }
+        }
     }
     actions
     {
@@ -42,4 +58,11 @@ pageextension 52625 "ORB Sales Order Archive" extends "Sales Order Archive"
             }
         }
     }
+    // trigger OnAfterGetRecord()
+    // begin
+    //     ProductionNote := Rec.GetProductionNote();
+    // end;
+
+    // var
+    //     ProductionNote: Text;
 }

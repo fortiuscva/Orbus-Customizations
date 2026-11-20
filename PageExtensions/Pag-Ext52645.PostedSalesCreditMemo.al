@@ -19,7 +19,22 @@ pageextension 52645 "ORB Posted Sales Credit Memo" extends "Posted Sales Credit 
             Caption = 'Versapay ID';
             Editable = False;
         }
-
+        addafter("Work Description")
+        {
+            group("ORB ProductionNote")
+            {
+                Caption = 'Production Note';
+                field("ORB GetProductionNote"; Rec.GetProductionNote())
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                    Importance = Additional;
+                    MultiLine = true;
+                    ShowCaption = false;
+                    ToolTip = 'Specifies the value of the Production Note field.', Comment = '%';
+                }
+            }
+        }
     }
 
     actions
@@ -27,6 +42,11 @@ pageextension 52645 "ORB Posted Sales Credit Memo" extends "Posted Sales Credit 
         // Add changes to page actions here
     }
 
-    var
-        myInt: Integer;
+    // trigger OnAfterGetRecord()
+    // begin
+    //     ProductionNote := Rec.GetProductionNote();
+    // end;
+
+    // var
+    //     ProductionNote: Text;
 }

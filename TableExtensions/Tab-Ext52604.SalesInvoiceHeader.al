@@ -130,5 +130,20 @@ tableextension 52604 "ORB Sales Invoice Header" extends "Sales Invoice Header"
             Caption = 'LIFT Last Updated DateTime';
             DataClassification = CustomerContent;
         }
+        field(52671; "ORB Production Note"; BLOB)
+        {
+            Caption = 'Production Note';
+            DataClassification = CustomerContent;
+        }
     }
+    procedure GetProductionNote() ProductionNote: Text
+    var
+        TypeHelper: Codeunit "Type Helper";
+        InStream: InStream;
+    begin
+        CalcFields("ORB Production Note");
+        "ORB Production Note".CreateInStream(InStream, TEXTENCODING::UTF8);
+        exit(TypeHelper.TryReadAsTextWithSepAndFieldErrMsg(InStream, TypeHelper.LFSeparator(), FieldName("ORB Production Note")));
+    end;
+
 }
