@@ -1509,6 +1509,30 @@ codeunit 52601 "ORB Orbus Event & Subscribers"
         exit(TotalPickQtyBase);
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnInsertShipmentHeaderOnBeforeTransferfieldsToSalesShptHeader, '', false, false)]
+    local procedure "Sales-Post_OnInsertShipmentHeaderOnBeforeTransferfieldsToSalesShptHeader"(var SalesHeader: Record "Sales Header")
+    begin
+        SalesHeader.CalcFields("ORB Production Note");
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnInsertInvoiceHeaderOnBeforeSalesInvHeaderTransferFields, '', false, false)]
+    local procedure "Sales-Post_OnInsertInvoiceHeaderOnBeforeSalesInvHeaderTransferFields"(var SalesHeader: Record "Sales Header")
+    begin
+        SalesHeader.CalcFields("ORB Production Note");
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnInsertCrMemoHeaderOnBeforeSalesCrMemoHeaderTransferFields, '', false, false)]
+    local procedure "Sales-Post_OnInsertCrMemoHeaderOnBeforeSalesCrMemoHeaderTransferFields"(var SalesHeader: Record "Sales Header")
+    begin
+        SalesHeader.CalcFields("ORB Production Note");
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::ArchiveManagement, OnBeforeStoreSalesDocument, '', false, false)]
+    local procedure ArchiveManagement_OnBeforeStoreSalesDocument(var SalesHeader: Record "Sales Header"; var IsHandled: Boolean)
+    begin
+        SalesHeader.CalcFields("ORB Production Note");
+    end;
+
     var
         OrbusSingleInstanceCUGbl: Codeunit "ORB Orbus Single Instance";
         OrbusFunctionsCUGbl: Codeunit "ORB Functions";

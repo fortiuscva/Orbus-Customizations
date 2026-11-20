@@ -15,6 +15,22 @@ pageextension 52626 "ORB Posted Sales Shipment" extends "Posted Sales Shipment"
                 ToolTip = 'Specifies the user who resolved escalated issue';
             }
         }
+        addafter("Work Description")
+        {
+            group("ORB ProductionNote")
+            {
+                Caption = 'Production Note';
+                field("ORB GetProductionNote"; Rec.GetProductionNote())
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                    Importance = Additional;
+                    MultiLine = true;
+                    ShowCaption = false;
+                    ToolTip = 'Specifies the value of the Production Note field.', Comment = '%';
+                }
+            }
+        }
     }
     actions
     {
@@ -30,4 +46,11 @@ pageextension 52626 "ORB Posted Sales Shipment" extends "Posted Sales Shipment"
             }
         }
     }
+    // trigger OnAfterGetRecord()
+    // begin
+    //     ProductionNote := Rec.GetProductionNote();
+    // end;
+
+    // var
+    //     ProductionNote: Text;
 }
